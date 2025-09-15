@@ -1,28 +1,64 @@
 // Portfolio Gallery - Camilo Rivera
-// Auto-generated from optimized images
+// NUCLEAR MODE: All images, no fictitious titles
 
 const paintingsData = [
-    { id: 1, title: "Abstraction Lyrique I", technique: "Huile sur toile", size: "80x100cm", price: "CHF 2,800", image: "images/paintings/painting-001.jpg" },
-    { id: 2, title: "Réflexions Urbaines", technique: "Huile sur toile", size: "60x80cm", price: "CHF 2,200", image: "images/paintings/painting-002.jpg" },
-    { id: 3, title: "Chaos Émotionnel", technique: "Huile sur toile", size: "100x120cm", price: "CHF 3,500", image: "images/paintings/painting-003.jpg" },
-    { id: 4, title: "Fragments de Lumière", technique: "Huile sur toile", size: "50x70cm", price: "CHF 1,800", image: "images/paintings/painting-004.jpg" },
-    { id: 5, title: "Mouvement Perpétuel", technique: "Huile sur toile", size: "70x90cm", price: "CHF 2,500", image: "images/paintings/painting-005.jpg" },
-    { id: 6, title: "Éclats de Mémoire", technique: "Huile sur toile", size: "80x100cm", price: "CHF 2,800", image: "images/paintings/painting-006.jpg" },
-    { id: 7, title: "Tempête Intérieure", technique: "Huile sur toile", size: "60x80cm", price: "CHF 2,200", image: "images/paintings/painting-007.jpg" },
-    { id: 8, title: "Harmony of Chaos", technique: "Huile sur toile", size: "90x120cm", price: "CHF 3,200", image: "images/paintings/painting-008.jpg" },
-    { id: 9, title: "Mélancolie Urbaine", technique: "Huile sur toile", size: "50x70cm", price: "CHF 1,800", image: "images/paintings/painting-009.jpg" },
-    { id: 10, title: "Réverie Nocturne", technique: "Huile sur toile", size: "80x100cm", price: "CHF 2,800", image: "images/paintings/painting-010.jpg" },
-    { id: 11, title: "Le Jaune", technique: "Huile sur toile", size: "70x90cm", price: "CHF 2,500", image: "images/paintings/painting-018.jpg" },
-    { id: 12, title: "Berceau Bleu", technique: "Huile sur toile", size: "60x80cm", price: "CHF 2,200", image: "images/paintings/painting-019.jpg" }
+    { id: 1, technique: "Huile sur toile", image: "images/paintings/painting-001.jpg" },
+    { id: 2, technique: "Huile sur toile", image: "images/paintings/painting-002.jpg" },
+    { id: 3, technique: "Huile sur toile", image: "images/paintings/painting-003.jpg" },
+    { id: 4, technique: "Huile sur toile", image: "images/paintings/painting-004.jpg" },
+    { id: 5, technique: "Huile sur toile", image: "images/paintings/painting-005.jpg" },
+    { id: 6, technique: "Huile sur toile", image: "images/paintings/painting-006.jpg" },
+    { id: 7, technique: "Huile sur toile", image: "images/paintings/painting-007.jpg" },
+    { id: 8, technique: "Huile sur toile", image: "images/paintings/painting-008.jpg" },
+    { id: 9, technique: "Huile sur toile", image: "images/paintings/painting-009.jpg" },
+    { id: 10, technique: "Huile sur toile", image: "images/paintings/painting-010.jpg" },
+    { id: 11, technique: "Huile sur toile", image: "images/paintings/painting-011.jpg" },
+    { id: 12, technique: "Huile sur toile", image: "images/paintings/painting-012.jpg" },
+    { id: 13, technique: "Huile sur toile", image: "images/paintings/painting-013.jpg" },
+    { id: 14, technique: "Huile sur toile", image: "images/paintings/painting-014.jpg" },
+    { id: 15, technique: "Huile sur toile", image: "images/paintings/painting-015.jpg" },
+    { id: 16, technique: "Huile sur toile", image: "images/paintings/painting-016.jpg" },
+    { id: 17, technique: "Huile sur toile", image: "images/paintings/painting-017.jpg" },
+    { id: 18, technique: "Huile sur toile", image: "images/paintings/painting-018.jpg" },
+    { id: 19, technique: "Huile sur toile", image: "images/paintings/painting-019.jpg" },
+    { id: 20, technique: "Huile sur toile", image: "images/paintings/painting-020.jpg" },
+    { id: 21, technique: "Huile sur toile", image: "images/paintings/painting-021.jpg" },
+    { id: 22, technique: "Huile sur toile", image: "images/paintings/painting-022.jpg" },
+    { id: 23, technique: "Huile sur toile", image: "images/paintings/painting-023.jpg" },
+    { id: 24, technique: "Huile sur toile", image: "images/paintings/painting-024.jpg" },
+    { id: 25, technique: "Huile sur toile", image: "images/paintings/painting-025.jpg" },
+    { id: 26, technique: "Huile sur toile", image: "images/paintings/painting-026.jpg" },
+    { id: 27, technique: "Huile sur toile", image: "images/paintings/painting-027.jpg" }
 ];
 
 const encresData = [
-    { id: 1, title: "Fluidité I", technique: "Encre de Chine", size: "40x30cm", price: "CHF 800", image: "images/encres/encre-001.jpg" },
-    { id: 2, title: "Équilibre Zen", technique: "Encre de Chine", size: "50x40cm", price: "CHF 900", image: "images/encres/encre-002.jpg" },
-    { id: 3, title: "Méditation Liquide", technique: "Encre de Chine", size: "30x40cm", price: "CHF 700", image: "images/encres/encre-003.jpg" },
-    { id: 4, title: "Souffle du Vent", technique: "Encre de Chine", size: "40x50cm", price: "CHF 850", image: "images/encres/encre-004.jpg" },
-    { id: 5, title: "Clarté Contemplative", technique: "Encre de Chine", size: "35x45cm", price: "CHF 750", image: "images/encres/encre-005.jpg" },
-    { id: 6, title: "Essence Primitive", technique: "Encre de Chine", size: "40x30cm", price: "CHF 800", image: "images/encres/encre-006.jpg" }
+    { id: 1, technique: "Encre de Chine", image: "images/encres/encre-000.jpg" },
+    { id: 2, technique: "Encre de Chine", image: "images/encres/encre-001.jpg" },
+    { id: 3, technique: "Encre de Chine", image: "images/encres/encre-002.jpg" },
+    { id: 4, technique: "Encre de Chine", image: "images/encres/encre-003.jpg" },
+    { id: 5, technique: "Encre de Chine", image: "images/encres/encre-004.jpg" },
+    { id: 6, technique: "Encre de Chine", image: "images/encres/encre-005.jpg" },
+    { id: 7, technique: "Encre de Chine", image: "images/encres/encre-006.jpg" },
+    { id: 8, technique: "Encre de Chine", image: "images/encres/encre-007.jpg" },
+    { id: 9, technique: "Encre de Chine", image: "images/encres/encre-008.jpg" },
+    { id: 10, technique: "Encre de Chine", image: "images/encres/encre-009.jpg" },
+    { id: 11, technique: "Encre de Chine", image: "images/encres/encre-010.jpg" },
+    { id: 12, technique: "Encre de Chine", image: "images/encres/encre-011.jpg" },
+    { id: 13, technique: "Encre de Chine", image: "images/encres/encre-012.jpg" },
+    { id: 14, technique: "Encre de Chine", image: "images/encres/encre-013.jpg" },
+    { id: 15, technique: "Encre de Chine", image: "images/encres/encre-014.jpg" },
+    { id: 16, technique: "Encre de Chine", image: "images/encres/encre-015.jpg" },
+    { id: 17, technique: "Encre de Chine", image: "images/encres/encre-016.jpg" },
+    { id: 18, technique: "Encre de Chine", image: "images/encres/encre-017.jpg" },
+    { id: 19, technique: "Encre de Chine", image: "images/encres/encre-018.jpg" },
+    { id: 20, technique: "Encre de Chine", image: "images/encres/encre-019.jpg" },
+    { id: 21, technique: "Encre de Chine", image: "images/encres/encre-020.jpg" },
+    { id: 22, technique: "Encre de Chine", image: "images/encres/encre-021.jpg" },
+    { id: 23, technique: "Encre de Chine", image: "images/encres/encre-022.jpg" },
+    { id: 24, technique: "Encre de Chine", image: "images/encres/encre-023.jpg" },
+    { id: 25, technique: "Encre de Chine", image: "images/encres/encre-024.jpg" },
+    { id: 26, technique: "Encre de Chine", image: "images/encres/encre-025.jpg" },
+    { id: 27, technique: "Encre de Chine", image: "images/encres/encre-026.jpg" }
 ];
 
 function loadGallery(containerId, artworks) {
@@ -37,14 +73,12 @@ function loadGallery(containerId, artworks) {
 
         card.innerHTML = `
             <img src="${artwork.image}"
-                 alt="${artwork.title}"
+                 alt="Œuvre ${artwork.id}"
                  class="painting-image"
                  onerror="this.style.background='linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'; this.style.display='block';"
                  loading="lazy">
             <div class="painting-overlay">
-                <div class="painting-title">${artwork.title}</div>
-                <div class="painting-details">${artwork.technique} • ${artwork.size}</div>
-                <div class="painting-price">${artwork.price}</div>
+                <div class="painting-details">${artwork.technique}</div>
             </div>
         `;
 
@@ -58,16 +92,15 @@ function loadGallery(containerId, artworks) {
 }
 
 function showArtworkDetails(artwork) {
-    // Simple modal or contact form
     const message = `Bonjour,
 
-Je suis intéressé(e) par l'œuvre "${artwork.title}" (${artwork.technique}, ${artwork.size}) exposée à Riddes.
+Je suis intéressé(e) par une œuvre (${artwork.technique}) exposée à Riddes.
 
 Pourriez-vous me donner plus d'informations sur cette pièce?
 
 Merci,`;
 
-    const subject = `Exposition Riddes - ${artwork.title}`;
+    const subject = `Exposition Riddes - Œuvre ${artwork.technique}`;
     const mailtoLink = `mailto:camilo@osomcreative.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
 
     window.location.href = mailtoLink;
