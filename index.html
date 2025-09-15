@@ -304,8 +304,18 @@
             font-size: 11px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--text-gray);
+            color: var(--black);
             animation: bounce 2s infinite;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+            opacity: 0.8;
         }
 
         @keyframes bounce {
@@ -799,7 +809,7 @@
             justify-content: center;
             opacity: 1;
             visibility: visible;
-            transition: all 1s ease-out;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
         }
 
         .video-opening.hidden {
@@ -880,14 +890,21 @@
         body.opening-active .contact,
         body.opening-active footer {
             opacity: 0;
-            transform: scale(1.02);
-            transition: all 1s ease-out;
+            transition: opacity 0.4s ease-out;
         }
 
         nav, .hero, .collections, .about, .exposition, .contact, footer {
-            opacity: 1;
-            transform: scale(1);
-            transition: all 1s ease-out;
+            opacity: 0;
+            animation: fadeInSite 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInSite {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Scroll Progress Button */
@@ -1055,6 +1072,7 @@
             <a href="#collections" class="hero-cta">Découvrir les œuvres</a>
             <a href="#contact" class="hero-cta secondary">Contact & Prix</a>
         </div>
+        <div class="scroll-indicator">Scroll</div>
         <div class="scroll-indicator">Scroll</div>
     </section>
 
@@ -1320,15 +1338,14 @@
                 setTimeout(() => {
                     openingVideo.pause();
 
-                    // Fade out opening
-                    videoOpening.style.transition = 'all 1.2s ease-out';
+                    // Fade out opening rapide
                     videoOpening.classList.add('hidden');
 
-                    // Show main site with synchronized timing
+                    // Show main site avec fade in immediate
                     setTimeout(() => {
                         document.body.classList.remove('opening-active');
                         sessionStorage.setItem('hasSeenOpening', 'true');
-                    }, 200);
+                    }, 300);
 
                 }, 4200); // 4.2 seconds
             });
