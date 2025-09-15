@@ -78,25 +78,73 @@ function loadGallery(containerId, artworks) {
             </div>
         `;
 
-        // Click handler for artwork details
+        // Click handler for artwork enlargement
         card.addEventListener('click', () => {
-            showArtworkDetails(artwork);
+            openLightbox(artwork);
         });
 
         container.appendChild(card);
     });
 }
 
-function showArtworkDetails(artwork) {
+function openLightbox(artwork) {
+    // Create lightbox modal
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <div class="lightbox-content">
+            <img src="${artwork.image}" alt="Œuvre ${artwork.id}" class="lightbox-image">
+            <div class="lightbox-info">
+                <div class="lightbox-technique">${artwork.technique}</div>
+                <button class="lightbox-contact" onclick="contactArtist('${artwork.technique}')">
+                    Demander des informations
+                </button>
+            </div>
+            <button class="lightbox-close">&times;</button>
+        </div>
+    `;
+
+    // Add lightbox to body
+    document.body.appendChild(lightbox);
+
+    // Close handlers
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+            closeLightbox(lightbox);
+        }
+    });
+
+    // Escape key handler
+    document.addEventListener('keydown', function escHandler(e) {
+        if (e.key === 'Escape') {
+            closeLightbox(lightbox);
+            document.removeEventListener('keydown', escHandler);
+        }
+    });
+
+    // Smooth entrance animation
+    setTimeout(() => lightbox.classList.add('lightbox-active'), 10);
+}
+
+function closeLightbox(lightbox) {
+    lightbox.classList.remove('lightbox-active');
+    setTimeout(() => {
+        if (lightbox && lightbox.parentNode) {
+            lightbox.parentNode.removeChild(lightbox);
+        }
+    }, 300);
+}
+
+function contactArtist(technique) {
     const message = `Bonjour,
 
-Je suis intéressé(e) par une œuvre (${artwork.technique}) exposée à Riddes.
+Je suis intéressé(e) par une œuvre (${technique}) exposée à Riddes.
 
 Pourriez-vous me donner plus d'informations sur cette pièce?
 
 Merci,`;
 
-    const subject = `Exposition Riddes - Œuvre ${artwork.technique}`;
+    const subject = `Exposition Riddes - Œuvre ${technique}`;
     const mailtoLink = `mailto:camilo@osomcreative.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
 
     window.location.href = mailtoLink;
