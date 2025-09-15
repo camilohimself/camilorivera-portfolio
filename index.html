@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Camilo Rivera - Peintre. Exposition 'Un pont entre abstraction et figuration' à Riddes, Valais. Œuvres à l'huile et encre de Chine.">
+    <title>Camilo Rivera | Peintre - Exposition Riddes Valais 2025</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray: #f8f8f8;
+            --text-gray: #6a6a6a;
+            --border: #e5e5e5;
+            --gold: #d4af37;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--black);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 20px 60px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        .nav-menu a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--black);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 40px;
+            animation: fadeUp 1.2s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 5vw, 72px);
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        .hero .exposition-info {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border: 1px solid var(--black);
+            margin-right: 20px;
+        }
+
+        .hero-cta:hover {
+            background: transparent;
+            color: var(--black);
+        }
+
+        .hero-cta.secondary {
+            background: transparent;
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .hero-cta.secondary:hover {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Collections */
+        .collections {
+            padding: 120px 60px;
+        }
+
+        .section-header {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .collections-nav {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .collection-tab {
+            padding: 15px 30px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-gray);
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .collection-tab.active {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .collection-tab:hover {
+            border-color: var(--black);
+            color: var(--black);
+        }
+
+        .paintings-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .painting-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 400px;
+            background: var(--gray);
+            transition: var(--transition);
+        }
+
+        .painting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .painting-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .painting-card:hover .painting-image {
+            transform: scale(1.05);
+        }
+
+        .painting-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: var(--white);
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .painting-card:hover .painting-overlay {
+            transform: translateY(0);
+        }
+
+        .painting-title {
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+
+        .painting-details {
+            font-size: 13px;
+            opacity: 0.8;
+            letter-spacing: 0.05em;
+        }
+
+        .painting-price {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        /* About */
+        .about {
+            padding: 120px 60px;
+            background: var(--gray);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 42px;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-gray);
+        }
+
+        /* Exposition */
+        .exposition {
+            padding: 120px 60px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .exposition-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .exposition h2 {
+            font-size: 42px;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .exposition-details {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .exposition-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 120px 60px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 42px;
+            font-weight: 200;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .contact p {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 50px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .contact-value {
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .contact-value a {
+            color: var(--black);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-value a:hover {
+            color: var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 60px;
+            background: var(--black);
+            color: var(--white);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .paintings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .collections-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .exposition-info,
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hidden by default */
+        .collection-content {
+            display: none;
+        }
+
+        .collection-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">Camilo Rivera<br>Peintre</a>
+        <ul class="nav-menu">
+            <li><a href="#collections">Œuvres</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#exposition">Exposition</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Un pont entre<br>abstraction et figuration</h1>
+            <p class="subtitle">Peinture à l'huile & Encre de Chine</p>
+            <p class="exposition-info">Exposition Riddes • 5-26 Octobre 2025</p>
+            <a href="#collections" class="hero-cta">Découvrir les œuvres</a>
+            <a href="#contact" class="hero-cta secondary">Contact & Prix</a>
+        </div>
+        <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <!-- Collections -->
+    <section class="collections" id="collections">
+        <div class="section-header">
+            <h2>Collections</h2>
+            <p>Chaque œuvre raconte une histoire, un voyage entre les territoires de l'expression abstraite et figurative.</p>
+        </div>
+
+        <div class="collections-nav">
+            <button class="collection-tab active" data-collection="paintings">Peintures à l'Huile</button>
+            <button class="collection-tab" data-collection="encres">Encres de Chine</button>
+        </div>
+
+        <!-- Paintings Collection -->
+        <div class="collection-content active" id="paintings-collection">
+            <div class="paintings-grid" id="paintings-grid">
+                <!-- Paintings will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Encres Collection -->
+        <div class="collection-content" id="encres-collection">
+            <div class="paintings-grid" id="encres-grid">
+                <!-- Encres will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>L'Artiste</h2>
+                <p>Camilo Rivera, peintre d'origine chilienne établi en Suisse, développe un langage visuel qui s'étend du domaine de l'abstraction vers des territoires expressifs plus figuratifs.</p>
+
+                <p>Sa transition de l'huile vers l'encre de Chine constitue une métaphore de sa quête personnelle : trouver l'équilibre entre le chaos émotionnel et la clarté de l'expression.</p>
+
+                <p>Pour Rivera, la toile est un espace sacré où se livrent et se résolvent les batailles intérieures, où les taches de couleur pure et les formes indomptées se rencontrent pour raconter des histoires sans mots.</p>
+
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2025</div>
+                        <div class="stat-label">Exposition Riddes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">70+</div>
+                        <div class="stat-label">Œuvres Créées</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <div style="height: 500px; background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%); border-radius: 4px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exposition -->
+    <section class="exposition" id="exposition">
+        <div class="exposition-container">
+            <h2>Exposition Actuelle</h2>
+            <p class="exposition-details">"Un pont entre abstraction et figuration" présente une sélection d'œuvres récentes qui illustrent l'évolution artistique de Camilo Rivera, de la peinture lyrique abstraite vers un travail plus défini avec l'encre de Chine.</p>
+
+            <div class="exposition-info">
+                <div class="info-item">
+                    <div class="info-label">Lieu</div>
+                    <div class="info-value">Riddes · arts & culture<br>Rue du Village 2, 1908 Riddes</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Dates</div>
+                    <div class="info-value">5 - 26 Octobre 2025</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Finissage</div>
+                    <div class="info-value">Rencontre art & terroir<br>avec Maison Maye</div>
+                </div>
+            </div>
+
+            <a href="#contact" class="hero-cta">Visiter l'exposition</a>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2>Contact & Acquisitions</h2>
+            <p>Pour toute information sur les œuvres, leur disponibilité ou pour organiser une visite privée.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:camilo@osomcreative.ch">camilo@osomcreative.ch</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Téléphone</div>
+                    <div class="contact-value">
+                        <a href="tel:+41791234567">+41 79 123 45 67</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Localisation</div>
+                    <div class="contact-value">Valais, Suisse</div>
+                </div>
+            </div>
+
+            <a href="mailto:camilo@osomcreative.ch?subject=Exposition Riddes - Demande d'information" class="hero-cta">Demande d'information</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 2025 Camilo Rivera. Tous les droits réservés.
+            </div>
+            <div class="footer-links">
+                <a href="https://osomcreative.ch">OSOM Creative</a>
+                <a href="mailto:camilo@osomcreative.ch">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/gallery.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Collection tabs
+        document.querySelectorAll('.collection-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active from all tabs and content
+                document.querySelectorAll('.collection-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.collection-content').forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked tab
+                this.classList.add('active');
+
+                // Show corresponding content
+                const collection = this.dataset.collection;
+                document.getElementById(collection + '-collection').classList.add('active');
+            });
+        });
+
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.painting-card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
