@@ -879,7 +879,15 @@
         body.opening-active .exposition,
         body.opening-active .contact,
         body.opening-active footer {
-            visibility: hidden;
+            opacity: 0;
+            transform: scale(1.02);
+            transition: all 1s ease-out;
+        }
+
+        nav, .hero, .collections, .about, .exposition, .contact, footer {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 1s ease-out;
         }
 
         /* Scroll Progress Button */
@@ -1316,11 +1324,11 @@
                     videoOpening.style.transition = 'all 1.2s ease-out';
                     videoOpening.classList.add('hidden');
 
-                    // Show main site
+                    // Show main site with synchronized timing
                     setTimeout(() => {
                         document.body.classList.remove('opening-active');
                         sessionStorage.setItem('hasSeenOpening', 'true');
-                    }, 300);
+                    }, 200);
 
                 }, 4200); // 4.2 seconds
             });
