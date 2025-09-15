@@ -1362,13 +1362,9 @@
         const openingVideo = document.getElementById('openingVideo');
         const heroVideo = document.querySelector('.hero-video');
 
-        // Set drone video for opening and random for hero
+        // Set drone video for both opening and hero
         openingVideo.src = 'videos/hero-drone.mp4';
-
-        // Random hero video
-        const heroSources = ['videos/hero-video.mp4', 'videos/hero-drone.mp4'];
-        const randomHero = Math.random() > 0.5 ? 1 : 0;
-        heroVideo.src = heroSources[randomHero];
+        heroVideo.src = 'videos/hero-drone.mp4';
 
         // Check if user wants to skip opening
         const skipOpening = sessionStorage.getItem('skipDroneOpening');
