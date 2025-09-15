@@ -673,6 +673,65 @@
             transition: all 0.2s ease;
         }
 
+        /* Scroll Progress Button */
+        .scroll-progress-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: transparent;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .scroll-progress-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-progress-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-progress-fill {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--black);
+            transition: all 0.1s ease-out;
+            transform-origin: center;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .scroll-progress-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            color: var(--black);
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .scroll-progress-btn:hover .scroll-progress-icon {
+            opacity: 1;
+            color: var(--white);
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             nav {
@@ -941,6 +1000,51 @@
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
+        });
+
+        // Scroll Progress Button
+        const scrollProgressBtn = document.createElement('div');
+        scrollProgressBtn.className = 'scroll-progress-btn';
+        scrollProgressBtn.innerHTML = `
+            <div class="scroll-progress-fill"></div>
+            <div class="scroll-progress-icon">↑</div>
+        `;
+        document.body.appendChild(scrollProgressBtn);
+
+        const progressFill = scrollProgressBtn.querySelector('.scroll-progress-fill');
+        const progressIcon = scrollProgressBtn.querySelector('.scroll-progress-icon');
+
+        // Scroll tracking
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+
+            // Show button after 100px scroll
+            if (scrollTop > 100) {
+                scrollProgressBtn.classList.add('visible');
+            } else {
+                scrollProgressBtn.classList.remove('visible');
+            }
+
+            // Progress fill animation (scale from 0 to 1)
+            const fillScale = Math.min(scrollPercent / 100, 1);
+            progressFill.style.transform = `translate(-50%, -50%) scale(${fillScale})`;
+
+            // Icon color transition
+            if (fillScale > 0.5) {
+                progressIcon.style.color = 'var(--white)';
+            } else {
+                progressIcon.style.color = 'var(--black)';
+            }
+        });
+
+        // Click to scroll to top
+        scrollProgressBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
