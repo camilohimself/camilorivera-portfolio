@@ -795,7 +795,7 @@
             transition: all 0.2s ease;
         }
 
-        /* Video Opening Intro */
+        /* Video Opening Fullscreen */
         .video-opening {
             position: fixed;
             top: 0;
@@ -804,12 +804,10 @@
             height: 100%;
             background: #000;
             z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            cursor: pointer;
         }
 
         .video-opening.hidden {
@@ -822,58 +820,93 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(1.2) saturate(1.1);
+            filter: contrast(1.1) saturate(1.2) brightness(1.05);
         }
 
-        .opening-text {
+        .opening-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 10001;
+        }
+
+        .opening-content {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10002;
             color: white;
-            font-size: clamp(32px, 8vw, 80px);
+            animation: contentSequence 10s ease-out infinite;
+        }
+
+        .opening-name {
+            font-size: clamp(40px, 8vw, 90px);
             font-weight: 200;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .opening-expo {
+            font-size: clamp(16px, 3vw, 24px);
+            font-weight: 300;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            text-align: center;
-            z-index: 10001;
-            animation: textReveal 2s ease-out 1s both;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            opacity: 0.9;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
 
-        .opening-text::after {
+        .opening-expo::after {
             content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
+            display: block;
+            width: 80px;
             height: 2px;
             background: var(--gold);
-            animation: lineExpand 1s ease-out 2.5s both;
+            margin: 20px auto 0;
         }
 
-        @keyframes textReveal {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) translateY(30px);
-                letter-spacing: 0.5em;
-            }
-            100% {
+        .click-instruction {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: pulseClick 2s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes contentSequence {
+            0%, 15% {
                 opacity: 1;
-                transform: translate(-50%, -50%) translateY(0);
-                letter-spacing: 0.1em;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            20%, 85% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+            90%, 100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
             }
         }
 
-        @keyframes lineExpand {
-            0% {
-                width: 0;
-                opacity: 0;
+        @keyframes pulseClick {
+            0%, 100% {
+                opacity: 0.6;
+                transform: translateX(-50%) scale(1);
             }
-            100% {
-                width: 60px;
+            50% {
                 opacity: 1;
+                transform: translateX(-50%) scale(1.05);
             }
         }
 
@@ -1027,19 +1060,26 @@
     </style>
 </head>
 <body class="opening-active">
-    <!-- Video Opening Intro -->
+    <!-- Video Opening Fullscreen -->
     <div class="video-opening" id="videoOpening">
         <video
             class="opening-video"
             autoplay
             muted
+            loop
             playsinline
             id="openingVideo">
-            <source src="videos/hero-video.mp4" type="video/mp4">
+            <source src="videos/hero-drone.mp4" type="video/mp4">
         </video>
-        <div class="opening-text">
-            Camilo<br>Rivera
+        <div class="opening-overlay"></div>
+        <div class="opening-content">
+            <div class="opening-name">Camilo Rivera</div>
+            <div class="opening-expo">
+                Exposition Riddes<br>
+                4 - 25 Septembre 2025
+            </div>
         </div>
+        <div class="click-instruction">Cliquez pour entrer</div>
     </div>
 
     <!-- Navigation -->
@@ -1317,82 +1357,56 @@
             });
         });
 
-        // Video Rotation System
-        const videoSources = {
-            hero: [
-                'videos/hero-video.mp4',     // Original atelier video
-                'videos/hero-drone.mp4'      // New drone video
-            ],
-            opening: [
-                'videos/hero-video.mp4',     // Atelier opening (same)
-                'videos/opening-drone.mp4'   // Drone opening (5s extract)
-            ]
-        };
-
-        // Get alternate video
-        function getVideoSource() {
-            const lastVideo = localStorage.getItem('lastHeroVideo') || '0';
-            const nextVideo = lastVideo === '0' ? '1' : '0';
-            localStorage.setItem('lastHeroVideo', nextVideo);
-            return parseInt(nextVideo);
-        }
-
-        // Video Opening Logic
+        // Fullscreen Video Opening Logic
         const videoOpening = document.getElementById('videoOpening');
         const openingVideo = document.getElementById('openingVideo');
         const heroVideo = document.querySelector('.hero-video');
 
-        // Set video sources - different for opening vs hero
-        const videoIndex = getVideoSource();
-        openingVideo.src = videoSources.opening[videoIndex];
-        heroVideo.src = videoSources.hero[videoIndex];
+        // Set drone video for opening and random for hero
+        openingVideo.src = 'videos/hero-drone.mp4';
 
-        // Check if user has already seen the opening
-        const hasSeenOpening = sessionStorage.getItem('hasSeenOpening');
+        // Random hero video
+        const heroSources = ['videos/hero-video.mp4', 'videos/hero-drone.mp4'];
+        const randomHero = Math.random() > 0.5 ? 1 : 0;
+        heroVideo.src = heroSources[randomHero];
 
-        if (hasSeenOpening) {
-            // Skip opening if already seen in this session
+        // Check if user wants to skip opening
+        const skipOpening = sessionStorage.getItem('skipDroneOpening');
+
+        if (skipOpening === 'true') {
+            // Skip opening if user has already seen it
             videoOpening.classList.add('hidden');
             document.body.classList.remove('opening-active');
         } else {
-            // Show opening video
+            // Show fullscreen drone opening
             openingVideo.addEventListener('loadedmetadata', () => {
-                // Set video to play only first 5 seconds
                 openingVideo.currentTime = 0;
-
-                // Stop video at 5 seconds and transition to site
-                setTimeout(() => {
-                    openingVideo.pause();
-
-                    // Fade out opening rapide
-                    videoOpening.classList.add('hidden');
-
-                    // Show main site avec fade in immediate
-                    setTimeout(() => {
-                        document.body.classList.remove('opening-active');
-                        sessionStorage.setItem('hasSeenOpening', 'true');
-                    }, 300);
-
-                }, 4200); // 4.2 seconds
+                // Video loops infinitely until click
+                console.log('🚁 Drone opening ready - click to enter site');
             });
 
-            // Fallback in case video doesn't load
+            // Click anywhere to enter site
+            videoOpening.addEventListener('click', () => {
+                console.log('👆 User clicked - entering site');
+                openingVideo.pause();
+
+                // Smooth transition to site
+                videoOpening.classList.add('hidden');
+
+                setTimeout(() => {
+                    document.body.classList.remove('opening-active');
+                    sessionStorage.setItem('skipDroneOpening', 'true');
+                }, 400);
+            });
+
+            // Optional: Auto-enter after very long time (60s)
             setTimeout(() => {
                 if (!videoOpening.classList.contains('hidden')) {
-                    videoOpening.classList.add('hidden');
-                    document.body.classList.remove('opening-active');
-                    sessionStorage.setItem('hasSeenOpening', 'true');
+                    console.log('⏰ Auto-entering site after 60s');
+                    videoOpening.click(); // Trigger click event
                 }
-            }, 6500);
+            }, 60000);
         }
-
-        // Allow skipping opening by clicking
-        videoOpening.addEventListener('click', () => {
-            openingVideo.pause();
-            videoOpening.classList.add('hidden');
-            document.body.classList.remove('opening-active');
-            sessionStorage.setItem('hasSeenOpening', 'true');
-        });
     </script>
 </body>
 </html>
