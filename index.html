@@ -1318,17 +1318,23 @@
         });
 
         // Video Rotation System
-        const videoSources = [
-            'videos/hero-video.mp4',     // Original atelier video
-            'videos/hero-drone.mp4'      // New drone video
-        ];
+        const videoSources = {
+            hero: [
+                'videos/hero-video.mp4',     // Original atelier video
+                'videos/hero-drone.mp4'      // New drone video
+            ],
+            opening: [
+                'videos/hero-video.mp4',     // Atelier opening (same)
+                'videos/opening-drone.mp4'   // Drone opening (5s extract)
+            ]
+        };
 
-        // Get random video or alternate
+        // Get alternate video
         function getVideoSource() {
             const lastVideo = localStorage.getItem('lastHeroVideo') || '0';
             const nextVideo = lastVideo === '0' ? '1' : '0';
             localStorage.setItem('lastHeroVideo', nextVideo);
-            return videoSources[parseInt(nextVideo)];
+            return parseInt(nextVideo);
         }
 
         // Video Opening Logic
@@ -1336,10 +1342,10 @@
         const openingVideo = document.getElementById('openingVideo');
         const heroVideo = document.querySelector('.hero-video');
 
-        // Set random video sources
-        const selectedVideo = getVideoSource();
-        openingVideo.src = selectedVideo;
-        heroVideo.src = selectedVideo;
+        // Set video sources - different for opening vs hero
+        const videoIndex = getVideoSource();
+        openingVideo.src = videoSources.opening[videoIndex];
+        heroVideo.src = videoSources.hero[videoIndex];
 
         // Check if user has already seen the opening
         const hasSeenOpening = sessionStorage.getItem('hasSeenOpening');
