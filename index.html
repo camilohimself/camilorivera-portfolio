@@ -785,6 +785,103 @@
             transition: all 0.2s ease;
         }
 
+        /* Video Opening Intro */
+        .video-opening {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            visibility: visible;
+            transition: all 1s ease-out;
+        }
+
+        .video-opening.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .opening-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.2) saturate(1.1);
+        }
+
+        .opening-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: clamp(32px, 8vw, 80px);
+            font-weight: 200;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-align: center;
+            z-index: 10001;
+            animation: textReveal 2s ease-out 1s both;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .opening-text::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            animation: lineExpand 1s ease-out 2.5s both;
+        }
+
+        @keyframes textReveal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateY(30px);
+                letter-spacing: 0.5em;
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateY(0);
+                letter-spacing: 0.1em;
+            }
+        }
+
+        @keyframes lineExpand {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            100% {
+                width: 60px;
+                opacity: 1;
+            }
+        }
+
+        /* Main content hidden during opening */
+        body.opening-active {
+            overflow: hidden;
+        }
+
+        body.opening-active nav,
+        body.opening-active .hero,
+        body.opening-active .collections,
+        body.opening-active .about,
+        body.opening-active .exposition,
+        body.opening-active .contact,
+        body.opening-active footer {
+            visibility: hidden;
+        }
+
         /* Scroll Progress Button */
         .scroll-progress-btn {
             position: fixed;
@@ -904,7 +1001,22 @@
         }
     </style>
 </head>
-<body>
+<body class="opening-active">
+    <!-- Video Opening Intro -->
+    <div class="video-opening" id="videoOpening">
+        <video
+            class="opening-video"
+            autoplay
+            muted
+            playsinline
+            id="openingVideo">
+            <source src="videos/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="opening-text">
+            Camilo<br>Rivera
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <a href="#" class="logo">Camilo Rivera<br>Peintre</a>
@@ -1177,6 +1289,58 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // Video Opening Logic
+        const videoOpening = document.getElementById('videoOpening');
+        const openingVideo = document.getElementById('openingVideo');
+
+        // Check if user has already seen the opening
+        const hasSeenOpening = sessionStorage.getItem('hasSeenOpening');
+
+        if (hasSeenOpening) {
+            // Skip opening if already seen in this session
+            videoOpening.classList.add('hidden');
+            document.body.classList.remove('opening-active');
+        } else {
+            // Show opening video
+            openingVideo.addEventListener('loadedmetadata', () => {
+                // Set video to play only first 5 seconds
+                openingVideo.currentTime = 0;
+
+                // Stop video at 5 seconds and transition to site
+                setTimeout(() => {
+                    openingVideo.pause();
+
+                    // Fade out opening
+                    videoOpening.style.transition = 'all 1.2s ease-out';
+                    videoOpening.classList.add('hidden');
+
+                    // Show main site
+                    setTimeout(() => {
+                        document.body.classList.remove('opening-active');
+                        sessionStorage.setItem('hasSeenOpening', 'true');
+                    }, 300);
+
+                }, 4200); // 4.2 seconds
+            });
+
+            // Fallback in case video doesn't load
+            setTimeout(() => {
+                if (!videoOpening.classList.contains('hidden')) {
+                    videoOpening.classList.add('hidden');
+                    document.body.classList.remove('opening-active');
+                    sessionStorage.setItem('hasSeenOpening', 'true');
+                }
+            }, 6500);
+        }
+
+        // Allow skipping opening by clicking
+        videoOpening.addEventListener('click', () => {
+            openingVideo.pause();
+            videoOpening.classList.add('hidden');
+            document.body.classList.remove('opening-active');
+            sessionStorage.setItem('hasSeenOpening', 'true');
         });
     </script>
 </body>
