@@ -633,6 +633,46 @@
             transform: scale(1.1);
         }
 
+        /* Lightbox Navigation Arrows */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            color: var(--black);
+            font-size: 30px;
+            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .lightbox-nav:hover {
+            opacity: 1;
+            background: var(--white);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: -80px;
+        }
+
+        .lightbox-next {
+            right: -80px;
+        }
+
+        .lightbox-image {
+            transition: all 0.2s ease;
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             nav {
@@ -717,6 +757,7 @@
         <div class="collections-nav">
             <button class="collection-tab active" data-collection="paintings">Peintures à l'Huile</button>
             <button class="collection-tab" data-collection="encres">Encres de Chine</button>
+            <button class="collection-tab" data-collection="shooting">Shooting Atelier</button>
         </div>
 
         <!-- Paintings Collection -->
@@ -730,6 +771,13 @@
         <div class="collection-content" id="encres-collection">
             <div class="paintings-grid" id="encres-grid">
                 <!-- Encres will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Shooting Collection -->
+        <div class="collection-content" id="shooting-collection">
+            <div class="paintings-grid" id="shooting-grid">
+                <!-- Shooting photos will be loaded here -->
             </div>
         </div>
     </section>
@@ -757,7 +805,7 @@
                 </div>
             </div>
             <div class="about-image">
-                <div style="height: 500px; background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%); border-radius: 4px;"></div>
+                <img src="images/shooting/IMG_4613-opt.jpg" alt="Camilo Rivera - Artiste Peintre" style="width: 100%; height: 500px; object-fit: cover; border-radius: 4px;">
             </div>
         </div>
     </section>
