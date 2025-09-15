@@ -1317,9 +1317,29 @@
             });
         });
 
+        // Video Rotation System
+        const videoSources = [
+            'videos/hero-video.mp4',     // Original atelier video
+            'videos/hero-drone.mp4'      // New drone video
+        ];
+
+        // Get random video or alternate
+        function getVideoSource() {
+            const lastVideo = localStorage.getItem('lastHeroVideo') || '0';
+            const nextVideo = lastVideo === '0' ? '1' : '0';
+            localStorage.setItem('lastHeroVideo', nextVideo);
+            return videoSources[parseInt(nextVideo)];
+        }
+
         // Video Opening Logic
         const videoOpening = document.getElementById('videoOpening');
         const openingVideo = document.getElementById('openingVideo');
+        const heroVideo = document.querySelector('.hero-video');
+
+        // Set random video sources
+        const selectedVideo = getVideoSource();
+        openingVideo.src = selectedVideo;
+        heroVideo.src = selectedVideo;
 
         // Check if user has already seen the opening
         const hasSeenOpening = sessionStorage.getItem('hasSeenOpening');
