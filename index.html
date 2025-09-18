@@ -13,6 +13,11 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+
         :root {
             --black: #0a0a0a;
             --white: #ffffff;
@@ -29,8 +34,8 @@
             font-size: 16px;
             line-height: 1.7;
             color: var(--black);
-            background: var(--white);
             -webkit-font-smoothing: antialiased;
+            background: transparent !important;
         }
 
         ::selection {
@@ -195,6 +200,16 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-content.auto-fade {
+            opacity: 0.09;
+        }
+
+        .hero-content:hover {
+            opacity: 1 !important;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-content::before {
@@ -308,6 +323,12 @@
             animation: bounce 2s infinite;
             text-align: center;
             z-index: 100;
+            transition: color 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-indicator.white-mode {
+            color: var(--white);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .scroll-indicator::before {
@@ -326,6 +347,7 @@
         /* Collections */
         .collections {
             padding: 120px 60px;
+            background: transparent !important;
         }
 
         .section-header {
@@ -451,7 +473,7 @@
         /* About */
         .about {
             padding: 120px 60px;
-            background: var(--gray);
+            background: transparent !important;
         }
 
         .about-container {
@@ -913,6 +935,7 @@
         /* Main content hidden during opening */
         body.opening-active {
             overflow: hidden;
+            background: #000 !important;
         }
 
         body.opening-active nav,
@@ -1100,9 +1123,8 @@
             autoplay
             muted
             loop
-            playsinline
-            poster="images/paintings/painting-001.jpg">
-            <source src="videos/hero-video.mp4" type="video/mp4">
+            playsinline>
+            <source src="videos/hero-drone-clean.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -1402,6 +1424,50 @@
                     videoOpening.click(); // Trigger click event
                 }
             }, 60000);
+        }
+
+        // Hero Content Auto-Fade + Scroll Indicator Logic
+        const heroContent = document.querySelector('.hero-content');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        let inactivityTimer;
+        let isUserInactive = false;
+
+        function startInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (!heroContent.matches(':hover')) {
+                    heroContent.classList.add('auto-fade');
+                    scrollIndicator.classList.add('white-mode');
+                    isUserInactive = true;
+                    console.log('✨ Hero content auto-faded + scroll indicator white mode');
+                }
+            }, 8000); // 8 seconds of inactivity
+        }
+
+        function resetInactivity() {
+            clearTimeout(inactivityTimer);
+            if (isUserInactive) {
+                heroContent.classList.remove('auto-fade');
+                scrollIndicator.classList.remove('white-mode');
+                isUserInactive = false;
+                console.log('👁️ User activity detected - hero content + scroll restored');
+            }
+            startInactivityTimer();
+        }
+
+        // Track user activity (mouse movement, scroll, clicks)
+        ['mousemove', 'scroll', 'click', 'keydown'].forEach(event => {
+            document.addEventListener(event, resetInactivity, { passive: true });
+        });
+
+        // Start timer when page loads (after opening)
+        if (skipOpening === 'true') {
+            startInactivityTimer();
+        } else {
+            // Start timer after opening is dismissed
+            videoOpening.addEventListener('click', () => {
+                setTimeout(startInactivityTimer, 2000); // Start 2s after entering site
+            });
         }
     </script>
 </body>
