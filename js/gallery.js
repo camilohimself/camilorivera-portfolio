@@ -173,9 +173,6 @@ function openLightbox(artwork, gallery, index) {
             <img src="${artwork.image}" alt="Œuvre ${artwork.id}" class="lightbox-image">
             <div class="lightbox-info">
                 <div class="lightbox-technique">${artwork.technique}</div>
-                <button class="lightbox-contact" onclick="contactArtist('${artwork.technique}')">
-                    Demander des informations
-                </button>
             </div>
             <button class="lightbox-close">&times;</button>
             ${gallery.length > 1 ? `
@@ -187,6 +184,13 @@ function openLightbox(artwork, gallery, index) {
 
     // Add lightbox to body
     document.body.appendChild(lightbox);
+
+    // Zoom functionality
+    const lightboxImg = lightbox.querySelector('.lightbox-image');
+    lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        lightboxImg.classList.toggle('zoomed');
+    });
 
     // Navigation handlers
     const prevBtn = lightbox.querySelector('.lightbox-prev');
@@ -269,6 +273,9 @@ function navigateLightbox(direction) {
     const lightboxTechnique = document.querySelector('.lightbox-technique');
 
     if (lightboxImage && lightboxTechnique) {
+        // Reset zoom state on navigation
+        lightboxImage.classList.remove('zoomed');
+
         // Smooth transition effect
         lightboxImage.style.opacity = '0.5';
         lightboxImage.style.transform = 'scale(0.95)';

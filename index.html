@@ -785,6 +785,13 @@
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-image.zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
         }
 
         .lightbox-info {
