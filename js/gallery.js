@@ -2,8 +2,8 @@
 // NUCLEAR MODE: All images, no fictitious titles
 
 const paintingsData = [
-    { id: 1, technique: "Huile sur toile", image: "images/paintings/2069C456-9AE8-4F5A-B35E-52B80A9605D2.webp" },
-    { id: 2, technique: "Huile sur toile", image: "images/paintings/241240340_255290506453650_8691736928064111730_n.webp" },
+    { id: 1, technique: "Huile sur toile", image: "images/paintings/2069C456-9AE8-4F5A-B35E-52B80A9605D2.webp", title: "Vibrations Urbaines", dimensions: "60x80 cm", year: "2024", price: "Sur demande" },
+    { id: 2, technique: "Huile sur toile", image: "images/paintings/241240340_255290506453650_8691736928064111730_n.webp", title: "Échos Colorés", dimensions: "70x90 cm", year: "2024", price: "Sur demande" },
     { id: 3, technique: "Huile sur toile", image: "images/paintings/245ED55B-2694-478D-AF2A-2391A61F5005.webp" },
     { id: 4, technique: "Huile sur toile", image: "images/paintings/4F9CB35A-F34A-4D53-B785-53F2C264A2CC 2.webp" },
     { id: 5, technique: "Huile sur toile", image: "images/paintings/5bdca9d5-f8be-4cba-bf45-aa0a8a393a49.webp" },
@@ -171,6 +171,25 @@ function openLightbox(artwork, gallery, index) {
     lightbox.innerHTML = `
         <div class="lightbox-content">
             <img src="${artwork.image}" alt="Œuvre ${artwork.id}" class="lightbox-image">
+
+            <!-- MÉTADONNÉES TECHNIQUES BUSINESS -->
+            <div class="artwork-metadata">
+                <div class="metadata-title">${artwork.title || `Œuvre ${artwork.id}`}</div>
+                <div class="metadata-details">
+                    <strong>${artwork.technique}</strong><br>
+                    ${artwork.dimensions || 'Dimensions sur demande'}<br>
+                    ${artwork.year || '2024'}
+                </div>
+                <div class="metadata-price">${artwork.price || 'Prix sur demande'}</div>
+            </div>
+
+            <!-- CONTRÔLES ZOOM PROFESSIONNEL -->
+            <div class="lightbox-zoom-controls">
+                <button class="zoom-btn zoom-in" title="Zoom avant">+</button>
+                <button class="zoom-btn zoom-out" title="Zoom arrière">−</button>
+                <button class="zoom-btn share-btn" title="Partager">📤</button>
+            </div>
+
             <div class="lightbox-info">
                 <div class="lightbox-technique">${artwork.technique}</div>
             </div>
@@ -185,11 +204,60 @@ function openLightbox(artwork, gallery, index) {
     // Add lightbox to body
     document.body.appendChild(lightbox);
 
-    // Zoom functionality
+    // ZOOM TECHNIQUE PROFESSIONNEL + PARTAGE BUSINESS
     const lightboxImg = lightbox.querySelector('.lightbox-image');
+    const zoomInBtn = lightbox.querySelector('.zoom-in');
+    const zoomOutBtn = lightbox.querySelector('.zoom-out');
+    const shareBtn = lightbox.querySelector('.share-btn');
+
+    let zoomLevel = 1;
+    const maxZoom = 4;
+    const minZoom = 1;
+
+    // Click image = zoom progressif
     lightboxImg.addEventListener('click', (e) => {
         e.stopPropagation();
-        lightboxImg.classList.toggle('zoomed');
+        zoomLevel = zoomLevel >= maxZoom ? minZoom : zoomLevel + 1;
+        lightboxImg.style.transform = `scale(${zoomLevel})`;
+        lightboxImg.style.cursor = zoomLevel >= maxZoom ? 'zoom-out' : 'zoom-in';
+    });
+
+    // Boutons zoom professionnel
+    zoomInBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (zoomLevel < maxZoom) {
+            zoomLevel += 0.5;
+            lightboxImg.style.transform = `scale(${zoomLevel})`;
+        }
+    });
+
+    zoomOutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (zoomLevel > minZoom) {
+            zoomLevel -= 0.5;
+            lightboxImg.style.transform = `scale(${zoomLevel})`;
+        }
+    });
+
+    // PARTAGE BUSINESS QUALIFIÉ
+    shareBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const artworkTitle = artwork.title || `Œuvre ${artwork.id}`;
+        const shareText = `Découvrez "${artworkTitle}" de Camilo Rivera - ${artwork.technique} | Portfolio: ${window.location.origin}`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: `${artworkTitle} - Camilo Rivera`,
+                text: shareText,
+                url: window.location.origin
+            });
+        } else {
+            // Fallback: Copy to clipboard
+            navigator.clipboard.writeText(shareText).then(() => {
+                shareBtn.innerHTML = '✓';
+                setTimeout(() => shareBtn.innerHTML = '📤', 2000);
+            });
+        }
     });
 
     // Navigation handlers

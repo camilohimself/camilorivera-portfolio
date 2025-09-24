@@ -790,8 +790,83 @@
         }
 
         .lightbox-image.zoomed {
-            transform: scale(2);
+            transform: scale(3);
             cursor: zoom-out;
+        }
+
+        /* ZOOM TECHNIQUE PROFESSIONNEL */
+        .lightbox-zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-active .lightbox-zoom-controls {
+            opacity: 1;
+        }
+
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: var(--white);
+            transform: scale(1.1);
+        }
+
+        /* MÉTADONNÉES TECHNIQUES */
+        .artwork-metadata {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            max-width: 300px;
+        }
+
+        .lightbox-active .artwork-metadata {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .metadata-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+
+        .metadata-details {
+            font-size: 13px;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .metadata-price {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 400;
         }
 
         .lightbox-info {
@@ -1167,6 +1242,32 @@
             display: block;
         }
 
+        /* MOBILE GESTURES PREMIUM */
+        .lightbox-image {
+            touch-action: pinch-zoom;
+        }
+
+        @media (max-width: 768px) {
+            .lightbox-zoom-controls {
+                bottom: 80px;
+                right: 15px;
+                flex-direction: column;
+            }
+
+            .artwork-metadata {
+                top: 15px;
+                left: 15px;
+                max-width: 250px;
+                font-size: 12px;
+            }
+
+            .zoom-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
         /* PREMIUM CONTACT MODAL - 1500CHF LEVEL */
         .contact-modal {
             display: none;
@@ -1432,6 +1533,7 @@
             <div class="hero-buttons">
                 <a href="#collections" class="hero-cta">Découvrir les œuvres</a>
                 <button class="hero-cta secondary" onclick="openContactModal()">Contact & Prix</button>
+                <button class="hero-cta secondary" onclick="openConseilModal()" style="background: var(--gold); color: var(--black); border-color: var(--gold);">Conseil Personnalisé</button>
             </div>
         </div>
         <div class="scroll-indicator">Scroll</div>
@@ -1919,8 +2021,52 @@ ${name}`;
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeContactModal();
+                closeConseilModal();
             }
         });
+
+        // MODE CONSEIL PERSONNALISÉ BUSINESS
+        function openConseilModal() {
+            document.getElementById('conseilModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeConseilModal() {
+            document.getElementById('conseilModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitConseilForm() {
+            const style = document.querySelector('input[name="style"]:checked')?.value || 'Non spécifié';
+            const budget = document.querySelector('input[name="budget"]:checked')?.value || 'Non spécifié';
+            const piece = document.querySelector('input[name="piece"]:checked')?.value || 'Non spécifié';
+            const name = document.getElementById('conseilName').value;
+            const email = document.getElementById('conseilEmail').value;
+
+            const subject = 'Demande de Conseil Personnalisé - Camilo Rivera';
+            const body = `Bonjour Camilo,
+
+Je souhaiterais recevoir vos conseils personnalisés pour une acquisition d'œuvre.
+
+PROFIL CLIENT:
+Nom: ${name}
+Email: ${email}
+
+PRÉFÉRENCES ARTISTIQUES:
+Style recherché: ${style}
+Budget indicatif: ${budget}
+Destination: ${piece}
+
+Pourriez-vous me recommander 2-3 œuvres correspondant à ces critères et m'envoyer le dossier complet ?
+
+Merci pour votre expertise,
+${name}`;
+
+            const mailtoLink = `mailto:camilo@osomcreative.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+
+            closeConseilModal();
+        }
     </script>
 
     <!-- CONTACT MODAL PREMIUM -->
@@ -1972,6 +2118,62 @@ ${name}`;
                 </div>
 
                 <button type="submit" class="submit-btn">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CONSEIL PERSONNALISÉ BUSINESS -->
+    <div id="conseilModal" class="contact-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeConseilModal()">&times;</button>
+
+            <div class="modal-header">
+                <h2>Conseil Personnalisé</h2>
+                <p>Recevez 2-3 recommandations d'œuvres selon vos préférences</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); submitConseilForm();">
+                <div class="form-group">
+                    <label>Style recherché :</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="style" value="Abstrait moderne"> Abstrait moderne</label>
+                        <label><input type="radio" name="style" value="Figuratif expressif"> Figuratif expressif</label>
+                        <label><input type="radio" name="style" value="Encre minimaliste"> Encre minimaliste</label>
+                        <label><input type="radio" name="style" value="Couleurs vives"> Couleurs vives</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget indicatif :</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="budget" value="1000-3000 CHF"> 1'000-3'000 CHF</label>
+                        <label><input type="radio" name="budget" value="3000-7000 CHF"> 3'000-7'000 CHF</label>
+                        <label><input type="radio" name="budget" value="7000-15000 CHF"> 7'000-15'000 CHF</label>
+                        <label><input type="radio" name="budget" value="Sur mesure"> Sur mesure</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Destination :</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="piece" value="Salon"> Salon</label>
+                        <label><input type="radio" name="piece" value="Chambre"> Chambre</label>
+                        <label><input type="radio" name="piece" value="Bureau"> Bureau</label>
+                        <label><input type="radio" name="piece" value="Entreprise"> Entreprise</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="conseilName">Nom complet</label>
+                    <input type="text" id="conseilName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="conseilEmail">Email</label>
+                    <input type="email" id="conseilEmail" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Recevoir mes recommandations</button>
             </form>
         </div>
     </div>
