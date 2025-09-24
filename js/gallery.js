@@ -138,8 +138,9 @@ function loadGallery(containerId, artworks) {
             <img src="${artwork.image}"
                  alt="Œuvre ${artwork.id}"
                  class="painting-image"
-                 onerror="this.style.background='linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'; this.style.display='block';"
-                 loading="lazy">
+                 onerror="console.error('Erreur chargement:', this.src); this.style.background='linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%)'; this.style.display='block';"
+                 onload="console.log('Image chargée:', this.src); this.style.opacity='1';"
+                 style="opacity: 0; transition: opacity 0.3s ease;">
             <div class="painting-overlay">
                 <div class="painting-details">${artwork.technique}</div>
             </div>
@@ -314,11 +315,49 @@ Merci,`;
     window.location.href = mailtoLink;
 }
 
-// Load galleries when page loads
+// Précharger les images critiques
+function preloadImages(artworks, limit = 6) {
+    console.log(`🚀 Préchargement de ${Math.min(limit, artworks.length)} images...`);
+
+    artworks.slice(0, limit).forEach((artwork, index) => {
+        const img = new Image();
+        img.onload = () => console.log(`✅ Image ${index + 1} préchargée:`, artwork.image);
+        img.onerror = () => console.error(`❌ Erreur préchargement:`, artwork.image);
+        img.src = artwork.image;
+    });
+}
+
+// Load galleries when page loads avec préchargement
 document.addEventListener('DOMContentLoaded', function() {
-    loadGallery('paintings-grid', paintingsData);
-    loadGallery('encres-grid', encresData);
-    loadGallery('shooting-grid', shootingData);
+    console.log('📚 Chargement des galeries Portfolio Camilo Rivera...');
+    console.log('🔍 Base URL:', window.location.origin);
+
+    // Vérifier que les conteneurs existent
+    const containers = ['paintings-grid', 'encres-grid', 'shooting-grid'];
+    containers.forEach(id => {
+        const element = document.getElementById(id);
+        if (!element) {
+            console.error(`❌ Conteneur manquant: ${id}`);
+        } else {
+            console.log(`✅ Conteneur trouvé: ${id}`);
+        }
+    });
+
+    // Précharger les premières images de chaque collection
+    preloadImages(paintingsData, 3);
+    preloadImages(encresData, 3);
+    preloadImages(shootingData, 3);
+
+    // Attendre un peu que le préchargement commence
+    setTimeout(() => {
+        // Charger les galeries
+        loadGallery('paintings-grid', paintingsData);
+        loadGallery('encres-grid', encresData);
+        loadGallery('shooting-grid', shootingData);
+
+        console.log('✅ Portfolio Camilo Rivera - Toutes les galeries chargées');
+        console.log(`🎨 Total: ${paintingsData.length} peintures, ${encresData.length} encres, ${shootingData.length} photos`);
+    }, 500);
 });
 
 // Export for potential future use
