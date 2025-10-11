@@ -701,6 +701,69 @@
             color: var(--gold);
         }
 
+        /* Newsletter Form */
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 18px 25px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            border: 1px solid var(--border);
+            background: var(--white);
+            color: var(--black);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--black);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .newsletter-submit {
+            padding: 18px 40px;
+            background: var(--black);
+            color: var(--white);
+            border: 1px solid var(--black);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .newsletter-submit:hover {
+            background: transparent;
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .newsletter-privacy {
+            font-size: 12px;
+            color: var(--text-gray);
+            opacity: 0.7;
+            margin: 0;
+        }
+
         /* Footer */
         footer {
             padding: 40px 60px;
@@ -1162,6 +1225,15 @@
             .contact-info {
                 grid-template-columns: 1fr;
             }
+
+            .newsletter-input-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .newsletter-submit {
+                width: 100%;
+            }
         }
 
         /* Hidden by default */
@@ -1335,29 +1407,29 @@
     <!-- Contact -->
     <section class="contact" id="contact">
         <div class="contact-container">
-            <h2>Contact & Acquisitions</h2>
-            <p>Pour toute information sur les œuvres, leur disponibilité ou pour organiser une visite privée.</p>
+            <h2>Restez Informé</h2>
+            <p>Inscrivez-vous pour recevoir des nouvelles sur mes expositions, nouvelles œuvres et projets artistiques.</p>
+
+            <form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
+                <input type="hidden" name="form-name" value="newsletter">
+                <div class="newsletter-input-group">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Votre adresse email"
+                        required
+                        class="newsletter-input">
+                    <button type="submit" class="newsletter-submit">S'inscrire</button>
+                </div>
+                <p class="newsletter-privacy">Vos données restent privées. Pas de spam, désinscription à tout moment.</p>
+            </form>
 
             <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-label">Email</div>
-                    <div class="contact-value">
-                        <a href="mailto:camilo@osomcreative.ch">camilo@osomcreative.ch</a>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">Téléphone</div>
-                    <div class="contact-value">
-                        <a href="tel:+41791234567">+41 79 123 45 67</a>
-                    </div>
-                </div>
                 <div class="contact-item">
                     <div class="contact-label">Localisation</div>
                     <div class="contact-value">Valais, Suisse</div>
                 </div>
             </div>
-
-            <a href="mailto:camilo@osomcreative.ch?subject=Exposition Riddes - Demande d'information" class="hero-cta">Demande d'information</a>
         </div>
     </section>
 
@@ -1368,8 +1440,7 @@
                 © 2025 Camilo Rivera. Tous les droits réservés.
             </div>
             <div class="footer-links">
-                <a href="https://osomcreative.ch">OSOM Creative</a>
-                <a href="mailto:camilo@osomcreative.ch">Email</a>
+                Réalisé avec une note d'abstraction par <a href="https://osomcreative.ch" target="_blank" rel="noopener">OSOM</a>
             </div>
         </div>
     </footer>
