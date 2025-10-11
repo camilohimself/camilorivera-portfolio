@@ -787,8 +787,9 @@
         }
 
         .footer-links {
-            display: flex;
-            gap: 40px;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            opacity: 0.6;
         }
 
         .footer-links a {
@@ -796,8 +797,8 @@
             text-decoration: none;
             font-size: 12px;
             letter-spacing: 0.05em;
-            opacity: 0.6;
             transition: var(--transition);
+            margin-left: 5px;
         }
 
         .footer-links a:hover {
@@ -1219,6 +1220,11 @@
             .footer-content {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
+            }
+
+            .footer-links {
+                text-align: center;
             }
 
             .exposition-info,
