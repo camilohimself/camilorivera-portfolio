@@ -780,6 +780,13 @@ section {
   cursor: zoom-out;
 }
 
+/* Hide controls when zoomed on mobile */
+.lightbox-zoomed .lightbox-controls {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
 .lightbox-controls {
   position: relative;
   z-index: 5;
@@ -1270,10 +1277,61 @@ section {
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-image { max-width: 400px; margin: 0 auto; }
 
-  .lightbox-nav { width: 44px; height: 44px; font-size: 1.1rem; }
-  .lightbox-prev { left: 12px; }
-  .lightbox-next { right: 12px; }
-  .lightbox-image-wrap img { max-width: 92vw; max-height: 75vh; }
+  /* Mobile lightbox — optimized touch UX */
+  .lightbox-image-wrap {
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+  }
+
+  .lightbox-image-wrap img {
+    max-width: 94vw;
+    max-height: 80vh;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    background: rgba(7, 7, 7, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0.7;
+  }
+
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+
+  /* Hide nav arrows when zoomed */
+  .lightbox-zoomed .lightbox-nav,
+  .lightbox-zoomed .lightbox-technique,
+  .lightbox-zoomed .lightbox-counter {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  .lightbox-close {
+    width: 44px;
+    height: 44px;
+    top: 16px;
+    right: 16px;
+    background: rgba(7, 7, 7, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50%;
+    font-size: 1.4rem;
+  }
+
+  .lightbox-counter { bottom: 20px; }
+  .lightbox-technique { bottom: 20px; left: 16px; }
 
   .footer { flex-direction: column; gap: 12px; text-align: center; }
 
