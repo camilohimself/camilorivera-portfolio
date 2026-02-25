@@ -26,6 +26,13 @@
 </head>
 <body>
 
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Animated Grain -->
+  <div class="grain" aria-hidden="true"></div>
+
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress"></div>
 
@@ -33,7 +40,7 @@
   <nav class="nav">
     <a href="#" class="nav-logo">Camilo Rivera <span>/</span></a>
     <ul class="nav-links">
-      <li><a href="#gallery">&#338;uvres</a></li>
+      <li><a href="#featured">&#338;uvres</a></li>
       <li><a href="#about">&#192; propos</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -46,7 +53,7 @@
 
   <!-- Mobile Menu Overlay -->
   <div class="nav-mobile">
-    <a href="#gallery">&#338;uvres</a>
+    <a href="#featured">&#338;uvres</a>
     <a href="#about">&#192; propos</a>
     <a href="#contact">Contact</a>
   </div>
@@ -69,7 +76,7 @@
         au c&#339;ur des Alpes valaisannes.
       </p>
       <div class="hero-actions">
-        <a href="#gallery" class="btn btn-primary">D&eacute;couvrir les &#339;uvres</a>
+        <a href="#featured" class="btn btn-primary">D&eacute;couvrir les &#339;uvres</a>
         <a href="#about" class="btn btn-ghost">Mon parcours</a>
       </div>
     </div>
@@ -80,25 +87,40 @@
     </div>
   </section>
 
+  <!-- ═══ FEATURED — Horizontal Scroll ═══ -->
+  <section id="featured">
+    <div class="section-header reveal">
+      <div class="section-tag">S&eacute;lection</div>
+      <h2 class="section-title" data-reveal>&#338;uvres choisies</h2>
+    </div>
+
+    <div class="featured-track" id="featured-track"></div>
+
+    <div class="featured-hint reveal">
+      <div class="featured-hint-line"></div>
+      <span>Glisser pour explorer</span>
+    </div>
+  </section>
+
   <!-- ═══ GALLERY ═══ -->
   <section id="gallery">
     <div class="section-header reveal">
       <div class="section-tag">Collection</div>
-      <h2 class="section-title">Un pont entre <em>abstraction</em><br>et figuration</h2>
+      <h2 class="section-title" data-reveal>Un pont entre abstraction et figuration</h2>
     </div>
 
     <div class="gallery-filters reveal">
       <button class="filter-btn active" data-filter="all">
-        Tout <span class="count">120</span>
+        Tout <span class="count">115</span>
       </button>
       <button class="filter-btn" data-filter="paintings">
-        Peintures <span class="count">30</span>
+        Peintures <span class="count">29</span>
       </button>
       <button class="filter-btn" data-filter="encres">
         Encres <span class="count">26</span>
       </button>
       <button class="filter-btn" data-filter="shooting">
-        Atelier <span class="count">62</span>
+        Atelier <span class="count">60</span>
       </button>
     </div>
 
@@ -108,7 +130,7 @@
   <!-- ═══ ABOUT ═══ -->
   <section id="about">
     <div class="about-grid">
-      <div class="about-image reveal">
+      <div class="about-image reveal" data-parallax="0.08">
         <img src="images/shooting/IMG_4428-opt.webp" alt="Camilo Rivera dans son atelier" loading="lazy">
       </div>
       <div class="about-text reveal">
