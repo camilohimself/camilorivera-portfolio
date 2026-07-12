@@ -471,100 +471,6 @@ button { font: inherit; border: none; background: none; cursor: none; color: inh
 }
 
 /* ══════════════════════════════════════════════
-   FEATURED — Horizontal Scroll
-   ══════════════════════════════════════════════ */
-#featured {
-  padding: var(--section-pad) 0;
-  overflow: hidden;
-  background: var(--black);
-}
-
-#featured .section-header {
-  padding: 0 var(--side-pad);
-}
-
-.featured-track {
-  display: flex;
-  gap: 24px;
-  padding: 0 var(--side-pad);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  cursor: grab;
-}
-
-.featured-track::-webkit-scrollbar { display: none; }
-.featured-track:active { cursor: grabbing; }
-
-.featured-item {
-  flex: 0 0 auto;
-  width: clamp(300px, 40vw, 550px);
-  scroll-snap-align: start;
-  position: relative;
-  overflow: hidden;
-  border-radius: 3px;
-  background: var(--surface);
-}
-
-.featured-item img {
-  width: 100%;
-  height: clamp(400px, 55vh, 700px);
-  object-fit: cover;
-  transition: transform 1s var(--ease-out), filter 0.6s;
-  will-change: transform;
-}
-
-.featured-item:hover img {
-  transform: scale(1.06);
-  filter: brightness(1.08);
-}
-
-.featured-item-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(7,7,7,0.8) 0%, transparent 40%);
-  opacity: 0;
-  transition: opacity 0.5s;
-  display: flex;
-  align-items: flex-end;
-  padding: 32px;
-}
-
-.featured-item:hover .featured-item-overlay { opacity: 1; }
-
-.featured-item-label {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--white);
-}
-
-.featured-hint {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 20px var(--side-pad) 0;
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.featured-hint-line {
-  width: 40px;
-  height: 1px;
-  background: var(--border-light);
-  animation: hintSlide 2s ease-in-out infinite;
-}
-
-@keyframes hintSlide {
-  0%, 100% { transform: translateX(0); opacity: 1; }
-  50% { transform: translateX(15px); opacity: 0.3; }
-}
-
-/* ══════════════════════════════════════════════
    SECTION COMMONS
    ══════════════════════════════════════════════ */
 section {
@@ -1269,8 +1175,6 @@ section {
   .hero-actions { justify-content: center; }
   .hero-video-wrap video { opacity: 0.3; }
 
-  .featured-item { width: 80vw; }
-
   .gallery-grid { columns: 2; column-gap: 10px; }
   .gallery-item { margin-bottom: 10px; }
 
@@ -1347,7 +1251,6 @@ section {
   .about-stats { gap: 24px; }
   .hero-title { font-size: clamp(2.6rem, 12vw, 4rem); }
   .section-title { font-size: clamp(1.4rem, 5.5vw, 2rem); }
-  .featured-item { width: 85vw; }
 }
 
 /* Reduced motion */

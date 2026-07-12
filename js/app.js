@@ -73,18 +73,6 @@ const GALLERY = {
   ]
 };
 
-// Featured paintings for horizontal scroll
-const FEATURED = [
-  { src: "images/paintings/Abstrait 2017.webp", label: "Huile sur toile" },
-  { src: "images/encres/DE67C11E-EA54-4B63-AF46-35AB65BC9A1E.webp", label: "Encre de Chine" },
-  { src: "images/paintings/berceau bleu.webp", label: "Huile sur toile" },
-  { src: "images/paintings/2069C456-9AE8-4F5A-B35E-52B80A9605D2.webp", label: "Huile sur toile" },
-  { src: "images/encres/82E94A6B-E49D-4430-91AC-94D596E18576.webp", label: "Encre de Chine" },
-  { src: "images/paintings/lejaune.webp", label: "Huile sur toile" },
-  { src: "images/paintings/76845302_2716476255134187_2382461608643389949_n.webp", label: "Huile sur toile" },
-  { src: "images/encres/3AF5264E-328A-4A24-BC65-4E7586AAF4D8.webp", label: "Encre de Chine" },
-];
-
 const LABELS = { paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Atelier' };
 const PATHS = { paintings: 'images/paintings/', encres: 'images/encres/', shooting: 'images/shooting/' };
 
@@ -102,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomCursor();
   initHeroTextReveal();
   initNavigation();
-  initFeatured();
   initGallery();
   initLightbox();
   initParallax();
@@ -153,7 +140,7 @@ function initCustomCursor() {
 
   // Gallery items get special cursor
   const addGalleryCursor = () => {
-    document.querySelectorAll('.gallery-item, .featured-item').forEach(el => {
+    document.querySelectorAll('.gallery-item').forEach(el => {
       el.addEventListener('mouseenter', () => {
         document.body.classList.remove('cursor-hover');
         document.body.classList.add('cursor-gallery');
@@ -217,63 +204,6 @@ function initHeroTextReveal() {
   }).join('<br>');
 
   title.innerHTML = wrapped;
-}
-
-// ══════════════════════════════════════════════
-// FEATURED — Horizontal Scroll
-// ══════════════════════════════════════════════
-function initFeatured() {
-  const track = document.getElementById('featured-track');
-  if (!track) return;
-
-  FEATURED.forEach(item => {
-    const el = document.createElement('div');
-    el.className = 'featured-item';
-
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.label;
-    img.loading = 'lazy';
-
-    const overlay = document.createElement('div');
-    overlay.className = 'featured-item-overlay';
-
-    const label = document.createElement('span');
-    label.className = 'featured-item-label';
-    label.textContent = item.label;
-
-    overlay.appendChild(label);
-    el.appendChild(img);
-    el.appendChild(overlay);
-
-    // Click opens lightbox
-    el.addEventListener('click', () => {
-      openLightbox(null, item.src);
-    });
-
-    track.appendChild(el);
-  });
-
-  // Drag to scroll
-  let isDown = false;
-  let startX, scrollLeft;
-
-  track.addEventListener('mousedown', (e) => {
-    isDown = true;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-
-  track.addEventListener('mouseleave', () => { isDown = false; });
-  track.addEventListener('mouseup', () => { isDown = false; });
-
-  track.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    track.scrollLeft = scrollLeft - walk;
-  });
 }
 
 // ══════════════════════════════════════════════
@@ -444,11 +374,6 @@ function openLightbox(category, src, sourceEl) {
     technique: el.querySelector('.gallery-item-info').textContent,
     el: el
   }));
-
-  // If from featured, add it
-  if (lightboxGallery.length === 0) {
-    lightboxGallery = FEATURED.map(f => ({ src: f.src, technique: f.label, el: null }));
-  }
 
   const filename = src.split('/').pop();
   lightboxIndex = lightboxGallery.findIndex(item => item.src.includes(filename));
