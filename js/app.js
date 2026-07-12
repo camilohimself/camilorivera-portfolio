@@ -444,7 +444,7 @@ function injectJsonLd(works) {
     url: SITE,
     sameAs: [
       'https://www.instagram.com/camilohimself/',
-      'https://osomcreative.ch'
+      'https://www.osom.ch'
     ]
   };
 
