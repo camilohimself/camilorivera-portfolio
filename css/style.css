@@ -516,8 +516,13 @@ button { font: inherit; border: none; background: none; cursor: none; color: inh
 .hero-scroll {
   position: absolute;
   bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Centrage par marges auto, PAS par translateX(-50%) : l'animation
+     fadeUp (fill forwards) écrase le transform de base à sa fin, ce qui
+     décalait l'indicateur d'une demi-largeur vers la droite. */
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin-inline: auto;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -556,7 +561,16 @@ button { font: inherit; border: none; background: none; cursor: none; color: inh
 .lightbox-close:focus-visible,
 .lightbox-nav:focus-visible,
 .gallery-item:focus-visible,
-.filter-btn:focus-visible {
+.filter-btn:focus-visible,
+.nav-logo:focus-visible,
+.nav-links a:focus-visible,
+.nav-mobile a:focus-visible,
+.nav-toggle:focus-visible,
+.btn:focus-visible,
+.contact-email:focus-visible,
+.contact-social a:focus-visible,
+.back-to-top:focus-visible,
+.footer a:focus-visible {
   outline: 1px solid var(--accent);
   outline-offset: 3px;
 }

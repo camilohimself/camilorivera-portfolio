@@ -9,11 +9,17 @@
 /*.mp4
   Cache-Control: public, max-age=31536000
 
+# CSS/JS : URLs stables entre déploiements → revalidation à chaque visite
+# (ETag Netlify, 304 quasi gratuit sur ~45 KB). Un cache long ici servirait
+# du vieux code pendant un an aux visiteurs récurrents.
 /*.css
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.js
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=0, must-revalidate
+
+/works.json
+  Cache-Control: public, max-age=0, must-revalidate
 
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
