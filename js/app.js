@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextReveal();
   initScrollProgress();
   initBackToTop();
-  initCookieBanner();
 });
 
 // ══════════════════════════════════════════════
@@ -452,6 +451,13 @@ function openLightbox(category, src, sourceEl) {
       img.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s';
       img.style.transform = 'translate(0, 0) scale(1)';
       img.style.opacity = '1';
+
+      // Once the FLIP settle animation is done, drop the inline transform/transition
+      // so the CSS .zoomed rule (desktop click-to-zoom) can take over again.
+      setTimeout(() => {
+        img.style.transform = '';
+        img.style.transition = '';
+      }, 600);
     });
   } else {
     requestAnimationFrame(() => lb.classList.add('active'));
@@ -510,8 +516,8 @@ function initLightboxTouch(lb, wrap, img) {
   function clampPan() {
     if (scale <= 1) { panX = 0; panY = 0; return; }
     const rect = img.getBoundingClientRect();
-    const imgW = (rect.width / scale) * scale;
-    const imgH = (rect.height / scale) * scale;
+    const imgW = rect.width;
+    const imgH = rect.height;
     const viewW = window.innerWidth;
     const viewH = window.innerHeight;
     const maxPanX = Math.max(0, (imgW - viewW) / 2);
@@ -678,6 +684,12 @@ function navigateLightbox(dir) {
     requestAnimationFrame(() => {
       img.style.opacity = '1';
       img.style.transform = 'translateX(0) scale(1)';
+
+      // Same as openLightbox: release the inline transform once the slide
+      // transition has settled so CSS (.zoomed) can apply again.
+      setTimeout(() => {
+        img.style.transform = '';
+      }, 600);
     });
   }, 200);
 }
@@ -724,19 +736,44 @@ function initParallax() {
 // ══════════════════════════════════════════════
 function initTextReveal() {
   document.querySelectorAll('.section-title[data-reveal]').forEach(title => {
-    const text = title.textContent;
+    let i = 0;
+
+    // Wrap each character of a text node in a <span class="char">,
+    // incrementing the delay counter globally across the whole title.
+    const wrapChars = (str) => {
+      const frag = document.createDocumentFragment();
+      [...str].forEach(char => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = char === ' ' ? '\u00a0' : char;
+        span.style.transitionDelay = `${i * 0.025}s`;
+        i++;
+        frag.appendChild(span);
+      });
+      return frag;
+    };
+
+    // Walk childNodes instead of textContent so <br> and other elements
+    // (ex. <em>) survive the rebuild.
+    const walk = (node) => {
+      const out = document.createDocumentFragment();
+      node.childNodes.forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          out.appendChild(wrapChars(child.textContent));
+        } else if (child.nodeName === 'BR') {
+          out.appendChild(child.cloneNode(true));
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          const clone = child.cloneNode(false);
+          clone.appendChild(walk(child));
+          out.appendChild(clone);
+        }
+      });
+      return out;
+    };
+
+    const rebuilt = walk(title);
     title.innerHTML = '';
-
-    // Split by lines (look for <br> in original HTML)
-    const originalHTML = title.dataset.reveal || text;
-
-    [...text].forEach((char, i) => {
-      const span = document.createElement('span');
-      span.className = 'char';
-      span.textContent = char === ' ' ? '\u00a0' : char;
-      span.style.transitionDelay = `${i * 0.025}s`;
-      title.appendChild(span);
-    });
+    title.appendChild(rebuilt);
   });
 
   const observer = new IntersectionObserver((entries) => {
@@ -793,33 +830,5 @@ function initBackToTop() {
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-// ══════════════════════════════════════════════
-// COOKIE BANNER
-// ══════════════════════════════════════════════
-function initCookieBanner() {
-  if (localStorage.getItem('cookies-choice')) return;
-
-  const banner = document.getElementById('cookie-banner');
-  if (!banner) return;
-
-  setTimeout(() => banner.classList.add('visible'), 1500);
-
-  const dismiss = () => {
-    banner.classList.add('hiding');
-    banner.classList.remove('visible');
-    setTimeout(() => banner.remove(), 600);
-  };
-
-  document.getElementById('cookie-accept').addEventListener('click', () => {
-    localStorage.setItem('cookies-choice', 'accepted');
-    dismiss();
-  });
-
-  document.getElementById('cookie-decline').addEventListener('click', () => {
-    localStorage.setItem('cookies-choice', 'declined');
-    dismiss();
   });
 }

@@ -4,7 +4,61 @@
    "Probably the most beautiful portfolio in the world"
    ═══════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+/* ── Self-hosted fonts ───────────────────────── */
+/* Cormorant Garamond & DM Sans, latin subset only (covers Œ/œ via U+0152-0153). */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/cormorant-garamond-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/cormorant-garamond-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/cormorant-garamond-300-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/dm-sans-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/dm-sans-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/dm-sans-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* ── Tokens ──────────────────────────────────── */
 :root {
@@ -171,7 +225,7 @@ button { font: inherit; border: none; background: none; cursor: none; color: inh
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 105;
   height: var(--nav-h);
   display: flex;
   align-items: center;
@@ -574,7 +628,6 @@ section {
 
 /* Masonry grid */
 .gallery-grid {
-  display: columns;
   columns: 3;
   column-gap: 16px;
 }
@@ -1057,95 +1110,6 @@ section {
 }
 
 /* ══════════════════════════════════════════════
-   COOKIE BANNER
-   ══════════════════════════════════════════════ */
-.cookie-banner {
-  position: fixed;
-  bottom: 28px;
-  left: 28px;
-  z-index: 300;
-  max-width: 380px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 28px 28px 22px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-  pointer-events: none;
-}
-
-.cookie-banner.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.cookie-banner.hiding {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-
-.cookie-quote {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--text);
-  line-height: 1.6;
-  margin-bottom: 6px;
-}
-
-.cookie-author {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-
-.cookie-text {
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.cookie-actions { display: flex; gap: 10px; }
-
-.cookie-accept {
-  padding: 9px 22px;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: var(--accent);
-  color: var(--black);
-  border-radius: 2px;
-  transition: all 0.3s var(--ease-out);
-}
-
-.cookie-accept:hover { background: var(--white); }
-
-.cookie-decline {
-  padding: 9px 22px;
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  transition: all 0.3s var(--ease-out);
-}
-
-.cookie-decline:hover {
-  color: var(--text);
-  border-color: var(--border-light);
-}
-
-/* ══════════════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -1240,8 +1204,6 @@ section {
   .footer { flex-direction: column; gap: 12px; text-align: center; }
 
   .section-title { font-size: clamp(1.6rem, 4.5vw, 2.8rem); }
-
-  .cookie-banner { left: 12px; right: 12px; bottom: 12px; max-width: none; }
 }
 
 @media (max-width: 480px) {
