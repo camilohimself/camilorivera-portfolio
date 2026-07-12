@@ -10,6 +10,16 @@
 const SITE = 'https://www.camilorivera.ch/';
 const PATHS = { paintings: 'images/paintings/', encres: 'images/encres/', shooting: 'images/shooting/' };
 
+// ── Chapitres éditoriaux de la galerie ──────────
+// Ligne d'accroche affichée sous les filtres, qui réagit au filtre actif.
+// Édition libre : texte pur, un par clé de filtre. Ne réordonne PAS la grille.
+const CHAPTER_LINES = {
+  all:       'Le corpus entier — huile, encre de Chine et silence de l’atelier.',
+  paintings: 'Série I — Huiles sur toile · 29 œuvres · gestes et empâtements',
+  encres:    'Série II — Encres de Chine · 26 œuvres · le trait, le vide',
+  shooting:  'L’atelier — Bramois, Valais · 60 photographies'
+};
+
 // ── State ───────────────────────────────────────
 let WORKS = [];                    // tableau works.json, dans l'ordre d'affichage
 const WORKS_BY_SLUG = {};          // index slug → œuvre
@@ -29,9 +39,32 @@ let ringX = 0, ringY = 0;
 const scrollCallbacks = [];
 let scrollTicking = false;
 
+// ── Préférences de mouvement / capacités ────────
+// prefers-reduced-motion : neutralise TOUTES les animations « plaisir »
+// (ken burns, morph View Transitions, cartel, ressort de swipe).
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+// View Transitions same-document : progressive enhancement du morph
+// vignette ⇄ œuvre. Absente ou reduced-motion → repli FLIP intact.
+function supportsViewTransitions() {
+  return typeof document.startViewTransition === 'function';
+}
+function useViewTransition() {
+  return supportsViewTransitions() && !prefersReducedMotion();
+}
+const VT_NAME = 'oeuvre-morph';
+
+// Échappe le texte injecté en innerHTML (cartel). Les données works.json
+// sont maîtrisées, mais on reste correct par principe.
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"]/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]
+  ));
+}
+
 // ── Init ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  initHeroVideo();
   initCustomCursor();
   initHeroTextReveal();
   initNavigation();
@@ -49,19 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══════════════════════════════════════════════
-// HERO VIDEO — rendition switch (pas de <source> en dur)
+// HERO MACRO MATIÈRE — image plein écran, statique
 // ══════════════════════════════════════════════
-function initHeroVideo() {
-  const video = document.querySelector('.hero-video-wrap video');
-  if (!video) return;
-
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  video.src = isMobile ? 'videos/hero-drone-mobile.mp4' : 'videos/hero-drone-optimized.mp4';
-
-  // L'autoplay peut être refusé par le navigateur (économie de données,
-  // politique autoplay) — on ignore silencieusement, le poster reste affiché.
-  video.play().catch(() => {});
-}
+// La vidéo drone a été remplacée par un gros plan de matière de peinture
+// (images/hero/hero-matiere-1.webp), servi en dur dans le HTML avec
+// fetchpriority="high". Ken Burns + fondu d'émergence sont gérés en CSS
+// (voir .hero-matiere-wrap) et neutralisés en reduced-motion — plus de JS ici.
 
 // ══════════════════════════════════════════════
 // CUSTOM CURSOR
@@ -147,8 +173,9 @@ function initHeroTextReveal() {
     // Don't split inside HTML tags
     const words = line.trim().split(/\s+/);
     return words.map((word, i) => {
-      // Preserve <em> tags
-      return `<span class="word"><span class="word-inner" style="animation-delay: ${0.5 + i * 0.08}s">${word}</span></span>`;
+      // Preserve <em> tags. Le titre « émerge du pigment » : les mots
+      // démarrent après le fondu de l'image hero (0.8s), pas avant.
+      return `<span class="word"><span class="word-inner" style="animation-delay: ${0.9 + i * 0.08}s">${word}</span></span>`;
     }).join(' ');
   }).join('<br>');
 
@@ -319,8 +346,26 @@ async function initGallery() {
   observeGalleryReveal(grid);
   initGalleryInteractions();
   initFilters(grid);
+  // Ligne éditoriale initiale (sans fondu — l'état de départ).
+  const chapterEl = document.getElementById('gallery-chapter-line');
+  if (chapterEl) chapterEl.textContent = CHAPTER_LINES[currentFilter] || CHAPTER_LINES.all;
   injectJsonLd(WORKS);
   handleInitialDeepLink(grid);
+}
+
+// Met à jour la ligne éditoriale sous les filtres, en fondu doux (0.3s CSS).
+// Le texte est remplacé pendant le creux du fondu ; reduced-motion aplatit
+// la transition (règle globale) — le texte change alors sans battement.
+function renderChapterLine(filter) {
+  const el = document.getElementById('gallery-chapter-line');
+  if (!el) return;
+  const text = CHAPTER_LINES[filter] || CHAPTER_LINES.all;
+  if (el.textContent === text) return;
+  el.classList.add('fading');
+  window.setTimeout(() => {
+    el.textContent = text;
+    el.classList.remove('fading');
+  }, 180);
 }
 
 // Compteurs de filtres calculés depuis works.json (les valeurs hardcodées
@@ -369,6 +414,7 @@ function initFilters(grid) {
 
 function setFilter(filter, grid) {
   currentFilter = filter;
+  renderChapterLine(filter);
   grid.querySelectorAll('.gallery-item').forEach((item, i) => {
     const match = filter === 'all' || item.dataset.category === filter;
     item.classList.toggle('hidden', !match);
@@ -484,12 +530,19 @@ function onPopState() {
 // ══════════════════════════════════════════════
 // LIGHTBOX — Cinematic FLIP animation
 // ══════════════════════════════════════════════
-// Légende : « Titre · technique » pour les œuvres, technique seule pour l'atelier.
-// Année & dimensions ajoutées uniquement si renseignées (null aujourd'hui).
+// Cartel de musée : titre (Cormorant italique) au-dessus d'une méta ligne
+// (technique · dimensions · année, DM Sans petites capitales), séparés d'un
+// filet doré. Atelier (title null) → méta seule, sans filet. Année &
+// dimensions n'apparaissent que renseignées (null aujourd'hui → ignorées).
+// Retourne du markup (innerHTML) car le cartel est structuré, plus une ligne.
 function lightboxCaption(work) {
-  return [work.title, work.technique, work.dimensions, work.year]
-    .filter(Boolean)
-    .join(' · ');
+  const title = work.title;
+  const meta = [work.technique, work.dimensions, work.year].filter(Boolean).join(' · ');
+  let html = '';
+  if (title) html += `<span class="cartel-title">${escapeHtml(title)}</span>`;
+  if (title && meta) html += '<span class="cartel-rule" aria-hidden="true"></span>';
+  if (meta) html += `<span class="cartel-meta">${escapeHtml(meta)}</span>`;
+  return html;
 }
 
 // Libellé accessible (aria-label du dialog) : titre de l'œuvre, ou technique
@@ -548,7 +601,22 @@ function trapLightboxFocus(e) {
   }
 }
 
-function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
+// openLightbox : dispatcher. Deux chemins d'entrée qui gèrent CHACUN leur
+// cycle complet. Le chemin View Transitions ne partage rien avec le
+// setTimeout 600ms du FLIP (nettoyage des transform inline) : structure
+// volontairement séparée pour éviter tout héritage croisé.
+function openLightbox(sourceEl, opts = {}) {
+  const histMode = opts.history || 'push';
+  if (useViewTransition()) openLightboxVT(sourceEl, histMode);
+  else openLightboxFlip(sourceEl, histMode);
+}
+
+// Construit et monte la lightbox : DOM + état + événements + focus +
+// historique + préchargement voisins. SANS mise en scène d'entrée — chaque
+// chemin (FLIP / VT) pose ensuite la sienne. `initialSrc` (optionnel) sert
+// d'image de départ (chemin VT) ; à défaut on affiche la pleine réso.
+// Retourne les nœuds utiles + `fullSrc` (URL pleine résolution à rétablir).
+function createLightboxDOM(sourceEl, histMode, initialSrc) {
   const slug = sourceEl.dataset.slug;
 
   // Galerie de la lightbox = items visibles (respecte le filtre courant).
@@ -571,7 +639,6 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
 
   lightboxSourceEl = sourceEl;
 
-  // Create lightbox with separate bg for FLIP
   const lb = document.createElement('div');
   lb.className = 'lightbox';
   lb.id = 'lightbox';
@@ -585,7 +652,10 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
   const wrap = document.createElement('div');
   wrap.className = 'lightbox-image-wrap';
   const img = document.createElement('img');
-  img.src = entry.src;
+  // initialSrc (chemin VT) = variante DÉJÀ peinte de la vignette : la boîte de
+  // l'image est ainsi correctement proportionnée (image chargée) dès le snapshot
+  // « après » du morph. À défaut (FLIP), on affiche directement la pleine réso.
+  img.src = initialSrc || entry.src;
   img.alt = altFor(work);
   wrap.appendChild(img);
 
@@ -607,9 +677,10 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
   nextBtn.setAttribute('aria-label', 'Œuvre suivante');
   nextBtn.textContent = '›';
 
-  const caption = document.createElement('span');
-  caption.className = 'lightbox-technique';
-  caption.textContent = lightboxCaption(work);
+  // Cartel de musée : markup structuré (titre + filet + méta).
+  const cartel = document.createElement('div');
+  cartel.className = 'lightbox-cartel';
+  cartel.innerHTML = lightboxCaption(work);
 
   const counter = document.createElement('span');
   counter.className = 'lightbox-counter';
@@ -618,7 +689,7 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
   controls.appendChild(closeBtn);
   controls.appendChild(prevBtn);
   controls.appendChild(nextBtn);
-  controls.appendChild(caption);
+  controls.appendChild(cartel);
   controls.appendChild(counter);
 
   lb.appendChild(bg);
@@ -634,34 +705,6 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
   preloadLightboxNeighbors(lightboxIndex);
   syncLightboxHistory(slug, histMode);
 
-  // FLIP animation from source element
-  if (sourceEl) {
-    const sourceRect = sourceEl.getBoundingClientRect();
-    const destX = window.innerWidth / 2;
-    const destY = window.innerHeight / 2;
-    const sourceX = sourceRect.left + sourceRect.width / 2;
-    const sourceY = sourceRect.top + sourceRect.height / 2;
-
-    img.style.transform = `translate(${sourceX - destX}px, ${sourceY - destY}px) scale(0.3)`;
-    img.style.opacity = '0.5';
-
-    requestAnimationFrame(() => {
-      lb.classList.add('active');
-      img.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s';
-      img.style.transform = 'translate(0, 0) scale(1)';
-      img.style.opacity = '1';
-
-      // Once the FLIP settle animation is done, drop the inline transform/transition
-      // so the CSS .zoomed rule (desktop click-to-zoom) can take over again.
-      setTimeout(() => {
-        img.style.transform = '';
-        img.style.transition = '';
-      }, 600);
-    });
-  } else {
-    requestAnimationFrame(() => lb.classList.add('active'));
-  }
-
   // Focus initial sur le bouton fermer (preventScroll : la page ne bouge pas).
   closeBtn.focus({ preventScroll: true });
 
@@ -669,7 +712,6 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
   closeBtn.addEventListener('click', () => closeLightbox());
   prevBtn.addEventListener('click', () => navigateLightbox(-1));
   nextBtn.addEventListener('click', () => navigateLightbox(1));
-
   bg.addEventListener('click', () => closeLightbox());
 
   // ── MOBILE TOUCH: pinch-zoom, pan, swipe nav, swipe-down close ──
@@ -682,6 +724,82 @@ function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
       img.classList.toggle('zoomed');
     });
   }
+
+  return { lb, img, wrap, fullSrc: entry.src };
+}
+
+// ── Chemin FLIP (repli universel, inchangé) ──────
+// Zoom cinématique depuis la vignette. Le nettoyage des transform/transition
+// inline à 600ms rend la main à la règle CSS .zoomed (click-to-zoom desktop).
+function openLightboxFlip(sourceEl, histMode) {
+  const { lb, img } = createLightboxDOM(sourceEl, histMode);
+
+  if (sourceEl) {
+    const sourceRect = sourceEl.getBoundingClientRect();
+    const destX = window.innerWidth / 2;
+    const destY = window.innerHeight / 2;
+    const sourceX = sourceRect.left + sourceRect.width / 2;
+    const sourceY = sourceRect.top + sourceRect.height / 2;
+
+    img.style.transform = `translate(${sourceX - destX}px, ${sourceY - destY}px) scale(0.3)`;
+    img.style.opacity = '0.5';
+
+    requestAnimationFrame(() => {
+      lb.classList.add('active', 'flip-entrance');
+      img.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s';
+      img.style.transform = 'translate(0, 0) scale(1)';
+      img.style.opacity = '1';
+
+      // Fin du FLIP : on lâche transform/transition inline (cf. .zoomed).
+      setTimeout(() => {
+        img.style.transform = '';
+        img.style.transition = '';
+      }, 600);
+    });
+  } else {
+    requestAnimationFrame(() => lb.classList.add('active', 'flip-entrance'));
+  }
+}
+
+// ── Chemin View Transitions (progressive enhancement) ──
+// Morph natif vignette → œuvre. L'IMG source porte view-transition-name dans
+// le snapshot « avant » ; l'IMG lightbox le porte dans le snapshot « après »
+// (un seul élément nommé par snapshot, sinon l'API annule le morph). Aucun
+// transform inline, aucun setTimeout 600ms : le navigateur orchestre, on ne
+// fait que nettoyer les noms à la fin.
+function openLightboxVT(sourceEl, histMode) {
+  const sourceImg = sourceEl.querySelector('img');
+  // Image de départ = la variante DÉJÀ peinte de la vignette : garantit une
+  // boîte bien proportionnée au snapshot « après ». On passe en pleine réso
+  // une fois le morph terminé (même image, plus fine → swap invisible).
+  const seedSrc = (sourceImg && (sourceImg.currentSrc || sourceImg.src)) || undefined;
+  if (sourceImg) sourceImg.style.viewTransitionName = VT_NAME;
+
+  let fullSrc;
+  const vt = document.startViewTransition(() => {
+    // On retire le nom de la vignette AVANT de le poser sur l'image lightbox.
+    if (sourceImg) sourceImg.style.viewTransitionName = '';
+    const built = createLightboxDOM(sourceEl, histMode, seedSrc);
+    fullSrc = built.fullSrc;
+    // vt-run coupe les transitions CSS fond/contrôles → snapshot « après » net.
+    built.lb.classList.add('active', 'vt-run');
+    if (built.img) built.img.style.viewTransitionName = VT_NAME;
+  });
+
+  vt.finished.finally(() => {
+    if (sourceImg) sourceImg.style.viewTransitionName = '';
+    const lb = document.getElementById('lightbox');
+    if (lb) {
+      lb.classList.remove('vt-run');
+      const img = lb.querySelector('.lightbox-image-wrap img');
+      if (img) {
+        img.style.viewTransitionName = '';
+        // Passage en pleine résolution (invisible : même image, plus fine).
+        // img.src (IDL) est absolu, fullSrc aussi → comparaison fiable.
+        if (fullSrc && img.src !== fullSrc) img.src = fullSrc;
+      }
+    }
+  });
 }
 
 // ── Mobile Touch Handler ──────────────────────
@@ -833,9 +951,9 @@ function initLightboxTouch(lb, wrap, img) {
       lb.querySelector('.lightbox-bg').style.transition = 'opacity 0.3s';
     }
 
-    // Horizontal swipe → navigate
+    // Horizontal swipe → navigate (avec inertie ressort sur l'image sortante)
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      navigateLightbox(dx < 0 ? 1 : -1);
+      navigateLightbox(dx < 0 ? 1 : -1, { spring: true });
       return;
     }
   });
@@ -859,8 +977,12 @@ function initLightboxTouch(lb, wrap, img) {
   });
 }
 
-function navigateLightbox(dir) {
+// dir : ±1. opts.spring : au relâchement d'un swipe validé, l'image sortante
+// glisse avec un ressort (spring) doux plutôt que l'easing par défaut. Les
+// flèches (clavier/boutons) gardent le slide standard — inchangé.
+function navigateLightbox(dir, opts = {}) {
   if (lightboxGallery.length <= 1) return;
+  const spring = opts.spring === true && !prefersReducedMotion();
 
   lightboxIndex = (lightboxIndex + dir + lightboxGallery.length) % lightboxGallery.length;
   const entry = lightboxGallery[lightboxIndex];
@@ -871,31 +993,38 @@ function navigateLightbox(dir) {
   preloadLightboxNeighbors(lightboxIndex);
 
   const img = lb.querySelector('.lightbox-image-wrap img');
-  const caption = lb.querySelector('.lightbox-technique');
+  const cartel = lb.querySelector('.lightbox-cartel');
   const counter = lb.querySelector('.lightbox-counter');
 
   lb.setAttribute('aria-label', lightboxLabel(work));
 
+  // Ressort de swipe : easing spring-like, 0.35s, discret. Sinon on laisse
+  // la transition CSS par défaut (.lightbox-image-wrap img) porter le slide.
+  const out = spring ? 60 : 40;
+  if (spring) {
+    img.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.3s';
+  }
+
   img.style.opacity = '0';
-  img.style.transform = `translateX(${dir * 40}px) scale(0.97)`;
+  img.style.transform = `translateX(${dir * out}px) scale(0.97)`;
   img.classList.remove('zoomed');
   lb.classList.remove('lightbox-zoomed');
 
   setTimeout(() => {
     img.src = entry.src;
     img.alt = altFor(work);
-    caption.textContent = lightboxCaption(work);
+    if (cartel) cartel.innerHTML = lightboxCaption(work);
     counter.textContent = `${lightboxIndex + 1} / ${lightboxGallery.length}`;
 
-    img.style.transform = `translateX(${-dir * 40}px) scale(0.97)`;
+    img.style.transform = `translateX(${-dir * out}px) scale(0.97)`;
     requestAnimationFrame(() => {
       img.style.opacity = '1';
       img.style.transform = 'translateX(0) scale(1)';
 
-      // Same as openLightbox: release the inline transform once the slide
-      // transition has settled so CSS (.zoomed) can apply again.
+      // Fin du slide : on relâche transform/transition inline (cf. .zoomed).
       setTimeout(() => {
         img.style.transform = '';
+        img.style.transition = '';
       }, 600);
     });
   }, 200);
@@ -904,17 +1033,22 @@ function navigateLightbox(dir) {
   syncLightboxHistory(entry.slug, 'replace');
 }
 
+// closeLightbox : dispatcher symétrique de l'ouverture. Chaque chemin gère
+// son cycle (le VT ne dépend pas du setTimeout 500ms de fondu du FLIP).
 function closeLightbox({ fromPopstate = false } = {}) {
   const lb = document.getElementById('lightbox');
   if (!lb) return;
+  if (useViewTransition()) closeLightboxVT(lb, fromPopstate);
+  else closeLightboxFlip(lb, fromPopstate);
+}
 
-  lb.classList.remove('active');
-  lb.classList.remove('lightbox-zoomed');
+// État commun de fermeture : sortie du mode modal, historique, restitution du
+// focus. Partagé par les deux chemins ; ne touche PAS au DOM de la lightbox
+// (retrait spécifique à chaque chemin).
+function finalizeCloseState(fromPopstate) {
   lightboxOpen = false;
   document.body.style.overflow = '';
   document.body.classList.remove('cursor-hidden');
-
-  setTimeout(() => lb.remove(), 500);
 
   // Historique : ne rien faire si la fermeture découle déjà d'un popstate
   // (le navigateur a déjà dépilé l'entrée).
@@ -935,6 +1069,41 @@ function closeLightbox({ fromPopstate = false } = {}) {
     lightboxSourceEl.focus({ preventScroll: true });
   }
   lightboxSourceEl = null;
+}
+
+// ── Fermeture FLIP (repli universel, inchangé) ──
+// Fondu via retrait de .active, puis retrait du nœud à 500ms.
+function closeLightboxFlip(lb, fromPopstate) {
+  lb.classList.remove('active');
+  lb.classList.remove('lightbox-zoomed');
+  setTimeout(() => lb.remove(), 500);
+  finalizeCloseState(fromPopstate);
+}
+
+// ── Fermeture View Transitions ──
+// Morph inverse œuvre → vignette. L'IMG lightbox est nommée pour le snapshot
+// « avant » ; le teardown (retrait de la lightbox + nom reposé sur la vignette)
+// constitue le snapshot « après ». On capture la vignette AVANT finalize
+// (qui remet lightboxSourceEl à null).
+function closeLightboxVT(lb, fromPopstate) {
+  const img = lb.querySelector('.lightbox-image-wrap img');
+  const sourceEl = lightboxSourceEl;
+  const sourceImg = sourceEl && sourceEl.querySelector('img');
+
+  lb.classList.remove('lightbox-zoomed');
+  lb.classList.add('vt-run');
+  if (img) img.style.viewTransitionName = VT_NAME;
+
+  const vt = document.startViewTransition(() => {
+    lb.remove();
+    if (sourceImg) sourceImg.style.viewTransitionName = VT_NAME;
+  });
+
+  vt.finished.finally(() => {
+    if (sourceImg) sourceImg.style.viewTransitionName = '';
+  });
+
+  finalizeCloseState(fromPopstate);
 }
 
 // ══════════════════════════════════════════════

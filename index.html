@@ -30,6 +30,9 @@
   <link rel="preload" href="fonts/cormorant-garamond-300.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 
+  <!-- Hero : macro matière plein écran (LCP) -->
+  <link rel="preload" as="image" href="images/hero/hero-matiere-1.webp" fetchpriority="high">
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -69,10 +72,10 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">
-    <div class="hero-video-wrap">
-      <video autoplay muted loop playsinline preload="metadata"
-             poster="images/paintings/2069C456-9AE8-4F5A-B35E-52B80A9605D2.webp">
-      </video>
+    <div class="hero-matiere-wrap">
+      <img class="hero-matiere" src="images/hero/hero-matiere-1.webp"
+           alt="" aria-hidden="true" fetchpriority="high" decoding="async"
+           width="1440" height="1801">
     </div>
 
     <div class="hero-content">
@@ -116,6 +119,9 @@
         Atelier <span class="count">60</span>
       </button>
     </div>
+
+    <!-- Ligne éditoriale : réagit au filtre actif (cf. CHAPTER_LINES dans app.js) -->
+    <p class="gallery-chapter-line" id="gallery-chapter-line" aria-live="polite"></p>
 
     <div class="gallery-grid" id="gallery-grid"></div>
   </section>
