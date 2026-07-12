@@ -85,8 +85,14 @@ let mouseX = 0, mouseY = 0;
 let cursorX = 0, cursorY = 0;
 let ringX = 0, ringY = 0;
 
+// Registre commun des callbacks scroll (pattern ticking : un seul
+// listener passif, un seul rAF, N mises à jour dedans).
+const scrollCallbacks = [];
+let scrollTicking = false;
+
 // ── Init ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroVideo();
   initCustomCursor();
   initHeroTextReveal();
   initNavigation();
@@ -97,7 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextReveal();
   initScrollProgress();
   initBackToTop();
+  initScrollDispatcher();
 });
+
+// ══════════════════════════════════════════════
+// HERO VIDEO — rendition switch (pas de <source> en dur)
+// ══════════════════════════════════════════════
+function initHeroVideo() {
+  const video = document.querySelector('.hero-video-wrap video');
+  if (!video) return;
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  video.src = isMobile ? 'videos/hero-drone-mobile.mp4' : 'videos/hero-drone-optimized.mp4';
+
+  // L'autoplay peut être refusé par le navigateur (économie de données,
+  // politique autoplay) — on ignore silencieusement, le poster reste affiché.
+  video.play().catch(() => {});
+}
 
 // ══════════════════════════════════════════════
 // CUSTOM CURSOR
@@ -206,6 +228,21 @@ function initHeroTextReveal() {
 }
 
 // ══════════════════════════════════════════════
+// SCROLL DISPATCHER — un seul listener passif pour
+// nav scrolled + parallax + scroll-progress + back-to-top
+// ══════════════════════════════════════════════
+function initScrollDispatcher() {
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      scrollCallbacks.forEach(cb => cb());
+      scrollTicking = false;
+    });
+  }, { passive: true });
+}
+
+// ══════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════
 function initNavigation() {
@@ -213,9 +250,9 @@ function initNavigation() {
   const toggle = document.querySelector('.nav-toggle');
   const mobile = document.querySelector('.nav-mobile');
 
-  window.addEventListener('scroll', () => {
+  scrollCallbacks.push(() => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
+  });
 
   if (toggle && mobile) {
     toggle.addEventListener('click', () => {
@@ -253,9 +290,36 @@ function createGalleryItem(item) {
   el.dataset.category = item.category;
 
   const img = document.createElement('img');
-  img.src = item.src;
   img.alt = item.technique;
   img.loading = 'lazy';
+
+  // Dimensions intrinsèques + srcset responsive (variantes générées par
+  // tools/generate-image-variants.sh). Si l'image n'est pas dans DIMS
+  // (fichier généré après le dernier passage du script), on ne pose
+  // rien — repli silencieux sur le seul `src` pleine résolution.
+  // ORDRE CRITIQUE : loading/width/height/sizes/srcset AVANT src —
+  // affecter src en premier déclenche immédiatement le fetch de la
+  // pleine résolution et le navigateur ne rétrograde jamais vers la
+  // variante 480/800 ensuite (sélection déjà faite, ressource en cache).
+  const dims = (typeof DIMS !== 'undefined') && DIMS[`${item.category}/${item.file}`];
+  if (dims) {
+    const [w, h] = dims;
+    img.width = w;
+    img.height = h;
+
+    const stem = item.file.replace(/\.webp$/, '');
+    const base = PATHS[item.category];
+    // encodeURI() est indispensable ici : plusieurs fichiers contiennent
+    // des espaces ("berceau bleu.webp") qui, non encodés, casseraient le
+    // parsing de srcset (l'espace y sépare URL et descripteur de largeur).
+    img.sizes = '(max-width: 480px) 92vw, (max-width: 1024px) 46vw, 30vw';
+    img.srcset = [
+      `${encodeURI(base + stem + '-480.webp')} 480w`,
+      `${encodeURI(base + stem + '-800.webp')} 800w`,
+      `${encodeURI(item.src)} ${w}w`
+    ].join(', ');
+  }
+  img.src = item.src;
 
   const overlay = document.createElement('div');
   overlay.className = 'gallery-item-overlay';
@@ -282,7 +346,7 @@ function initGallery() {
   const allItems = [];
   for (const [category, files] of Object.entries(GALLERY)) {
     files.forEach((file, i) => {
-      allItems.push({ category, src: PATHS[category] + file, technique: LABELS[category], index: i });
+      allItems.push({ category, file, src: PATHS[category] + file, technique: LABELS[category], index: i });
     });
   }
 
@@ -354,6 +418,17 @@ function setFilter(filter, grid) {
 // ══════════════════════════════════════════════
 // LIGHTBOX — Cinematic FLIP animation
 // ══════════════════════════════════════════════
+// Précharge les voisines (index-1 / index+1, modulo) dans le cache
+// navigateur : la flèche/le swipe suivant affiche une image déjà
+// chargée — fini le flash noir pendant le fetch.
+function preloadLightboxNeighbors(index) {
+  if (lightboxGallery.length <= 1) return;
+  const nextItem = lightboxGallery[(index + 1) % lightboxGallery.length];
+  const prevItem = lightboxGallery[(index - 1 + lightboxGallery.length) % lightboxGallery.length];
+  new Image().src = nextItem.src;
+  new Image().src = prevItem.src;
+}
+
 function initLightbox() {
   document.addEventListener('keydown', (e) => {
     if (!lightboxOpen) return;
@@ -434,6 +509,8 @@ function openLightbox(category, src, sourceEl) {
   document.body.style.overflow = 'hidden';
   document.body.classList.add('cursor-hidden');
   lightboxOpen = true;
+
+  preloadLightboxNeighbors(lightboxIndex);
 
   // FLIP animation from source element
   if (sourceEl) {
@@ -665,6 +742,8 @@ function navigateLightbox(dir) {
   const lb = document.getElementById('lightbox');
   if (!lb) return;
 
+  preloadLightboxNeighbors(lightboxIndex);
+
   const img = lb.querySelector('.lightbox-image-wrap img');
   const technique = lb.querySelector('.lightbox-technique');
   const counter = lb.querySelector('.lightbox-counter');
@@ -714,9 +793,9 @@ function initParallax() {
   const parallaxEls = document.querySelectorAll('[data-parallax]');
   if (!parallaxEls.length) return;
 
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-
+  // getBoundingClientRect() par élément : acceptable une fois par frame,
+  // c'est pourquoi ça reste dans le callback rAF du dispatcher commun.
+  scrollCallbacks.push(() => {
     parallaxEls.forEach(el => {
       const speed = parseFloat(el.dataset.parallax) || 0.1;
       const rect = el.getBoundingClientRect();
@@ -728,7 +807,7 @@ function initParallax() {
         img.style.transform = `translateY(${offset}px)`;
       }
     });
-  }, { passive: true });
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -811,10 +890,10 @@ function initScrollProgress() {
   const bar = document.querySelector('.scroll-progress');
   if (!bar) return;
 
-  window.addEventListener('scroll', () => {
+  scrollCallbacks.push(() => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-  }, { passive: true });
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -824,9 +903,9 @@ function initBackToTop() {
   const btn = document.querySelector('.back-to-top');
   if (!btn) return;
 
-  window.addEventListener('scroll', () => {
+  scrollCallbacks.push(() => {
     btn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
+  });
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

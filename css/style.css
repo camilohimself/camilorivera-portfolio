@@ -644,9 +644,9 @@ section {
 
 .gallery-item img {
   width: 100%;
+  height: auto;
   display: block;
   transition: transform 0.7s var(--ease-out), filter 0.5s;
-  will-change: transform;
 }
 
 .gallery-item:hover img {
@@ -1123,6 +1123,9 @@ section {
   body { cursor: auto; }
   button { cursor: pointer; }
   .cursor-dot, .cursor-ring { display: none !important; }
+
+  /* Grain figé : on garde la texture, on coupe le repaint 2 fps */
+  .grain { animation: none; }
 
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
