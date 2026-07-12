@@ -524,6 +524,24 @@ button { font: inherit; border: none; background: none; cursor: none; color: inh
   50% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
 }
 
+/* ── Focus visible ───────────────────────────── */
+/* Indicateur clavier discret et cohérent avec la palette ; le ring
+   bleu par défaut du navigateur est masqué pour le focus programmatique
+   (ex. focus() sur la croix à l'ouverture de la lightbox après un clic). */
+.lightbox-close:focus:not(:focus-visible),
+.lightbox-nav:focus:not(:focus-visible),
+.gallery-item:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible,
+.gallery-item:focus-visible,
+.filter-btn:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
 /* ══════════════════════════════════════════════
    SECTION COMMONS
    ══════════════════════════════════════════════ */
@@ -1201,8 +1219,10 @@ section {
     font-size: 1.4rem;
   }
 
-  .lightbox-counter { bottom: 20px; }
-  .lightbox-technique { bottom: 20px; left: 16px; }
+  /* Légende à gauche, compteur à droite : les titres d'œuvres
+     (« Abstrait 978 · Huile sur toile ») chevauchaient le compteur centré. */
+  .lightbox-counter { bottom: 20px; left: auto; right: 16px; transform: none; }
+  .lightbox-technique { bottom: 20px; left: 16px; max-width: 60vw; }
 
   .footer { flex-direction: column; gap: 12px; text-align: center; }
 

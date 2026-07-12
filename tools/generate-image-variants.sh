@@ -9,6 +9,16 @@
 # les nouveaux fichiers (ou les originaux modifiés) sont ré-encodés.
 # Le fichier js/dims.generated.js est toujours réécrit en entier.
 #
+# ─── AJOUTER UNE NOUVELLE ŒUVRE (workflow complet) ───
+#   1. Déposer le fichier .webp dans images/<catégorie>/
+#   2. Lancer CE script (génère les variantes 480w/800w + dims.generated.js)
+#   3. Ajouter une entrée dans works.json (à la racine) — voir works.README.md
+#
+# SÉPARATION GÉNÉRÉ / CURATÉ :
+#   - js/dims.generated.js (dimensions par fichier) = AUTO-GÉNÉRÉ ici.
+#   - works.json (titres, ordre, techniques) = CURATÉ à la main. Les
+#     dimensions n'y sont PAS dupliquées — elles restent dans dims.generated.js.
+#
 # Prérequis : cwebp (encodage WebP), sips (lecture des dimensions,
 # outil natif macOS).
 #

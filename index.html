@@ -6,6 +6,7 @@
   <title>Camilo Rivera — Peintre &amp; Fondateur OSOM</title>
   <meta name="description" content="Camilo Rivera, artiste peintre et fondateur d'OSOM Creative. Huile sur toile, encre de Chine. Un pont entre abstraction et figuration. Bramois, Valais, Suisse.">
   <meta name="theme-color" content="#070707">
+  <link rel="canonical" href="https://www.camilorivera.ch/">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Camilo Rivera — Peintre & Fondateur OSOM">
@@ -52,7 +53,7 @@
       <li><a href="#about">&#192; propos</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="nav-toggle" aria-label="Menu">
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-mobile-menu">
       <span></span>
       <span></span>
       <span></span>
@@ -60,7 +61,7 @@
   </nav>
 
   <!-- Mobile Menu Overlay -->
-  <div class="nav-mobile">
+  <div class="nav-mobile" id="nav-mobile-menu">
     <a href="#gallery">&#338;uvres</a>
     <a href="#about">&#192; propos</a>
     <a href="#contact">Contact</a>
@@ -102,16 +103,16 @@
     </div>
 
     <div class="gallery-filters reveal">
-      <button class="filter-btn active" data-filter="all">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true">
         Tout <span class="count">115</span>
       </button>
-      <button class="filter-btn" data-filter="paintings">
+      <button class="filter-btn" data-filter="paintings" aria-pressed="false">
         Peintures <span class="count">29</span>
       </button>
-      <button class="filter-btn" data-filter="encres">
+      <button class="filter-btn" data-filter="encres" aria-pressed="false">
         Encres <span class="count">26</span>
       </button>
-      <button class="filter-btn" data-filter="shooting">
+      <button class="filter-btn" data-filter="shooting" aria-pressed="false">
         Atelier <span class="count">60</span>
       </button>
     </div>

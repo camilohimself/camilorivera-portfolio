@@ -3,84 +3,23 @@
    "Probably the most beautiful portfolio in the world"
    ═══════════════════════════════════════════════ */
 
-// ── Gallery Data ────────────────────────────────
-
-const GALLERY = {
-  paintings: [
-    "2069C456-9AE8-4F5A-B35E-52B80A9605D2.webp",
-    "241240340_255290506453650_8691736928064111730_n.webp",
-    "245ED55B-2694-478D-AF2A-2391A61F5005.webp",
-    "4F9CB35A-F34A-4D53-B785-53F2C264A2CC 2.webp",
-    "5bdca9d5-f8be-4cba-bf45-aa0a8a393a49.webp",
-    "C02001B6-E7C4-4E98-8719-A72A5C222221.webp",
-    "DA381FB0-8774-4F18-A775-176A062AA833 2.webp",
-    "E69C2BAA-DDDB-4CAC-A621-FBBA68373234 3.webp",
-    "FA261FBD-CB95-427F-A772-0D0A9E998D9E 2.webp",
-    "IMG_0586.webp", "IMG_0763.webp", "IMG_0792 2.webp",
-    "IMG_0869 2.webp", "IMG_4098.webp", "IMG_4104.webp",
-    "IMG_5030.webp", "IMG_5036.webp", "IMG_5048.webp",
-    "berceau bleu.webp", "lejaune.webp",
-    "119134831_121586616111055_4139209887395335536_n.webp",
-    "44489551_735378140156879_8490676937891947937_n.webp",
-    "45991042_353783608509449_6629598230452393544_n.webp",
-    "46141362_136434087338223_1568855912250128174_n.webp",
-    "46522503_1183661995121902_5060497401993855762_n.webp",
-    "47203626_201263684162569_3329879816042593797_n.webp",
-    "76845302_2716476255134187_2382461608643389949_n.webp",
-    "Abstrait 2017-2.webp", "Abstrait 2017.webp"
-  ],
-  encres: [
-    "1025E971-FC37-4284-B104-508562EF2D17.webp",
-    "27216297-5A1A-44BA-8F04-DE41FB32E77E.webp",
-    "3873A3C3-3FEA-4EA1-88DF-DD5DBED3DE54.webp",
-    "3AF5264E-328A-4A24-BC65-4E7586AAF4D8.webp",
-    "43150C4B-17AB-4B21-B5BF-28B02985BE81.webp",
-    "7390EA9D-8440-4D5A-99CE-0F93E80098FA.webp",
-    "82E94A6B-E49D-4430-91AC-94D596E18576.webp",
-    "9B6F8B83-B5BF-41A0-98D7-19C864B8EC90.webp",
-    "B6BB33BB-CF53-433E-ABF8-55C5E44F0B4B.webp",
-    "B7B8FC71-48B0-413E-9C58-C8F7450D6E51.webp",
-    "CEEBA166-0861-40C9-90C3-8B7714BA8143.webp",
-    "DE67C11E-EA54-4B63-AF46-35AB65BC9A1E.webp",
-    "IMG_1894.webp", "IMG_1963.webp", "IMG_2057.webp",
-    "IMG_2161.webp", "IMG_3708.webp", "IMG_3710.webp",
-    "IMG_3718.webp", "IMG_3727.webp", "IMG_3736.webp",
-    "IMG_3737.webp", "IMG_3868 2.webp", "IMG_4810 2.webp",
-    "IMG_4815.webp", "IMG_4936.webp"
-  ],
-  shooting: [
-    "IMG_4316-2-opt.webp", "IMG_4316-opt.webp", "IMG_4317-opt.webp",
-    "IMG_4318-opt.webp", "IMG_4331-opt.webp", "IMG_4333-opt.webp",
-    "IMG_4335-opt.webp", "IMG_4341-opt.webp", "IMG_4344-opt.webp",
-    "IMG_4347-opt.webp", "IMG_4350-opt.webp", "IMG_4351 2-opt.webp",
-    "IMG_4351-opt.webp", "IMG_4360 2-opt.webp", "IMG_4360-opt.webp",
-    "IMG_4362-opt.webp", "IMG_4367-opt.webp", "IMG_4371-opt.webp",
-    "IMG_4376-opt.webp", "IMG_4377-opt.webp", "IMG_4391-opt.webp",
-    "IMG_4396-opt.webp", "IMG_4400-opt.webp", "IMG_4405-opt.webp",
-    "IMG_4413-opt.webp", "IMG_4414-opt.webp", "IMG_4419-opt.webp",
-    "IMG_4420-opt.webp", "IMG_4423-opt.webp",
-    "IMG_4425-opt.webp", "IMG_4428-opt.webp", "IMG_4430-opt.webp",
-    "IMG_4433-opt.webp", "IMG_4434-opt.webp", "IMG_4435-opt.webp",
-    "IMG_4441-opt.webp", "IMG_4443-opt.webp", "IMG_4447-opt.webp",
-    "IMG_4449-opt.webp", "IMG_4452-opt.webp", "IMG_4454-opt.webp",
-    "IMG_4459-opt.webp", "IMG_4464-opt.webp", "IMG_4465-opt.webp",
-    "IMG_4472-opt.webp", "IMG_4477-opt.webp", "IMG_4480-opt.webp",
-    "IMG_4482-opt.webp", "IMG_4488-opt.webp", "IMG_4489-opt.webp",
-    "IMG_4490-opt.webp", "IMG_4496-opt.webp", "IMG_4503-opt.webp",
-    "IMG_4519-opt.webp", "IMG_4526-opt.webp", "IMG_4547-opt.webp",
-    "IMG_4550-opt.webp", "IMG_4613-opt.webp", "IMG_4615-opt.webp",
-    "IMG_4633-opt.webp"
-  ]
-};
-
-const LABELS = { paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Atelier' };
+// ── Données ─────────────────────────────────────
+// Les œuvres sont des DONNÉES (works.json), plus du code. La galerie est
+// construite au runtime depuis works.json, dans l'ordre du tableau (curatable
+// en réordonnant le JSON). Aucun tirage aléatoire : l'ordre est FIXE et reproductible.
+const SITE = 'https://www.camilorivera.ch/';
 const PATHS = { paintings: 'images/paintings/', encres: 'images/encres/', shooting: 'images/shooting/' };
 
 // ── State ───────────────────────────────────────
+let WORKS = [];                    // tableau works.json, dans l'ordre d'affichage
+const WORKS_BY_SLUG = {};          // index slug → œuvre
+
 let currentFilter = 'all';
 let lightboxGallery = [];
 let lightboxIndex = 0;
 let lightboxOpen = false;
+let lightboxSourceEl = null;       // vignette d'origine → restitution du focus
+let lightboxPushed = false;        // a-t-on empilé une entrée d'historique à l'ouverture ?
 let mouseX = 0, mouseY = 0;
 let cursorX = 0, cursorY = 0;
 let ringX = 0, ringY = 0;
@@ -96,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomCursor();
   initHeroTextReveal();
   initNavigation();
-  initGallery();
   initLightbox();
   initParallax();
   initScrollReveal();
@@ -104,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollProgress();
   initBackToTop();
   initScrollDispatcher();
+  // La galerie est asynchrone (fetch works.json) : les hooks qui dépendent des
+  // vignettes (observers, curseur galerie, magnétique, deep-link) sont enchaînés
+  // APRÈS le rendu réel, à l'intérieur de initGallery — plus de setTimeout arbitraires.
+  initGallery();
 });
 
 // ══════════════════════════════════════════════
@@ -153,55 +95,41 @@ function initCustomCursor() {
   }
   animate();
 
-  // Hover states for interactive elements
+  // Hover states for interactive elements présents au chargement (nav, filtres).
+  // Les vignettes de galerie, elles, sont câblées après leur rendu réel
+  // (initGalleryInteractions), plus de setTimeout(100).
   document.querySelectorAll('a, button, .filter-btn').forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
-
-  // Gallery items get special cursor
-  const addGalleryCursor = () => {
-    document.querySelectorAll('.gallery-item').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        document.body.classList.remove('cursor-hover');
-        document.body.classList.add('cursor-gallery');
-      });
-      el.addEventListener('mouseleave', () => {
-        document.body.classList.remove('cursor-gallery');
-      });
-    });
-  };
-
-  // Run after gallery is built
-  setTimeout(addGalleryCursor, 100);
-
-  // Magnetic hover effect on gallery items
-  initMagneticHover();
 }
 
 // ══════════════════════════════════════════════
-// MAGNETIC HOVER
+// GALLERY INTERACTIONS — curseur galerie + effet magnétique
+// Câblé APRÈS le rendu réel de la galerie (fini les setTimeout 100/200).
 // ══════════════════════════════════════════════
-function initMagneticHover() {
+function initGalleryInteractions() {
   if ('ontouchstart' in window) return;
 
-  // Debounced setup after gallery renders
-  setTimeout(() => {
-    document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('mousemove', (e) => {
-        const rect = item.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        const strength = 0.03;
-
-        item.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
-      });
-
-      item.addEventListener('mouseleave', () => {
-        item.style.transform = '';
-      });
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      document.body.classList.remove('cursor-hover');
+      document.body.classList.add('cursor-gallery');
     });
-  }, 200);
+
+    // Effet magnétique : léger suivi du curseur.
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      item.style.transform = `translate(${x * 0.03}px, ${y * 0.03}px)`;
+    });
+
+    item.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-gallery');
+      item.style.transform = '';
+    });
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -256,15 +184,17 @@ function initNavigation() {
 
   if (toggle && mobile) {
     toggle.addEventListener('click', () => {
-      toggle.classList.toggle('active');
-      mobile.classList.toggle('open');
-      document.body.style.overflow = mobile.classList.contains('open') ? 'hidden' : '';
+      const open = mobile.classList.toggle('open');
+      toggle.classList.toggle('active', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
     });
 
     mobile.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         toggle.classList.remove('active');
         mobile.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       });
     });
@@ -272,7 +202,10 @@ function initNavigation() {
 
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
-      const target = document.querySelector(a.getAttribute('href'));
+      const href = a.getAttribute('href');
+      // #oeuvre/<slug> n'est pas une ancre de scroll : laisser le hash tel quel.
+      if (href.startsWith('#oeuvre/')) return;
+      const target = href === '#' ? null : document.querySelector(href);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth' });
@@ -282,15 +215,33 @@ function initNavigation() {
 }
 
 // ══════════════════════════════════════════════
-// GALLERY
+// GALLERY — données → rendu
 // ══════════════════════════════════════════════
-function createGalleryItem(item) {
+// alt descriptif : œuvres → « Titre — technique, Camilo Rivera » ;
+// atelier → « Atelier de Camilo Rivera — photo N ».
+function altFor(work) {
+  if (work.category === 'shooting') {
+    const n = parseInt(work.slug.split('-')[1], 10);
+    return `Atelier de Camilo Rivera — photo ${n}`;
+  }
+  return `${work.title} — ${work.technique}, Camilo Rivera`;
+}
+
+function createGalleryItem(work) {
+  const src = PATHS[work.category] + work.file;
+
   const el = document.createElement('div');
   el.className = 'gallery-item clip-reveal';
-  el.dataset.category = item.category;
+  el.dataset.category = work.category;
+  el.dataset.slug = work.slug;
+
+  // Accessibilité : la vignette ouvre la lightbox → focusable + activable clavier.
+  el.setAttribute('role', 'button');
+  el.setAttribute('tabindex', '0');
+  el.setAttribute('aria-label', altFor(work));
 
   const img = document.createElement('img');
-  img.alt = item.technique;
+  img.alt = altFor(work);
   img.loading = 'lazy';
 
   // Dimensions intrinsèques + srcset responsive (variantes générées par
@@ -301,14 +252,14 @@ function createGalleryItem(item) {
   // affecter src en premier déclenche immédiatement le fetch de la
   // pleine résolution et le navigateur ne rétrograde jamais vers la
   // variante 480/800 ensuite (sélection déjà faite, ressource en cache).
-  const dims = (typeof DIMS !== 'undefined') && DIMS[`${item.category}/${item.file}`];
+  const dims = (typeof DIMS !== 'undefined') && DIMS[`${work.category}/${work.file}`];
   if (dims) {
     const [w, h] = dims;
     img.width = w;
     img.height = h;
 
-    const stem = item.file.replace(/\.webp$/, '');
-    const base = PATHS[item.category];
+    const stem = work.file.replace(/\.webp$/, '');
+    const base = PATHS[work.category];
     // encodeURI() est indispensable ici : plusieurs fichiers contiennent
     // des espaces ("berceau bleu.webp") qui, non encodés, casseraient le
     // parsing de srcset (l'espace y sépare URL et descripteur de largeur).
@@ -316,94 +267,104 @@ function createGalleryItem(item) {
     img.srcset = [
       `${encodeURI(base + stem + '-480.webp')} 480w`,
       `${encodeURI(base + stem + '-800.webp')} 800w`,
-      `${encodeURI(item.src)} ${w}w`
+      `${encodeURI(src)} ${w}w`
     ].join(', ');
   }
-  img.src = item.src;
+  img.src = src;
 
   const overlay = document.createElement('div');
   overlay.className = 'gallery-item-overlay';
 
   const info = document.createElement('span');
   info.className = 'gallery-item-info';
-  info.textContent = item.technique;
+  info.textContent = work.technique;
 
   overlay.appendChild(info);
   el.appendChild(img);
   el.appendChild(overlay);
 
-  el.addEventListener('click', () => {
-    openLightbox(item.category, item.src, el);
+  const open = () => openLightbox(el, { history: 'push' });
+  el.addEventListener('click', open);
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
   });
 
   return el;
 }
 
-function initGallery() {
+async function initGallery() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
-  const allItems = [];
-  for (const [category, files] of Object.entries(GALLERY)) {
-    files.forEach((file, i) => {
-      allItems.push({ category, file, src: PATHS[category] + file, technique: LABELS[category], index: i });
-    });
+  try {
+    const res = await fetch('works.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    WORKS = await res.json();
+  } catch (err) {
+    // Échec réseau : galerie vide, message console, pas de crash. Les compteurs
+    // hardcodés d'index.html restent le repli no-JS et demeurent affichés.
+    console.error('[galerie] Échec du chargement de works.json — galerie vide :', err);
+    return;
   }
 
-  const shuffled = interleaveGallery(allItems);
-  shuffled.forEach(item => grid.appendChild(createGalleryItem(item)));
+  WORKS.forEach(w => { WORKS_BY_SLUG[w.slug] = w; });
 
-  // Stagger entrance with clip-path reveal
-  requestAnimationFrame(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px 80px 0px' });
+  // Rendu dans l'ordre du tableau (un seul reflow via fragment).
+  const frag = document.createDocumentFragment();
+  WORKS.forEach(work => frag.appendChild(createGalleryItem(work)));
+  grid.appendChild(frag);
 
-    grid.querySelectorAll('.gallery-item').forEach((item, i) => {
-      item.style.transitionDelay = `${(i % 8) * 0.05}s`;
-      observer.observe(item);
-    });
-  });
+  // ── Enchaînement post-rendu réel ──
+  updateFilterCounts(WORKS);
+  observeGalleryReveal(grid);
+  initGalleryInteractions();
+  initFilters(grid);
+  injectJsonLd(WORKS);
+  handleInitialDeepLink(grid);
+}
 
-  // Filters
+// Compteurs de filtres calculés depuis works.json (les valeurs hardcodées
+// d'index.html sont le repli no-JS ; on les remet à jour au chargement).
+function updateFilterCounts(works) {
+  const counts = { all: works.length, paintings: 0, encres: 0, shooting: 0 };
+  works.forEach(w => { if (counts[w.category] !== undefined) counts[w.category]++; });
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setFilter(btn.dataset.filter, grid);
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
+    const span = btn.querySelector('.count');
+    const key = btn.dataset.filter;
+    if (span && counts[key] !== undefined) span.textContent = counts[key];
   });
 }
 
-function interleaveGallery(items) {
-  const groups = {};
-  items.forEach(item => {
-    if (!groups[item.category]) groups[item.category] = [];
-    groups[item.category].push(item);
+// Entrée en scène (clip-path reveal) au scroll.
+function observeGalleryReveal(grid) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px 80px 0px' });
+
+  grid.querySelectorAll('.gallery-item').forEach((item, i) => {
+    item.style.transitionDelay = `${(i % 8) * 0.05}s`;
+    observer.observe(item);
   });
+}
 
-  Object.values(groups).forEach(arr => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+function initFilters(grid) {
+  const btns = document.querySelectorAll('.filter-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setFilter(btn.dataset.filter, grid);
+      btns.forEach(b => {
+        const active = b === btn;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    });
   });
-
-  const result = [];
-  const keys = Object.keys(groups);
-  const maxLen = Math.max(...Object.values(groups).map(a => a.length));
-
-  for (let i = 0; i < maxLen; i++) {
-    for (const key of keys) {
-      if (groups[key][i]) result.push(groups[key][i]);
-    }
-  }
-  return result;
 }
 
 function setFilter(filter, grid) {
@@ -416,8 +377,127 @@ function setFilter(filter, grid) {
 }
 
 // ══════════════════════════════════════════════
+// SEO — JSON-LD injecté depuis works.json
+// Un seul <script type="application/ld+json"> dans le <head> :
+// Person (l'artiste) + ItemList de VisualArtwork (les 55 œuvres,
+// l'atelier étant de la documentation, pas des œuvres).
+// ══════════════════════════════════════════════
+function injectJsonLd(works) {
+  const personId = SITE + '#camilo-rivera';
+  const person = {
+    '@type': 'Person',
+    '@id': personId,
+    name: 'Camilo Rivera',
+    jobTitle: 'Artiste peintre',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bramois',
+      addressRegion: 'Valais',
+      addressCountry: 'CH'
+    },
+    url: SITE,
+    sameAs: [
+      'https://www.instagram.com/camilohimself/',
+      'https://osomcreative.ch'
+    ]
+  };
+
+  const oeuvres = works.filter(w => w.category !== 'shooting');
+  const itemList = {
+    '@type': 'ItemList',
+    name: 'Œuvres de Camilo Rivera',
+    numberOfItems: oeuvres.length,
+    itemListElement: oeuvres.map((w, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'VisualArtwork',
+        name: w.title,
+        artform: w.category === 'paintings' ? 'Peinture' : 'Dessin',
+        artMedium: w.technique,
+        creator: { '@id': personId },
+        url: SITE + '#oeuvre/' + w.slug,
+        image: SITE + encodeURI(PATHS[w.category] + w.file)
+      }
+    }))
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [person, itemList] });
+  document.head.appendChild(script);
+}
+
+// ══════════════════════════════════════════════
+// DEEP-LINKS — #oeuvre/<slug>
+// ══════════════════════════════════════════════
+function parseOeuvreHash() {
+  const m = location.hash.match(/^#oeuvre\/(.+)$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function slugSelector(slug) {
+  const safe = (window.CSS && CSS.escape) ? CSS.escape(slug) : slug;
+  return `[data-slug="${safe}"]`;
+}
+
+function openWorkBySlug(slug, opts) {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  const el = grid.querySelector(slugSelector(slug));
+  if (el) openLightbox(el, opts);
+}
+
+// Au chargement avec #oeuvre/<slug> : positionne la galerie en arrière-plan
+// puis ouvre la lightbox. Slug inconnu → ignore silencieusement.
+function handleInitialDeepLink(grid) {
+  const slug = parseOeuvreHash();
+  if (!slug) return;
+  if (!WORKS_BY_SLUG[slug]) return;
+  const el = grid.querySelector(slugSelector(slug));
+  if (!el) return;
+  el.scrollIntoView({ block: 'center' });
+  openLightbox(el, { history: 'replace' });
+}
+
+// push  : ouverture par clic → empile une entrée #oeuvre/<slug>
+// replace: deep-link au chargement / navigation flèche → remplace en place
+// none  : réouverture via bouton Suivant du navigateur → ne touche pas l'historique
+function syncLightboxHistory(slug, mode) {
+  const url = '#oeuvre/' + slug;
+  if (mode === 'push') history.pushState(null, '', url);
+  else if (mode === 'replace') history.replaceState(null, '', url);
+}
+
+function onPopState() {
+  if (lightboxOpen) {
+    // Bouton Retour du navigateur alors que la lightbox est ouverte → on ferme.
+    // L'historique a déjà bougé : teardown seul (pas de nouvelle manip d'historique).
+    closeLightbox({ fromPopstate: true });
+    return;
+  }
+  // Bouton Suivant vers un état #oeuvre → on rouvre la lightbox.
+  const slug = parseOeuvreHash();
+  if (slug && WORKS_BY_SLUG[slug]) openWorkBySlug(slug, { history: 'none' });
+}
+
+// ══════════════════════════════════════════════
 // LIGHTBOX — Cinematic FLIP animation
 // ══════════════════════════════════════════════
+// Légende : « Titre · technique » pour les œuvres, technique seule pour l'atelier.
+// Année & dimensions ajoutées uniquement si renseignées (null aujourd'hui).
+function lightboxCaption(work) {
+  return [work.title, work.technique, work.dimensions, work.year]
+    .filter(Boolean)
+    .join(' · ');
+}
+
+// Libellé accessible (aria-label du dialog) : titre de l'œuvre, ou technique
+// pour l'atelier (title null).
+function lightboxLabel(work) {
+  return work.title || work.technique;
+}
+
 // Précharge les voisines (index-1 / index+1, modulo) dans le cache
 // navigateur : la flèche/le swipe suivant affiche une image déjà
 // chargée — fini le flash noir pendant le fetch.
@@ -436,30 +516,68 @@ function initLightbox() {
       case 'Escape': closeLightbox(); break;
       case 'ArrowLeft': e.preventDefault(); navigateLightbox(-1); break;
       case 'ArrowRight': e.preventDefault(); navigateLightbox(1); break;
+      case 'Tab': trapLightboxFocus(e); break;
     }
   });
+
+  // Bouton Retour/Suivant du navigateur.
+  window.addEventListener('popstate', onPopState);
 }
 
-function openLightbox(category, src, sourceEl) {
-  // Build gallery from visible items
+// Focus trap : Tab / Shift+Tab cyclent entre les contrôles de la lightbox.
+function trapLightboxFocus(e) {
+  const lb = document.getElementById('lightbox');
+  if (!lb) return;
+  const focusables = Array.from(lb.querySelectorAll('.lightbox-close, .lightbox-nav'))
+    .filter(el => el.offsetParent !== null);   // ignore les contrôles masqués (display:none)
+  if (!focusables.length) return;
+
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  const active = document.activeElement;
+
+  if (!lb.contains(active)) {
+    e.preventDefault();
+    first.focus();
+  } else if (e.shiftKey && active === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && active === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
+function openLightbox(sourceEl, { history: histMode = 'push' } = {}) {
+  const slug = sourceEl.dataset.slug;
+
+  // Galerie de la lightbox = items visibles (respecte le filtre courant).
   const items = document.querySelectorAll('.gallery-item:not(.hidden)');
   lightboxGallery = Array.from(items).map(el => ({
+    slug: el.dataset.slug,
+    // .src (l'attribut) reste l'URL PLEINE RÉSOLUTION même si le navigateur a
+    // chargé une variante srcset ; la lightbox affiche donc bien la pleine réso.
     src: el.querySelector('img').src,
-    technique: el.querySelector('.gallery-item-info').textContent,
-    el: el
+    work: WORKS_BY_SLUG[el.dataset.slug],
+    el
   }));
 
-  const filename = src.split('/').pop();
-  lightboxIndex = lightboxGallery.findIndex(item => item.src.includes(filename));
+  lightboxIndex = lightboxGallery.findIndex(it => it.slug === slug);
   if (lightboxIndex === -1) lightboxIndex = 0;
 
-  const item = lightboxGallery[lightboxIndex];
+  const entry = lightboxGallery[lightboxIndex];
+  const work = entry.work;
   const isTouch = 'ontouchstart' in window;
+
+  lightboxSourceEl = sourceEl;
 
   // Create lightbox with separate bg for FLIP
   const lb = document.createElement('div');
   lb.className = 'lightbox';
   lb.id = 'lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', lightboxLabel(work));
 
   const bg = document.createElement('div');
   bg.className = 'lightbox-bg';
@@ -467,8 +585,8 @@ function openLightbox(category, src, sourceEl) {
   const wrap = document.createElement('div');
   wrap.className = 'lightbox-image-wrap';
   const img = document.createElement('img');
-  img.src = item.src;
-  img.alt = item.technique;
+  img.src = entry.src;
+  img.alt = altFor(work);
   wrap.appendChild(img);
 
   const controls = document.createElement('div');
@@ -477,19 +595,21 @@ function openLightbox(category, src, sourceEl) {
   const closeBtn = document.createElement('button');
   closeBtn.className = 'lightbox-close';
   closeBtn.setAttribute('aria-label', 'Fermer');
-  closeBtn.textContent = '\u00d7';
+  closeBtn.textContent = '×';
 
   const prevBtn = document.createElement('button');
   prevBtn.className = 'lightbox-nav lightbox-prev';
-  prevBtn.textContent = '\u2039';
+  prevBtn.setAttribute('aria-label', 'Œuvre précédente');
+  prevBtn.textContent = '‹';
 
   const nextBtn = document.createElement('button');
   nextBtn.className = 'lightbox-nav lightbox-next';
-  nextBtn.textContent = '\u203a';
+  nextBtn.setAttribute('aria-label', 'Œuvre suivante');
+  nextBtn.textContent = '›';
 
-  const technique = document.createElement('span');
-  technique.className = 'lightbox-technique';
-  technique.textContent = item.technique;
+  const caption = document.createElement('span');
+  caption.className = 'lightbox-technique';
+  caption.textContent = lightboxCaption(work);
 
   const counter = document.createElement('span');
   counter.className = 'lightbox-counter';
@@ -498,7 +618,7 @@ function openLightbox(category, src, sourceEl) {
   controls.appendChild(closeBtn);
   controls.appendChild(prevBtn);
   controls.appendChild(nextBtn);
-  controls.appendChild(technique);
+  controls.appendChild(caption);
   controls.appendChild(counter);
 
   lb.appendChild(bg);
@@ -509,8 +629,10 @@ function openLightbox(category, src, sourceEl) {
   document.body.style.overflow = 'hidden';
   document.body.classList.add('cursor-hidden');
   lightboxOpen = true;
+  lightboxPushed = (histMode === 'push');
 
   preloadLightboxNeighbors(lightboxIndex);
+  syncLightboxHistory(slug, histMode);
 
   // FLIP animation from source element
   if (sourceEl) {
@@ -540,12 +662,15 @@ function openLightbox(category, src, sourceEl) {
     requestAnimationFrame(() => lb.classList.add('active'));
   }
 
+  // Focus initial sur le bouton fermer (preventScroll : la page ne bouge pas).
+  closeBtn.focus({ preventScroll: true });
+
   // Events
-  closeBtn.addEventListener('click', closeLightbox);
+  closeBtn.addEventListener('click', () => closeLightbox());
   prevBtn.addEventListener('click', () => navigateLightbox(-1));
   nextBtn.addEventListener('click', () => navigateLightbox(1));
 
-  bg.addEventListener('click', closeLightbox);
+  bg.addEventListener('click', () => closeLightbox());
 
   // ── MOBILE TOUCH: pinch-zoom, pan, swipe nav, swipe-down close ──
   if (isTouch) {
@@ -738,15 +863,18 @@ function navigateLightbox(dir) {
   if (lightboxGallery.length <= 1) return;
 
   lightboxIndex = (lightboxIndex + dir + lightboxGallery.length) % lightboxGallery.length;
-  const item = lightboxGallery[lightboxIndex];
+  const entry = lightboxGallery[lightboxIndex];
+  const work = entry.work;
   const lb = document.getElementById('lightbox');
   if (!lb) return;
 
   preloadLightboxNeighbors(lightboxIndex);
 
   const img = lb.querySelector('.lightbox-image-wrap img');
-  const technique = lb.querySelector('.lightbox-technique');
+  const caption = lb.querySelector('.lightbox-technique');
   const counter = lb.querySelector('.lightbox-counter');
+
+  lb.setAttribute('aria-label', lightboxLabel(work));
 
   img.style.opacity = '0';
   img.style.transform = `translateX(${dir * 40}px) scale(0.97)`;
@@ -754,9 +882,9 @@ function navigateLightbox(dir) {
   lb.classList.remove('lightbox-zoomed');
 
   setTimeout(() => {
-    img.src = item.src;
-    img.alt = item.technique;
-    technique.textContent = item.technique;
+    img.src = entry.src;
+    img.alt = altFor(work);
+    caption.textContent = lightboxCaption(work);
     counter.textContent = `${lightboxIndex + 1} / ${lightboxGallery.length}`;
 
     img.style.transform = `translateX(${-dir * 40}px) scale(0.97)`;
@@ -771,9 +899,12 @@ function navigateLightbox(dir) {
       }, 600);
     });
   }, 200);
+
+  // Deep-link : remplace le hash par le slug courant, sans empiler d'historique.
+  syncLightboxHistory(entry.slug, 'replace');
 }
 
-function closeLightbox() {
+function closeLightbox({ fromPopstate = false } = {}) {
   const lb = document.getElementById('lightbox');
   if (!lb) return;
 
@@ -784,6 +915,26 @@ function closeLightbox() {
   document.body.classList.remove('cursor-hidden');
 
   setTimeout(() => lb.remove(), 500);
+
+  // Historique : ne rien faire si la fermeture découle déjà d'un popstate
+  // (le navigateur a déjà dépilé l'entrée).
+  if (!fromPopstate) {
+    if (lightboxPushed) {
+      // On avait empilé une entrée #oeuvre à l'ouverture → on la dépile.
+      // Le popstate qui suit voit lightboxOpen=false → aucun double teardown.
+      history.back();
+    } else {
+      // Ouverture par deep-link direct (aucune entrée empilée) → on nettoie le hash.
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+  lightboxPushed = false;
+
+  // Restitution du focus à la vignette d'origine.
+  if (lightboxSourceEl && typeof lightboxSourceEl.focus === 'function') {
+    lightboxSourceEl.focus({ preventScroll: true });
+  }
+  lightboxSourceEl = null;
 }
 
 // ══════════════════════════════════════════════
@@ -824,7 +975,7 @@ function initTextReveal() {
       [...str].forEach(char => {
         const span = document.createElement('span');
         span.className = 'char';
-        span.textContent = char === ' ' ? '\u00a0' : char;
+        span.textContent = char === ' ' ? ' ' : char;
         span.style.transitionDelay = `${i * 0.025}s`;
         i++;
         frag.appendChild(span);
