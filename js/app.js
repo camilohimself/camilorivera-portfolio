@@ -19,7 +19,8 @@
   let language = 'fr';
   let works = [];
   let bySlug = new Map();
-  let currentFilter = 'all';
+  let currentFilter = new URLSearchParams(location.search).get('collection') || 'all';
+  if (!CATEGORIES.includes(currentFilter)) currentFilter = 'all';
   let visibleCount = PAGE_SIZE;
   let collectionLoading = false;
   let sourceElement = null;
@@ -31,13 +32,12 @@
   let shareTimer;
   let requestedFrame = false;
   let userReduced = readPreference('cr-motion') === 'reduced';
-  let filmController;
 
   const english = {
     location: 'Bramois, Valais · Switzerland', works: 'The works', about: 'About', contact: 'Contact',
-    heroEyebrow: 'Painting & creation', heroLine1: 'From pigment', heroLine2: 'to <em>pixel.</em>',
-    heroDescription: 'Oil for texture. Ink for the figure.<br>Digital to explore new possibilities.<br>The same need to create.',
-    explore: 'Explore the works', heroFootnote: 'A bridge between abstraction<br>and figuration.',
+    heroEyebrow: 'Scattered notes of a painter', heroLine1: 'Paint.', heroLine2: 'Keep <em>traces.</em>',
+    heroDescription: 'Canvases, notebooks, places passed through.<br>What remains between two gestures.',
+    explore: 'Open the journal', heroFootnote: 'From a line on paper<br>to a place remembered.',
     viewWork: 'View the work', oil: 'Oil on canvas', originalWork: 'Original artwork · Camilo Rivera',
     heroSignature: 'An artist born in Chile, rooted in Valais.', scroll: 'Follow your gaze',
     collection: 'The collection', galleryTitle: 'What the gesture<br><em>leaves behind.</em>',
@@ -64,7 +64,7 @@
   };
   const labels = {
     fr: {
-      title: 'Camilo Rivera — Du pigment au pixel',
+      title: 'Camilo Rivera — Peindre et garder des traces',
       technique: {paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Photographie d’atelier'},
       loading: 'La collection se prépare…', images: 'images', shown: 'affichées', of: 'sur',
       unknown: 'Cette œuvre ne figure pas dans la collection.', copied: 'Lien copié',
@@ -81,7 +81,7 @@
       filmError: 'Le film n’a pas pu être chargé. Vous pouvez réessayer.'
     },
     en: {
-      title: 'Camilo Rivera — From pigment to pixel',
+      title: 'Camilo Rivera — Paint and keep traces',
       technique: {paintings: 'Oil on canvas', encres: 'India ink', shooting: 'Studio photograph'},
       loading: 'Preparing the collection…', images: 'images', shown: 'shown', of: 'of',
       unknown: 'This work could not be found in the collection.', copied: 'Link copied',
@@ -185,127 +185,6 @@
     button.disabled = systemMotion.matches;
     $('.motion-symbol').textContent = calm ? '▷' : 'Ⅱ';
     if (calm) $$('.reveal').forEach(el => el.classList.add('is-visible'));
-    filmController?.preferencesChanged();
-  }
-
-  function initFilm() {
-    const film = $('#atelier-film');
-    const frame = $('.matter-image');
-    const button = $('.film-toggle');
-    const message = $('.film-message');
-    const connection = navigator.connection;
-    let inView = false;
-    let userPaused = false;
-    let userStarted = false;
-    let blocked = false;
-    let failed = false;
-    let pendingPlay = null;
-    let lastReduced = reducedMotion();
-    let lastEconomy = saveBandwidth();
-
-    function saveBandwidth() {
-      return Boolean(connection?.saveData || /^(slow-)?2g$/.test(connection?.effectiveType || ''));
-    }
-    function shouldPlay() {
-      return inView && !document.hidden && !viewer.open && !userPaused && !blocked &&
-        (userStarted || (!reducedMotion() && !saveBandwidth()));
-    }
-    function updateButton() {
-      const playing = !film.paused || Boolean(pendingPlay && shouldPlay());
-      button.classList.toggle('is-playing', playing);
-      button.setAttribute('aria-label', t(playing ? 'filmPauseLabel' : 'filmPlayLabel'));
-      $('span', button).textContent = t(playing ? 'filmPause' : 'filmPlay');
-      message.textContent = failed ? t('filmError') : '';
-    }
-    function sync() {
-      if (!shouldPlay()) {
-        film.pause();
-        updateButton();
-        return;
-      }
-      // No source is attached until the film is visible and playback is allowed.
-      // The chosen file remains in use after a resize to avoid a second download.
-      if (!film.getAttribute('src')) {
-        film.muted = true;
-        film.defaultMuted = true;
-        film.volume = 0;
-        const compact = innerWidth <= 700 || saveBandwidth() || connection?.effectiveType === '3g';
-        film.src = compact ? film.dataset.mobileSrc : film.dataset.desktopSrc;
-      }
-      if (!film.paused || pendingPlay) {
-        updateButton();
-        return;
-      }
-      pendingPlay = Promise.resolve(film.play());
-      updateButton();
-      pendingPlay.catch(error => {
-        // A viewport exit can abort a pending play. Browser autoplay refusals
-        // wait for a deliberate tap instead of retrying in a loop.
-        if (error.name !== 'AbortError') blocked = true;
-      }).finally(() => {
-        pendingPlay = null;
-        if (!shouldPlay()) film.pause();
-        else if (film.paused) sync();
-        updateButton();
-      });
-    }
-    function preferencesChanged() {
-      const calm = reducedMotion();
-      const economy = saveBandwidth();
-      if ((calm && !lastReduced) || (economy && !lastEconomy)) userStarted = false;
-      lastReduced = calm;
-      lastEconomy = economy;
-      sync();
-    }
-    button.hidden = false;
-    button.addEventListener('click', () => {
-      if (!film.paused || (pendingPlay && shouldPlay())) {
-        userPaused = true;
-      } else {
-        userPaused = false;
-        userStarted = true;
-        blocked = false;
-        if (failed) {
-          film.removeAttribute('src');
-          film.load();
-          failed = false;
-        }
-      }
-      sync();
-    });
-    film.addEventListener('playing', () => {
-      if (!shouldPlay()) film.pause();
-      else frame.classList.add('has-film');
-      updateButton();
-    });
-    film.addEventListener('pause', updateButton);
-    film.addEventListener('error', () => {
-      failed = true;
-      blocked = true;
-      frame.classList.remove('has-film');
-      updateButton();
-    });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries => {
-        inView = entries[0].isIntersecting && entries[0].intersectionRatio >= .25;
-        sync();
-      }, {threshold: [0, .25]}).observe(frame);
-    } else {
-      const checkVisibility = () => {
-        const rect = frame.getBoundingClientRect();
-        inView = rect.top < innerHeight * .75 && rect.bottom > innerHeight * .25;
-        sync();
-      };
-      window.addEventListener('scroll', checkVisibility, {passive: true});
-      window.addEventListener('resize', checkVisibility, {passive: true});
-      checkVisibility();
-    }
-    document.addEventListener('visibilitychange', sync);
-    window.addEventListener('pagehide', () => film.pause());
-    window.addEventListener('pageshow', sync);
-    connection?.addEventListener?.('change', preferencesChanged);
-    updateButton();
-    return {sync, preferencesChanged};
   }
 
   let revealObserver;
@@ -360,7 +239,7 @@
     $('.scroll-progress').style.transform = 'scaleX(' + (maxScroll > 0 ? y / maxScroll : 0) + ')';
     const navPoint = viewport * .42;
     let active = '';
-    for (const id of ['gallery', 'about', 'contact']) {
+    for (const id of ['journal', 'gallery', 'about', 'contact']) {
       const rect = document.getElementById(id).getBoundingClientRect();
       if (rect.top <= navPoint && rect.bottom > navPoint) active = id;
     }
@@ -534,7 +413,6 @@
       viewer.showModal();
       document.body.style.top = '-' + savedScroll + 'px';
       document.body.classList.add('viewer-open');
-      filmController?.sync();
     }
     viewerIndex = viewerWorks.findIndex(item => item.slug === slug);
     if (viewerIndex < 0) {
@@ -621,7 +499,6 @@
     sourceElement = null;
     clearTimeout(shareTimer);
     scheduleScroll();
-    filmController?.sync();
   }
 
   function syncFromUrl() {
@@ -779,7 +656,6 @@
   $('.language-toggle').addEventListener('click', () => setLanguage(language === 'fr' ? 'en' : 'fr'));
   $('#year').textContent = new Date().getFullYear();
   initMotion();
-  filmController = initFilm();
   initViewer();
   if (readPreference('cr-language') === 'en') setLanguage('en');
   loadCollection();

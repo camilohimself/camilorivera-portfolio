@@ -1,0 +1,919 @@
+[
+  {
+    "id": "un-trait",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/22710415_502897843399388_4031039433946955776_n.jpg",
+    "file": "images/journal/un-trait.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/un-trait-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/un-trait-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une silhouette tracée finement sur une page",
+      "en": "A figure drawn in fine lines on a page"
+    },
+    "credit": null
+  },
+  {
+    "id": "entre-deux-toiles",
+    "group": "matieres",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/31889210_1490972477679193_2832323901403430912_n.jpg",
+    "file": "images/journal/entre-deux-toiles.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/entre-deux-toiles-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/entre-deux-toiles-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Deux toiles bleues et brunes traversées par un câble",
+      "en": "Two blue and brown canvases crossed by a cable"
+    },
+    "credit": null
+  },
+  {
+    "id": "figures-au-lavis",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/31920885_193190981311745_5385776031544115200_n.jpg",
+    "file": "images/journal/figures-au-lavis.webp",
+    "width": 1080,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/figures-au-lavis-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/figures-au-lavis-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Figures au trait et au lavis sur une feuille inclinée",
+      "en": "Figures in ink and wash on a tilted sheet"
+    },
+    "credit": null
+  },
+  {
+    "id": "trois-cadres",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/32048513_2130693787217779_7886099227254718464_n.jpg",
+    "file": "images/journal/trois-cadres.webp",
+    "width": 1080,
+    "height": 608,
+    "variants": [
+      {
+        "file": "images/journal/trois-cadres-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/trois-cadres-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Trois dessins à l’encre dans leurs cadres noirs",
+      "en": "Three ink drawings in black frames"
+    },
+    "credit": null
+  },
+  {
+    "id": "tete-en-bas",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/33060927_2116650161953228_7181581460925579264_n.jpg",
+    "file": "images/journal/tete-en-bas.webp",
+    "width": 1056,
+    "height": 934,
+    "variants": [
+      {
+        "file": "images/journal/tete-en-bas-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/tete-en-bas-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Figures à l’encre répétées, la tête en bas",
+      "en": "Repeated ink figures, upside down"
+    },
+    "credit": null
+  },
+  {
+    "id": "quelques-mots",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/33375941_1844219715880598_8558666856422965248_n.jpg",
+    "file": "images/journal/quelques-mots.webp",
+    "width": 1080,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/quelques-mots-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/quelques-mots-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Quelques mots manuscrits et des taches d’encre sur le papier",
+      "en": "Handwritten words and ink spots on paper"
+    },
+    "credit": null
+  },
+  {
+    "id": "au-bout-du-stylo",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/36741583_426793494485043_4904879366728581120_n.jpg",
+    "file": "images/journal/au-bout-du-stylo.webp",
+    "width": 720,
+    "height": 720,
+    "variants": [
+      {
+        "file": "images/journal/au-bout-du-stylo-480.webp",
+        "width": 480
+      }
+    ],
+    "alt": {
+      "fr": "Une main dessine une figure dans un carnet à spirale",
+      "en": "A hand draws a figure in a spiral notebook"
+    },
+    "credit": null
+  },
+  {
+    "id": "terre-et-braise",
+    "group": "matieres",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/47691770_341752346380970_791987516367536284_n.jpg",
+    "file": "images/journal/terre-et-braise.webp",
+    "width": 1080,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/terre-et-braise-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/terre-et-braise-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Matière peinte aux tons de rouille, de noir et d’ocre",
+      "en": "Painted texture in rust, black and ochre"
+    },
+    "credit": null
+  },
+  {
+    "id": "un-visage",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/49715076_1099364536903727_612743000708519469_n.jpg",
+    "file": "images/journal/un-visage.webp",
+    "width": 1035,
+    "height": 1293,
+    "variants": [
+      {
+        "file": "images/journal/un-visage-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/un-visage-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Un visage esquissé sur un papier ocre",
+      "en": "A face sketched on ochre paper"
+    },
+    "credit": null
+  },
+  {
+    "id": "regard-ocre",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/83107844_209429070104412_1382241286301943150_n.jpg",
+    "file": "images/journal/regard-ocre.webp",
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "file": "images/journal/regard-ocre-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/regard-ocre-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Un visage aux traits bruns sur fond jaune",
+      "en": "A face drawn in brown on yellow paper"
+    },
+    "credit": null
+  },
+  {
+    "id": "miroir-brise",
+    "group": "traces",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/101950586_276483343474318_7885535231082873999_n.jpg",
+    "file": "images/journal/miroir-brise.webp",
+    "width": 150,
+    "height": 150,
+    "variants": [],
+    "alt": {
+      "fr": "Un reflet fragmenté dans un miroir brisé",
+      "en": "A fragmented reflection in a broken mirror"
+    },
+    "credit": null
+  },
+  {
+    "id": "figures-ocres",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/83999287_1368698476670056_3595785814543081860_n.jpg",
+    "file": "images/journal/figures-ocres.webp",
+    "width": 1440,
+    "height": 1800,
+    "variants": [
+      {
+        "file": "images/journal/figures-ocres-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/figures-ocres-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Figures allongées aux traits bruns sur papier ocre",
+      "en": "Elongated figures in brown on ochre paper"
+    },
+    "credit": null
+  },
+  {
+    "id": "pages-ouvertes",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/126844463_770033073551509_4803696755473515570_n.jpg",
+    "file": "images/journal/pages-ouvertes.webp",
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "file": "images/journal/pages-ouvertes-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/pages-ouvertes-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Un carnet ouvert rempli de silhouettes à l’encre",
+      "en": "An open notebook filled with ink figures"
+    },
+    "credit": null
+  },
+  {
+    "id": "rouge-et-blanc",
+    "group": "matieres",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/242446490_953315531920312_6328625191289278189_n.jpg",
+    "file": "images/journal/rouge-et-blanc.webp",
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "file": "images/journal/rouge-et-blanc-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/rouge-et-blanc-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Plans rouges, blancs et noirs dans une composition peinte",
+      "en": "Red, white and black shapes in a painted composition"
+    },
+    "credit": null
+  },
+  {
+    "id": "papier-quadrille",
+    "group": "carnets",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/244303042_576869936767716_4885151738612883035_n.jpg",
+    "file": "images/journal/papier-quadrille.webp",
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "file": "images/journal/papier-quadrille-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/papier-quadrille-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Des figures dessinées sur une page quadrillée",
+      "en": "Figures drawn on squared paper"
+    },
+    "credit": null
+  },
+  {
+    "id": "or-dans-l-ombre",
+    "group": "matieres",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/247517244_230033472449559_2360171462569633113_n.jpg",
+    "file": "images/journal/or-dans-l-ombre.webp",
+    "width": 1080,
+    "height": 1920,
+    "variants": [
+      {
+        "file": "images/journal/or-dans-l-ombre-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/or-dans-l-ombre-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Touches dorées dans une matière sombre et bleue",
+      "en": "Golden marks in dark blue painted texture"
+    },
+    "credit": null
+  },
+  {
+    "id": "pres-de-la-fenetre",
+    "group": "traces",
+    "source": "camilohimself (@camiloriverart) • Photos et vidéos Instagram_files/399746273_280953547671794_8406941872564121294_n(1).jpg",
+    "file": "images/journal/pres-de-la-fenetre.webp",
+    "width": 320,
+    "height": 320,
+    "variants": [],
+    "alt": {
+      "fr": "Une silhouette encapuchonnée au travail près d’une fenêtre",
+      "en": "A hooded figure at work beside a window"
+    },
+    "credit": null
+  },
+  {
+    "id": "abstrait-4",
+    "group": "matieres",
+    "source": "PAINTINGS/peintures/Abstrait4.jpg",
+    "file": "images/journal/abstrait-4.webp",
+    "width": 1679,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/journal/abstrait-4-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/abstrait-4-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une forme verticale émerge d’une toile claire",
+      "en": "A vertical form emerges from a pale canvas"
+    },
+    "credit": null
+  },
+  {
+    "id": "eclats-dans-le-bleu",
+    "group": "matieres",
+    "source": "PAINTINGS/peintures/Fichier_000.jpeg",
+    "file": "images/journal/eclats-dans-le-bleu.webp",
+    "width": 1111,
+    "height": 1075,
+    "variants": [
+      {
+        "file": "images/journal/eclats-dans-le-bleu-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/eclats-dans-le-bleu-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Éclats bleus, rouges et blancs dans une matière peinte",
+      "en": "Blue, red and white bursts in painted texture"
+    },
+    "credit": null
+  },
+  {
+    "id": "un-horizon",
+    "group": "matieres",
+    "source": "PAINTINGS/peintures/Fichier_000(1).jpeg",
+    "file": "images/journal/un-horizon.webp",
+    "width": 1139,
+    "height": 1152,
+    "variants": [
+      {
+        "file": "images/journal/un-horizon-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/un-horizon-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Composition aux bleus intenses, jaunes et gris",
+      "en": "A composition in intense blue, yellow and grey"
+    },
+    "credit": null
+  },
+  {
+    "id": "composition-3",
+    "group": "matieres",
+    "source": "PAINTINGS/peintures/composition3.JPG",
+    "file": "images/journal/composition-3.webp",
+    "width": 1800,
+    "height": 1784,
+    "variants": [
+      {
+        "file": "images/journal/composition-3-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/composition-3-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une lumière grise traverse une composition très sombre",
+      "en": "Grey light crosses a very dark composition"
+    },
+    "credit": null
+  },
+  {
+    "id": "dans-la-brume",
+    "group": "matieres",
+    "source": "PAINTINGS/peintures/DSCN5834.JPG",
+    "file": "images/journal/dans-la-brume.webp",
+    "width": 1800,
+    "height": 1793,
+    "variants": [
+      {
+        "file": "images/journal/dans-la-brume-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/dans-la-brume-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une forme rouge se devine dans des brumes grises",
+      "en": "A red form appears through grey haze"
+    },
+    "credit": null
+  },
+  {
+    "id": "premieres-couleurs",
+    "group": "matieres",
+    "source": "PAINTINGS/26225560_1970884806564854_768142385354899456_n.jpg",
+    "file": "images/journal/premieres-couleurs.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/premieres-couleurs-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/premieres-couleurs-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Peinture aux bleus, jaunes et rouges diffus",
+      "en": "Painting with diffuse blues, yellows and reds"
+    },
+    "credit": null
+  },
+  {
+    "id": "ombres-et-lumieres",
+    "group": "matieres",
+    "source": "PAINTINGS/43985050_198942287563469_6486441862302058506_n.jpg",
+    "file": "images/journal/ombres-et-lumieres.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/ombres-et-lumieres-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/ombres-et-lumieres-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Formes sombres, blancs lumineux et une touche jaune",
+      "en": "Dark forms, luminous whites and a yellow mark"
+    },
+    "credit": null
+  },
+  {
+    "id": "traces-epaisses",
+    "group": "matieres",
+    "source": "PAINTINGS/44489551_735378140156879_8490676937891947937_n.jpg",
+    "file": "images/journal/traces-epaisses.webp",
+    "width": 1080,
+    "height": 1077,
+    "variants": [
+      {
+        "file": "images/journal/traces-epaisses-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/traces-epaisses-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Empâtements bruns, blancs et bleus sur la toile",
+      "en": "Thick brown, white and blue paint on canvas"
+    },
+    "credit": null
+  },
+  {
+    "id": "rythmes",
+    "group": "matieres",
+    "source": "PAINTINGS/44898227_1381987418604707_2994768184345554793_n.jpg",
+    "file": "images/journal/rythmes.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/rythmes-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/rythmes-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Rythmes bruns et bleus sur un fond clair",
+      "en": "Brown and blue rhythms on a pale background"
+    },
+    "credit": null
+  },
+  {
+    "id": "rouges",
+    "group": "matieres",
+    "source": "PAINTINGS/45265634_2143383019045731_534453910224100273_n.jpg",
+    "file": "images/journal/rouges.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/rouges-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/rouges-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Traces rouges et sombres sur un fond blanc",
+      "en": "Red and dark marks on a white background"
+    },
+    "credit": null
+  },
+  {
+    "id": "vert-de-bleu",
+    "group": "matieres",
+    "source": "PAINTINGS/45991042_353783608509449_6629598230452393544_n.jpg",
+    "file": "images/journal/vert-de-bleu.webp",
+    "width": 1080,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/vert-de-bleu-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/vert-de-bleu-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Peinture en verts pâles, bleus et blancs",
+      "en": "Painting in pale green, blue and white"
+    },
+    "credit": null
+  },
+  {
+    "id": "signes",
+    "group": "matieres",
+    "source": "PAINTINGS/46141362_136434087338223_1568855912250128174_n.jpg",
+    "file": "images/journal/signes.webp",
+    "width": 1080,
+    "height": 896,
+    "variants": [
+      {
+        "file": "images/journal/signes-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/signes-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Signes noirs et rouges sur une composition blanche",
+      "en": "Black and red signs on a white composition"
+    },
+    "credit": null
+  },
+  {
+    "id": "couches",
+    "group": "matieres",
+    "source": "PAINTINGS/46522503_1183661995121902_5060497401993855762_n.jpg",
+    "file": "images/journal/couches.webp",
+    "width": 1080,
+    "height": 1080,
+    "variants": [
+      {
+        "file": "images/journal/couches-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/couches-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Couches de peinture brunes et blanches ponctuées de jaune",
+      "en": "Layers of brown and white paint with touches of yellow"
+    },
+    "credit": null
+  },
+  {
+    "id": "le-rouge-revient",
+    "group": "matieres",
+    "source": "PAINTINGS/47203626_201263684162569_3329879816042593797_n.jpg",
+    "file": "images/journal/le-rouge-revient.webp",
+    "width": 1080,
+    "height": 1069,
+    "variants": [
+      {
+        "file": "images/journal/le-rouge-revient-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/le-rouge-revient-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une composition rouge, blanche et brune",
+      "en": "A composition in red, white and brown"
+    },
+    "credit": null
+  },
+  {
+    "id": "bleus",
+    "group": "matieres",
+    "source": "PAINTINGS/76845302_2716476255134187_2382461608643389949_n.jpg",
+    "file": "images/journal/bleus.webp",
+    "width": 1440,
+    "height": 1800,
+    "variants": [
+      {
+        "file": "images/journal/bleus-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/bleus-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Des figures suggérées dans une peinture bleue et ocre",
+      "en": "Suggested figures in blue and ochre paint"
+    },
+    "credit": null
+  },
+  {
+    "id": "terres-chaudes",
+    "group": "matieres",
+    "source": "PAINTINGS/119134831_121586616111055_4139209887395335536_n.jpg",
+    "file": "images/journal/terres-chaudes.webp",
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "file": "images/journal/terres-chaudes-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/terres-chaudes-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Des formes roses et grises dans une peinture ocre",
+      "en": "Pink and grey forms in an ochre painting"
+    },
+    "credit": null
+  },
+  {
+    "id": "la-main",
+    "group": "traces",
+    "source": "photos divers/6ad4a636-d6a6-4813-9d5c-afd59e90ed0a.JPG",
+    "file": "images/journal/la-main.webp",
+    "width": 604,
+    "height": 1024,
+    "variants": [
+      {
+        "file": "images/journal/la-main-480.webp",
+        "width": 480
+      }
+    ],
+    "alt": {
+      "fr": "Portrait en noir et blanc, une main tendue vers l’objectif",
+      "en": "Black and white portrait, a hand reaching towards the lens"
+    },
+    "credit": null
+  },
+  {
+    "id": "affiche-2017",
+    "group": "traces",
+    "source": "photos divers/19693789_10155578733853478_965281453056086372_o.jpg",
+    "file": "images/journal/affiche-2017.webp",
+    "width": 1448,
+    "height": 2048,
+    "variants": [
+      {
+        "file": "images/journal/affiche-2017-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/affiche-2017-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Affiche de l’exposition de Camilo Rivera et Sabine Leyat Filliez à La Tour Lombarde, du 2 juin au 2 juillet 2017",
+      "en": "Poster for the exhibition by Camilo Rivera and Sabine Leyat Filliez at La Tour Lombarde, 2 June to 2 July 2017"
+    },
+    "credit": null
+  },
+  {
+    "id": "figure-encre",
+    "group": "carnets",
+    "source": "photos divers/IMG_2041.jpg",
+    "file": "images/journal/figure-encre.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/journal/figure-encre-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/figure-encre-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une figure à l’encre noire, entourée d’éclaboussures",
+      "en": "A figure in black ink surrounded by splashes"
+    },
+    "credit": null
+  },
+  {
+    "id": "a-l-atelier",
+    "group": "traces",
+    "source": "shooting Atelier/IMG_4331.jpg",
+    "file": "images/journal/a-l-atelier.webp",
+    "width": 1800,
+    "height": 1311,
+    "variants": [
+      {
+        "file": "images/journal/a-l-atelier-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/a-l-atelier-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Camilo Rivera peint dans son atelier, photographie en noir et blanc",
+      "en": "Camilo Rivera painting in his studio, black and white photograph"
+    },
+    "credit": null
+  },
+  {
+    "id": "caves-lumiere",
+    "group": "les-caves",
+    "source": "photos divers/Photos URBEX_Zuber/_D818693.tif",
+    "file": "images/journal/caves-lumiere.webp",
+    "width": 1800,
+    "height": 1201,
+    "variants": [
+      {
+        "file": "images/journal/caves-lumiere-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/caves-lumiere-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une toile sur le mur des anciennes caves Provins, dans la lumière d’une fenêtre",
+      "en": "A canvas on a wall in the former Provins cellars, lit by a window"
+    },
+    "credit": "Photographies : David Zuber"
+  },
+  {
+    "id": "caves-mur",
+    "group": "les-caves",
+    "source": "photos divers/Photos URBEX_Zuber/_D818699-Modifier.tif",
+    "file": "images/journal/caves-mur.webp",
+    "width": 1800,
+    "height": 1201,
+    "variants": [
+      {
+        "file": "images/journal/caves-mur-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/caves-mur-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une peinture suspendue au mur blanc des anciennes caves Provins",
+      "en": "A painting hanging on a white wall in the former Provins cellars"
+    },
+    "credit": "Photographies : David Zuber"
+  },
+  {
+    "id": "caves-silence",
+    "group": "les-caves",
+    "source": "photos divers/Photos URBEX_Zuber/_D818709-Modifier.tif",
+    "file": "images/journal/caves-silence.webp",
+    "width": 1800,
+    "height": 1168,
+    "variants": [
+      {
+        "file": "images/journal/caves-silence-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/caves-silence-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une toile dans une salle sombre aux murs bruts des anciennes caves Provins",
+      "en": "A canvas in a dark room with bare walls in the former Provins cellars"
+    },
+    "credit": "Photographies : David Zuber"
+  },
+  {
+    "id": "caves-passage",
+    "group": "les-caves",
+    "source": "photos divers/Photos URBEX_Zuber/_D818711.tif",
+    "file": "images/journal/caves-passage.webp",
+    "width": 1800,
+    "height": 1201,
+    "variants": [
+      {
+        "file": "images/journal/caves-passage-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/caves-passage-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une toile lumineuse au bout d’un couloir des anciennes caves Provins",
+      "en": "A luminous canvas at the end of a corridor in the former Provins cellars"
+    },
+    "credit": "Photographies : David Zuber"
+  }
+]

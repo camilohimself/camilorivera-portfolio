@@ -3,35 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Camilo Rivera — Du pigment au pixel</title>
+  <title>Camilo Rivera — Peindre et garder des traces</title>
   <meta name="description" content="Camilo Rivera, artiste peintre à Bramois, Valais. Huile sur toile, encre de Chine et création digitale. Un pont entre abstraction et figuration.">
   <meta name="theme-color" content="#f5f0e8">
   <link rel="canonical" href="https://www.camilorivera.ch/">
-  <meta property="og:title" content="Camilo Rivera — Du pigment au pixel">
+  <meta property="og:title" content="Camilo Rivera — Peindre et garder des traces">
   <meta property="og:description" content="Huile sur toile, encre de Chine et création digitale. Entrez dans l’univers de Camilo Rivera, artiste peintre en Valais.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.camilorivera.ch/">
   <meta property="og:image" content="https://www.camilorivera.ch/images/paintings/IMG_0586.webp">
   <meta property="og:locale" content="fr_CH">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Camilo Rivera — Du pigment au pixel">
+  <meta name="twitter:title" content="Camilo Rivera — Peindre et garder des traces">
   <meta name="twitter:description" content="Huile sur toile, encre de Chine et création digitale. Bramois, Valais.">
   <meta name="twitter:image" content="https://www.camilorivera.ch/images/paintings/IMG_0586.webp">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="fonts/cormorant-garamond-300.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=20260910-film">
+  <link rel="stylesheet" href="css/style.css?v=20260910-journal">
   <script src="js/dims.generated.js?v=20260712" defer></script>
-  <script src="js/app.js?v=20260910-film" defer></script>
+  <script src="js/app.js?v=20260910-journal" defer></script>
+  <script src="js/journal.js?v=20260910-journal" defer></script>
+  <script src="js/films.js?v=20260910-journal" defer></script>
+  <link rel="stylesheet" href="css/journal.css?v=20260910-journal">
 </head>
-<body>
+<body class="home-journal">
   <a class="skip-link" href="#main">Aller au contenu</a>
   <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
     <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h15M12 5l7 7-7 7"/></symbol>
     <symbol id="diagonal" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol>
     <symbol id="grid-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></symbol>
     <symbol id="person-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="book-icon" viewBox="0 0 24 24"><path d="M12 6c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v15"/></symbol>
     <symbol id="mail-icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></symbol>
   </defs></svg>
   <div class="scroll-progress" aria-hidden="true"></div>
@@ -40,6 +44,7 @@
     <a class="wordmark" href="#top" aria-label="Camilo Rivera, accueil">Camilo Rivera<span aria-hidden="true">.</span></a>
     <span class="header-location" data-i18n="location">Bramois, Valais · Suisse</span>
     <nav class="desktop-nav" aria-label="Navigation principale">
+      <a href="journal/" data-section="journal" data-en="The journal">Le journal</a>
       <a href="#gallery" data-section="gallery" data-i18n="works">Les œuvres</a>
       <a href="#about" data-section="about" data-i18n="about">À propos</a>
       <a class="nav-contact" href="#contact" data-section="contact"><span data-i18n="contact">Contact</span><svg><use href="#diagonal"/></svg></a>
@@ -53,13 +58,15 @@
   <main id="main">
     <section class="hero section-shell" id="top" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow hero-enter"><span class="status-dot" aria-hidden="true"></span><span data-i18n="heroEyebrow">Peinture & création</span></p>
-        <h1 id="hero-title" class="hero-title"><span class="title-line"><span data-i18n="heroLine1">Du pigment</span></span><span class="title-line"><span data-i18n="heroLine2">au <em>pixel.</em></span></span></h1>
-        <p class="hero-description hero-enter" data-i18n="heroDescription">L’huile pour la matière. L’encre pour la figure.<br>Le digital pour ouvrir d’autres possibles.<br>Un même besoin de créer.</p>
-        <a class="text-link hero-enter" href="#gallery"><span data-i18n="explore">Explorer les œuvres</span><span class="round-arrow"><svg><use href="#arrow"/></svg></span></a>
-        <div class="hero-footnote hero-enter"><span class="tiny-index">01 — 03</span><span data-i18n="heroFootnote">Un pont entre abstraction<br>et figuration.</span></div>
+        <p class="eyebrow hero-enter"><span class="status-dot" aria-hidden="true"></span><span data-i18n="heroEyebrow">Notes éparses d’un peintre</span></p>
+        <h1 id="hero-title" class="hero-title"><span class="title-line"><span data-i18n="heroLine1">Peindre.</span></span><span class="title-line"><span data-i18n="heroLine2">Garder <em>des traces.</em></span></span></h1>
+        <p class="hero-description hero-enter" data-i18n="heroDescription">Des toiles, des carnets, des lieux traversés.<br>Ce qui reste, entre deux gestes.</p>
+        <a class="text-link hero-enter" href="journal/"><span data-i18n="explore">Ouvrir le journal</span><span class="round-arrow"><svg><use href="#arrow"/></svg></span></a>
+        <div class="hero-footnote hero-enter"><span class="tiny-index">Notes / 01</span><span data-i18n="heroFootnote">Du trait sur le papier<br>aux lieux traversés.</span></div>
       </div>
       <figure class="hero-art">
+        <a class="hero-scrap paper-edge" href="journal/carnets/" aria-label="Ouvrir les carnets" data-aria-en="Open the notebooks"><img src="images/journal/figure-encre-480.webp" width="480" height="640" alt="Une silhouette à l’encre noire" data-alt-en="A figure in black ink" decoding="async"><span data-en="a line, again">encore un trait</span></a>
+        <a class="hero-stamp" href="journal/traces/" aria-label="Lire les traces d’atelier" data-aria-en="Read the studio traces"><img src="images/journal/a-l-atelier-480.webp" width="480" height="350" alt="Camilo Rivera en train de peindre" data-alt-en="Camilo Rivera painting" decoding="async"></a>
         <a class="hero-art-link" href="images/paintings/IMG_0586.webp" data-work="abstrait-996" aria-label="Voir Abstrait 996">
           <div class="hero-art-image"><img src="images/paintings/IMG_0586.webp" srcset="images/paintings/IMG_0586-480.webp 480w, images/paintings/IMG_0586-800.webp 800w, images/paintings/IMG_0586.webp 1200w" sizes="(max-width: 700px) 90vw, 45vw" width="1200" height="1231" fetchpriority="high" alt="Abstrait 996, huile sur toile aux gestes blancs, noirs, bleus et ocres"></div>
           <span class="art-open"><span data-i18n="viewWork">Voir l’œuvre</span><svg><use href="#diagonal"/></svg></span>
@@ -70,9 +77,11 @@
       <div class="hero-bottom"><span data-i18n="heroSignature">Artiste peintre, né au Chili, ancré en Valais.</span><a href="#gallery"><span data-i18n="scroll">Au fil du regard</span><svg><use href="#arrow"/></svg></a></div>
     </section>
 
+<section class="journal-door section-shell" id="journal" aria-labelledby="journal-door-title"><div class="door-heading paper-reveal"><p class="eyebrow" data-en="01 / The journal">01 / Le journal</p><h2 id="journal-door-title" data-en="There are the works.&lt;br&gt;&lt;em&gt;And everything around them.&lt;/em&gt;">Il y a les œuvres.<br><em>Et tout autour.</em></h2><p class="journal-prose" data-en="Open notebooks, places passed through, pieces of life.">Des carnets ouverts, des lieux traversés, des morceaux de vie.</p></div><div class="door-board"><a class="door-card door-carnets" href="journal/carnets/"><div class="door-image"><img src="images/journal/pages-ouvertes-900.webp" srcset="images/journal/pages-ouvertes-480.webp 480w, images/journal/pages-ouvertes-900.webp 900w, images/journal/pages-ouvertes.webp 1440w" sizes="(max-width: 700px) 42vw, 23vw" width="1440" height="1440" alt="Un carnet ouvert rempli de silhouettes à l’encre" data-alt-en="An open notebook filled with ink figures" decoding="async" loading="lazy"></div><span class="door-caption"><span class="door-number">01</span><span class="door-name" data-en="The notebooks">Les carnets</span><span aria-hidden="true">↗</span></span></a><a class="door-card door-matieres" href="journal/matieres/"><div class="door-image"><img src="images/journal/le-rouge-revient-900.webp" srcset="images/journal/le-rouge-revient-480.webp 480w, images/journal/le-rouge-revient-900.webp 900w, images/journal/le-rouge-revient.webp 1080w" sizes="(max-width: 700px) 42vw, 23vw" width="1080" height="1069" alt="Une composition rouge, blanche et brune" data-alt-en="A composition in red, white and brown" decoding="async" loading="lazy"></div><span class="door-caption"><span class="door-number">02</span><span class="door-name" data-en="The paint">La matière</span><span aria-hidden="true">↗</span></span></a><a class="door-card door-les-caves" href="journal/les-caves/"><div class="door-image"><img src="images/journal/caves-lumiere-900.webp" srcset="images/journal/caves-lumiere-480.webp 480w, images/journal/caves-lumiere-900.webp 900w, images/journal/caves-lumiere.webp 1800w" sizes="(max-width: 700px) 42vw, 23vw" width="1800" height="1201" alt="Une toile sur le mur des anciennes caves Provins, dans la lumière d’une fenêtre" data-alt-en="A canvas on a wall in the former Provins cellars, lit by a window" decoding="async" loading="lazy"></div><span class="door-caption"><span class="door-number">03</span><span class="door-name" data-en="The cellars">Les caves</span><span aria-hidden="true">↗</span></span></a><a class="door-card door-traces" href="journal/traces/"><div class="door-image"><img src="images/journal/la-main.webp" srcset="images/journal/la-main-480.webp 480w, images/journal/la-main.webp 604w" sizes="(max-width: 700px) 42vw, 23vw" width="604" height="1024" alt="Portrait en noir et blanc, une main tendue vers l’objectif" data-alt-en="Black and white portrait, a hand reaching towards the lens" decoding="async" loading="lazy"></div><span class="door-caption"><span class="door-number">04</span><span class="door-name" data-en="The traces">Les traces</span><span aria-hidden="true">↗</span></span></a></div><div class="door-footer"><p data-en="There is no need to begin at the beginning.">Rien n’oblige à commencer par le début.</p><a class="text-link" href="journal/"><span data-en="Leaf through the journal">Feuilleter le journal</span><svg aria-hidden="true"><use href="#arrow"/></svg></a></div></section>
+
     <section class="gallery section-shell" id="gallery" aria-labelledby="gallery-title">
       <div class="section-heading reveal">
-        <p class="eyebrow"><span class="section-number">01</span><span data-i18n="collection">La collection</span></p>
+        <p class="eyebrow"><span class="section-number">02</span><span data-i18n="collection">La collection</span></p>
         <div class="heading-row"><h2 id="gallery-title" data-i18n="galleryTitle">Ce que le geste<br><em>laisse derrière lui.</em></h2><p class="section-intro" data-i18n="galleryIntro">La matière, le trait, le silence.<br>Chaque œuvre, une autre façon<br>de regarder.</p></div>
       </div>
       <div class="gallery-toolbar">
@@ -95,14 +104,15 @@
       <div class="gallery-more"><p id="gallery-count"></p><button class="button button-outline" id="load-more" type="button" hidden><span data-i18n="loadMore">Poursuivre l’exploration</span><svg><use href="#arrow"/></svg></button></div>
     </section>
 
-    <section class="matter" id="geste" aria-labelledby="matter-title">
+    <section class="matter" data-film id="geste" aria-labelledby="matter-title">
       <div class="matter-stage">
         <div class="matter-copy">
           <p class="matter-kicker eyebrow" data-i18n="matterKicker">Dans l’intimité du geste</p>
           <h2 id="matter-title"><span data-i18n="matterLine1">Tout commence</span><em data-i18n="matterLine2">par un geste.</em></h2>
           <p class="matter-note" data-i18n="matterNote">L’encre se pose. La figure apparaît.</p>
+          <a class="text-link matter-journal-link" href="journal/carnets/"><span data-en="Turn the notebook’s pages">Tourner les pages du carnet</span><svg><use href="#arrow"/></svg></a>
         </div>
-        <div class="matter-image">
+        <div class="matter-image film-frame">
           <img class="film-poster" src="images/hero/geste-encre-poster.webp" alt="Une figure à l’encre, traversée de bleus et de violets, en cours de création" width="900" height="1014" loading="lazy" decoding="async">
           <video id="atelier-film" muted playsinline loop preload="none" width="900" height="1014" aria-label="Une figure prend forme à l’encre" aria-describedby="film-description" data-mobile-src="videos/geste-encre-mobile.mp4" data-desktop-src="videos/geste-encre-desktop.mp4"></video>
         </div>
@@ -116,7 +126,7 @@
     </section>
 
     <section class="about dark-section section-shell" id="about" aria-labelledby="about-title">
-      <div class="section-heading reveal"><p class="eyebrow"><span class="section-number">02</span><span data-i18n="behindWorks">Derrière les œuvres</span></p></div>
+      <div class="section-heading reveal"><p class="eyebrow"><span class="section-number">03</span><span data-i18n="behindWorks">Derrière les œuvres</span></p></div>
       <div class="about-grid">
         <figure class="about-portrait reveal"><img src="images/shooting/IMG_4428-opt.webp" srcset="images/shooting/IMG_4428-opt-480.webp 480w, images/shooting/IMG_4428-opt-800.webp 800w, images/shooting/IMG_4428-opt.webp 1200w" sizes="(max-width: 700px) 90vw, 40vw" alt="Camilo Rivera au travail dans son atelier" width="1200" height="1800" loading="lazy" decoding="async"><figcaption><span>Camilo Rivera</span><span data-i18n="portraitCaption">À l’atelier, Bramois</span></figcaption></figure>
         <div class="about-copy reveal"><h2 id="about-title" data-i18n="aboutTitle">Peindre.<br>Tracer.<br><em>Construire.</em></h2><p class="about-lead" data-i18n="aboutLead">Né au Chili. Grandi en Valais.<br>Et toujours, ce besoin de créer.</p><p data-i18n="aboutBody1">Je peins depuis une dizaine d’années. L’huile d’abord : la matière, le geste, l’abstraction. Puis l’encre de Chine, et avec elle la figure. Un trait plus nu, plus direct.</p><p data-i18n="aboutBody2">Ce même élan me conduit à imaginer des sites et des applications chez OSOM Labs, l’agence que j’ai fondée à Bramois. De la toile au code, partir de rien et construire quelque chose qui tient.</p><a class="text-link" href="https://www.osom.ch" target="_blank" rel="noopener noreferrer"><span data-i18n="discoverOsom">L’autre côté du geste : OSOM Labs</span><svg><use href="#diagonal"/></svg></a></div>
@@ -125,7 +135,7 @@
     </section>
 
     <section class="contact section-shell" id="contact" aria-labelledby="contact-title">
-      <p class="eyebrow reveal"><span class="section-number">03</span><span data-i18n="conversation">La conversation continue</span></p>
+      <p class="eyebrow reveal"><span class="section-number">04</span><span data-i18n="conversation">La conversation continue</span></p>
       <div class="contact-heading reveal"><h2 id="contact-title" data-i18n="contactTitle">Une œuvre.<br>Une idée.<br><em>Parlons-en.</em></h2><a class="contact-round" href="mailto:camrivera@protonmail.com" aria-label="Écrire à Camilo Rivera"><svg><use href="#diagonal"/></svg></a></div>
       <div class="contact-bottom reveal"><p data-i18n="contactText">Une question sur une œuvre, une collaboration,<br>ou simplement l’envie d’échanger.</p><a class="contact-email" href="mailto:camrivera@protonmail.com">camrivera@protonmail.com<svg><use href="#diagonal"/></svg></a></div>
     </section>
@@ -133,7 +143,7 @@
 
   <footer class="site-footer section-shell"><a class="wordmark" href="#top">Camilo Rivera<span aria-hidden="true">.</span></a><span>© <span id="year">2026</span> Camilo Rivera</span><div><a href="https://www.instagram.com/camilohimself/" target="_blank" rel="noopener noreferrer">Instagram<svg><use href="#diagonal"/></svg></a><a href="https://www.osom.ch" target="_blank" rel="noopener noreferrer">OSOM Labs<svg><use href="#diagonal"/></svg></a><a class="back-top" href="#top" aria-label="Retour en haut">↑</a></div></footer>
 
-  <nav class="mobile-dock" aria-label="Navigation mobile"><a href="#gallery" data-section="gallery"><svg><use href="#grid-icon"/></svg><span data-i18n="works">Les œuvres</span></a><a href="#about" data-section="about"><svg><use href="#person-icon"/></svg><span data-i18n="about">À propos</span></a><a href="#contact" data-section="contact"><svg><use href="#mail-icon"/></svg><span data-i18n="contact">Contact</span></a></nav>
+  <nav class="mobile-dock" aria-label="Navigation mobile"><a href="journal/" data-section="journal"><svg><use href="#book-icon"/></svg><span data-en="Journal">Journal</span></a><a href="#gallery" data-section="gallery"><svg><use href="#grid-icon"/></svg><span data-i18n="works">Les œuvres</span></a><a href="#about" data-section="about"><svg><use href="#person-icon"/></svg><span data-i18n="about">À propos</span></a><a href="#contact" data-section="contact"><svg><use href="#mail-icon"/></svg><span data-i18n="contact">Contact</span></a></nav>
 
   <dialog class="viewer" id="viewer" aria-labelledby="viewer-title" aria-describedby="viewer-meta">
     <div class="viewer-top"><span class="viewer-brand">Camilo Rivera<span>.</span></span><div><button class="viewer-share icon-button" type="button" aria-label="Partager l’œuvre"><svg><use href="#diagonal"/></svg><span data-i18n="share">Partager</span></button><button class="viewer-close icon-button" type="button" aria-label="Fermer la visionneuse"><span data-i18n="close">Fermer</span><span class="close-icon" aria-hidden="true"></span></button></div></div>

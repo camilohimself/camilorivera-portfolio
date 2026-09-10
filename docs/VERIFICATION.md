@@ -80,3 +80,48 @@ Inspection des fichiers avec `ffprobe` :
 Les deux fichiers durent 21,3 secondes. Le fichier fourni pesait 14 813 159 octets. La taille mobile est réduite d’environ 94 %. Aucun essai sur iPhone physique ni en réseau mobile réel ; ces limites restent applicables.
 
 `node --check js/app.js`, `node tools/validate-portfolio.mjs` et `git diff --check` ont tous terminé avec le code de sortie 0 après cette intégration.
+
+## Journal, archives et maillage interne
+
+L’accueil et les cinq nouvelles pages ont été parcourus et capturés en 390 × 844 et 1440 × 1000 pixels. Le premier parcours termine avec 13 contrôles et 12 audits automatisés, sans erreur JavaScript ni anomalie d’accessibilité détectée. Aucun fichier vidéo n’est chargé au premier affichage de ces six pages.
+
+La suite d’interactions du journal termine avec 26 contrôles et 10 audits supplémentaires, tous sans anomalie détectée :
+
+- Agrandissement des archives, clavier, zoom, maintien du focus, glissement tactile réel et lien propre à chaque image.
+- Copie par lien sélectionnable lorsque le presse-papiers est refusé, puis retour au même emplacement et au même lien après fermeture. Retour arrière et avant du navigateur, et accès direct à une photographie des caves avec son crédit.
+- Page suivante, langue et préférence de mouvement conservées entre les chapitres.
+- Renvois vers les encres, les peintures et les photographies d’atelier : filtres sélectionnés et compteurs 26, 29 et 60 vérifiés après chargement.
+- Cent combinaisons examinées : cinq pages, dix formats, deux langues. Largeurs de 320 à 1920 pixels, dont 844 × 390 en paysage. Aucun titre coupé au bord de l’écran ni débordement horizontal détecté.
+- Commandes de la visionneuse accessibles à 320 × 568, 844 × 390 et 1440 × 1000.
+- Lecture réelle des deux nouveaux films, en versions mobile et ordinateur ; fichier adapté, silence, pause volontaire, arrêt derrière une image agrandie et reprise à sa fermeture.
+- Sommaire, chapitres et images utilisables sans JavaScript.
+- Mouvement réduit et économie de données simulée : aucun chargement automatique et lecture explicite fonctionnelle.
+
+Les audits des pages entières ont été exécutés avec tous les contenus révélés. Les légendes sur fond ocre ont été renforcées et les couleurs du bouton vidéo ne se fondent plus l’une dans l’autre pendant son changement d’état. La position de lecture est enregistrée avant l’ouverture de la visionneuse pour que le retour du navigateur ne ramène pas en haut de page.
+
+Les suites de la collection et du film d’accueil ont également été relancées : 17 et 23 contrôles validés, avec leurs cinq audits sans anomalie. Cela représente 79 contrôles de parcours dans les quatre suites, plus les mesures du mouvement au défilement et les validations statiques. Les audits automatisés restent des vérifications limitées, pas une certification.
+
+Le lecteur des deux nouveaux films a aussi été utilisé dans le navigateur intégré de l’application. Le premier a été observé à 7,99 secondes sur 32,6 secondes ; le second à 7,16 secondes sur 16,83 secondes, avec `muted: true`, `volume: 0`, `readyState: 4` et aucune erreur média. Le premier se trouvait en pause après avoir quitté son cadre ; le second était en lecture.
+
+Inspection des nouveaux fichiers :
+
+| Film | Version | Taille | Dimensions | Durée |
+| --- | --- | ---: | --- | --- |
+| Deux figures | Mobile | 2 076 377 octets | 640 × 598 | 32,6 s |
+| Deux figures | Ordinateur | 4 165 015 octets | 1000 × 934 | 32,6 s |
+| Encre en mouvement | Mobile | 1 012 158 octets | 540 × 684 | 16,83 s |
+| Encre en mouvement | Ordinateur | 2 527 865 octets | 900 × 1140 | 16,83 s |
+
+Les six fichiers utilisés par les trois films ont été inspectés : une seule piste, vidéo H.264, 30 images par seconde. Le dernier photogramme exporté de « Deux figures » montre le dessin et exclut le carton final. Les sources fournies n’ont pas été modifiées.
+
+Sorties du validateur du journal :
+
+```text
+OK — 6 pages, 384 références locales, aucune ancre manquante.
+OK — 41 archives utilisées, 117 images et variantes, descriptions FR et EN.
+OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.
+```
+
+Les noms et le contexte des caves proviennent des informations fournies par Camilo. Le nom de l’exposition, les deux artistes et les dates de 2017 ont été lus sur l’affiche fournie. Les proportions, la syntaxe des scripts, les liens et les références accessibles des pages ont été vérifiés. Les mesures locales de l’accueil indiquent zéro déplacement cumulé de mise en page et aucune requête externe ; les temps locaux ne sont pas des mesures de production.
+
+Les limites restent les mêmes : pas d’iPhone physique, pas de réseau mobile réel, pas d’essai dans les applications Safari et Firefox, et aucune fusion, aucun envoi distant ni publication. Les pages restent sur la branche locale `version-astra`.

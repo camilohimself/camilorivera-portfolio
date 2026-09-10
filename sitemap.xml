@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.camilorivera.ch/</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-10</lastmod>
   </url>
+  <url><loc>https://www.camilorivera.ch/journal/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://www.camilorivera.ch/journal/carnets/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://www.camilorivera.ch/journal/matieres/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://www.camilorivera.ch/journal/les-caves/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://www.camilorivera.ch/journal/traces/</loc><lastmod>2026-09-10</lastmod></url>
 </urlset>

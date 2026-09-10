@@ -2,7 +2,7 @@
 
 Site personnel de Camilo Rivera, artiste peintre à Bramois, Valais.
 
-La version `version-astra` propose une galerie éditoriale bilingue, un parcours animé au défilement, un film silencieux du geste à l’encre, une navigation mobile en bas d’écran et une visionneuse accessible. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier.
+La version `version-astra` réunit une galerie bilingue et un journal d’artiste en cinq pages. L’accueil met en scène Abstrait 996 parmi des fragments de carnet et d’atelier. Le journal accueille 41 images d’archives et deux nouveaux films, en complément du film de l’accueil. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier.
 
 ## Aperçu local
 
@@ -19,14 +19,25 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `works.json` : titres, ordre, techniques et métadonnées du catalogue. Les identifiants existants sont permanents.
 - `index.html` : structure de la page, textes français et premier contenu accessible sans script.
 - `css/style.css` : couleurs, typographie locale, compositions et comportements adaptatifs.
-- `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences, lecture du film et effets au défilement.
+- `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences et effets au défilement.
+- `journal/index.html` : sommaire du journal, relié aux quatre chapitres.
+- `journal/carnets/index.html` : douze images de carnets et deux films du geste.
+- `journal/matieres/index.html` : vingt archives de peinture.
+- `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.
+- `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017.
+- `journal/archives.json` : inventaire des sources, variantes, descriptions françaises et anglaises et crédits connus.
+- `css/journal.css` et `js/journal.js` : compositions, langues, préférences et visionneuse des archives.
+- `js/films.js` : lecteur silencieux commun aux trois films.
 - `js/dims.generated.js` : dimensions générées des images, à conserver comme fichier généré.
 - `images/` et `fonts/` : ressources locales, sans téléchargement depuis un service tiers.
 - `videos/geste-encre-mobile.mp4` et `videos/geste-encre-desktop.mp4` : film de 21,3 secondes, sans piste audio, en deux tailles. L’image de repli est `images/hero/geste-encre-poster.webp`.
+- `videos/deux-figures-*.mp4` et `videos/encre-en-mouvement-*.mp4` : films des carnets en deux tailles, respectivement 32,6 et 16,83 secondes, sans piste audio. Leurs images de repli sont dans `images/journal/`.
 
 Le filtre initial présente les peintures et encres dans l’ordre du catalogue. Les photos ont leur propre filtre. Douze images sont affichées à la fois ; la visionneuse permet de parcourir toute la catégorie choisie.
 
 Les commandes de partage proposent l’URL canonique de l’œuvre. La prise de contact ouvre un courrier avec la référence de l’œuvre, sans l’envoyer.
+
+Les chapitres sont reliés par un sommaire, des liens de page précédente et suivante, et des liens vers la collection avec sa sélection déjà active : `?collection=paintings#gallery`, `?collection=encres#gallery` et `?collection=shooting#gallery`. Les photos du journal ont une adresse propre dans leur chapitre : `#fragment/<identifiant>`. Le bouton de copie conserve l’adresse de la version consultée, y compris pour un aperçu local. Les pages et les images restent accessibles sans JavaScript.
 
 Les préférences de langue et de mouvement sont mémorisées localement. Si ce stockage est bloqué, le site continue de fonctionner. Le réglage système de réduction des animations est prioritaire.
 
@@ -36,7 +47,10 @@ Le film se trouve entre la collection et la présentation de l’atelier, à l�
 
 ```sh
 node --check js/app.js
+node --check js/journal.js
+node --check js/films.js
 node tools/validate-portfolio.mjs
+node tools/validate-journal.mjs
 git diff --check
 ```
 
