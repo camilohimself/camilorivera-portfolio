@@ -31,6 +31,7 @@
   let shareTimer;
   let requestedFrame = false;
   let userReduced = readPreference('cr-motion') === 'reduced';
+  let filmController;
 
   const english = {
     location: 'Bramois, Valais · Switzerland', works: 'The works', about: 'About', contact: 'Contact',
@@ -45,8 +46,10 @@
     galleryTip: 'Something catches your eye? Come closer.',
     galleryError: 'The full collection could not be loaded. You can still explore these first works.',
     retry: 'Try again', loadMore: 'Continue exploring',
-    matterKicker: 'Closer to the material', matterLine1: 'It all begins', matterLine2: 'with a gesture.',
-    matterDetail: 'Oil on canvas · Detail', matterNote: 'Take a moment to look.',
+    matterKicker: 'Inside the gesture', matterLine1: 'It all begins', matterLine2: 'with a gesture.',
+    matterDetail: 'Ink on paper · In the studio', matterNote: 'Ink settles. A figure emerges.',
+    filmSilent: 'Silent film',
+    filmDescription: 'Seen from above, a figure is drawn in ink, then blue and purple inks spread across the paper. The film ends on the finished work. There is no sound.',
     behindWorks: 'Behind the works', portraitCaption: 'In the studio, Bramois',
     aboutTitle: 'Paint.<br>Draw.<br><em>Build.</em>',
     aboutLead: 'Born in Chile. Raised in Valais.<br>And always, the need to create.',
@@ -72,7 +75,10 @@
       shooting: 'Le quotidien de l’atelier, à Bramois.',
       studioTitle: 'À l’atelier', inquiry: 'À propos de', imageAlt: 'de Camilo Rivera',
       network: 'La collection n’a pas pu être chargée.', sold: 'Collection privée', available: 'Disponible',
-      stage: 'Image agrandie, faites défiler pour explorer'
+      stage: 'Image agrandie, faites défiler pour explorer',
+      filmPlay: 'Lire le film', filmPause: 'Pause', filmPlayLabel: 'Lire la vidéo sans son',
+      filmPauseLabel: 'Mettre la vidéo en pause',
+      filmError: 'Le film n’a pas pu être chargé. Vous pouvez réessayer.'
     },
     en: {
       title: 'Camilo Rivera — From pigment to pixel',
@@ -86,7 +92,10 @@
       shooting: 'Everyday moments in the studio, in Bramois.',
       studioTitle: 'In the studio', inquiry: 'About', imageAlt: 'by Camilo Rivera',
       network: 'The collection could not be loaded.', sold: 'Private collection', available: 'Available',
-      stage: 'Enlarged image, scroll to explore'
+      stage: 'Enlarged image, scroll to explore',
+      filmPlay: 'Play the film', filmPause: 'Pause', filmPlayLabel: 'Play the silent video',
+      filmPauseLabel: 'Pause the video',
+      filmError: 'The film could not be loaded. You can try again.'
     }
   };
   const attributeTranslations = {
@@ -97,7 +106,8 @@
     '.hero-art-link': {'aria-label': 'View Abstrait 996'},
     '.hero-art-image img': {alt: 'Abstrait 996, oil painting with white, black, blue and ochre gestures'},
     '.gallery-filters': {'aria-label': 'Filter the collection'},
-    '.matter-image img': {alt: 'Detail of painted texture in blue, green and yellow'},
+    '.film-poster': {alt: 'An ink figure with washes of blue and purple, in the process of being created'},
+    '#atelier-film': {'aria-label': 'A figure takes shape in ink'},
     '.about-portrait img': {alt: 'Camilo Rivera working in his studio'},
     '.studio-photo': {'aria-label': 'Explore the studio photographs'},
     '.studio-photo img': {alt: 'A moment in Camilo Rivera’s studio'},
@@ -175,6 +185,127 @@
     button.disabled = systemMotion.matches;
     $('.motion-symbol').textContent = calm ? '▷' : 'Ⅱ';
     if (calm) $$('.reveal').forEach(el => el.classList.add('is-visible'));
+    filmController?.preferencesChanged();
+  }
+
+  function initFilm() {
+    const film = $('#atelier-film');
+    const frame = $('.matter-image');
+    const button = $('.film-toggle');
+    const message = $('.film-message');
+    const connection = navigator.connection;
+    let inView = false;
+    let userPaused = false;
+    let userStarted = false;
+    let blocked = false;
+    let failed = false;
+    let pendingPlay = null;
+    let lastReduced = reducedMotion();
+    let lastEconomy = saveBandwidth();
+
+    function saveBandwidth() {
+      return Boolean(connection?.saveData || /^(slow-)?2g$/.test(connection?.effectiveType || ''));
+    }
+    function shouldPlay() {
+      return inView && !document.hidden && !viewer.open && !userPaused && !blocked &&
+        (userStarted || (!reducedMotion() && !saveBandwidth()));
+    }
+    function updateButton() {
+      const playing = !film.paused || Boolean(pendingPlay && shouldPlay());
+      button.classList.toggle('is-playing', playing);
+      button.setAttribute('aria-label', t(playing ? 'filmPauseLabel' : 'filmPlayLabel'));
+      $('span', button).textContent = t(playing ? 'filmPause' : 'filmPlay');
+      message.textContent = failed ? t('filmError') : '';
+    }
+    function sync() {
+      if (!shouldPlay()) {
+        film.pause();
+        updateButton();
+        return;
+      }
+      // No source is attached until the film is visible and playback is allowed.
+      // The chosen file remains in use after a resize to avoid a second download.
+      if (!film.getAttribute('src')) {
+        film.muted = true;
+        film.defaultMuted = true;
+        film.volume = 0;
+        const compact = innerWidth <= 700 || saveBandwidth() || connection?.effectiveType === '3g';
+        film.src = compact ? film.dataset.mobileSrc : film.dataset.desktopSrc;
+      }
+      if (!film.paused || pendingPlay) {
+        updateButton();
+        return;
+      }
+      pendingPlay = Promise.resolve(film.play());
+      updateButton();
+      pendingPlay.catch(error => {
+        // A viewport exit can abort a pending play. Browser autoplay refusals
+        // wait for a deliberate tap instead of retrying in a loop.
+        if (error.name !== 'AbortError') blocked = true;
+      }).finally(() => {
+        pendingPlay = null;
+        if (!shouldPlay()) film.pause();
+        else if (film.paused) sync();
+        updateButton();
+      });
+    }
+    function preferencesChanged() {
+      const calm = reducedMotion();
+      const economy = saveBandwidth();
+      if ((calm && !lastReduced) || (economy && !lastEconomy)) userStarted = false;
+      lastReduced = calm;
+      lastEconomy = economy;
+      sync();
+    }
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      if (!film.paused || (pendingPlay && shouldPlay())) {
+        userPaused = true;
+      } else {
+        userPaused = false;
+        userStarted = true;
+        blocked = false;
+        if (failed) {
+          film.removeAttribute('src');
+          film.load();
+          failed = false;
+        }
+      }
+      sync();
+    });
+    film.addEventListener('playing', () => {
+      if (!shouldPlay()) film.pause();
+      else frame.classList.add('has-film');
+      updateButton();
+    });
+    film.addEventListener('pause', updateButton);
+    film.addEventListener('error', () => {
+      failed = true;
+      blocked = true;
+      frame.classList.remove('has-film');
+      updateButton();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting && entries[0].intersectionRatio >= .25;
+        sync();
+      }, {threshold: [0, .25]}).observe(frame);
+    } else {
+      const checkVisibility = () => {
+        const rect = frame.getBoundingClientRect();
+        inView = rect.top < innerHeight * .75 && rect.bottom > innerHeight * .25;
+        sync();
+      };
+      window.addEventListener('scroll', checkVisibility, {passive: true});
+      window.addEventListener('resize', checkVisibility, {passive: true});
+      checkVisibility();
+    }
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('pagehide', () => film.pause());
+    window.addEventListener('pageshow', sync);
+    connection?.addEventListener?.('change', preferencesChanged);
+    updateButton();
+    return {sync, preferencesChanged};
   }
 
   let revealObserver;
@@ -249,10 +380,9 @@
     if (rect.top < viewport && rect.bottom > 0) {
       const progress = Math.max(0, Math.min(1, (viewport - rect.top) / rect.height));
       matter.style.setProperty('--matter-inset', Math.max(0, 19 - progress * 34) + '%');
-      matter.style.setProperty('--matter-scale', String(1.15 - progress * .15));
-      matter.style.setProperty('--matter-left', ((1 - progress) * -65) + 'px');
-      matter.style.setProperty('--matter-right', ((1 - progress) * 65) + 'px');
-      matter.style.setProperty('--matter-progress', String(progress));
+      matter.style.setProperty('--matter-scale', String(.92 + Math.min(1, progress * 1.7) * .08));
+      matter.style.setProperty('--matter-left', ((1 - progress) * -18) + 'px');
+      matter.style.setProperty('--matter-right', ((1 - progress) * 18) + 'px');
     }
   }
 
@@ -404,6 +534,7 @@
       viewer.showModal();
       document.body.style.top = '-' + savedScroll + 'px';
       document.body.classList.add('viewer-open');
+      filmController?.sync();
     }
     viewerIndex = viewerWorks.findIndex(item => item.slug === slug);
     if (viewerIndex < 0) {
@@ -490,6 +621,7 @@
     sourceElement = null;
     clearTimeout(shareTimer);
     scheduleScroll();
+    filmController?.sync();
   }
 
   function syncFromUrl() {
@@ -647,6 +779,7 @@
   $('.language-toggle').addEventListener('click', () => setLanguage(language === 'fr' ? 'en' : 'fr'));
   $('#year').textContent = new Date().getFullYear();
   initMotion();
+  filmController = initFilm();
   initViewer();
   if (readPreference('cr-language') === 'en') setLanguage('en');
   loadCollection();

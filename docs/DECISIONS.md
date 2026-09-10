@@ -19,3 +19,16 @@
 - **Mise en œuvre** : image `IMG_0586.webp` et variantes locales, proportions originales de 1200 × 1231 pixels, légende et lien direct correspondants. L’image d’aperçu du site reprend également cette œuvre.
 - **Branche** : `version-astra`.
 - **Tranché par** : Camilo.
+
+## 10 septembre 2026 — Film du geste à l’encre
+
+- **Contexte** : Camilo fournit « VIDEO 1 .mp4 » et demande une intégration immersive, optimisée pour le mobile et obligatoirement silencieuse, avec liberté de recadrage.
+- **Décision** : le film remplace la photographie de matière entre la collection et la présentation de l’atelier. Le titre « Tout commence par un geste. » accompagne le passage des œuvres terminées à leur création. « Abstrait 996 » reste l’œuvre d’accueil.
+- **Composition** : fond sombre, texte et film côte à côte sur ordinateur ; texte au-dessus et commande au-dessous du film sur téléphone. Le cadre s’ouvre progressivement au défilement, sans texte superposé au dessin. Sur écran peu haut, la section reprend une hauteur naturelle pour garder toutes les commandes accessibles.
+- **Média** : suppression des bandes noires par un recadrage fixe de 1080 × 1216 pixels, centré verticalement. Conservation des 21,3 secondes. Deux fichiers H.264 à 30 images par seconde, en 540 × 608 et 900 × 1014 pixels, avec index de lecture au début du fichier. La piste audio est supprimée ; les propriétés de lecture imposent aussi le silence et la lecture dans la page.
+- **Chargement** : aucun fichier vidéo au premier affichage. Sélection d’une seule taille au premier démarrage ; pas de nouveau téléchargement lors d’une rotation d’écran. Pause hors champ, en arrière-plan et derrière la visionneuse.
+- **Choix de visite** : pause explicite conservée pendant la visite. En mouvement réduit, économie de données ou connexion annoncée en 2G, l’image de repli reste fixe jusqu’à une demande de lecture. Une erreur de chargement conserve cette image et permet de réessayer. Interface et description disponibles en français et anglais.
+- **Pourquoi** : mettre en valeur le processus de création, préserver le dessin sur les petits écrans et limiter le coût réseau et les décodages inutiles.
+- **Écarté** : lecteur tiers, nouvelle dépendance, piste audio simplement masquée, lecture imposée aux visiteurs ayant choisi de réduire les animations et recadrage plein écran coupant la figure sur ordinateur.
+- **Branche** : `version-astra`.
+- **Tranché par** : demande et liberté créative accordées par Camilo ; composition et préparation des médias sur la branche de travail.

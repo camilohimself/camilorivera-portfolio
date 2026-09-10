@@ -55,3 +55,28 @@ Trois audits automatisés WCAG 2 A/AA et 2.1 AA : accueil mobile, visionneuse m
 - Pas de mesure en réseau mobile réel ni de mesure sur le site publié.
 - Aucun script TypeScript, lint ou compilation n’est déclaré : le dépôt est un site statique sans `package.json`. Les vérifications portent sur la syntaxe JavaScript, les ressources et le comportement dans le navigateur.
 - Aucune fusion ni publication exécutée.
+
+## Intégration du film à l’encre
+
+La suite consacrée au film a terminé avec `TERMINÉ 23 contrôles`. La suite générale a ensuite été relancée et a terminé avec `COMPLETE 17 checks`.
+
+- Lecture réellement décodée et observée au-delà de neuf secondes, sur les formats mobile et ordinateur. Sélection du fichier correspondant, propriétés de silence actives et aucune requête vidéo au premier affichage de l’accueil.
+- Pause volontaire conservée après un aller-retour dans la page, pause hors écran, reprise au retour, arrêt derrière la visionneuse et reprise à sa fermeture.
+- Réaction au changement de visibilité d’onglet vérifiée avec un événement simulé.
+- Mouvement réduit : image fixe sans source vidéo chargée. Lecture explicite possible ; changement ultérieur de préférence système respecté. Traduire l’interface ne relance pas un film en pause et n’interrompt pas une lecture demandée.
+- Économie de données et réseau 2G simulés : lecture seulement sur demande, avec fichier mobile. Refus de lecture automatique et erreur réseau simulés : image de repli conservée et nouvelle tentative fonctionnelle.
+- Onze formats, de 320 × 568 à 1920 × 1080 pixels, dont un téléphone en paysage. Vérification dans les deux langues : pas de débordement horizontal, titre distinct du film et commandes d’au moins 44 pixels accessibles.
+- Deux audits supplémentaires WCAG 2 A/AA et 2.1 AA sur la section vidéo : zéro anomalie détectée. Les trois audits de la suite générale restent également à zéro.
+- Dévoilement du cadre au défilement mesuré sur ordinateur et téléphone ; réduction des mouvements vérifiée. Déplacement cumulé de mise en page observé à zéro et aucune vidéo téléchargée au premier affichage, dans les deux essais locaux.
+- Dans l’aperçu intégré de l’app, lecture effective observée à 10,5 secondes, `muted: true`, `paused: false`, durée de 21,3 secondes et aucune erreur média.
+
+Inspection des fichiers avec `ffprobe` :
+
+| Fichier | Taille | Dimensions | Cadence | Pistes |
+| --- | ---: | --- | --- | --- |
+| `geste-encre-mobile.mp4` | 833 787 octets | 540 × 608 | 30 images/s | H.264 vidéo uniquement |
+| `geste-encre-desktop.mp4` | 2 333 779 octets | 900 × 1014 | 30 images/s | H.264 vidéo uniquement |
+
+Les deux fichiers durent 21,3 secondes. Le fichier fourni pesait 14 813 159 octets. La taille mobile est réduite d’environ 94 %. Aucun essai sur iPhone physique ni en réseau mobile réel ; ces limites restent applicables.
+
+`node --check js/app.js`, `node tools/validate-portfolio.mjs` et `git diff --check` ont tous terminé avec le code de sortie 0 après cette intégration.

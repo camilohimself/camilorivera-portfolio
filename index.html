@@ -21,9 +21,9 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="fonts/cormorant-garamond-300.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=20260910">
+  <link rel="stylesheet" href="css/style.css?v=20260910-film">
   <script src="js/dims.generated.js?v=20260712" defer></script>
-  <script src="js/app.js?v=20260910" defer></script>
+  <script src="js/app.js?v=20260910-film" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
@@ -95,13 +95,23 @@
       <div class="gallery-more"><p id="gallery-count"></p><button class="button button-outline" id="load-more" type="button" hidden><span data-i18n="loadMore">Poursuivre l’exploration</span><svg><use href="#arrow"/></svg></button></div>
     </section>
 
-    <section class="matter" aria-labelledby="matter-title">
+    <section class="matter" id="geste" aria-labelledby="matter-title">
       <div class="matter-stage">
-        <div class="matter-image"><img src="images/hero/hero-matiere-1.webp" alt="Détail de matière picturale, bleus, verts et touches de jaune" width="1440" height="1801" loading="lazy" decoding="async"></div>
-        <div class="matter-shade"></div>
-        <p class="matter-kicker eyebrow" data-i18n="matterKicker">Au plus près de la matière</p>
-        <h2 id="matter-title"><span data-i18n="matterLine1">Tout commence</span><em data-i18n="matterLine2">par un geste.</em></h2>
-        <div class="matter-footer"><span data-i18n="matterDetail">Huile sur toile · Détail</span><span class="matter-line" aria-hidden="true"></span><span data-i18n="matterNote">Prendre le temps de regarder.</span></div>
+        <div class="matter-copy">
+          <p class="matter-kicker eyebrow" data-i18n="matterKicker">Dans l’intimité du geste</p>
+          <h2 id="matter-title"><span data-i18n="matterLine1">Tout commence</span><em data-i18n="matterLine2">par un geste.</em></h2>
+          <p class="matter-note" data-i18n="matterNote">L’encre se pose. La figure apparaît.</p>
+        </div>
+        <div class="matter-image">
+          <img class="film-poster" src="images/hero/geste-encre-poster.webp" alt="Une figure à l’encre, traversée de bleus et de violets, en cours de création" width="900" height="1014" loading="lazy" decoding="async">
+          <video id="atelier-film" muted playsinline loop preload="none" width="900" height="1014" aria-label="Une figure prend forme à l’encre" aria-describedby="film-description" data-mobile-src="videos/geste-encre-mobile.mp4" data-desktop-src="videos/geste-encre-desktop.mp4"></video>
+        </div>
+        <p class="visually-hidden" id="film-description" data-i18n="filmDescription">Vu du dessus, le dessin d’une figure au trait, puis des encres bleues et violettes qui se diffusent sur le papier. Le film se termine sur l’œuvre. Vidéo sans son.</p>
+        <div class="matter-footer">
+          <div class="matter-caption"><span data-i18n="matterDetail">Encre sur papier · À l’atelier</span><span data-i18n="filmSilent">Film sans son</span></div>
+          <button class="film-toggle" type="button" aria-controls="atelier-film" aria-label="Lire la vidéo sans son" hidden><svg class="film-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg><svg class="film-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><span>Lire le film</span></button>
+          <p class="film-message" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 
