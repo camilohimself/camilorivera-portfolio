@@ -915,5 +915,2253 @@
       "en": "A luminous canvas at the end of a corridor in the former Provins cellars"
     },
     "credit": "Photographies : David Zuber"
+  },
+  {
+    "number": 1,
+    "id": "r01-5ffc9690-28a3-4700-b049-c1425e5937b0",
+    "source": "5FFC9690-28A3-4700-B049-C1425E5937B0.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r01-5ffc9690-28a3-4700-b049-c1425e5937b0.webp",
+    "width": 739,
+    "height": 923,
+    "variants": [
+      {
+        "file": "images/reserve/r01-5ffc9690-28a3-4700-b049-c1425e5937b0-480.webp",
+        "width": 480,
+        "height": 600
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Affiche d’exposition, septembre 2025",
+      "en": "Exhibition poster, September 2025"
+    },
+    "caption": {
+      "fr": "Affiche d’exposition, septembre 2025",
+      "en": "Exhibition poster, September 2025"
+    },
+    "credit": ""
+  },
+  {
+    "number": 2,
+    "id": "r02-644cb237-6c2d-4d8f-b7ca-743e519c2be9",
+    "source": "644CB237-6C2D-4D8F-B7CA-743E519C2BE9.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r02-644cb237-6c2d-4d8f-b7ca-743e519c2be9.webp",
+    "width": 1237,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r02-644cb237-6c2d-4d8f-b7ca-743e519c2be9-480.webp",
+        "width": 480,
+        "height": 854
+      },
+      {
+        "file": "images/reserve/r02-644cb237-6c2d-4d8f-b7ca-743e519c2be9-900.webp",
+        "width": 900,
+        "height": 1601
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Toiles au pied d’un escalier",
+      "en": "Canvases at the foot of a staircase"
+    },
+    "caption": {
+      "fr": "Toiles au pied d’un escalier",
+      "en": "Canvases at the foot of a staircase"
+    },
+    "credit": ""
+  },
+  {
+    "number": 3,
+    "id": "r03-797db701-3b88-41b7-8f02-d1bb37b2fb25",
+    "source": "797db701-3b88-41b7-8f02-d1bb37b2fb25.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r03-797db701-3b88-41b7-8f02-d1bb37b2fb25.webp",
+    "width": 960,
+    "height": 719,
+    "variants": [
+      {
+        "file": "images/reserve/r03-797db701-3b88-41b7-8f02-d1bb37b2fb25-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "file": "images/reserve/r03-797db701-3b88-41b7-8f02-d1bb37b2fb25-900.webp",
+        "width": 900,
+        "height": 674
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Piano et lecture parmi les tableaux",
+      "en": "Piano and reading among the paintings"
+    },
+    "caption": {
+      "fr": "Piano et lecture parmi les tableaux",
+      "en": "Piano and reading among the paintings"
+    },
+    "credit": ""
+  },
+  {
+    "number": 4,
+    "id": "r04-9167e0f1-bade-485b-b181-975ac80ff6bb",
+    "source": "9167e0f1-bade-485b-b181-975ac80ff6bb.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r04-9167e0f1-bade-485b-b181-975ac80ff6bb.webp",
+    "width": 1600,
+    "height": 1200,
+    "variants": [
+      {
+        "file": "images/reserve/r04-9167e0f1-bade-485b-b181-975ac80ff6bb-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "file": "images/reserve/r04-9167e0f1-bade-485b-b181-975ac80ff6bb-900.webp",
+        "width": 900,
+        "height": 675
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Composition noire, blanche et rouge",
+      "en": "Composition in black, white and red"
+    },
+    "caption": {
+      "fr": "Composition noire, blanche et rouge",
+      "en": "Composition in black, white and red"
+    },
+    "credit": ""
+  },
+  {
+    "number": 5,
+    "id": "r05-a6c33ad9-f8e2-4d42-b118-9c8557e39cbb",
+    "source": "a6c33ad9-f8e2-4d42-b118-9c8557e39cbb.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r05-a6c33ad9-f8e2-4d42-b118-9c8557e39cbb.webp",
+    "width": 738,
+    "height": 1600,
+    "variants": [
+      {
+        "file": "images/reserve/r05-a6c33ad9-f8e2-4d42-b118-9c8557e39cbb-480.webp",
+        "width": 480,
+        "height": 1041
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Un papillon posé sur une main",
+      "en": "A butterfly resting on a hand"
+    },
+    "caption": {
+      "fr": "Un papillon posé sur une main",
+      "en": "A butterfly resting on a hand"
+    },
+    "credit": ""
+  },
+  {
+    "number": 6,
+    "id": "r06-img_3759",
+    "source": "IMG_3759.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r06-img_3759.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r06-img_3759-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r06-img_3759-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Cadres, papiers et outils sur la table",
+      "en": "Frames, papers and tools on the table"
+    },
+    "caption": {
+      "fr": "Cadres, papiers et outils sur la table",
+      "en": "Frames, papers and tools on the table"
+    },
+    "credit": ""
+  },
+  {
+    "number": 7,
+    "id": "r07-img_3779",
+    "source": "IMG_3779.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r07-img_3779.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r07-img_3779-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r07-img_3779-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure à l’encre dans son cadre",
+      "en": "An ink figure in its frame"
+    },
+    "caption": {
+      "fr": "Une figure à l’encre dans son cadre",
+      "en": "An ink figure in its frame"
+    },
+    "credit": ""
+  },
+  {
+    "number": 8,
+    "id": "r08-img_3790",
+    "source": "IMG_3790.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r08-img_3790.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r08-img_3790-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r08-img_3790-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Visages et corps enchevêtrés au trait",
+      "en": "Faces and bodies tangled in lines"
+    },
+    "caption": {
+      "fr": "Visages et corps enchevêtrés au trait",
+      "en": "Faces and bodies tangled in lines"
+    },
+    "credit": ""
+  },
+  {
+    "number": 9,
+    "id": "r09-img_3807",
+    "source": "IMG_3807.heic",
+    "group": "reserves",
+    "file": "images/reserve/r09-img_3807.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r09-img_3807-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r09-img_3807-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Un visage dessiné et quelques mots",
+      "en": "A drawn face and a few words"
+    },
+    "caption": {
+      "fr": "Un visage dessiné et quelques mots",
+      "en": "A drawn face and a few words"
+    },
+    "credit": ""
+  },
+  {
+    "number": 10,
+    "id": "r10-img_3825",
+    "source": "IMG_3825.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r10-img_3825.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r10-img_3825-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r10-img_3825-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Dessins accrochés à un mur de pierre",
+      "en": "Drawings hung on a stone wall"
+    },
+    "caption": {
+      "fr": "Dessins accrochés à un mur de pierre",
+      "en": "Drawings hung on a stone wall"
+    },
+    "credit": ""
+  },
+  {
+    "number": 11,
+    "id": "r11-img_3832",
+    "source": "IMG_3832.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r11-img_3832.webp",
+    "width": 1080,
+    "height": 1920,
+    "variants": [
+      {
+        "file": "images/reserve/r11-img_3832-480.webp",
+        "width": 480,
+        "height": 853
+      },
+      {
+        "file": "images/reserve/r11-img_3832-900.webp",
+        "width": 900,
+        "height": 1600
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Affiche d’exposition, mai et juin 2024",
+      "en": "Exhibition poster, May and June 2024"
+    },
+    "caption": {
+      "fr": "Affiche d’exposition, mai et juin 2024",
+      "en": "Exhibition poster, May and June 2024"
+    },
+    "credit": ""
+  },
+  {
+    "number": 12,
+    "id": "r12-img_3851",
+    "source": "IMG_3851.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r12-img_3851.webp",
+    "width": 1661,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r12-img_3851-480.webp",
+        "width": 480,
+        "height": 636
+      },
+      {
+        "file": "images/reserve/r12-img_3851-900.webp",
+        "width": 900,
+        "height": 1192
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une silhouette dans un lavis vert",
+      "en": "A figure in a green wash"
+    },
+    "caption": {
+      "fr": "Une silhouette dans un lavis vert",
+      "en": "A figure in a green wash"
+    },
+    "credit": ""
+  },
+  {
+    "number": 13,
+    "id": "r13-img_3858",
+    "source": "IMG_3858.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r13-img_3858.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r13-img_3858-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r13-img_3858-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Une ombre au sol, un pied dans le cadre",
+      "en": "A shadow on the ground, a foot in the frame"
+    },
+    "caption": {
+      "fr": "Une ombre au sol, un pied dans le cadre",
+      "en": "A shadow on the ground, a foot in the frame"
+    },
+    "credit": ""
+  },
+  {
+    "number": 14,
+    "id": "r14-img_3868",
+    "source": "IMG_3868.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r14-img_3868.webp",
+    "width": 1676,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r14-img_3868-480.webp",
+        "width": 480,
+        "height": 630
+      },
+      {
+        "file": "images/reserve/r14-img_3868-900.webp",
+        "width": 900,
+        "height": 1181
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Figure assise et lavis ocre",
+      "en": "Seated figure and ochre wash"
+    },
+    "caption": {
+      "fr": "Figure assise et lavis ocre",
+      "en": "Seated figure and ochre wash"
+    },
+    "credit": ""
+  },
+  {
+    "number": 15,
+    "id": "r15-img_3903",
+    "source": "IMG_3903.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r15-img_3903.webp",
+    "width": 1800,
+    "height": 1800,
+    "variants": [
+      {
+        "file": "images/reserve/r15-img_3903-480.webp",
+        "width": 480,
+        "height": 480
+      },
+      {
+        "file": "images/reserve/r15-img_3903-900.webp",
+        "width": 900,
+        "height": 900
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Portrait sombre dans un reflet",
+      "en": "Dark portrait in a reflection"
+    },
+    "caption": {
+      "fr": "Portrait sombre dans un reflet",
+      "en": "Dark portrait in a reflection"
+    },
+    "credit": ""
+  },
+  {
+    "number": 16,
+    "id": "r16-img_3911",
+    "source": "IMG_3911.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r16-img_3911.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r16-img_3911-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r16-img_3911-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Les tubes de couleur",
+      "en": "Tubes of paint"
+    },
+    "caption": {
+      "fr": "Les tubes de couleur",
+      "en": "Tubes of paint"
+    },
+    "credit": ""
+  },
+  {
+    "number": 17,
+    "id": "r17-img_3961",
+    "source": "IMG_3961.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r17-img_3961.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r17-img_3961-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r17-img_3961-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Une toile au sol dans une grande pièce",
+      "en": "A canvas on the floor of a large room"
+    },
+    "caption": {
+      "fr": "Une toile au sol dans une grande pièce",
+      "en": "A canvas on the floor of a large room"
+    },
+    "credit": ""
+  },
+  {
+    "number": 18,
+    "id": "r18-img_4001",
+    "source": "IMG_4001.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r18-img_4001.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r18-img_4001-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r18-img_4001-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "La table de travail, entre encres et outils",
+      "en": "The worktable, between inks and tools"
+    },
+    "caption": {
+      "fr": "La table de travail, entre encres et outils",
+      "en": "The worktable, between inks and tools"
+    },
+    "credit": ""
+  },
+  {
+    "number": 19,
+    "id": "r19-img_4003",
+    "source": "IMG_4003.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r19-img_4003.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r19-img_4003-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r19-img_4003-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Palette, couleurs épaisses et papiers",
+      "en": "Palette, thick paint and papers"
+    },
+    "caption": {
+      "fr": "Palette, couleurs épaisses et papiers",
+      "en": "Palette, thick paint and papers"
+    },
+    "credit": ""
+  },
+  {
+    "number": 20,
+    "id": "r20-img_4004",
+    "source": "IMG_4004.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r20-img_4004.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r20-img_4004-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r20-img_4004-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Tubes ouverts et figures en cours",
+      "en": "Open tubes and figures in progress"
+    },
+    "caption": {
+      "fr": "Tubes ouverts et figures en cours",
+      "en": "Open tubes and figures in progress"
+    },
+    "credit": ""
+  },
+  {
+    "number": 21,
+    "id": "r21-img_4005",
+    "source": "IMG_4005.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r21-img_4005.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r21-img_4005-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r21-img_4005-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Une paire de ciseaux sur le papier taché",
+      "en": "Scissors on stained paper"
+    },
+    "caption": {
+      "fr": "Une paire de ciseaux sur le papier taché",
+      "en": "Scissors on stained paper"
+    },
+    "credit": ""
+  },
+  {
+    "number": 22,
+    "id": "r22-img_4020",
+    "source": "IMG_4020.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r22-img_4020.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r22-img_4020-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r22-img_4020-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Bacs et cadres dans l’atelier",
+      "en": "Trays and frames in the studio"
+    },
+    "caption": {
+      "fr": "Bacs et cadres dans l’atelier",
+      "en": "Trays and frames in the studio"
+    },
+    "credit": ""
+  },
+  {
+    "number": 23,
+    "id": "r23-img_4022",
+    "source": "IMG_4022.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r23-img_4022.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r23-img_4022-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r23-img_4022-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Les outils au bord de l’évier",
+      "en": "Tools beside the sink"
+    },
+    "caption": {
+      "fr": "Les outils au bord de l’évier",
+      "en": "Tools beside the sink"
+    },
+    "credit": ""
+  },
+  {
+    "number": 24,
+    "id": "r24-img_4024",
+    "source": "IMG_4024.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r24-img_4024.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r24-img_4024-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r24-img_4024-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Gros plan sur une brosse chargée de bleu",
+      "en": "Close-up of a brush loaded with blue"
+    },
+    "caption": {
+      "fr": "Gros plan sur une brosse chargée de bleu",
+      "en": "Close-up of a brush loaded with blue"
+    },
+    "credit": ""
+  },
+  {
+    "number": 25,
+    "id": "r25-img_4072",
+    "source": "IMG_4072.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r25-img_4072.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r25-img_4072-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r25-img_4072-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Une affiche d’exposition conservée sur téléphone",
+      "en": "An exhibition poster kept on a phone"
+    },
+    "caption": {
+      "fr": "Une affiche d’exposition conservée sur téléphone",
+      "en": "An exhibition poster kept on a phone"
+    },
+    "credit": ""
+  },
+  {
+    "number": 26,
+    "id": "r26-img_4077",
+    "source": "IMG_4077.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r26-img_4077.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r26-img_4077-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r26-img_4077-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Une palette rouge et noire",
+      "en": "A red and black palette"
+    },
+    "caption": {
+      "fr": "Une palette rouge et noire",
+      "en": "A red and black palette"
+    },
+    "credit": ""
+  },
+  {
+    "number": 27,
+    "id": "r27-img_4085",
+    "source": "IMG_4085.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r27-img_4085.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r27-img_4085-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r27-img_4085-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Page de carnet et mots manuscrits",
+      "en": "Notebook page and handwritten words"
+    },
+    "caption": {
+      "fr": "Page de carnet et mots manuscrits",
+      "en": "Notebook page and handwritten words"
+    },
+    "credit": ""
+  },
+  {
+    "number": 28,
+    "id": "r28-img_4496",
+    "source": "IMG_4496.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r28-img_4496.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r28-img_4496-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r28-img_4496-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Silhouettes, encre et lavis vert",
+      "en": "Figures, ink and green wash"
+    },
+    "caption": {
+      "fr": "Silhouettes, encre et lavis vert",
+      "en": "Figures, ink and green wash"
+    },
+    "credit": ""
+  },
+  {
+    "number": 29,
+    "id": "r29-img_4542",
+    "source": "IMG_4542.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r29-img_4542.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r29-img_4542-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r29-img_4542-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Deux corps dessinés sur papier quadrillé",
+      "en": "Two bodies drawn on squared paper"
+    },
+    "caption": {
+      "fr": "Deux corps dessinés sur papier quadrillé",
+      "en": "Two bodies drawn on squared paper"
+    },
+    "credit": ""
+  },
+  {
+    "number": 30,
+    "id": "r30-img_4545",
+    "source": "IMG_4545.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r30-img_4545.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r30-img_4545-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r30-img_4545-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Étude d’un corps au crayon",
+      "en": "Study of a body in pencil"
+    },
+    "caption": {
+      "fr": "Étude d’un corps au crayon",
+      "en": "Study of a body in pencil"
+    },
+    "credit": ""
+  },
+  {
+    "number": 31,
+    "id": "r31-img_4625",
+    "source": "IMG_4625.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r31-img_4625.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r31-img_4625-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r31-img_4625-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure noire et bleue, vue de près",
+      "en": "A black and blue figure, seen close up"
+    },
+    "caption": {
+      "fr": "Une figure noire et bleue, vue de près",
+      "en": "A black and blue figure, seen close up"
+    },
+    "credit": ""
+  },
+  {
+    "number": 32,
+    "id": "r32-img_4673",
+    "source": "IMG_4673.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r32-img_4673.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r32-img_4673-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r32-img_4673-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Études de mains au crayon",
+      "en": "Pencil studies of hands"
+    },
+    "caption": {
+      "fr": "Études de mains au crayon",
+      "en": "Pencil studies of hands"
+    },
+    "credit": ""
+  },
+  {
+    "number": 33,
+    "id": "r33-img_4717",
+    "source": "IMG_4717.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r33-img_4717.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r33-img_4717-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r33-img_4717-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure au crayon et son écho",
+      "en": "A pencil figure and its echo"
+    },
+    "caption": {
+      "fr": "Une figure au crayon et son écho",
+      "en": "A pencil figure and its echo"
+    },
+    "credit": ""
+  },
+  {
+    "number": 34,
+    "id": "r34-img_4723",
+    "source": "IMG_4723.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r34-img_4723.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r34-img_4723-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r34-img_4723-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Un corps dans un réseau de hachures",
+      "en": "A body in a web of hatching"
+    },
+    "caption": {
+      "fr": "Un corps dans un réseau de hachures",
+      "en": "A body in a web of hatching"
+    },
+    "credit": ""
+  },
+  {
+    "number": 35,
+    "id": "r35-img_4767",
+    "source": "IMG_4767.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r35-img_4767.webp",
+    "width": 1599,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r35-img_4767-480.webp",
+        "width": 480,
+        "height": 660
+      },
+      {
+        "file": "images/reserve/r35-img_4767-900.webp",
+        "width": 900,
+        "height": 1238
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une présence dans les noirs et les ocres",
+      "en": "A presence in blacks and ochres"
+    },
+    "caption": {
+      "fr": "Une présence dans les noirs et les ocres",
+      "en": "A presence in blacks and ochres"
+    },
+    "credit": ""
+  },
+  {
+    "number": 36,
+    "id": "r36-img_4770",
+    "source": "IMG_4770.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r36-img_4770.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r36-img_4770-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r36-img_4770-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Le rouge traverse le dessin",
+      "en": "Red crosses the drawing"
+    },
+    "caption": {
+      "fr": "Le rouge traverse le dessin",
+      "en": "Red crosses the drawing"
+    },
+    "credit": ""
+  },
+  {
+    "number": 37,
+    "id": "r37-img_4790",
+    "source": "IMG_4790.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r37-img_4790.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r37-img_4790-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r37-img_4790-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Lavis violet autour d’une figure",
+      "en": "Violet wash around a figure"
+    },
+    "caption": {
+      "fr": "Lavis violet autour d’une figure",
+      "en": "Violet wash around a figure"
+    },
+    "credit": ""
+  },
+  {
+    "number": 38,
+    "id": "r38-img_4795",
+    "source": "IMG_4795.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r38-img_4795.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r38-img_4795-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r38-img_4795-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une silhouette et une tache violette",
+      "en": "A figure and a violet mark"
+    },
+    "caption": {
+      "fr": "Une silhouette et une tache violette",
+      "en": "A figure and a violet mark"
+    },
+    "credit": ""
+  },
+  {
+    "number": 39,
+    "id": "r39-img_4814",
+    "source": "IMG_4814.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r39-img_4814.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r39-img_4814-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r39-img_4814-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Un nœud de traits et d’encre noire",
+      "en": "A knot of lines and black ink"
+    },
+    "caption": {
+      "fr": "Un nœud de traits et d’encre noire",
+      "en": "A knot of lines and black ink"
+    },
+    "credit": ""
+  },
+  {
+    "number": 40,
+    "id": "r40-img_4816",
+    "source": "IMG_4816.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r40-img_4816.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r40-img_4816-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r40-img_4816-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure assise dans le bleu",
+      "en": "A seated figure in blue"
+    },
+    "caption": {
+      "fr": "Une figure assise dans le bleu",
+      "en": "A seated figure in blue"
+    },
+    "credit": ""
+  },
+  {
+    "number": 41,
+    "id": "r41-img_4826",
+    "source": "IMG_4826.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r41-img_4826.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r41-img_4826-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r41-img_4826-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "L’encre noire enveloppe la figure",
+      "en": "Black ink envelops the figure"
+    },
+    "caption": {
+      "fr": "L’encre noire enveloppe la figure",
+      "en": "Black ink envelops the figure"
+    },
+    "credit": ""
+  },
+  {
+    "number": 42,
+    "id": "r42-img_4940",
+    "source": "IMG_4940.heic",
+    "group": "reserves",
+    "file": "images/reserve/r42-img_4940.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r42-img_4940-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r42-img_4940-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Contours d’une tache bleue",
+      "en": "Contours of a blue stain"
+    },
+    "caption": {
+      "fr": "Contours d’une tache bleue",
+      "en": "Contours of a blue stain"
+    },
+    "credit": ""
+  },
+  {
+    "number": 43,
+    "id": "r43-img_4970",
+    "source": "IMG_4970.heic",
+    "group": "reserves",
+    "file": "images/reserve/r43-img_4970.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r43-img_4970-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r43-img_4970-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Le bleu se diffuse sur le papier",
+      "en": "Blue spreads across the paper"
+    },
+    "caption": {
+      "fr": "Le bleu se diffuse sur le papier",
+      "en": "Blue spreads across the paper"
+    },
+    "credit": ""
+  },
+  {
+    "number": 44,
+    "id": "r44-img_4986",
+    "source": "IMG_4986.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r44-img_4986.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r44-img_4986-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r44-img_4986-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Un calendrier de janvier fait à la main",
+      "en": "A handmade January calendar"
+    },
+    "caption": {
+      "fr": "Un calendrier de janvier fait à la main",
+      "en": "A handmade January calendar"
+    },
+    "credit": ""
+  },
+  {
+    "number": 45,
+    "id": "r45-img_5062",
+    "source": "IMG_5062.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r45-img_5062.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r45-img_5062-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r45-img_5062-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une présence dans les gris et les violets",
+      "en": "A presence in greys and violets"
+    },
+    "caption": {
+      "fr": "Une présence dans les gris et les violets",
+      "en": "A presence in greys and violets"
+    },
+    "credit": ""
+  },
+  {
+    "number": 46,
+    "id": "r46-img_5455",
+    "source": "IMG_5455.heic",
+    "group": "reserves",
+    "file": "images/reserve/r46-img_5455.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r46-img_5455-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r46-img_5455-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Bleu dense, traits et papier froissé",
+      "en": "Dense blue, lines and creased paper"
+    },
+    "caption": {
+      "fr": "Bleu dense, traits et papier froissé",
+      "en": "Dense blue, lines and creased paper"
+    },
+    "credit": ""
+  },
+  {
+    "number": 47,
+    "id": "r47-img_5477",
+    "source": "IMG_5477.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r47-img_5477.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r47-img_5477-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r47-img_5477-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Des dessins étalés au sol",
+      "en": "Drawings spread across the floor"
+    },
+    "caption": {
+      "fr": "Des dessins étalés au sol",
+      "en": "Drawings spread across the floor"
+    },
+    "credit": ""
+  },
+  {
+    "number": 48,
+    "id": "r48-img_5478",
+    "source": "IMG_5478.heic",
+    "group": "reserves",
+    "file": "images/reserve/r48-img_5478.webp",
+    "width": 1585,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r48-img_5478-480.webp",
+        "width": 480,
+        "height": 666
+      },
+      {
+        "file": "images/reserve/r48-img_5478-900.webp",
+        "width": 900,
+        "height": 1249
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure dressée sur des boucles d’encre",
+      "en": "A figure standing on loops of ink"
+    },
+    "caption": {
+      "fr": "Une figure dressée sur des boucles d’encre",
+      "en": "A figure standing on loops of ink"
+    },
+    "credit": ""
+  },
+  {
+    "number": 49,
+    "id": "r49-img_5479",
+    "source": "IMG_5479.heic",
+    "group": "reserves",
+    "file": "images/reserve/r49-img_5479.webp",
+    "width": 1571,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r49-img_5479-480.webp",
+        "width": 480,
+        "height": 672
+      },
+      {
+        "file": "images/reserve/r49-img_5479-900.webp",
+        "width": 900,
+        "height": 1260
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une silhouette noire en mouvement",
+      "en": "A black figure in motion"
+    },
+    "caption": {
+      "fr": "Une silhouette noire en mouvement",
+      "en": "A black figure in motion"
+    },
+    "credit": ""
+  },
+  {
+    "number": 50,
+    "id": "r50-img_5480",
+    "source": "IMG_5480.heic",
+    "group": "reserves",
+    "file": "images/reserve/r50-img_5480.webp",
+    "width": 1629,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r50-img_5480-480.webp",
+        "width": 480,
+        "height": 648
+      },
+      {
+        "file": "images/reserve/r50-img_5480-900.webp",
+        "width": 900,
+        "height": 1215
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure dans de larges gestes gris",
+      "en": "A figure in broad grey strokes"
+    },
+    "caption": {
+      "fr": "Une figure dans de larges gestes gris",
+      "en": "A figure in broad grey strokes"
+    },
+    "credit": ""
+  },
+  {
+    "number": 51,
+    "id": "r51-img_5484",
+    "source": "IMG_5484.heic",
+    "group": "reserves",
+    "file": "images/reserve/r51-img_5484.webp",
+    "width": 1627,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r51-img_5484-480.webp",
+        "width": 480,
+        "height": 649
+      },
+      {
+        "file": "images/reserve/r51-img_5484-900.webp",
+        "width": 900,
+        "height": 1217
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Figure élancée et ombre d’encre",
+      "en": "An elongated figure and an ink shadow"
+    },
+    "caption": {
+      "fr": "Figure élancée et ombre d’encre",
+      "en": "An elongated figure and an ink shadow"
+    },
+    "credit": ""
+  },
+  {
+    "number": 52,
+    "id": "r52-img_5485",
+    "source": "IMG_5485.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r52-img_5485.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r52-img_5485-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r52-img_5485-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Un dessin posé sur le bois",
+      "en": "A drawing laid on wood"
+    },
+    "caption": {
+      "fr": "Un dessin posé sur le bois",
+      "en": "A drawing laid on wood"
+    },
+    "credit": ""
+  },
+  {
+    "number": 53,
+    "id": "r53-img_5666",
+    "source": "IMG_5666.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r53-img_5666.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r53-img_5666-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r53-img_5666-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure encadrée entre ombre et lumière",
+      "en": "A framed figure between shadow and light"
+    },
+    "caption": {
+      "fr": "Une figure encadrée entre ombre et lumière",
+      "en": "A framed figure between shadow and light"
+    },
+    "credit": ""
+  },
+  {
+    "number": 54,
+    "id": "r54-img_5669",
+    "source": "IMG_5669.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r54-img_5669.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r54-img_5669-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r54-img_5669-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une petite figure verte encadrée",
+      "en": "A small framed green figure"
+    },
+    "caption": {
+      "fr": "Une petite figure verte encadrée",
+      "en": "A small framed green figure"
+    },
+    "credit": ""
+  },
+  {
+    "number": 55,
+    "id": "r55-img_5696",
+    "source": "IMG_5696.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r55-img_5696.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r55-img_5696-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r55-img_5696-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une figure face au bleu",
+      "en": "A figure facing the blue"
+    },
+    "caption": {
+      "fr": "Une figure face au bleu",
+      "en": "A figure facing the blue"
+    },
+    "credit": ""
+  },
+  {
+    "number": 56,
+    "id": "r56-img_5698",
+    "source": "IMG_5698.heic",
+    "group": "reserves",
+    "file": "images/reserve/r56-img_5698.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r56-img_5698-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r56-img_5698-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une silhouette et une tache rose",
+      "en": "A figure and a pink stain"
+    },
+    "caption": {
+      "fr": "Une silhouette et une tache rose",
+      "en": "A figure and a pink stain"
+    },
+    "credit": ""
+  },
+  {
+    "number": 57,
+    "id": "r57-img_5704",
+    "source": "IMG_5704.heic",
+    "group": "reserves",
+    "file": "images/reserve/r57-img_5704.webp",
+    "width": 1800,
+    "height": 2156,
+    "variants": [
+      {
+        "file": "images/reserve/r57-img_5704-480.webp",
+        "width": 480,
+        "height": 575
+      },
+      {
+        "file": "images/reserve/r57-img_5704-900.webp",
+        "width": 900,
+        "height": 1078
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Détail d’encre et de lavis brun",
+      "en": "Detail of ink and brown wash"
+    },
+    "caption": {
+      "fr": "Détail d’encre et de lavis brun",
+      "en": "Detail of ink and brown wash"
+    },
+    "credit": ""
+  },
+  {
+    "number": 58,
+    "id": "r58-img_5707",
+    "source": "IMG_5707.heic",
+    "group": "reserves",
+    "file": "images/reserve/r58-img_5707.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r58-img_5707-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r58-img_5707-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Détail de papier, de jaune et de noir",
+      "en": "Detail of paper, yellow and black"
+    },
+    "caption": {
+      "fr": "Détail de papier, de jaune et de noir",
+      "en": "Detail of paper, yellow and black"
+    },
+    "credit": ""
+  },
+  {
+    "number": 59,
+    "id": "r59-img_5861",
+    "source": "IMG_5861.JPG",
+    "group": "reserves",
+    "file": "images/reserve/r59-img_5861.webp",
+    "width": 1536,
+    "height": 2048,
+    "variants": [
+      {
+        "file": "images/reserve/r59-img_5861-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r59-img_5861-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Deux personnes les bras levés à la balustrade",
+      "en": "Two people with arms raised at a railing"
+    },
+    "caption": {
+      "fr": "Deux personnes les bras levés à la balustrade",
+      "en": "Two people with arms raised at a railing"
+    },
+    "credit": ""
+  },
+  {
+    "number": 60,
+    "id": "r60-img_5909",
+    "source": "IMG_5909.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r60-img_5909.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r60-img_5909-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r60-img_5909-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Un regard sur les dessins exposés",
+      "en": "Looking at the exhibited drawings"
+    },
+    "caption": {
+      "fr": "Un regard sur les dessins exposés",
+      "en": "Looking at the exhibited drawings"
+    },
+    "credit": ""
+  },
+  {
+    "number": 61,
+    "id": "r61-img_6090",
+    "source": "IMG_6090.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r61-img_6090.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r61-img_6090-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r61-img_6090-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "Reliefs de peinture blanche",
+      "en": "Ridges of white paint"
+    },
+    "caption": {
+      "fr": "Reliefs de peinture blanche",
+      "en": "Ridges of white paint"
+    },
+    "credit": ""
+  },
+  {
+    "number": 62,
+    "id": "r62-img_6091",
+    "source": "IMG_6091.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r62-img_6091.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r62-img_6091-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r62-img_6091-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "atelier",
+    "alt": {
+      "fr": "La trace d’un outil dans la peinture",
+      "en": "The mark of a tool in the paint"
+    },
+    "caption": {
+      "fr": "La trace d’un outil dans la peinture",
+      "en": "The mark of a tool in the paint"
+    },
+    "credit": ""
+  },
+  {
+    "number": 63,
+    "id": "r63-img_6093",
+    "source": "IMG_6093.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r63-img_6093.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r63-img_6093-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r63-img_6093-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Affiche d’exposition aux Vignes à Sierre",
+      "en": "Exhibition poster for Les Vignes in Sierre"
+    },
+    "caption": {
+      "fr": "Affiche d’exposition aux Vignes à Sierre",
+      "en": "Exhibition poster for Les Vignes in Sierre"
+    },
+    "credit": ""
+  },
+  {
+    "number": 64,
+    "id": "r64-img_6509",
+    "source": "IMG_6509.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r64-img_6509.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r64-img_6509-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r64-img_6509-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Une toile éclairée au-dessus de l’escalier",
+      "en": "A lit canvas above the staircase"
+    },
+    "caption": {
+      "fr": "Une toile éclairée au-dessus de l’escalier",
+      "en": "A lit canvas above the staircase"
+    },
+    "credit": ""
+  },
+  {
+    "number": 65,
+    "id": "r65-img_6510",
+    "source": "IMG_6510.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r65-img_6510.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r65-img_6510-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r65-img_6510-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Une peinture sous la lumière d’exposition",
+      "en": "A painting under exhibition lighting"
+    },
+    "caption": {
+      "fr": "Une peinture sous la lumière d’exposition",
+      "en": "A painting under exhibition lighting"
+    },
+    "credit": ""
+  },
+  {
+    "number": 66,
+    "id": "r66-img_6514",
+    "source": "IMG_6514.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r66-img_6514.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r66-img_6514-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r66-img_6514-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Un dessin devenu écran de téléphone",
+      "en": "A drawing used as a phone screen"
+    },
+    "caption": {
+      "fr": "Un dessin devenu écran de téléphone",
+      "en": "A drawing used as a phone screen"
+    },
+    "credit": ""
+  },
+  {
+    "number": 67,
+    "id": "r67-img_6540",
+    "source": "IMG_6540.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r67-img_6540.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r67-img_6540-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r67-img_6540-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Un espace d’exposition sous la charpente",
+      "en": "An exhibition space beneath exposed beams"
+    },
+    "caption": {
+      "fr": "Un espace d’exposition sous la charpente",
+      "en": "An exhibition space beneath exposed beams"
+    },
+    "credit": ""
+  },
+  {
+    "number": 68,
+    "id": "r68-img_6567",
+    "source": "IMG_6567.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r68-img_6567.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r68-img_6567-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r68-img_6567-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Deux guitaristes au milieu des œuvres",
+      "en": "Two guitarists among the artworks"
+    },
+    "caption": {
+      "fr": "Deux guitaristes au milieu des œuvres",
+      "en": "Two guitarists among the artworks"
+    },
+    "credit": ""
+  },
+  {
+    "number": 69,
+    "id": "r69-img_6740",
+    "source": "IMG_6740.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r69-img_6740.webp",
+    "width": 1017,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r69-img_6740-480.webp",
+        "width": 480,
+        "height": 1038
+      },
+      {
+        "file": "images/reserve/r69-img_6740-900.webp",
+        "width": 900,
+        "height": 1947
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Une autre trace de l’affiche de septembre 2025",
+      "en": "Another record of the September 2025 poster"
+    },
+    "caption": {
+      "fr": "Une autre trace de l’affiche de septembre 2025",
+      "en": "Another record of the September 2025 poster"
+    },
+    "credit": ""
+  },
+  {
+    "number": 70,
+    "id": "r70-img_6749",
+    "source": "IMG_6749.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r70-img_6749.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/reserve/r70-img_6749-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "file": "images/reserve/r70-img_6749-900.webp",
+        "width": 900,
+        "height": 675
+      }
+    ],
+    "kind": "expositions",
+    "alt": {
+      "fr": "Une personne assise parmi les dessins exposés",
+      "en": "A person seated among the exhibited drawings"
+    },
+    "caption": {
+      "fr": "Une personne assise parmi les dessins exposés",
+      "en": "A person seated among the exhibited drawings"
+    },
+    "credit": ""
+  },
+  {
+    "number": 71,
+    "id": "r71-img_6818",
+    "source": "IMG_6818.HEIC",
+    "group": "reserves",
+    "file": "images/reserve/r71-img_6818.webp",
+    "width": 1650,
+    "height": 2200,
+    "variants": [
+      {
+        "file": "images/reserve/r71-img_6818-480.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "file": "images/reserve/r71-img_6818-900.webp",
+        "width": 900,
+        "height": 1200
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Un dessin ocre posé sur le bois",
+      "en": "An ochre drawing on wood"
+    },
+    "caption": {
+      "fr": "Un dessin ocre posé sur le bois",
+      "en": "An ochre drawing on wood"
+    },
+    "credit": ""
+  },
+  {
+    "number": 72,
+    "id": "r72-img_7087",
+    "source": "IMG_7087.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r72-img_7087.webp",
+    "width": 1800,
+    "height": 832,
+    "variants": [
+      {
+        "file": "images/reserve/r72-img_7087-480.webp",
+        "width": 480,
+        "height": 222
+      },
+      {
+        "file": "images/reserve/r72-img_7087-900.webp",
+        "width": 900,
+        "height": 416
+      }
+    ],
+    "kind": "figures",
+    "alt": {
+      "fr": "Une peinture vue sur un écran",
+      "en": "A painting viewed on a screen"
+    },
+    "caption": {
+      "fr": "Une peinture vue sur un écran",
+      "en": "A painting viewed on a screen"
+    },
+    "credit": ""
+  },
+  {
+    "number": 73,
+    "id": "r73-img_7505",
+    "source": "IMG_7505.PNG",
+    "group": "reserves",
+    "file": "images/reserve/r73-img_7505.webp",
+    "width": 864,
+    "height": 1184,
+    "variants": [
+      {
+        "file": "images/reserve/r73-img_7505-480.webp",
+        "width": 480,
+        "height": 658
+      }
+    ],
+    "kind": "a-cote",
+    "alt": {
+      "fr": "Portrait dans l’ombre des feuillages",
+      "en": "Portrait in the shadow of foliage"
+    },
+    "caption": {
+      "fr": "Portrait dans l’ombre des feuillages",
+      "en": "Portrait in the shadow of foliage"
+    },
+    "credit": ""
   }
 ]

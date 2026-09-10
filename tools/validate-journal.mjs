@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const routes=['index.html','journal/index.html',...['carnets','matieres','les-caves','traces'].map(s=>'journal/'+s+'/index.html')];
+const routes=['index.html','journal/index.html',...['carnets','matieres','les-caves','traces','reserves'].map(s=>'journal/'+s+'/index.html')];
 const sources=new Map(routes.map(p=>[p,fs.readFileSync(path.join(repo,p),'utf8')]));
 const archives=JSON.parse(fs.readFileSync(path.join(repo,'journal/archives.json'),'utf8'));
 let localLinks=0;
@@ -14,6 +14,7 @@ for(const[route,html]of sources){
  assert.equal((html.match(/<h1\b/g)||[]).length,1,route+' : un titre principal');
  assert.ok(html.includes('rel="canonical"'),route+' : adresse canonique');
  assert.ok(html.includes('name="description"'),route+' : description');
+ assert.ok(html.includes('css/accrochages.css'),route+' : feuille d’accrochage présente');
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(new Set(ids).size,ids.length,route+' : identifiants uniques');
  for(const match of html.matchAll(/\baria-(?:labelledby|describedby|controls)="([^"]+)"/g)){
@@ -50,7 +51,12 @@ const caves=sources.get('journal/les-caves/index.html');
 for(const fact of ['Provins','St-Léonard','David Zuber','Alban Reynard','détruit'])assert.ok(caves.includes(fact),'Contexte des caves manquant : '+fact);
 const poster=sources.get('journal/traces/index.html');
 for(const fact of ['Sabine Leyat Filliez','La Tour Lombarde','2 juin au 2 juillet 2017'])assert.ok(poster.includes(fact),'Affiche : '+fact);
-assert.equal(archives.length,41);
+assert.equal(archives.length,114);
+assert.equal(archives.filter(a=>a.group==='reserves').length,73);
+assert.equal(new Set(archives.map(a=>a.id)).size,114);
+const reserve=sources.get('journal/reserves/index.html');
+assert.equal((reserve.match(/data-reserve-item data-hang="[1-8]"/g)||[]).length,73,'Accrochage des archives sans script');
+assert.equal((sources.get('index.html').match(/class="work-card" data-hang="[1-3]"/g)||[]).length,3,'Premières œuvres composées sans script');
 console.log(`OK — ${routes.length} pages, ${localLinks} références locales, aucune ancre manquante.`);
-console.log(`OK — 41 archives utilisées, ${imageVariants} images et variantes, descriptions FR et EN.`);
+console.log(`OK — 114 archives utilisées, ${imageVariants} images et variantes, descriptions FR et EN.`);
 console.log('OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.');

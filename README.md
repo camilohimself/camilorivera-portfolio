@@ -2,7 +2,9 @@
 
 Site personnel de Camilo Rivera, artiste peintre à Bramois, Valais.
 
-La version `version-astra` réunit une galerie bilingue et un journal d’artiste en cinq pages. L’accueil met en scène Abstrait 996 parmi des fragments de carnet et d’atelier. Le journal accueille 41 images d’archives et deux nouveaux films, en complément du film de l’accueil. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier.
+La version `version-astra` réunit une galerie bilingue et un journal d’artiste en six pages. L’accueil met en scène Abstrait 996 parmi des fragments de carnet et d’atelier, du kraft déchiré et du ciel. Le journal accueille 114 images d’archives, dont les 73 fragments de la réserve, et deux films en complément du film de l’accueil. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier.
+
+Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
 
 ## Aperçu local
 
@@ -20,13 +22,19 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `index.html` : structure de la page, textes français et premier contenu accessible sans script.
 - `css/style.css` : couleurs, typographie locale, compositions et comportements adaptatifs.
 - `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences et effets au défilement.
-- `journal/index.html` : sommaire du journal, relié aux quatre chapitres.
-- `journal/carnets/index.html` : douze images de carnets et deux films du geste.
-- `journal/matieres/index.html` : vingt archives de peinture.
+- `journal/index.html` : sommaire du journal, relié aux cinq chapitres.
+- `journal/carnets/index.html` : douze archives de carnets, trois nouvelles figures et deux films du geste.
+- `journal/matieres/index.html` : vingt archives de peinture et trois photographies de pigments et d’outils.
 - `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.
-- `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017.
+- `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017, et trois nouveaux fragments d’exposition.
+- `journal/reserves/index.html` : les 73 nouvelles images, regroupées en figures, atelier, expositions et à-côtés ; liens directs et ouverture progressive par lots de seize.
 - `journal/archives.json` : inventaire des sources, variantes, descriptions françaises et anglaises et crédits connus.
 - `css/journal.css` et `js/journal.js` : compositions, langues, préférences et visionneuse des archives.
+- `css/intensity.css` : matières, ciel, papiers et contrastes communs aux sept pages du site.
+- `css/accrochages.css` : grands formats, collages et chevauchements des galeries, adaptés au téléphone.
+- `js/reserve.js` : filtres, progression et composition de la réserve ; adresse `?regard=atelier#inventaire`, par exemple.
+- `images/reserve/` : 73 images préparées pour le web et leurs variantes ; les fichiers fournis restent inchangés.
+- `images/matieres/kraft-ciel.webp` : fond décoratif, distinct des œuvres et des photographies d’archives.
 - `js/films.js` : lecteur silencieux commun aux trois films.
 - `js/dims.generated.js` : dimensions générées des images, à conserver comme fichier généré.
 - `images/` et `fonts/` : ressources locales, sans téléchargement depuis un service tiers.
@@ -34,6 +42,8 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `videos/deux-figures-*.mp4` et `videos/encre-en-mouvement-*.mp4` : films des carnets en deux tailles, respectivement 32,6 et 16,83 secondes, sans piste audio. Leurs images de repli sont dans `images/journal/`.
 
 Le filtre initial présente les peintures et encres dans l’ordre du catalogue. Les photos ont leur propre filtre. Douze images sont affichées à la fois ; la visionneuse permet de parcourir toute la catégorie choisie.
+
+Dans la réserve, 37 figures, 15 photographies d’atelier, 14 images d’exposition et 7 à-côtés se répondent. Le filtre recalcule l’accrochage à partir des seules images retenues. Sans JavaScript, les 73 liens restent présents et utilisables.
 
 Les commandes de partage proposent l’URL canonique de l’œuvre. La prise de contact ouvre un courrier avec la référence de l’œuvre, sans l’envoyer.
 
@@ -49,6 +59,7 @@ Le film se trouve entre la collection et la présentation de l’atelier, à l�
 node --check js/app.js
 node --check js/journal.js
 node --check js/films.js
+node --check js/reserve.js
 node tools/validate-portfolio.mjs
 node tools/validate-journal.mjs
 git diff --check

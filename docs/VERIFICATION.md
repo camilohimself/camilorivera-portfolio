@@ -2,6 +2,35 @@
 
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
+## Réserve de 73 images et accrochages intenses
+
+La dernière passe concerne le kraft et le ciel, les nouveaux collages, la réserve et la présentation plus chaotique demandée ensuite par Camilo. L’aperçu testé est local, sur le port 55329.
+
+- **Contenu** : 73 nouvelles archives et 216 fichiers WebP, ajoutés aux 41 archives déjà présentes. Toutes les sources ont une entrée unique ; les fichiers originaux sont accessibles depuis l’agrandissement dans leur version web complète. Les fichiers fournis n’ont pas été modifiés.
+- **Réserve** : 10 contrôles de parcours, deux audits automatisés sans anomalie. Les 73 images sont accessibles par progression ; chaque filtre retourne le nombre attendu. Catégorie dans l’adresse, rechargement, anglais, flèches du clavier, focus, retour à la position de lecture et adresse directe vers une image hors du premier lot ont été exécutés. Sans JavaScript, les 73 liens restent visibles.
+- **Journal** : 28 contrôles de parcours, 12 audits automatisés sans anomalie, aucune erreur JavaScript. Les sept pages ont été examinées sur dix formats et dans les deux langues, soit 140 combinaisons. Aucun débordement horizontal ni titre tronqué détecté. Les audits des pages entières incluent les sections révélées sous le premier écran.
+- **Collection** : nouvelle exécution des 17 contrôles, avec trois audits sans anomalie. Les filtres, le chargement progressif, les liens profonds, le retour arrière, le glissement tactile, le zoom et le repli réseau continuent de fonctionner après le changement de composition.
+- **Accrochages** : 12 compositions examinées sur ordinateur et mobile, dont les carnets, les visages, les peintures, la collection et la réserve. Les captures d’ensemble des peintures ont été faites après leur décodage. Un échantillonnage des points de chaque lien, jusqu’aux seize premiers liens par composition, confirme que les images restent atteignables malgré les superpositions. Les légendes de la réserve sont au-dessus des images voisines.
+- **Films** : la suite dédiée à l’accueil a terminé ses 23 contrôles et deux audits sans anomalie ; les deux films des carnets ont été relus dans la suite du journal après modification des accrochages, sur ordinateur et mobile. Lecture silencieuse, pause volontaire, arrêt hors écran et derrière la visionneuse vérifiés.
+- **Mouvement** : toile d’accueil et ouverture du cadre du film mesurées à plusieurs positions de défilement sur ordinateur et mobile. Le réglage de réduction supprime ces transformations. Aucun fichier vidéo ni ressource externe demandé au chargement de l’accueil ; déplacement cumulé de mise en page observé à zéro dans les deux essais. Les transferts initiaux observés sont de 2 092 323 octets sur ordinateur et de 1 607 887 octets en émulation mobile. Il ne s’agit pas de mesures en réseau réel.
+
+Dernières sorties des validations statiques :
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — ancres, identifiants, polices, dimensions et références des œuvres.
+OK — 7 pages, 635 références locales, aucune ancre manquante.
+OK — 114 archives utilisées, 333 images et variantes, descriptions FR et EN.
+OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.
+```
+
+La syntaxe de `app.js`, `journal.js`, `films.js` et `reserve.js`, ainsi que `git diff --check`, a été vérifiée sans erreur. Les contrôles sont ceux d’un site statique : aucun paquet installé et aucune compilation nécessaire.
+
+Les limites précédentes restent applicables : pas d’iPhone physique, de Safari ou Firefox, ni de mesure sur le site publié. Le dernier contrôle dans la fenêtre native de l’app n’a pas pu être refait, le Mac étant verrouillé ; les parcours Chromium locaux ont été exécutés. Aucun envoi, aucune fusion et aucune publication.
+
+Les sections suivantes conservent l’historique des vérifications précédentes.
+
 ## Contrôles du contenu
 
 Sorties du validateur `node tools/validate-portfolio.mjs` :

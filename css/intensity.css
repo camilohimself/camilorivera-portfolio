@@ -1,0 +1,399 @@
+/* Kraft, open sky and fragments: the structure carries the collisions. */
+.intense{
+  --paper:#f4eddf;
+  --canvas:#dfc9a9;
+  --ink:#111610;
+  --muted:#594c3e;
+  --line:#bfb099;
+  --accent:#682113;
+  --kraft:#c6a071;
+  --kraft-light:#dfbe91;
+  --oxide:#b22e1e;
+  --chalk:#fff8e9;
+  --cobalt:#183ca5;
+  --night:#0b1713;
+  --dark-muted:#c9c5b8;
+  --ochre-paper:#c6a071;
+  --tear:polygon(0 1%,9% 0,17% 1.3%,28% .2%,36% 1%,43% 0,55% 1.2%,64% .3%,78% 1.1%,88% 0,100% .9%,99.3% 16%,100% 29%,99.1% 41%,100% 58%,99.3% 69%,100% 83%,99.4% 100%,87% 98.9%,74% 100%,62% 99%,49% 100%,37% 98.6%,25% 100%,14% 99%,0 100%,.9% 83%,0 69%,.7% 56%,0 40%,.8% 25%);
+  --paper-shadow:2px 8px 4px rgb(0 0 0 / .15),0 30px 30px -22px rgb(0 0 0 / .6);
+}
+.intense .site-header{background:var(--paper);backdrop-filter:none}
+.intense .wordmark>span{font-size:1.35em;color:var(--oxide)}
+.intense .scroll-progress{height:3px;background:var(--oxide)}
+.intense .paper-edge{clip-path:var(--tear)}
+.intense .photo-link{isolation:isolate}
+.intense .photo-enlarge{opacity:1;transform:none;box-shadow:0 2px 8px rgb(0 0 0 / .12)}
+
+/* The original canvas floats in an impossible opening through the paper. */
+.intense.home-journal .hero{
+  background:var(--kraft) url('../images/matieres/kraft-ciel.webp') center/cover;
+  padding-top:75px;padding-bottom:0;isolation:isolate;column-gap:5%;
+}
+.intense.home-journal .hero-copy{z-index:3;padding-bottom:26px}
+.intense.home-journal .hero-title{font-size:clamp(80px,8.8vw,157px);line-height:.88}
+.intense.home-journal .hero-title em{
+  display:table;white-space:nowrap;background:var(--oxide);color:var(--chalk);
+  padding:0 .13em .13em .08em;margin-left:-.08em;margin-top:.08em;
+  transform:rotate(-4deg);clip-path:var(--tear);font-size:1.03em;
+}
+.intense.home-journal .hero .eyebrow{color:var(--ink);letter-spacing:.06em}
+.intense.home-journal .hero-description{color:var(--ink);max-width:345px;background:rgb(223 190 145 / .92);padding:10px 14px 11px 0;clip-path:var(--tear)}
+.intense.home-journal .hero-copy>.text-link{color:var(--chalk);background:var(--ink);padding:5px 10px 5px 19px;transform:rotate(-1.5deg)}
+.intense.home-journal .hero-copy .round-arrow{border-color:var(--chalk);border-radius:0}
+.intense.home-journal .hero-footnote{color:var(--ink);margin-top:33px;background:var(--kraft-light);display:inline-flex;padding:10px 16px 10px 10px;clip-path:var(--tear);transform:rotate(2deg)}
+.intense.home-journal .hero-footnote .tiny-index{color:var(--ink)}
+.intense.home-journal .hero-art{margin:20px 10px 55px 24px;z-index:2}
+.intense.home-journal .hero-art-link{background:var(--ink);padding:9px 9px 15px;box-shadow:12px 28px 28px -10px rgb(0 0 0 / .45);outline:1px solid rgb(255 248 233 / .4)}
+.intense.home-journal .hero-art-link::before{left:8%;width:105px;height:32px;background:var(--kraft-light);transform:rotate(-17deg);opacity:.88}
+.intense.home-journal .hero-art figcaption{background:var(--ink);color:var(--chalk);margin:12px 0 0 auto;padding:7px 13px;width:max-content;max-width:90%;transform:rotate(-3deg);clip-path:var(--tear)}
+.intense.home-journal .hero-art figcaption>span:last-child{color:var(--dark-muted)}
+.intense.home-journal .hero-art-aside{color:var(--chalk);background:var(--ink);right:-17px;padding:8px 3px}
+.intense .hero-stamp{width:29%;right:-1%;top:-67px;transform:rotate(11deg);padding:0;z-index:4;border:5px solid var(--kraft-light)}
+.intense .hero-stamp img{aspect-ratio:.9;object-fit:cover;object-position:60% 27%}
+.intense .hero-scrap{width:31%;max-width:185px;left:-62px;bottom:-61px;transform:rotate(-15deg);padding:9px 7px 13px;background:var(--sheet);z-index:4}
+.intense .hero-scrap img{aspect-ratio:.72;object-fit:contain}
+.intense .hero-scrap>span{font-size:22px}
+.intense.home-journal .hero-bottom{position:relative;background:var(--ink);color:var(--chalk);border:0;margin:0 calc(-1 * var(--gutter));padding:19px var(--gutter);z-index:4}
+.intense .art-open{background:var(--chalk);color:var(--ink)}
+
+/* Breaks in scale, paper strips and a fifth entrance. */
+.intense .journal-door{background:var(--night);padding-top:110px;isolation:isolate}
+.intense .journal-door::before{background:var(--night);height:21px;top:-15px}
+.intense .journal-door::after{content:"";position:absolute;inset:0;z-index:-1;background:url('../images/reserve/r61-img_6090-900.webp') 70% 50%/cover;opacity:.065;mix-blend-mode:screen;pointer-events:none}
+.intense .door-heading h2 em{display:block;color:var(--kraft-light);transform:rotate(-2deg);margin-top:10px}
+.intense .door-board{gap:3.5%;padding-bottom:70px}
+.intense .door-image{padding:0;background:transparent}
+.intense .door-card:nth-child(odd) .door-image{clip-path:var(--tear)}
+.intense .door-carnets{--tilt:-9deg;width:114%;z-index:2}
+.intense .door-matieres{--tilt:8deg;margin-top:110px;z-index:3}
+.intense .door-les-caves{--tilt:-5deg;width:115%;margin-top:15px}
+.intense .door-traces{--tilt:10deg;margin-top:145px}
+.intense .door-number{color:var(--kraft-light)}
+.intense .door-caption{background:var(--night);position:relative;padding-block:7px}
+.reserve-door{display:flex;align-items:center;gap:28px;width:fit-content;max-width:80%;margin:0 auto 55px;transform:rotate(-3deg);background:var(--kraft);color:var(--ink);padding:10px 32px 10px 10px;clip-path:var(--tear);transition:transform .6s var(--ease)}
+.reserve-door:hover{transform:rotate(0deg) translateY(-4px)}
+.reserve-door-image{width:95px;flex-shrink:0;overflow:hidden}
+.reserve-door-image img{height:115px;width:100%;object-fit:cover;object-position:50% 38%}
+.reserve-door-copy{display:flex;flex-direction:column;gap:12px}
+.reserve-door-copy>strong{font-family:var(--font-display);font-size:45px;font-weight:300;line-height:.95;letter-spacing:-.04em}
+.reserve-door-copy>span{font-size:11px}
+.intense .door-footer{border-color:var(--dark-line)}
+.between-worlds{background:var(--kraft);position:relative;display:grid;grid-template-columns:1fr 1fr;gap:9%;padding-block:125px 150px;isolation:isolate}
+.between-worlds::before{content:"";position:absolute;inset:0;background:url('../images/matieres/kraft-ciel.webp') 0 0/300% auto;z-index:-1;opacity:.55;pointer-events:none}
+.worlds-left{align-self:center;z-index:3}
+.worlds-left .eyebrow{margin-bottom:40px}
+.worlds-left h2{font-size:clamp(61px,6.7vw,114px)}
+.worlds-left h2 em{color:var(--accent)}
+.worlds-left .journal-prose{color:var(--ink);margin:30px 0 16px;max-width:285px}
+.worlds-left .text-link{border-bottom:1px solid var(--ink)}
+.worlds-photos{position:relative;min-height:580px}
+.worlds-tools{display:block;width:88%;transform:rotate(8deg);clip-path:var(--tear);position:relative;z-index:1}
+.worlds-tools img{aspect-ratio:.84;object-fit:cover}
+.worlds-wash{position:absolute;width:56%;left:-10%;bottom:-25px;transform:rotate(-11deg);z-index:2;box-shadow:var(--paper-shadow)}
+.worlds-wash img{aspect-ratio:.8;object-fit:cover;clip-path:var(--tear)}
+.worlds-note{font-family:var(--font-display);font-style:italic;font-size:62px;position:absolute;right:0;bottom:-49px;background:var(--oxide);color:var(--chalk);padding:5px 25px 12px;transform:rotate(4deg);z-index:3;clip-path:var(--tear)}
+.intense .gallery{position:relative}
+.intense .gallery::before{content:"";position:absolute;height:22px;top:-18px;left:0;right:0;background:var(--paper);clip-path:polygon(0 45%,5% 75%,11% 10%,18% 80%,28% 20%,34% 70%,42% 15%,51% 65%,59% 10%,67% 75%,75% 25%,83% 65%,92% 0,100% 55%,100% 100%,0 100%)}
+.intense .work-image{background:var(--canvas)}
+.intense .work-card:nth-child(4n+1) .work-image{background:var(--kraft-light)}
+.intense .work-card:nth-child(4n+3) .work-image{background:var(--night)}
+.intense .matter{background:var(--night)}
+.intense .matter h2>em{color:var(--kraft-light)}
+.intense .about{background:var(--night)}
+.intense .about-portrait{transform:rotate(-3deg);padding:10px;background:var(--kraft)}
+.intense .about-portrait figcaption{color:var(--ink);padding:0 5px 5px}
+.intense .studio-photo-small{transform:rotate(6deg)}
+.intense .contact{background:var(--kraft);position:relative;isolation:isolate}
+.intense .contact::before{content:"";position:absolute;inset:0;background:url('../images/matieres/kraft-ciel.webp') 0 25%/300% auto;opacity:.35;z-index:-1;pointer-events:none}
+.intense .contact h2 em{display:inline-block;padding:.01em .08em .14em;background:var(--oxide);color:var(--chalk);transform:rotate(-3deg);clip-path:var(--tear)}
+.intense .contact-round{border:0;border-radius:0;background:var(--ink);color:var(--chalk);transform:rotate(8deg);clip-path:var(--tear)}
+.intense .contact-round:hover{transform:rotate(-3deg)}
+.intense .contact-bottom p,.intense .contact .eyebrow,.intense .contact .section-number{color:var(--ink)}
+.intense .contact-bottom{border-color:var(--muted)}
+
+/* Journal cover: a black room with windows through the paper. */
+.intense.chapter-cover main{background:var(--night);color:var(--chalk)}
+.intense.chapter-cover .folio-line{color:var(--dark-muted);border-color:var(--dark-line)}
+.intense.chapter-cover .journal-cover-opening{position:relative;isolation:isolate;padding-block:105px 100px}
+.intense.chapter-cover .journal-cover-opening::before{content:"";position:absolute;right:-8%;top:0;width:56%;height:115%;background:url('../images/matieres/kraft-ciel.webp') right center/cover;clip-path:var(--tear);transform:rotate(8deg);z-index:-1}
+.intense.chapter-cover .cover-copy .eyebrow{color:var(--kraft-light)}
+.intense.chapter-cover .cover-copy h1{font-size:clamp(85px,9.5vw,160px)}
+.intense.chapter-cover .cover-copy h1 em{display:inline-block;background:var(--oxide);color:var(--chalk);transform:rotate(-4deg);padding:0 .12em .14em .03em;margin-top:.03em;clip-path:var(--tear)}
+.intense.chapter-cover .cover-copy .journal-lead{color:var(--chalk);max-width:350px}
+.intense.chapter-cover .cover-copy .text-link{border-color:var(--dark-line)}
+.intense.chapter-cover .cover-collage{z-index:2}
+.intense.chapter-cover .cover-photo{padding:0}
+.intense.chapter-cover .cover-atelier{transform:rotate(-12deg);width:80%;top:45px}
+.intense.chapter-cover .cover-encre{transform:rotate(14deg);right:-2%;top:-25px;clip-path:var(--tear)}
+.intense.chapter-cover .cover-paint{transform:rotate(-9deg);left:0;bottom:-5px}
+.intense.chapter-cover .cover-poster{transform:rotate(12deg);right:0;bottom:-35px;background:var(--sheet);padding:5px}
+.intense.chapter-cover .reading-note{position:relative;z-index:2}
+.intense.chapter-cover .reading-note>p{background:var(--kraft);color:var(--ink);padding:13px 28px;clip-path:var(--tear);transform:rotate(-7deg)}
+.intense.chapter-cover .chapter-index{padding-top:0}
+.intense.chapter-cover .index-entry{border-color:var(--dark-line);padding-block:80px}
+.intense.chapter-cover .entry-copy .journal-prose,.intense.chapter-cover .journal-related .eyebrow{color:var(--dark-muted)}
+.intense.chapter-cover .entry-number{color:var(--kraft-light)}
+.intense.chapter-cover .entry-copy .text-link,.intense.chapter-cover .journal-related{border-color:var(--dark-line)}
+.intense.chapter-cover .index-entry:nth-child(even) .entry-image{transform:rotate(-6deg)}
+.intense.chapter-cover .index-entry:nth-child(odd) .entry-image{transform:rotate(7deg)}
+.intense.chapter-cover .index-reserves .entry-image{background:var(--kraft-light);clip-path:var(--tear);height:340px;width:75%;padding:10px}
+.intense.chapter-cover .index-reserves .entry-image img{object-fit:contain;mix-blend-mode:multiply}
+.journal-reserve-last{padding-bottom:55px}
+.intense.chapter-cover :focus-visible{outline-color:var(--chalk)}
+
+/* New fragments invade the chapters; original drawings remain intact. */
+.intense .notebook-opening{background:var(--kraft);position:relative;isolation:isolate}
+.intense .notebook-opening::before{content:"";position:absolute;inset:0;background:url('../images/matieres/kraft-ciel.webp') 0 10%/260% auto;opacity:.42;z-index:-1;pointer-events:none}
+.intense .notebook-opening h1 em{color:var(--ink);text-decoration:underline;text-decoration-color:var(--oxide);text-decoration-thickness:5px;text-underline-offset:7px}
+.intense .notebook-opening .journal-lead{color:var(--ink)}
+.intense .opening-figure{transform:rotate(10deg)}
+.intense .word-fragment{transform:rotate(-14deg);bottom:15px;background:var(--kraft-light)}
+.ink-collision{background:var(--night);color:var(--chalk);display:grid;grid-template-columns:.75fr 1.25fr;gap:4%;padding-block:100px 150px;align-items:center;position:relative}
+.collision-copy{position:relative;z-index:3}
+.collision-copy h2{font-size:clamp(70px,7.7vw,130px)}
+.collision-copy .journal-prose{color:var(--dark-muted);margin:27px 0 20px;max-width:250px}
+.collision-images{position:relative;min-height:680px}
+.ink-tower{width:56%;margin-left:18%;transform:rotate(6deg);z-index:2}
+.ink-tower .photo-link{background:var(--kraft-light);padding:12px;clip-path:var(--tear)}
+.ink-tower img{mix-blend-mode:multiply}
+.ink-knot{position:absolute;width:43%;right:-2%;bottom:3%;transform:rotate(11deg);z-index:3}
+.ink-blue{position:absolute;width:46%;left:-3%;bottom:-20px;transform:rotate(-12deg);z-index:1}
+.collision-images figcaption{color:var(--dark-muted)}
+.intense .scrap-spread .photo-link{padding:9px 9px 18px;clip-path:var(--tear);background:var(--sheet)}
+.intense .scrap-spread>div:nth-child(2n) .archive-photo{transform:rotate(6deg)}
+.intense .scrap-spread>div:nth-child(odd) .archive-photo{transform:rotate(-5deg)}
+.intense .ochre-pages{background:var(--kraft)}
+.intense .paint-opening{background:var(--cobalt);color:var(--chalk);padding-top:85px}
+.intense .paint-opening .eyebrow,.intense .paint-opening .journal-lead,.intense .paint-opening h1 em{color:var(--chalk)}
+.intense .paint-opening .text-link{border-color:var(--dark-muted)}
+.intense .paint-opening .opening-paint{transform:rotate(9deg)}
+.intense .paint-opening .opening-paint figcaption{background:var(--cobalt);color:var(--chalk)}
+.pigment-room{background:var(--kraft-light);padding-block:120px;display:grid;grid-template-columns:.8fr 1.2fr;gap:8%;align-items:center;position:relative}
+.pigment-copy .eyebrow{margin-bottom:30px}
+.pigment-copy h2{font-size:clamp(68px,7vw,120px)}
+.pigment-copy h2 em{color:var(--accent)}
+.pigment-copy .journal-prose{color:var(--ink);margin:25px 0 20px;max-width:285px}
+.pigment-stack{position:relative;min-height:600px}
+.pigment-white{width:83%;transform:rotate(-7deg)}
+.pigment-white img{max-height:590px;object-fit:cover}
+.pigment-blue{position:absolute;width:48%;right:-4%;top:7%;transform:rotate(12deg);z-index:2}
+.pigment-red{position:absolute;bottom:-20px;right:10%;width:48%;transform:rotate(5deg);z-index:3}
+.intense .colour-pages{background:var(--kraft)}
+.intense .colour-wall .photo-link{outline:3px solid var(--kraft-light);outline-offset:6px}
+.intense .night-paint{background:var(--night)}
+.intense .traces-opening{background:var(--oxide);color:var(--chalk)}
+.intense .traces-opening .eyebrow,.intense .traces-opening h1 em,.intense .traces-opening .journal-lead{color:var(--chalk)}
+.intense .traces-opening .text-link{border-color:var(--chalk)}
+.intense .traces-opening .studio-memory{background:var(--kraft);transform:rotate(-7deg)}
+.intense .traces-opening .studio-memory figcaption{color:var(--ink)}
+.intense .mirror-memory{transform:rotate(14deg);border:4px solid var(--ink);padding:0}
+.intense .exhibition-page{background-color:var(--kraft-light)}
+.lived-room{background:var(--night);color:var(--chalk);padding-block:110px 145px;display:grid;grid-template-columns:.8fr 1.2fr;gap:8%;align-items:center}
+.lived-copy>.eyebrow{margin-bottom:35px;color:var(--kraft-light)}
+.lived-copy h2{font-size:clamp(60px,6.2vw,102px)}
+.lived-copy h2 em{color:var(--kraft-light)}
+.lived-copy .text-link{margin-top:28px}
+.lived-photos{position:relative;min-height:590px}
+.lived-concert{width:90%;transform:rotate(-6deg)}
+.lived-concert img{max-height:470px;object-fit:cover}
+.lived-people{position:absolute;width:43%;left:-4%;bottom:-20px;transform:rotate(-9deg)}
+.lived-poster{position:absolute;width:43%;right:0;bottom:-30px;transform:rotate(9deg);z-index:2}
+.lived-photos figcaption{color:var(--dark-muted)}
+.intense .homage{background:var(--kraft-light);clip-path:var(--tear)}
+.intense.chapter-les-caves .site-header{background:var(--night)}
+.intense.chapter-les-caves .header-tools button:hover{background:var(--dark-line)}
+.intense .caves-story>.archive-photo{transform:rotate(5deg);border:8px solid var(--kraft);padding-bottom:10px;background:var(--kraft)}
+.intense .caves-story>.archive-photo figcaption{color:var(--ink);padding-inline:6px}
+.reserve-invitation{display:flex;gap:40px;align-items:center;justify-content:center;padding-block:60px 75px;background:var(--oxide);color:var(--chalk);position:relative}
+.reserve-invitation-number{font-family:var(--font-display);font-size:170px;line-height:1;transform:rotate(-9deg)}
+.reserve-invitation h2{font-size:clamp(37px,4.3vw,67px);max-width:450px}
+.reserve-invitation .text-link{margin-top:15px}
+.intense .chapter-turn{background:var(--kraft-light)}
+.intense.chapter-les-caves .chapter-turn{background:var(--night)}
+
+/* The reserve is an open drawer: all photos exist in ordinary HTML. */
+.reserve-opening{background:var(--night);color:var(--chalk);display:grid;grid-template-columns:1fr 1fr;gap:6%;padding-block:85px 135px;position:relative;isolation:isolate}
+.reserve-opening::before{content:"";position:absolute;right:0;top:0;width:50%;height:100%;background:url('../images/matieres/kraft-ciel.webp') right center/cover;z-index:-1;clip-path:var(--tear)}
+.reserve-opening-copy{z-index:3}
+.reserve-opening .eyebrow{color:var(--kraft-light);font-size:10px;letter-spacing:.07em;margin:15px 0 35px}
+.reserve-opening h1{font-size:clamp(80px,9vw,154px);line-height:.93}
+.reserve-opening h1 em{display:inline-block;color:var(--chalk);background:var(--oxide);padding:0 .11em .15em .04em;transform:rotate(-4deg);clip-path:var(--tear)}
+.reserve-opening .journal-lead{color:var(--chalk);max-width:320px}
+.reserve-opening-copy>.text-link{margin-top:20px;border-bottom:1px solid var(--dark-line)}
+.reserve-count{display:flex;gap:20px;align-items:center;margin-top:30px;font-size:10px}
+.reserve-count b{font-family:var(--font-display);font-size:70px;font-weight:300;line-height:1;color:var(--kraft-light)}
+.reserve-opening-collage{position:relative;min-height:610px;align-self:center}
+.reserve-portrait{width:70%;margin-left:13%;transform:rotate(6deg);padding:8px;background:var(--kraft);z-index:1}
+.reserve-portrait img{aspect-ratio:.76;object-fit:cover;object-position:55% 42%}
+.reserve-portrait figcaption{color:var(--ink);padding:0 4px 5px}
+.reserve-shadow{position:absolute;bottom:-15px;left:-3%;width:41%;z-index:2;transform:rotate(-11deg);border:8px solid var(--paper);box-shadow:var(--paper-shadow)}
+.reserve-shadow img{aspect-ratio:.79;object-fit:cover}
+.reserve-moth{position:absolute;right:-2%;bottom:4%;width:36%;z-index:3;transform:rotate(13deg);clip-path:var(--tear);border:6px solid var(--kraft-light)}
+.reserve-moth img{aspect-ratio:.85;object-fit:cover;object-position:50% 36%}
+.cut-label{position:absolute;z-index:4;bottom:-57px;right:0;color:var(--ink);background:var(--kraft-light);font-family:var(--font-display);font-style:italic;font-size:31px;line-height:1.05;padding:13px 18px 18px;max-width:300px;transform:rotate(3deg);clip-path:var(--tear)}
+.reserve-inventory{padding-block:90px 100px;background:var(--paper)}
+.reserve-inventory-heading{display:flex;gap:45px;justify-content:space-between;align-items:end;margin-bottom:50px}
+.reserve-inventory-heading h2{font-size:clamp(62px,6.8vw,111px);max-width:620px}
+.reserve-inventory-heading .journal-prose{max-width:260px;margin-bottom:5px}
+.reserve-toolbar{position:sticky;top:calc(var(--header-h) - 1px);background:var(--paper);z-index:10;padding:12px 0 14px;margin-bottom:45px;border-block:1px solid var(--line)}
+.reserve-filters{display:flex;gap:5px;flex-wrap:wrap}
+.reserve-filter{display:flex;align-items:center;gap:13px;min-height:46px;padding:5px 16px;font-size:12px}
+.reserve-filter small{font-size:9px}
+.reserve-filter[aria-pressed="true"]{background:var(--ink);color:var(--chalk);transform:rotate(-2deg)}
+.reserve-filter:hover:not([aria-pressed="true"]){background:var(--canvas)}
+.reserve-status{font-size:10px;color:var(--muted);margin-top:10px;min-height:16px}
+.reserve-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:55px 28px;align-items:start}
+.reserve-item{min-width:0;scroll-margin-top:calc(var(--header-h) + 150px)}
+.reserve-item:nth-child(4n+2){padding-top:45px}
+.reserve-item:nth-child(4n+4){padding-top:90px}
+.reserve-item:nth-child(3n+1) .archive-photo{transform:rotate(-3deg)}
+.reserve-item:nth-child(3n+2) .archive-photo{transform:rotate(3deg)}
+.reserve-grid .photo-link{padding:8px;background:var(--kraft-light);box-shadow:var(--paper-shadow)}
+.reserve-item[data-kind="expositions"] .photo-link{background:var(--sheet)}
+.reserve-item[data-kind="a-cote"] .photo-link{background:var(--night)}
+.reserve-grid .photo-link img{aspect-ratio:.76;object-fit:contain;background:var(--paper)}
+.reserve-item[data-kind="atelier"] .photo-link img,.reserve-item[data-kind="a-cote"] .photo-link img{object-fit:cover}
+.reserve-grid figcaption{gap:8px;font-size:10px;line-height:1.6}
+.reserve-more{display:flex;justify-content:center;margin-top:60px}
+.reserve-exit{background:var(--cobalt);color:var(--chalk);padding-block:85px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px 7%;align-items:end}
+.reserve-exit h2{grid-row:1/3;font-size:clamp(65px,7vw,114px)}
+.reserve-exit>.text-link{border-bottom:1px solid var(--dark-muted);justify-self:start}
+.reserve-opening :focus-visible,.reserve-invitation :focus-visible,.reserve-exit :focus-visible,.ink-collision :focus-visible,.lived-room :focus-visible,.paint-opening :focus-visible,.traces-opening :focus-visible{outline-color:var(--chalk)}
+.intense [hidden]{display:none}
+
+@media(max-width:1100px){
+  .intense.home-journal .hero-title{font-size:9.4vw}
+  .intense .hero-stamp{top:-45px}
+  .intense .hero-scrap{left:-30px}
+  .worlds-photos{min-height:450px}
+  .collision-images{min-height:520px}
+  .pigment-stack{min-height:480px}
+  .lived-photos{min-height:440px}
+  .reserve-opening-collage{min-height:480px}
+  .reserve-opening h1{font-size:9.5vw}
+  .reserve-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 25px}
+  .reserve-item:nth-child(4n+2),.reserve-item:nth-child(4n+4){padding-top:0}
+  .reserve-item:nth-child(3n+2){padding-top:50px}
+  .reserve-inventory-heading{align-items:start}
+}
+@media(max-width:700px){
+  .intense.home-journal .hero{padding-top:37px;background-size:auto 1050px;background-position:58% 0}
+  .intense.home-journal .hero-title{font-size:clamp(68px,17vw,113px);line-height:.89}
+  .intense.home-journal .hero-title em{font-size:1em;margin-top:.07em}
+  .intense.home-journal .hero-copy{padding-bottom:5px}
+  .intense.home-journal .hero .eyebrow{margin-bottom:30px}
+  .intense.home-journal .hero-description{font-size:12px;max-width:290px;margin-top:19px;margin-bottom:15px;padding-block:7px}
+  .intense.home-journal .hero-copy>.text-link{font-size:11px;min-height:48px}
+  .intense.home-journal .hero-footnote{margin-top:19px;font-size:9px;padding:8px}
+  .intense.home-journal .hero-art{width:calc(100% - 28px);margin:74px 6px 80px 17px}
+  .intense.home-journal .hero-art-link{padding:7px 7px 12px}
+  .intense.home-journal .hero-art-link::before{width:65px;height:24px;top:-10px}
+  .intense .hero-stamp{width:31%;top:-51px;right:-3%;border-width:4px}
+  .intense .hero-scrap{width:29%;left:-27px;bottom:-53px;padding:5px 5px 11px}
+  .intense .hero-scrap>span{font-size:15px}
+  .intense.home-journal .hero-art figcaption{font-size:9px;gap:10px;padding:6px 10px;max-width:76%}
+  .intense.home-journal .hero-art-aside{font-size:8px;right:-13px}
+  .intense.home-journal .hero-bottom{margin-top:0;padding-block:14px;font-size:9px;gap:25px}
+  .intense .journal-door{padding-top:62px}
+  .intense .door-heading h2{font-size:clamp(48px,11.7vw,78px)}
+  .intense .door-board{gap:35px 27px;padding-bottom:42px}
+  .intense .door-carnets{width:110%}
+  .intense .door-matieres{margin-top:57px}
+  .intense .door-les-caves{margin-top:0;width:107%}
+  .intense .door-traces{margin-top:65px}
+  .intense .door-name{font-size:25px}
+  .reserve-door{max-width:100%;gap:17px;margin-bottom:34px;padding:8px 18px 8px 8px}
+  .reserve-door-image{width:63px}
+  .reserve-door-image img{height:91px}
+  .reserve-door-copy>strong{font-size:32px}
+  .reserve-door-copy>span{font-size:9px;line-height:1.6}
+  .between-worlds{display:flex;flex-direction:column;gap:50px;padding-block:67px 115px}
+  .between-worlds::before{background-size:auto 130%;background-position:0 0}
+  .worlds-left .eyebrow{margin-bottom:25px}
+  .worlds-left h2{font-size:clamp(51px,12.3vw,83px)}
+  .worlds-left .journal-prose{font-size:12px;margin:23px 0 13px}
+  .worlds-photos{min-height:0;height:116vw;max-height:690px;margin-inline:10px}
+  .worlds-tools{width:84%;margin-left:auto;transform:rotate(5deg)}
+  .worlds-wash{width:52%;left:-3%;bottom:-9px;transform:rotate(-8deg)}
+  .worlds-note{right:-2%;bottom:-42px;font-size:39px;padding:4px 19px 10px}
+  .intense .contact h2{font-size:clamp(64px,15.4vw,104px)}
+  .intense .contact-round{width:70px}
+  .intense .contact-heading{gap:15px}
+  .intense.chapter-cover .journal-cover-opening{padding-block:45px 90px}
+  .intense.chapter-cover .journal-cover-opening::before{top:auto;bottom:-3%;right:-19%;height:52%;width:96%;transform:rotate(-9deg)}
+  .intense.chapter-cover .cover-copy h1{font-size:clamp(68px,17.3vw,120px);line-height:.95}
+  .intense.chapter-cover .cover-copy .journal-lead{font-size:13px;max-width:310px}
+  .intense.chapter-cover .cover-collage{margin-top:40px;height:100vw;max-height:520px}
+  .intense.chapter-cover .cover-atelier{top:23px;left:0;width:82%}
+  .intense.chapter-cover .cover-encre{right:-3%;top:-15px}
+  .intense.chapter-cover .cover-paint{left:0;bottom:0}
+  .intense.chapter-cover .cover-poster{right:-1%;bottom:-24px}
+  .intense.chapter-cover .reading-note{padding-top:15px;padding-bottom:25px}
+  .intense.chapter-cover .reading-note>p{font-size:26px;margin-right:0}
+  .intense.chapter-cover .index-entry{padding-block:52px}
+  .intense.chapter-cover .index-reserves .entry-image{height:260px;width:62%;margin-top:35px}
+  .intense .notebook-opening h1 em{text-decoration-thickness:3px;text-underline-offset:5px}
+  .intense .notebook-opening::before{background-size:auto 130%}
+  .ink-collision{display:flex;flex-direction:column;align-items:stretch;gap:38px;padding-block:60px 100px}
+  .collision-copy h2{font-size:clamp(66px,15.5vw,100px)}
+  .collision-copy .journal-prose{margin:20px 0 12px;font-size:12px}
+  .collision-images{min-height:0;height:118vw;max-height:720px;margin:0 10px}
+  .ink-tower{width:59%;margin-left:17%}
+  .ink-tower .photo-link{padding:7px}
+  .ink-knot{right:-3%;width:45%;bottom:4%}
+  .ink-blue{left:-4%;width:43%;bottom:-5px}
+  .intense .paint-opening{padding-top:42px}
+  .pigment-room{display:flex;flex-direction:column;align-items:stretch;gap:40px;padding-block:60px 110px}
+  .pigment-copy h2{font-size:clamp(61px,14vw,93px)}
+  .pigment-copy .journal-prose{font-size:12px;margin:22px 0 12px}
+  .pigment-stack{min-height:0;height:127vw;max-height:700px;margin-inline:10px}
+  .pigment-white{width:80%}
+  .pigment-blue{right:-5%;width:45%;top:10%}
+  .pigment-red{right:3%;width:47%;bottom:-24px}
+  .intense .colour-wall .photo-link{outline-width:2px;outline-offset:3px}
+  .lived-room{display:flex;flex-direction:column;gap:45px;align-items:stretch;padding-block:60px 120px}
+  .lived-copy h2{font-size:clamp(64px,14.8vw,100px)}
+  .lived-copy>.eyebrow{font-size:10px;margin-bottom:25px}
+  .lived-photos{min-height:0;height:117vw;max-height:670px;margin-inline:8px}
+  .lived-concert{width:91%}
+  .lived-concert img{max-height:88vw}
+  .lived-people{width:45%;left:-2%;bottom:-30px}
+  .lived-poster{width:44%;right:-2%;bottom:-37px}
+  .reserve-invitation{gap:20px;padding-block:38px 47px}
+  .reserve-invitation-number{font-size:96px}
+  .reserve-invitation h2{font-size:34px}
+  .reserve-invitation .text-link{font-size:10px;gap:10px;margin-top:8px}
+  .reserve-opening{display:flex;flex-direction:column;gap:55px;padding-block:40px 110px}
+  .reserve-opening::before{width:100%;height:49%;top:auto;bottom:0;background-position:70% center;transform:rotate(6deg)}
+  .reserve-opening h1{font-size:clamp(68px,17vw,115px)}
+  .reserve-opening .eyebrow{font-size:9px;margin-top:0;margin-bottom:28px}
+  .reserve-opening .journal-lead{font-size:13px;max-width:310px;margin-top:25px}
+  .reserve-count{margin-top:20px}
+  .reserve-count b{font-size:57px}
+  .reserve-opening-collage{min-height:0;height:123vw;max-height:690px;width:100%;margin-top:15px}
+  .reserve-portrait{width:75%;margin-left:11%}
+  .reserve-portrait figcaption{font-size:8px}
+  .reserve-shadow{width:40%;bottom:-4px;left:-1%;border-width:5px}
+  .reserve-moth{right:-1%;bottom:4%;width:34%;border-width:4px}
+  .cut-label{font-size:24px;max-width:220px;bottom:-51px;padding:10px 15px 14px}
+  .reserve-inventory{padding-block:59px 65px}
+  .reserve-inventory-heading{display:block;margin-bottom:30px}
+  .reserve-inventory-heading h2{font-size:clamp(55px,13.7vw,89px)}
+  .reserve-inventory-heading .journal-prose{margin-top:22px;font-size:12px;max-width:290px}
+  .reserve-toolbar{margin-bottom:35px;padding-block:10px 12px}
+  .reserve-filters{gap:3px}
+  .reserve-filter{padding:5px 10px;font-size:10px;gap:8px}
+  .reserve-filter small{font-size:8px}
+  .reserve-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 23px;padding-inline:2px}
+  .reserve-item:nth-child(3n+2){padding-top:0}
+  .reserve-item:nth-child(even){padding-top:40px}
+  .reserve-grid .photo-link{padding:5px}
+  .reserve-grid figcaption{font-size:9px;gap:6px}
+  .reserve-more{margin-top:40px}
+  .reserve-exit{display:flex;flex-direction:column;align-items:start;gap:22px;padding-block:58px}
+  .reserve-exit h2{font-size:clamp(57px,13vw,85px);margin-bottom:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .intense .reserve-door{transition:none}
+}
+.motion-reduced .reserve-door{transition:none}

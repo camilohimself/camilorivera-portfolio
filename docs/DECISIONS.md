@@ -1,5 +1,29 @@
 # Décisions du portfolio
 
+## 10 septembre 2026 — Kraft, ciel et réserve ouverte
+
+- **Contexte** : Camilo trouve le site trop propre et fournit 72 fichiers supplémentaires, ainsi que le portrait `IMG_7505.PNG`. Il demande plus de contrastes, du kraft, du ciel, du surréalisme et une intensité plus proche de sa peinture.
+- **Décision** : conserver les parcours et mouvements existants, enrichir l’accueil et les chapitres avec les nouveaux fragments, et ouvrir une page de réserve rassemblant les 73 images. Le sommaire conduit désormais à cinq chapitres.
+- **Matières** : papier brun, ciel bleu, rouge dense et noir. Le fond de kraft et de ciel est un élément décoratif créé séparément ; aucune œuvre ni photographie fournie n’est transformée par cette création. Les images d’archives restent des images d’archives.
+- **Archives** : conversion colorimétrique vers sRGB, prise en compte de l’orientation, fichiers WebP sans métadonnées personnelles et variantes adaptées à l’affichage. Les originaux restent en lecture seule. Les 73 nouveaux fichiers et leurs variantes représentent 216 images, soit 51 283 394 octets au total ; chargement progressif dans les pages.
+- **Réserve** : 37 figures, 15 photographies d’atelier, 14 images d’exposition et 7 à-côtés. Seize images au premier affichage, puis seize par ouverture successive ; tout reste accessible sans JavaScript. Les légendes décrivent les images sans inventer de titre d’œuvre, de date ou de crédit.
+- **Liens** : nouvelles entrées depuis l’accueil, le sommaire et les chapitres ; renvois ciblés vers les figures, les outils et les expositions. Adresse de catégorie conservée au rechargement ; mêmes préférences de langue et de mouvement que le journal.
+- **Conservation** : Abstrait 996 à l’accueil, films silencieux, contexte confirmé des caves, crédit David Zuber et hommage à Alban Reynard.
+- **Écarté** : substitution des œuvres, modification des originaux, nouvelle dépendance et publication automatique.
+- **Branche** : `version-astra`.
+- **Tranché par** : demande et liberté créative données par Camilo.
+
+## 10 septembre 2026 — Accrochages sur le fil
+
+- **Contexte** : après lecture de la nouvelle version, Camilo demande explicitement des galeries plus intenses, chaotiques, voire grotesques. La matière du site lui convient ; la présentation des images reste trop gentille.
+- **Décision** : remplacer les rangées régulières de la collection et de la réserve par des séquences de huit positions, recalculées après filtrage. Dans les carnets et les peintures, chaque groupe devient une composition avec une grande image dominante, des fragments en travers et des chevauchements.
+- **Composition** : alternance de fonds noirs, rouges et bleus ; écarts importants de taille ; angles plus tendus ; visage agrandi ; détails de dessins en fond de page. Certains aperçus de peintures sont recadrés dans leur cadre de présentation, tandis que les agrandissements gardent l’image complète. Les calques décoratifs ne capturent aucun clic.
+- **Pourquoi** : laisser la matière picturale et les corps dessinés imposer le rythme de la page. La disposition doit produire elle-même l’intensité demandée.
+- **Usage** : les légendes et les filtres gardent un fond lisible, le clavier met l’œuvre active au premier plan, et les liens restent accessibles malgré les superpositions. Le défilement natif, les pauses vidéo et le mouvement réduit sont conservés.
+- **Écarté** : déplacement erratique des œuvres sous le pointeur, clignotement, défilement forcé, modification des fichiers sources et abandon des commandes de lecture.
+- **Branche** : `version-astra`.
+- **Tranché par** : demande explicite de Camilo de pousser l’accrochage plus loin.
+
 ## 10 septembre 2026 — Refonte éditoriale et navigation mobile
 
 - **Contexte** : nouvelle version du site personnel et du portfolio, avec carte blanche créative et priorité au défilement, aux animations, aux contrastes et au confort mobile.

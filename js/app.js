@@ -270,6 +270,9 @@
     link.className = 'work-card reveal';
     link.href = imagePath(work);
     link.dataset.work = work.slug;
+    const hanging = grid.childElementCount % 8;
+    link.dataset.hang = String(hanging + 1);
+    link.dataset.category = work.category;
     link.setAttribute('aria-label', (language === 'fr' ? 'Voir ' : 'View ') + workAlt(work));
     link.setAttribute('aria-haspopup', 'dialog');
     const frame = document.createElement('div');
@@ -285,7 +288,9 @@
       const stem = imagePath(work).replace(/\.webp$/, '');
       const variants = [480, 800].filter(width => width < dims[0]).map(width => encodeURI(stem + '-' + width + '.webp') + ' ' + width + 'w');
       variants.push(encodeURI(imagePath(work)) + ' ' + dims[0] + 'w');
-      img.sizes = '(max-width: 700px) ' + (grid.childElementCount === 0 ? '90vw' : '44vw') + ', 29vw';
+      const mobileWidths = [83, 46, 40, 53, 90, 46, 38, 75];
+      const desktopWidths = [57, 37, 30, 42, 64, 24, 29, 50];
+      img.sizes = `(max-width: 700px) ${mobileWidths[hanging]}vw, ${desktopWidths[hanging]}vw`;
       img.srcset = variants.join(', ');
     }
     img.src = imagePath(work);
