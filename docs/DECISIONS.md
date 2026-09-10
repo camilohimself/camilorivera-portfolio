@@ -1,5 +1,18 @@
 # Décisions du portfolio
 
+## 10 septembre 2026 — Le téléphone comme geste de lecture
+
+- **Contexte** : Camilo suspend la demande d’envoi sur GitHub et réaffirme la priorité absolue au mobile. Il donne carte blanche pour renforcer transitions, animations et réactions au toucher.
+- **Décision** : donner aux passages entre chapitres une découpe oblique de papier, faire céder puis revenir les boutons sous le doigt, et laisser les images agrandies suivre directement le geste. Une petite traction revient en place ; une traction suffisante ou un geste bref et rapide passe à l’image suivante. Le sens du mouvement correspond au sens de navigation.
+- **Pages** : utilisation progressive des [transitions natives entre documents](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@view-transition). Les liens, l’historique, le chargement et la restauration de la lecture restent gérés par le navigateur. L’en-tête et le dock sont isolés des feuilles qui changent. Un navigateur sans cette fonction conserve une navigation ordinaire.
+- **Visionneuses** : contrôleur partagé entre collection et archives. Ouverture depuis la vignette lorsqu’elle est visible, fermeture vers elle, interruption des animations précédentes lors d’un nouveau geste et suppression du clic de zoom qui pouvait suivre un glissement. Le zoom conserve le déplacement dans l’image. Les contrôles restent fixes.
+- **Filtres et espace** : les quatre filtres de collection tiennent sur 320 pixels. La réserve passe en une rangée horizontale ; sa barre passe de 145 à 88 pixels en portrait, et de 100 à 56 pixels dans le paysage testé. Un changement de série ramène aux premières images, avec une courte arrivée décalée. Les liens du pied de page atteignent 44 pixels.
+- **Pourquoi** : prolonger les accrochages intenses par une sensation physique, tout en donnant davantage d’écran aux œuvres et un retour immédiat aux actions du pouce.
+- **Préférences** : réduction des mouvements conservée entre les pages ; annulation des effets en cours quand la préférence change. Aucun mouvement permanent ni son ajouté. Sans script, les textes, liens et images restent disponibles.
+- **Écarté** : interception des liens pour retarder la navigation, défilement général piloté par le site, nouvelle dépendance et envoi sur GitHub pendant cette passe.
+- **Branche** : `version-astra`.
+- **Tranché par** : demande et liberté créative explicitement accordées par Camilo.
+
 ## 10 septembre 2026 — Kraft, ciel et réserve ouverte
 
 - **Contexte** : Camilo trouve le site trop propre et fournit 72 fichiers supplémentaires, ainsi que le portrait `IMG_7505.PNG`. Il demande plus de contrastes, du kraft, du ciel, du surréalisme et une intensité plus proche de sa peinture.

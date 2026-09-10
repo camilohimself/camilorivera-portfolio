@@ -72,6 +72,7 @@
   let pushed = false;
   let returnUrl = '';
   let messageTimer;
+  const viewerMotion = window.CamiloViewerMotion?.create({dialog, stage, image, reduced: calm, onStep: stepPhoto});
 
   function photoSlug() {
     if (!location.hash.startsWith('#fragment/')) return null;
@@ -104,6 +105,7 @@
   }
   function showPhoto(index, source, addHistory = true) {
     if (!dialog || typeof dialog.showModal !== 'function') return;
+    const wasOpen = dialog.open;
     current = index;
     if (!dialog.open) {
       sourceElement = source || document.activeElement;
@@ -119,9 +121,11 @@
       $('.archive-close').focus({preventScroll: true});
     }
     renderPhoto();
+    if (!wasOpen || viewerMotion?.closing) viewerMotion?.open(sourceElement);
   }
   function hidePhoto() {
     if (!dialog?.open) return;
+    viewerMotion?.reset();
     dialog.close();
     document.body.classList.remove('viewer-open');
     document.body.style.top = '';
@@ -134,20 +138,30 @@
   }
   function closePhoto() {
     const goBack = pushed && Boolean(photoSlug());
-    hidePhoto();
-    if (goBack) history.back();
-    else history.replaceState(null, '', returnUrl || location.pathname + location.search);
+    const finish = () => {
+      hidePhoto();
+      if (goBack) history.back();
+      else history.replaceState(null, '', returnUrl || location.pathname + location.search);
+    };
+    if (viewerMotion) viewerMotion.close(finish);
+    else finish();
   }
   function syncPhoto() {
     const slug = photoSlug();
     const index = photos.findIndex(a => a.dataset.photo === slug);
     if (index >= 0) showPhoto(index, null, false);
+    else if (viewerMotion?.closing) viewerMotion.close(hidePhoto, true);
     else hidePhoto();
   }
   function stepPhoto(step) {
-    current = (current + step + photos.length) % photos.length;
-    renderPhoto();
-    history.replaceState({journalPhoto: true}, '', '#fragment/' + photos[current].dataset.photo);
+    if (!dialog?.open || !photos.length || viewerMotion?.closing) return;
+    const render = () => {
+      current = (current + step + photos.length) % photos.length;
+      renderPhoto();
+      history.replaceState({journalPhoto: true}, '', '#fragment/' + photos[current].dataset.photo);
+    };
+    if (viewerMotion) viewerMotion.step(step, render);
+    else render();
   }
   function installViewer() {
     if (!dialog) return;
@@ -168,8 +182,13 @@
     dialog.addEventListener('cancel', event => { event.preventDefault(); closePhoto(); });
     $('.archive-prev').addEventListener('click', () => stepPhoto(-1));
     $('.archive-next').addEventListener('click', () => stepPhoto(1));
-    $('.archive-zoom').addEventListener('click', () => setZoom(!stage.classList.contains('is-zoomed')));
-    image.addEventListener('click', () => setZoom(!stage.classList.contains('is-zoomed')));
+    const togglePhotoZoom = () => {
+      if (viewerMotion?.closing) return;
+      viewerMotion?.reset();
+      setZoom(!stage.classList.contains('is-zoomed'));
+    };
+    $('.archive-zoom').addEventListener('click', togglePhotoZoom);
+    image.addEventListener('click', togglePhotoZoom);
     dialog.addEventListener('keydown', event => {
       if (event.key === 'Tab') {
         const controls = $$('a[href],button:not(:disabled),input,[tabindex="0"]', dialog).filter(el => el.getClientRects().length);
@@ -183,19 +202,21 @@
         event.preventDefault(); stepPhoto(event.key === 'ArrowRight' ? 1 : -1);
       }
     });
-    let pointer;
-    stage.addEventListener('pointerdown', event => {
-      if (!event.isPrimary || event.pointerType === 'mouse' || stage.classList.contains('is-zoomed')) { pointer = null; return; }
-      pointer = {id: event.pointerId, x: event.clientX, y: event.clientY};
-      stage.setPointerCapture(event.pointerId);
-    });
-    stage.addEventListener('pointerup', event => {
-      if (!pointer || pointer.id !== event.pointerId) return;
-      const dx = event.clientX - pointer.x; const dy = event.clientY - pointer.y;
-      pointer = null;
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) stepPhoto(dx < 0 ? 1 : -1);
-    });
-    stage.addEventListener('pointercancel', () => { pointer = null; });
+    if (!viewerMotion) {
+      let pointer;
+      stage.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.pointerType === 'mouse' || stage.classList.contains('is-zoomed')) { pointer = null; return; }
+        pointer = {id: event.pointerId, x: event.clientX, y: event.clientY};
+        stage.setPointerCapture(event.pointerId);
+      });
+      stage.addEventListener('pointerup', event => {
+        if (!pointer || pointer.id !== event.pointerId) return;
+        const dx = event.clientX - pointer.x; const dy = event.clientY - pointer.y;
+        pointer = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) stepPhoto(dx < 0 ? 1 : -1);
+      });
+      stage.addEventListener('pointercancel', () => { pointer = null; });
+    }
     $('.archive-copy').addEventListener('click', async () => {
       // Copy the current origin so local previews do not claim to be published pages.
       const url = location.href;

@@ -1,0 +1,106 @@
+/* Le mouvement suit la lecture et le toucher. Les pages restent des liens natifs. */
+@view-transition { navigation: auto; }
+
+:root { --page-way: 1; --touch-ease: cubic-bezier(.2,.85,.25,1); }
+.site-header { view-transition-name: atelier-header; }
+.mobile-dock { view-transition-name: atelier-dock; }
+.scroll-progress { view-transition-name: atelier-progress; }
+::view-transition { pointer-events: none; }
+::view-transition-group(*) { animation-duration: 480ms; animation-timing-function: var(--touch-ease); }
+::view-transition-old(root) { animation: sheet-out 480ms var(--touch-ease) both; }
+::view-transition-new(root) { animation: sheet-in 540ms var(--touch-ease) both; mix-blend-mode: normal; }
+::view-transition-old(atelier-header), ::view-transition-old(atelier-dock), ::view-transition-old(atelier-progress) { animation: none; }
+::view-transition-new(atelier-header), ::view-transition-new(atelier-dock), ::view-transition-new(atelier-progress) { animation: none; }
+@keyframes sheet-out {
+  to { opacity: .3; transform: translateX(calc(-4% * var(--page-way))) rotate(calc(-1deg * var(--page-way))); }
+}
+@keyframes sheet-in {
+  from { clip-path: polygon(100% 0,100% 0,100% 100%,100% 100%,100% 69%,100% 39%); transform: translateX(6%) rotate(1.3deg); }
+  38% { clip-path: polygon(53% 0,100% 0,100% 100%,42% 100%,47% 69%,43% 39%); }
+  to { clip-path: polygon(0 0,100% 0,100% 100%,0 100%,0 69%,0 39%); transform: none; }
+}
+:root[data-page-way="back"]::view-transition-new(root) { animation-name: sheet-back; }
+@keyframes sheet-back {
+  from { clip-path: polygon(0 0,0 0,0 39%,0 69%,0 100%,0 100%); transform: translateX(-6%) rotate(-1.3deg); }
+  38% { clip-path: polygon(0 0,47% 0,57% 39%,53% 69%,58% 100%,0 100%); }
+  to { clip-path: polygon(0 0,100% 0,100% 39%,100% 69%,100% 100%,0 100%); transform: none; }
+}
+
+/* Une pression brève, puis un rebond de papier. Pas d’effet sur un geste de défilement. */
+.touch-held { scale: .958; transition: scale 100ms ease-out; }
+:is(.photo-link,.work-card,.hero-art-link,.cover-photo,.entry-image,.door-card,.hero-scrap).touch-held { scale: .984; }
+.touch-release { animation: touch-return 360ms var(--touch-ease); }
+@keyframes touch-return { 0% { scale: .958; } 55% { scale: 1.016; } 100% { scale: 1; } }
+.button, .filter-btn, .reserve-filter { position: relative; isolation: isolate; }
+:is(.button,.filter-btn,.reserve-filter)::before {
+  content: ""; position: absolute; inset: 3px 0; z-index: -1; pointer-events: none;
+  background: currentColor; opacity: .13; scale: 0 1; transform-origin: left;
+  clip-path: polygon(0 9%,24% 1%,40% 10%,76% 0,100% 7%,98% 91%,69% 100%,47% 90%,8% 100%);
+  transition: scale 220ms var(--touch-ease);
+}
+:is(.button,.filter-btn,.reserve-filter).touch-held::before { scale: 1 1; }
+:is(.button,.text-link,.mobile-dock a).touch-held > svg { translate: 3px -2px; }
+.mobile-dock a > svg { transition: translate 240ms var(--touch-ease); }
+.mobile-dock.has-touch-cursor a[aria-current]::before { display: none; }
+.dock-cursor {
+  position: absolute; top: -1px; left: 0; width: 28px; height: 4px; background: var(--accent);
+  clip-path: polygon(0 20%,90% 0,100% 60%,14% 100%); pointer-events: none;
+  transition: translate 420ms var(--touch-ease);
+}
+
+/* Les feuilles arrivent en travers puis retrouvent leur accrochage. */
+.work-card,.paper-reveal,.fragment-reveal { --arrival-x: -10px; --arrival-turn: -2deg; }
+html.motion-ready:not(.motion-reduced) .work-card.reveal,
+html.journal-ready:not(.motion-reduced) .paper-reveal,
+html.touch-ready:not(.motion-reduced) .fragment-reveal {
+  transition: opacity 540ms var(--touch-ease), transform 760ms var(--touch-ease);
+}
+html.motion-ready:not(.motion-reduced) .work-card.reveal:not(.is-visible),
+html.journal-ready:not(.motion-reduced) .paper-reveal:not(.is-visible),
+html.touch-ready:not(.motion-reduced) .fragment-reveal:not(.is-visible) {
+  opacity: 0; transform: translate3d(var(--arrival-x),32px,0) rotate(var(--arrival-turn));
+}
+html.touch-ready .fragment-reveal.is-visible { opacity: 1; transform: none; }
+.work-card:nth-child(even),.paper-reveal:nth-child(even),.fragment-reveal:nth-child(even) { --arrival-x: 12px; --arrival-turn: 2.4deg; }
+html.motion-ready:not(.motion-reduced) .work-card.reveal .work-image { transition-duration: 760ms; }
+.site-footer > div a { min-height: 44px; }
+
+/* Garder de la place pour les œuvres, même sur un petit téléphone. */
+@media (max-width:700px) {
+  .gallery-filters { width: 100%; justify-content: space-between; gap: 0; overflow: visible; }
+  .filter-btn { padding-inline: 8px; font-size: 10px; gap: 6px; min-height: 46px; }
+  .filter-btn .count { font-size: 8px; }
+  .intense .reserve-toolbar { padding-block: 6px 8px; margin-bottom: 20px; }
+  .reserve-filters {
+    flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; gap: 4px;
+    padding: 3px 1px 6px; scrollbar-width: thin; scrollbar-color: var(--kraft-light) var(--night);
+    scroll-padding-inline: 5px;
+  }
+  .reserve-filter { flex: 0 0 auto; min-height: 44px; white-space: nowrap; }
+  .reserve-status { margin-top: 3px; }
+  .site-footer > div { row-gap: 4px; }
+}
+@media (max-width:360px) {
+  .gallery-toolbar { padding-inline: 12px; }
+  .filter-btn { padding-inline: 7px; }
+}
+@media (max-height:520px) and (orientation:landscape) {
+  .intense .reserve-toolbar { display: flex; align-items: center; gap: 15px; padding-block: 5px; }
+  .reserve-filters { flex-wrap: nowrap; }
+  .reserve-filter { min-height: 44px; padding-inline: 10px; }
+  .reserve-status { margin-top: 0; margin-left: auto; white-space: nowrap; }
+}
+html.motion-reduced .touch-held { scale: 1; }
+html.motion-reduced .touch-release { animation: none; }
+html.motion-reduced .fragment-reveal { opacity: 1; transform: none; }
+html.motion-reduced .dock-cursor { transition: none; }
+html.motion-reduced::view-transition-group(*),
+html.motion-reduced::view-transition-old(*),
+html.motion-reduced::view-transition-new(*) { animation: none; }
+@media (prefers-reduced-motion:reduce) {
+  @view-transition { navigation: none; }
+  .touch-held { scale: 1; }
+  .touch-release { animation: none; }
+  .fragment-reveal { opacity: 1; transform: none; }
+  .dock-cursor { transition: none; }
+}

@@ -2,6 +2,31 @@
 
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
+## Transitions et interactions mobiles
+
+- **Mouvement partagé** : onze contrôles ciblés passés. Pression envoyée comme événement tactile réel, réduction immédiate du bouton puis retour au repos, annulation par glissement, sélection rapide de plusieurs catégories, arrivée des fragments à l’approche de l’écran et filtre de réserve après un défilement de 1 600 pixels.
+- **Visionneuses** : 27 contrôles ciblés passés sur les archives et la collection, sans erreur JavaScript. Suivi du doigt mesuré pendant le glissement, direction, rebond, annulation, deuxième doigt, zoom, changement de préférence système et locale, retour du focus et de la position de lecture. Les cas de toucher pendant fermeture, retour navigateur pendant fermeture et erreur réseau puis reprise sont également exécutés.
+- **Navigation** : transitions entre documents réellement exécutées et mesurées pendant le mouvement. La découpe de la page suivante est animée ; le retour navigateur inverse le sens et retrouve la position de lecture. Avec le mouvement réduit, la transition est désactivée et la préférence reste active dans le chapitre suivant.
+- **Petits écrans** : recontrôle sur 320 × 568, 390 × 844 et 844 × 390, en français et anglais. Les quatre centres des filtres de collection reçoivent le toucher. La barre de réserve mesure 88 pixels en portrait et 56 en paysage. Après filtrage, la première image revient vers y = 225 pixels en portrait et y = 234 en paysage. Aucun débordement horizontal. Le dernier filtre de réserve se rejoint en faisant défiler sa rangée.
+- **Parcours existants** : les 17 contrôles de la collection et les 28 contrôles du journal ont été réexécutés. Quinze audits automatisés au total, sans anomalie ; les sept pages passent dans dix formats et deux langues, soit 140 combinaisons. Les films des carnets ont été réellement lus sur ordinateur et mobile ; pause, silence et interruption par la visionneuse passent.
+- **Repli et repos** : les 73 fragments de réserve restent disponibles sans JavaScript. Aucune ressource extérieure ni animation permanente observée à l’accueil après stabilisation. Le réglage de mouvement réduit garde le filtrage immédiat, sans animation.
+- **Réserve complète** : dix contrôles de parcours et deux audits supplémentaires passés après modification des filtres. Progression jusqu’aux 73 images, catégories, compteurs, anglais, adresses directes, clavier, fermeture et repli sans script ; aucune erreur JavaScript ni référence introuvable.
+
+Les nouvelles feuilles et les nouveaux scripts sont inclus dans les sept pages. La syntaxe JavaScript et les références locales sont contrôlées ; aucune dépendance n’a été ajoutée.
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — ancres, identifiants, polices, dimensions et références des œuvres.
+OK — 7 pages, 663 références locales, aucune ancre manquante.
+OK — 114 archives utilisées, 333 images et variantes, descriptions FR et EN.
+OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.
+```
+
+Limites : essais dans Chromium avec émulation mobile, sans iPhone physique, Safari ni Firefox. Le contrôle de la fenêtre native n’a pas pu être effectué car le Mac est verrouillé. L’aperçu local est disponible sur le port 55329. L’envoi GitHub demandé auparavant reste suspendu conformément à la dernière instruction de Camilo.
+
+Les sections ci-dessous documentent les passes précédentes.
+
 ## Réserve de 73 images et accrochages intenses
 
 La dernière passe concerne le kraft et le ciel, les nouveaux collages, la réserve et la présentation plus chaotique demandée ensuite par Camilo. L’aperçu testé est local, sur le port 55329.

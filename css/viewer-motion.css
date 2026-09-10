@@ -1,0 +1,8 @@
+/* Keep the artwork under the finger without moving the modal controls. */
+.viewer-stage.has-viewer-motion:not(.is-zoomed){overflow:hidden}
+.viewer-stage.has-viewer-motion>img{transform-origin:center;backface-visibility:hidden}
+.viewer-stage.has-viewer-motion.is-dragging>img{will-change:transform;transition:none;cursor:grabbing}
+.viewer-motion-ghost{position:absolute;display:block;pointer-events:none;transform-origin:center;z-index:1}
+.viewer-motion-ghost>img{display:block;width:100%;height:100%;object-fit:contain;max-width:none;max-height:none;user-select:none}
+.motion-reduced .viewer-motion-ghost{display:none}
+@media(prefers-reduced-motion:reduce){.viewer-motion-ghost{display:none}}

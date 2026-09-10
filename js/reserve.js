@@ -30,13 +30,15 @@
     status.textContent = root.lang === 'en' ? `${count} of ${selected.length} fragments` : `${count} fragments sur ${selected.length}`;
   }
   filters.forEach(button => button.addEventListener('click', () => {
+    if (button.dataset.regard === kind) return;
     kind = button.dataset.regard;
     limit = 16;
     const url = new URL(location.href);
     if (kind === 'all') url.searchParams.delete('regard');
     else url.searchParams.set('regard', kind);
     history.replaceState(history.state, '', url);
-    render();
+    if (window.CamiloMotion) window.CamiloMotion.recompose(document.querySelector('.reserve-grid'), render, toolbar, button);
+    else render();
   }));
   document.querySelector('[data-reserve-more]').addEventListener('click', () => {
     const firstNew = matching()[limit];

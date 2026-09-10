@@ -6,6 +6,8 @@ La version `version-astra` réunit une galerie bilingue et un journal d’artist
 
 Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
 
+Le parcours mobile ajoute des transitions entre chapitres comme des feuilles tirées en travers, une réponse à la pression et une visionneuse qui suit le doigt. Les filtres prennent moins de hauteur et ramènent au début du nouvel accrochage. Le mouvement réduit supprime ces effets ; les liens et le défilement gardent leur comportement natif.
+
 ## Aperçu local
 
 Le site est statique, sans dépendance ni compilation. Depuis la racine du dépôt :
@@ -32,6 +34,8 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `css/journal.css` et `js/journal.js` : compositions, langues, préférences et visionneuse des archives.
 - `css/intensity.css` : matières, ciel, papiers et contrastes communs aux sept pages du site.
 - `css/accrochages.css` : grands formats, collages et chevauchements des galeries, adaptés au téléphone.
+- `css/motion.css` et `js/motion.js` : transitions natives entre pages, réponse des boutons au toucher, repère mobile et entrées des fragments.
+- `css/viewer-motion.css` et `js/viewer-motion.js` : glissement direct, retour élastique, changement directionnel et ouverture depuis la vignette, partagés par les deux visionneuses.
 - `js/reserve.js` : filtres, progression et composition de la réserve ; adresse `?regard=atelier#inventaire`, par exemple.
 - `images/reserve/` : 73 images préparées pour le web et leurs variantes ; les fichiers fournis restent inchangés.
 - `images/matieres/kraft-ciel.webp` : fond décoratif, distinct des œuvres et des photographies d’archives.
@@ -60,6 +64,8 @@ node --check js/app.js
 node --check js/journal.js
 node --check js/films.js
 node --check js/reserve.js
+node --check js/motion.js
+node --check js/viewer-motion.js
 node tools/validate-portfolio.mjs
 node tools/validate-journal.mjs
 git diff --check

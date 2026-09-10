@@ -41,7 +41,7 @@
     viewWork: 'View the work', oil: 'Oil on canvas', originalWork: 'Original artwork · Camilo Rivera',
     heroSignature: 'An artist born in Chile, rooted in Valais.', scroll: 'Follow your gaze',
     collection: 'The collection', galleryTitle: 'What the gesture<br><em>leaves behind.</em>',
-    galleryIntro: 'Texture, line, silence.<br>Each work, another way<br>of seeing.',
+    galleryIntro: 'Texture, line, silence.<br> Each work, another way<br> of seeing.',
     allWorks: 'The works', paintings: 'Paintings', inks: 'Inks', studio: 'The studio',
     galleryTip: 'Something catches your eye? Come closer.',
     galleryError: 'The full collection could not be loaded. You can still explore these first works.',
@@ -404,6 +404,11 @@
     try { return decodeURIComponent(location.hash.slice(8)); } catch { return null; }
   }
 
+  const viewerMotion = window.CamiloViewerMotion?.create({
+    dialog: viewer, stage, image: viewerImage,
+    reduced: () => reducedMotion() || root.classList.contains('motion-reduced'), onStep: navigateViewer
+  });
+
   function openWork(slug, source = null, mode = 'push') {
     const work = bySlug.get(slug);
     if (!work || typeof viewer.showModal !== 'function') return;
@@ -415,6 +420,8 @@
       viewerWorks = current.some(item => item.slug === slug) ? current :
         works.filter(item => work.category === 'shooting' ? item.category === 'shooting' : item.category !== 'shooting');
       savedScroll = window.scrollY;
+      // Save the real reading position before the fixed body changes the viewport.
+      if (mode === 'push') history.pushState({portfolioViewer: true}, '', '#oeuvre/' + slug);
       viewer.showModal();
       document.body.style.top = '-' + savedScroll + 'px';
       document.body.classList.add('viewer-open');
@@ -426,20 +433,21 @@
     }
     if (mode === 'push') {
       viewerPushed = true;
-      history.pushState({portfolioViewer: true}, '', '#oeuvre/' + slug);
+      if (wasOpen) history.pushState({portfolioViewer: true}, '', '#oeuvre/' + slug);
     } else {
       viewerPushed = Boolean(history.state?.portfolioViewer);
     }
     renderViewer();
     if (!wasOpen) {
       $('.viewer-close').focus({preventScroll: true});
-      if (!reducedMotion() && typeof viewerImage.animate === 'function') {
+      if (viewerMotion) viewerMotion.open(sourceElement);
+      else if (!reducedMotion() && typeof viewerImage.animate === 'function') {
         viewerImage.animate([
           {opacity: .2, transform: 'translateY(18px) scale(.97)'},
           {opacity: 1, transform: 'translateY(0) scale(1)'}
         ], {duration: 550, easing: 'cubic-bezier(.16,1,.3,1)'});
       }
-    }
+    } else if (viewerMotion?.closing) viewerMotion.open(sourceElement);
   }
 
   function renderViewer() {
@@ -477,33 +485,56 @@
   }
 
   function navigateViewer(direction) {
-    if (!viewer.open || !viewerWorks.length) return;
-    viewerIndex = (viewerIndex + direction + viewerWorks.length) % viewerWorks.length;
-    const slug = viewerWorks[viewerIndex].slug;
-    history.replaceState(history.state, '', '#oeuvre/' + slug);
-    renderViewer();
-    if (!reducedMotion() && typeof viewerImage.animate === 'function') {
-      viewerImage.animate([{opacity: .25, transform: 'translateX(' + (direction * 22) + 'px)'}, {opacity: 1, transform: 'translateX(0)'}], {duration: 280, easing: 'cubic-bezier(.16,1,.3,1)'});
+    if (!viewer.open || !viewerWorks.length || viewerMotion?.closing) return;
+    const render = () => {
+      viewerIndex = (viewerIndex + direction + viewerWorks.length) % viewerWorks.length;
+      const slug = viewerWorks[viewerIndex].slug;
+      history.replaceState(history.state, '', '#oeuvre/' + slug);
+      renderViewer();
+    };
+    if (viewerMotion) viewerMotion.step(direction, render);
+    else {
+      render();
+      if (!reducedMotion() && typeof viewerImage.animate === 'function') {
+        viewerImage.animate([{opacity: .25, transform: 'translateX(' + (direction * 22) + 'px)'}, {opacity: 1, transform: 'translateX(0)'}], {duration: 280, easing: 'cubic-bezier(.16,1,.3,1)'});
+      }
     }
   }
 
   function closeViewer(fromHistory = false) {
     if (!viewer.open) return;
-    viewer.close();
-    resetZoom();
-    document.body.classList.remove('viewer-open');
-    document.body.style.top = '';
-    window.scrollTo({top: savedScroll, behavior: 'instant'});
-    const goBack = viewerPushed;
-    viewerPushed = false;
-    if (!fromHistory) {
-      if (goBack) history.back();
-      else if (location.hash.startsWith('#oeuvre/')) history.replaceState(null, '', returnUrl);
-    }
-    if (sourceElement?.isConnected) sourceElement.focus({preventScroll: true});
-    sourceElement = null;
-    clearTimeout(shareTimer);
-    scheduleScroll();
+    const finish = () => {
+      viewer.close();
+      resetZoom();
+      document.body.classList.remove('viewer-open');
+      document.body.style.top = '';
+      window.scrollTo({top: savedScroll, behavior: 'instant'});
+      const goBack = viewerPushed;
+      viewerPushed = false;
+      const readingPosition = savedScroll;
+      const readingUrl = returnUrl;
+      const readingSource = sourceElement;
+      const restoreReadingPosition = () => requestAnimationFrame(() => {
+        if (!viewer.open && location.pathname + location.search + location.hash === readingUrl) {
+          window.scrollTo({top: readingPosition, behavior: 'instant'});
+          if (readingSource?.isConnected) readingSource.focus({preventScroll: true});
+        }
+      });
+      if (!fromHistory) {
+        if (goBack) {
+          // Native history restoration follows popstate; restore our exact reading point after it.
+          window.addEventListener('popstate', restoreReadingPosition, {once: true});
+          history.back();
+        }
+        else if (location.hash.startsWith('#oeuvre/')) history.replaceState(null, '', returnUrl);
+      } else restoreReadingPosition();
+      if (sourceElement?.isConnected) sourceElement.focus({preventScroll: true});
+      sourceElement = null;
+      clearTimeout(shareTimer);
+      scheduleScroll();
+    };
+    if (viewerMotion) viewerMotion.close(finish, fromHistory);
+    else finish();
   }
 
   function syncFromUrl() {
@@ -528,6 +559,8 @@
   }
 
   function toggleZoom() {
+    if (viewerMotion?.closing) return;
+    viewerMotion?.reset();
     if (stage.classList.contains('is-zoomed')) return resetZoom();
     stage.classList.add('is-zoomed');
     stage.tabIndex = 0;
@@ -606,21 +639,22 @@
         navigateViewer(event.key === 'ArrowRight' ? 1 : -1);
       }
     });
-    let pointerStart = null;
-    stage.addEventListener('pointerdown', event => {
-      if (!event.isPrimary || stage.classList.contains('is-zoomed')) { pointerStart = null; return; }
-      if (event.pointerType === 'mouse') return;
-      pointerStart = {x: event.clientX, y: event.clientY, id: event.pointerId};
-      stage.setPointerCapture(event.pointerId);
-    });
-    stage.addEventListener('pointerup', event => {
-      if (!pointerStart || pointerStart.id !== event.pointerId) return;
-      const dx = event.clientX - pointerStart.x;
-      const dy = event.clientY - pointerStart.y;
-      pointerStart = null;
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) navigateViewer(dx < 0 ? 1 : -1);
-    });
-    stage.addEventListener('pointercancel', () => { pointerStart = null; });
+    if (!viewerMotion) {
+      let pointerStart = null;
+      stage.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.pointerType === 'mouse' || stage.classList.contains('is-zoomed')) { pointerStart = null; return; }
+        pointerStart = {x: event.clientX, y: event.clientY, id: event.pointerId};
+        stage.setPointerCapture(event.pointerId);
+      });
+      stage.addEventListener('pointerup', event => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const dx = event.clientX - pointerStart.x;
+        const dy = event.clientY - pointerStart.y;
+        pointerStart = null;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) navigateViewer(dx < 0 ? 1 : -1);
+      });
+      stage.addEventListener('pointercancel', () => { pointerStart = null; });
+    }
     window.addEventListener('popstate', syncFromUrl);
     window.addEventListener('hashchange', syncFromUrl);
   }
@@ -644,7 +678,9 @@
   });
 
   $$('.filter-btn').forEach(button => button.addEventListener('click', () => {
-    setFilter(button.dataset.filter);
+    if (button.dataset.filter === currentFilter) return;
+    if (window.CamiloMotion) window.CamiloMotion.recompose(grid, () => setFilter(button.dataset.filter), $('.gallery-toolbar'), button);
+    else setFilter(button.dataset.filter);
   }));
   $('#load-more').addEventListener('click', () => {
     const previousCount = grid.childElementCount;
