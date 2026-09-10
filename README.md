@@ -6,6 +6,8 @@ La version `version-astra` réunit une galerie bilingue et un journal d’artist
 
 Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
 
+Des réflexions confiées par Camilo nourrissent l’accueil (« Peindre. Sans faire semblant. »), l’ouverture des peintures (« La peinture ne ment jamais ») et le passage des carnets consacré au geste, du poignet au corps entier. Les textes sont adaptés et traduits dans les deux langues.
+
 Le parcours mobile ajoute des transitions entre chapitres comme des feuilles tirées en travers, une réponse à la pression et une visionneuse qui suit le doigt. Les filtres prennent moins de hauteur et ramènent au début du nouvel accrochage. Le mouvement réduit supprime ces effets ; les liens et le défilement gardent leur comportement natif.
 
 ## Aperçu local

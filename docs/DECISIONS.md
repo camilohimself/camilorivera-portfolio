@@ -1,5 +1,15 @@
 # Décisions du portfolio
 
+## 10 septembre 2026 — La parole de Camilo dans les pages
+
+- **Source** : réflexions confiées directement par Camilo dans la conversation. Pour lui, la peinture laisse sentir ce qui vient des tripes et ce qui fait semblant, quel que soit le lieu d’exposition. Elle exprime ce que les mots et la gestuelle ne parviennent pas à dire. Le poignet, l’avant-bras et le corps entier correspondent, dans son image, à dire, parler à voix haute et crier sur les toits.
+- **Décision** : répartir cette parole en trois endroits, avec une formulation légèrement resserrée. L’accueil devient « Peindre. Sans faire semblant. », avec la phrase « Il y a des choses que je ne peux dire qu’en peignant. ». Le chapitre des matières s’ouvre sur « La peinture ne ment jamais » et reprend le contraste entre café et musée. Le premier film des carnets reçoit « Du geste au cri » et le passage du poignet au corps.
+- **Voix** : première personne dans les paragraphes. Conservation des mots « tripes », « horreur » et du « peut-être » qui fait de la comparaison du geste une intuition personnelle. Ces textes sont des adaptations autorisées de sa parole, pas une transcription verbatim. L’anglais suit le même sens.
+- **Lecture** : une petite bande de kraft accompagne « Sans faire » pour garder les lettres lisibles lorsqu’elles passent devant le ciel. Les compositions et animations restent en place. Les descriptions accessibles des films continuent à décrire les images et leur absence de son.
+- **Pourquoi** : remplacer quelques textes génériques par le regard et les images propres à Camilo, sans multiplier les déclarations ni ajouter des convictions absentes de sa réflexion.
+- **Branche** : `version-astra`.
+- **Tranché par** : invitation explicite de Camilo à reprendre des morceaux de ses réflexions dans les héros et les textes.
+
 ## 10 septembre 2026 — Le téléphone comme geste de lecture
 
 - **Contexte** : Camilo suspend la demande d’envoi sur GitHub et réaffirme la priorité absolue au mobile. Il donne carte blanche pour renforcer transitions, animations et réactions au toucher.

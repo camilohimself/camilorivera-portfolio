@@ -2,6 +2,12 @@
 
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
+## Parole de Camilo
+
+Les nouveaux titres et paragraphes de l’accueil, des matières et du premier film des carnets ont été vérifiés en français et anglais sur 320 × 568, 390 × 844, 844 × 390 et 1440 × 1000, soit 24 combinaisons. Aucun débordement horizontal ni titre dépassant l’écran, aucune erreur JavaScript. Les captures mobiles des trois passages ont été relues. La bande de kraft du titre d’accueil préserve sa lisibilité devant le ciel.
+
+Les validations du catalogue et du journal passent : 115 entrées, 7 pages, 663 références locales, aucune ancre manquante. La syntaxe de `js/app.js` et `git diff --check` passent également. La modification concerne les textes, leurs traductions et un fond de lisibilité du titre ; les descriptions des films et leurs commandes sont conservées.
+
 ## Transitions et interactions mobiles
 
 - **Mouvement partagé** : onze contrôles ciblés passés. Pression envoyée comme événement tactile réel, réduction immédiate du bouton puis retour au repos, annulation par glissement, sélection rapide de plusieurs catégories, arrivée des fragments à l’approche de l’écran et filtre de réserve après un défilement de 1 600 pixels.
