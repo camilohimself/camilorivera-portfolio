@@ -107,3 +107,17 @@ Cette première adaptation est remplacée par la consigne de fidélité au texte
 - **Écarté** : dates reconstituées, nouveaux titres d’œuvres, téléchargement de toutes les archives à l’accueil, modification des fichiers sources, nouvelle dépendance et publication automatique.
 - **Branche** : `version-astra`.
 - **Tranché par** : liberté créative et création de pages autorisées par Camilo ; composition et navigation élaborées dans ce cadre.
+
+## 10 septembre 2026 — Optimisation des médias avant la fusion
+
+- **Contexte** : la branche `version-astra` porte 371 fichiers nouveaux et fait passer le dépôt de 37,4 à 115,2 Mo. Camilo demande d'optimiser images et vidéos avant la fusion, en restant au plus près du rendu qu'il a validé.
+- **Constat** : mesurés contre les originaux HEIC et JPEG, les WebP servis plafonnaient autour de 30 dB. Ils avaient été produits depuis un intermédiaire déjà compressé. Repartir des fichiers sources supprime une génération de compression et permet de gagner sur les deux tableaux à la fois, poids et fidélité.
+- **Décision images** : réencoder depuis les originaux, à dimensions strictement conservées. La qualité est cherchée par paliers depuis q74 et le fichier n'est remplacé que s'il est à la fois plus léger et au moins aussi fidèle à son original que celui qu'il remplace. Résultat : 377 fichiers sur 686, 89,7 Mo à 73,0 Mo, fidélité en hausse de 1,80 dB en moyenne.
+- **Décision vidéos** : les six films étaient déjà encodés correctement en x264 CRF 26-27. Sans rushes d'origine, tout réencodage part d'un fichier déjà compressé et coûte une génération. Seul `geste-encre-desktop.mp4` franchit les deux seuils retenus, transparence perceptuelle VMAF supérieure ou égale à 96 et gain d'au moins 10 % : 2 279 Ko à 1 980 Ko. Les cinq autres sont conservés intacts.
+- **Pourquoi ces garde-fous** : les dimensions sont portées par le HTML en `width`, `height` et par 394 descripteurs `srcset` en `Nw` ; les modifier fausserait le calcul de ratio et les descripteurs. Le plancher q74 évite les artefacts de bloc sur les aplats, qu'une moyenne de PSNR peut masquer. Les neuf fichiers dont le cadrage diffère de leur original ont été laissés intacts plutôt que redressés au jugé.
+- **Écarté** : descendre sous q74 malgré un PSNR encore favorable ; réencoder les cinq films pour 3 à 5 % ; toucher au journal, dont les sources sont des exports en 1 080 pixels déjà compressés, où le réencodage ne gagnerait qu'en dégradant.
+- **Non traité, laissé à l'arbitrage de Camilo** : `videos/hero-drone-optimized.mp4`, `videos/hero-drone-mobile.mp4` et les quatre `images/hero/hero-matiere-*.webp`, soit 13,3 Mo hérités de `main` et référencés par aucun code. Supprimer n'est pas optimiser.
+- **Intégrité** : aucun fichier de code, de style ou de contenu n'a été touché. Les 40 fichiers non médias sont identiques bit à bit à `version-astra` et la liste des fichiers est inchangée. Transitions, animations, effets de défilement et visionneuses restent ceux de la branche.
+- **Contrôles** : `validate-portfolio.mjs` et `validate-journal.mjs` passent, six sorties conformes. Zéro écart de dimension sur les 377 fichiers, zéro fichier illisible. Les sept pages répondent, aucune erreur ni avertissement en console, aucune image cassée, et le film réencodé se lit dans le navigateur.
+- **Branche** : `claude/optimisation-medias`, depuis `version-astra`.
+- **Tranché par** : demande explicite de Camilo, « peux-tu optimiser les photos et les vidéos qui sont déjà dans la branch ».
