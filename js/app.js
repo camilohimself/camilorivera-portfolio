@@ -35,8 +35,8 @@
 
   const english = {
     location: 'Bramois, Valais · Switzerland', works: 'The works', about: 'About', contact: 'Contact',
-    heroEyebrow: 'Scattered notes of a painter', heroLine1: 'Paint.', heroLine2: '<span class="hero-plain-words">No</span><em>pretending.</em>',
-    heroDescription: 'There are things I can only say through painting.',
+    heroEyebrow: 'Scattered notes of a painter', heroLine1: 'Paint.', heroLine2: 'Keep <em>traces.</em>',
+    heroDescription: 'Painting is something that never lies.',
     explore: 'Open the journal', heroFootnote: 'From a line on paper<br>to a place remembered.',
     viewWork: 'View the work', oil: 'Oil on canvas', originalWork: 'Original artwork · Camilo Rivera',
     heroSignature: 'An artist born in Chile, rooted in Valais.', scroll: 'Follow your gaze',
@@ -64,7 +64,7 @@
   };
   const labels = {
     fr: {
-      title: 'Camilo Rivera — Peindre sans faire semblant',
+      title: 'Camilo Rivera — Peindre et garder des traces',
       technique: {paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Photographie d’atelier'},
       loading: 'La collection se prépare…', images: 'images', shown: 'affichées', of: 'sur',
       unknown: 'Cette œuvre ne figure pas dans la collection.', copied: 'Lien copié',
@@ -81,7 +81,7 @@
       filmError: 'Le film n’a pas pu être chargé. Vous pouvez réessayer.'
     },
     en: {
-      title: 'Camilo Rivera — Paint without pretending',
+      title: 'Camilo Rivera — Paint and keep traces',
       technique: {paintings: 'Oil on canvas', encres: 'India ink', shooting: 'Studio photograph'},
       loading: 'Preparing the collection…', images: 'images', shown: 'shown', of: 'of',
       unknown: 'This work could not be found in the collection.', copied: 'Link copied',

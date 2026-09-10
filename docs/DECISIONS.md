@@ -1,6 +1,20 @@
 # Décisions du portfolio
 
+## 10 septembre 2026 — Conserver le texte brut
+
+- **Contexte** : Camilo précise qu’il veut conserver son texte brut, pourvu que le français et la prose soient corrects. Cette instruction remplace le choix de resserrement décrit dans l’entrée précédente.
+- **Décision** : préserver ses formulations, le « on », les répétitions, le « peut-être » et le déroulement de sa pensée. Corriger uniquement la transcription, la grammaire et la ponctuation. Des fragments peuvent servir de titres, sans inventer de nouvelles formules.
+- **Application** : retour au titre d’accueil « Peindre. Garder des traces. » et insertion de sa phrase « La peinture, c’est quelque chose qui ne ment jamais. ». Les matières reprennent le passage sur le café et le musée. Les carnets reprennent le besoin d’expression et le passage du poignet au corps entier, sous « Crier sur tous les toits ».
+- **Transcription** : « poignée » devient « poignet » ; « pareil les tripes » est rétabli en « peint avec les tripes » d’après le contexte. La proposition sur les choses qui ne peuvent être exprimées est corrigée grammaticalement. Aucune conviction supplémentaire n’est ajoutée.
+- **Langues** : la demande concerne la fidélité de la prose française ; la version anglaise est conservée et traduite au plus près des mêmes passages.
+- **Pourquoi** : la parole de Camilo donne le ton du portfolio. Sa singularité prime sur une reformulation publicitaire ou un raccourci plus lisse.
+- **Écarté** : les reformulations « Sans faire semblant » dans le titre d’accueil et « Du geste au cri » dans les carnets. Le fond ajouté pour la première est supprimé.
+- **Branche** : `version-astra`.
+- **Tranché par** : instruction explicite de Camilo : « Je pense que si ça reste français et que la prose est correcte, tu gardes mon texte brut. »
+
 ## 10 septembre 2026 — La parole de Camilo dans les pages
+
+Cette première adaptation est remplacée par la consigne de fidélité au texte brut ci-dessus.
 
 - **Source** : réflexions confiées directement par Camilo dans la conversation. Pour lui, la peinture laisse sentir ce qui vient des tripes et ce qui fait semblant, quel que soit le lieu d’exposition. Elle exprime ce que les mots et la gestuelle ne parviennent pas à dire. Le poignet, l’avant-bras et le corps entier correspondent, dans son image, à dire, parler à voix haute et crier sur les toits.
 - **Décision** : répartir cette parole en trois endroits, avec une formulation légèrement resserrée. L’accueil devient « Peindre. Sans faire semblant. », avec la phrase « Il y a des choses que je ne peux dire qu’en peignant. ». Le chapitre des matières s’ouvre sur « La peinture ne ment jamais » et reprend le contraste entre café et musée. Le premier film des carnets reçoit « Du geste au cri » et le passage du poignet au corps.

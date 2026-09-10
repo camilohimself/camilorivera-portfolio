@@ -31,7 +31,6 @@
 }
 .intense.home-journal .hero-copy{z-index:3;padding-bottom:26px}
 .intense.home-journal .hero-title{font-size:clamp(80px,8.8vw,157px);line-height:.88}
-.intense.home-journal .hero-plain-words{display:table;background:var(--kraft-light);padding:0 .06em .1em;margin-left:-.06em;clip-path:var(--tear)}
 .intense.home-journal .hero-title em{
   display:table;white-space:nowrap;background:var(--oxide);color:var(--chalk);
   padding:0 .13em .13em .08em;margin-left:-.08em;margin-top:.08em;

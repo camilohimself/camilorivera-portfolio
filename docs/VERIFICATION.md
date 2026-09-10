@@ -2,11 +2,11 @@
 
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
-## Parole de Camilo
+## Texte brut de Camilo
 
-Les nouveaux titres et paragraphes de l’accueil, des matières et du premier film des carnets ont été vérifiés en français et anglais sur 320 × 568, 390 × 844, 844 × 390 et 1440 × 1000, soit 24 combinaisons. Aucun débordement horizontal ni titre dépassant l’écran, aucune erreur JavaScript. Les captures mobiles des trois passages ont été relues. La bande de kraft du titre d’accueil préserve sa lisibilité devant le ciel.
+Après le retour aux formulations brutes de Camilo, les titres et paragraphes de l’accueil, des matières et du premier film des carnets ont été vérifiés en français et anglais sur 320 × 568, 390 × 844, 844 × 390 et 1440 × 1000, soit 24 combinaisons. Aucun débordement horizontal ni texte dépassant l’écran, aucune erreur JavaScript. Les captures mobiles des trois passages ont été relues. Les paragraphes plus longs restent entiers et le titre d’accueil retrouve sa formulation antérieure.
 
-Les validations du catalogue et du journal passent : 115 entrées, 7 pages, 663 références locales, aucune ancre manquante. La syntaxe de `js/app.js` et `git diff --check` passent également. La modification concerne les textes, leurs traductions et un fond de lisibilité du titre ; les descriptions des films et leurs commandes sont conservées.
+Les validations du catalogue et du journal passent : 115 entrées, 7 pages, 663 références locales, aucune ancre manquante. La syntaxe de `js/app.js` et `git diff --check` passent également. La modification concerne les textes, leurs traductions et la suppression du fond ajouté au titre précédent ; les descriptions des films et leurs commandes sont conservées. Cette passe est locale, sans nouvel envoi sur GitHub.
 
 ## Transitions et interactions mobiles
 
