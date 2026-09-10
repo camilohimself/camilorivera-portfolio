@@ -5,6 +5,12 @@ de la galerie. Pour **recurater** l'ordre, il suffit de réordonner les entrées
 tableau (aucun code à toucher). `js/app.js` fait `fetch('works.json')` au chargement
 et construit la galerie dans cet ordre.
 
+La version `version-astra` conserve cet ordre au sein de chaque filtre. « Les
+œuvres » réunit peintures et encres ; « L’atelier » présente les photographies.
+La galerie affiche douze images par lot, tandis que la visionneuse parcourt
+toute la sélection. Une URL `#oeuvre/<slug>` peut ouvrir une image qui n’est
+pas encore affichée dans la grille.
+
 ## Schéma d'une entrée
 
 ```json

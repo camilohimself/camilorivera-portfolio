@@ -1,1233 +1,653 @@
-/* ═══════════════════════════════════════════════
-   CAMILO RIVERA — Portfolio 2026
-   "Probably the most beautiful portfolio in the world"
-   ═══════════════════════════════════════════════ */
+/* Camilo Rivera — collection, visionneuse et mouvement au défilement. */
+(() => {
+  'use strict';
 
-// ── Données ─────────────────────────────────────
-// Les œuvres sont des DONNÉES (works.json), plus du code. La galerie est
-// construite au runtime depuis works.json, dans l'ordre du tableau (curatable
-// en réordonnant le JSON). Aucun tirage aléatoire : l'ordre est FIXE et reproductible.
-const SITE = 'https://www.camilorivera.ch/';
-const PATHS = { paintings: 'images/paintings/', encres: 'images/encres/', shooting: 'images/shooting/' };
+  const SITE = 'https://www.camilorivera.ch/';
+  const EMAIL = 'camrivera@protonmail.com';
+  const PAGE_SIZE = 12;
+  const CATEGORIES = ['paintings', 'encres', 'shooting'];
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const root = document.documentElement;
+  const grid = $('#gallery-grid');
+  const viewer = $('#viewer');
+  const stage = $('#viewer-stage');
+  const viewerImage = $('#viewer-image');
+  const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const originalCopy = new Map($$('[data-i18n]').map(el => [el, el.innerHTML]));
+  const originalAttributes = new Map();
+  let language = 'fr';
+  let works = [];
+  let bySlug = new Map();
+  let currentFilter = 'all';
+  let visibleCount = PAGE_SIZE;
+  let collectionLoading = false;
+  let sourceElement = null;
+  let viewerWorks = [];
+  let viewerIndex = 0;
+  let viewerPushed = false;
+  let returnUrl = '';
+  let savedScroll = 0;
+  let shareTimer;
+  let requestedFrame = false;
+  let userReduced = readPreference('cr-motion') === 'reduced';
 
-// ── Chapitres éditoriaux de la galerie ──────────
-// Ligne d'accroche affichée sous les filtres, qui réagit au filtre actif.
-// Édition libre : texte pur, un par clé de filtre. Ne réordonne PAS la grille.
-const CHAPTER_LINES = {
-  all:       'Le corpus entier — huile, encre de Chine et silence de l’atelier.',
-  paintings: 'Série I — Huiles sur toile · 29 œuvres · gestes et empâtements',
-  encres:    'Série II — Encres de Chine · 26 œuvres · le trait, le vide',
-  shooting:  'L’atelier — Bramois, Valais · 60 photographies'
-};
-
-// ── State ───────────────────────────────────────
-let WORKS = [];                    // tableau works.json, dans l'ordre d'affichage
-const WORKS_BY_SLUG = {};          // index slug → œuvre
-
-let currentFilter = 'all';
-let lightboxGallery = [];
-let lightboxIndex = 0;
-let lightboxOpen = false;
-let lightboxSourceEl = null;       // vignette d'origine → restitution du focus
-let lightboxPushed = false;        // a-t-on empilé une entrée d'historique à l'ouverture ?
-let mouseX = 0, mouseY = 0;
-let cursorX = 0, cursorY = 0;
-let ringX = 0, ringY = 0;
-
-// Registre commun des callbacks scroll (pattern ticking : un seul
-// listener passif, un seul rAF, N mises à jour dedans).
-const scrollCallbacks = [];
-let scrollTicking = false;
-
-// ── Préférences de mouvement / capacités ────────
-// prefers-reduced-motion : neutralise TOUTES les animations « plaisir »
-// (ken burns, morph View Transitions, cartel, ressort de swipe).
-function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-// View Transitions same-document : progressive enhancement du morph
-// vignette ⇄ œuvre. Absente ou reduced-motion → repli FLIP intact.
-function supportsViewTransitions() {
-  return typeof document.startViewTransition === 'function';
-}
-function useViewTransition() {
-  return supportsViewTransitions() && !prefersReducedMotion();
-}
-const VT_NAME = 'oeuvre-morph';
-
-// Échappe le texte injecté en innerHTML (cartel). Les données works.json
-// sont maîtrisées, mais on reste correct par principe.
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"]/g, c => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]
-  ));
-}
-
-// ── Init ────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initCustomCursor();
-  initHeroTextReveal();
-  initNavigation();
-  initLightbox();
-  initParallax();
-  initScrollReveal();
-  initTextReveal();
-  initScrollProgress();
-  initBackToTop();
-  initScrollDispatcher();
-  // La galerie est asynchrone (fetch works.json) : les hooks qui dépendent des
-  // vignettes (observers, curseur galerie, magnétique, deep-link) sont enchaînés
-  // APRÈS le rendu réel, à l'intérieur de initGallery — plus de setTimeout arbitraires.
-  initGallery();
-});
-
-// ══════════════════════════════════════════════
-// HERO MACRO MATIÈRE — image plein écran, statique
-// ══════════════════════════════════════════════
-// La vidéo drone a été remplacée par un gros plan de matière de peinture
-// (images/hero/hero-matiere-1.webp), servi en dur dans le HTML avec
-// fetchpriority="high". Ken Burns + fondu d'émergence sont gérés en CSS
-// (voir .hero-matiere-wrap) et neutralisés en reduced-motion — plus de JS ici.
-
-// ══════════════════════════════════════════════
-// CUSTOM CURSOR
-// ══════════════════════════════════════════════
-function initCustomCursor() {
-  // Skip on touch devices
-  if ('ontouchstart' in window) return;
-
-  const dot = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-ring');
-  if (!dot || !ring) return;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Smooth follow with lerp
-  function animate() {
-    cursorX += (mouseX - cursorX) * 0.2;
-    cursorY += (mouseY - cursorY) * 0.2;
-    ringX += (mouseX - ringX) * 0.08;
-    ringY += (mouseY - ringY) * 0.08;
-
-    dot.style.left = cursorX + 'px';
-    dot.style.top = cursorY + 'px';
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // Hover states for interactive elements présents au chargement (nav, filtres).
-  // Les vignettes de galerie, elles, sont câblées après leur rendu réel
-  // (initGalleryInteractions), plus de setTimeout(100).
-  document.querySelectorAll('a, button, .filter-btn').forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-}
-
-// ══════════════════════════════════════════════
-// GALLERY INTERACTIONS — curseur galerie + effet magnétique
-// Câblé APRÈS le rendu réel de la galerie (fini les setTimeout 100/200).
-// ══════════════════════════════════════════════
-function initGalleryInteractions() {
-  if ('ontouchstart' in window) return;
-
-  document.querySelectorAll('.gallery-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      document.body.classList.remove('cursor-hover');
-      document.body.classList.add('cursor-gallery');
-    });
-
-    // Effet magnétique : léger suivi du curseur.
-    item.addEventListener('mousemove', (e) => {
-      const rect = item.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      item.style.transform = `translate(${x * 0.03}px, ${y * 0.03}px)`;
-    });
-
-    item.addEventListener('mouseleave', () => {
-      document.body.classList.remove('cursor-gallery');
-      item.style.transform = '';
-    });
-  });
-}
-
-// ══════════════════════════════════════════════
-// HERO TEXT REVEAL — word by word
-// ══════════════════════════════════════════════
-function initHeroTextReveal() {
-  const title = document.querySelector('.hero-title');
-  if (!title) return;
-
-  // Get the HTML content and split by <br> and words
-  const html = title.innerHTML;
-  const lines = html.split('<br>');
-
-  const wrapped = lines.map(line => {
-    // Don't split inside HTML tags
-    const words = line.trim().split(/\s+/);
-    return words.map((word, i) => {
-      // Preserve <em> tags. Le titre « émerge du pigment » : les mots
-      // démarrent après le fondu de l'image hero (0.8s), pas avant.
-      return `<span class="word"><span class="word-inner" style="animation-delay: ${0.9 + i * 0.08}s">${word}</span></span>`;
-    }).join(' ');
-  }).join('<br>');
-
-  title.innerHTML = wrapped;
-}
-
-// ══════════════════════════════════════════════
-// SCROLL DISPATCHER — un seul listener passif pour
-// nav scrolled + parallax + scroll-progress + back-to-top
-// ══════════════════════════════════════════════
-function initScrollDispatcher() {
-  window.addEventListener('scroll', () => {
-    if (scrollTicking) return;
-    scrollTicking = true;
-    requestAnimationFrame(() => {
-      scrollCallbacks.forEach(cb => cb());
-      scrollTicking = false;
-    });
-  }, { passive: true });
-}
-
-// ══════════════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════════════
-function initNavigation() {
-  const nav = document.querySelector('.nav');
-  const toggle = document.querySelector('.nav-toggle');
-  const mobile = document.querySelector('.nav-mobile');
-
-  scrollCallbacks.push(() => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  if (toggle && mobile) {
-    toggle.addEventListener('click', () => {
-      const open = mobile.classList.toggle('open');
-      toggle.classList.toggle('active', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-
-    mobile.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        toggle.classList.remove('active');
-        mobile.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href');
-      // #oeuvre/<slug> n'est pas une ancre de scroll : laisser le hash tel quel.
-      if (href.startsWith('#oeuvre/')) return;
-      const target = href === '#' ? null : document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-}
-
-// ══════════════════════════════════════════════
-// GALLERY — données → rendu
-// ══════════════════════════════════════════════
-// alt descriptif : œuvres → « Titre — technique, Camilo Rivera » ;
-// atelier → « Atelier de Camilo Rivera — photo N ».
-function altFor(work) {
-  if (work.category === 'shooting') {
-    const n = parseInt(work.slug.split('-')[1], 10);
-    return `Atelier de Camilo Rivera — photo ${n}`;
-  }
-  return `${work.title} — ${work.technique}, Camilo Rivera`;
-}
-
-function createGalleryItem(work) {
-  const src = PATHS[work.category] + work.file;
-
-  const el = document.createElement('div');
-  el.className = 'gallery-item clip-reveal';
-  el.dataset.category = work.category;
-  el.dataset.slug = work.slug;
-
-  // Accessibilité : la vignette ouvre la lightbox → focusable + activable clavier.
-  el.setAttribute('role', 'button');
-  el.setAttribute('tabindex', '0');
-  el.setAttribute('aria-label', altFor(work));
-
-  const img = document.createElement('img');
-  img.alt = altFor(work);
-  img.loading = 'lazy';
-
-  // Dimensions intrinsèques + srcset responsive (variantes générées par
-  // tools/generate-image-variants.sh). Si l'image n'est pas dans DIMS
-  // (fichier généré après le dernier passage du script), on ne pose
-  // rien — repli silencieux sur le seul `src` pleine résolution.
-  // ORDRE CRITIQUE : loading/width/height/sizes/srcset AVANT src —
-  // affecter src en premier déclenche immédiatement le fetch de la
-  // pleine résolution et le navigateur ne rétrograde jamais vers la
-  // variante 480/800 ensuite (sélection déjà faite, ressource en cache).
-  const dims = (typeof DIMS !== 'undefined') && DIMS[`${work.category}/${work.file}`];
-  if (dims) {
-    const [w, h] = dims;
-    img.width = w;
-    img.height = h;
-
-    const stem = work.file.replace(/\.webp$/, '');
-    const base = PATHS[work.category];
-    // encodeURI() est indispensable ici : plusieurs fichiers contiennent
-    // des espaces ("berceau bleu.webp") qui, non encodés, casseraient le
-    // parsing de srcset (l'espace y sépare URL et descripteur de largeur).
-    img.sizes = '(max-width: 480px) 92vw, (max-width: 1024px) 46vw, 30vw';
-    img.srcset = [
-      `${encodeURI(base + stem + '-480.webp')} 480w`,
-      `${encodeURI(base + stem + '-800.webp')} 800w`,
-      `${encodeURI(src)} ${w}w`
-    ].join(', ');
-  }
-  img.src = src;
-
-  const overlay = document.createElement('div');
-  overlay.className = 'gallery-item-overlay';
-
-  const info = document.createElement('span');
-  info.className = 'gallery-item-info';
-  info.textContent = work.technique;
-
-  overlay.appendChild(info);
-  el.appendChild(img);
-  el.appendChild(overlay);
-
-  const open = () => openLightbox(el, { history: 'push' });
-  el.addEventListener('click', open);
-  el.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
-  });
-
-  return el;
-}
-
-async function initGallery() {
-  const grid = document.getElementById('gallery-grid');
-  if (!grid) return;
-
-  try {
-    const res = await fetch('works.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    WORKS = await res.json();
-  } catch (err) {
-    // Échec réseau : galerie vide, message console, pas de crash. Les compteurs
-    // hardcodés d'index.html restent le repli no-JS et demeurent affichés.
-    console.error('[galerie] Échec du chargement de works.json — galerie vide :', err);
-    return;
-  }
-
-  WORKS.forEach(w => { WORKS_BY_SLUG[w.slug] = w; });
-
-  // Rendu dans l'ordre du tableau (un seul reflow via fragment).
-  const frag = document.createDocumentFragment();
-  WORKS.forEach(work => frag.appendChild(createGalleryItem(work)));
-  grid.appendChild(frag);
-
-  // ── Enchaînement post-rendu réel ──
-  updateFilterCounts(WORKS);
-  observeGalleryReveal(grid);
-  initGalleryInteractions();
-  initFilters(grid);
-  // Ligne éditoriale initiale (sans fondu — l'état de départ).
-  const chapterEl = document.getElementById('gallery-chapter-line');
-  if (chapterEl) chapterEl.textContent = CHAPTER_LINES[currentFilter] || CHAPTER_LINES.all;
-  injectJsonLd(WORKS);
-  handleInitialDeepLink(grid);
-}
-
-// Met à jour la ligne éditoriale sous les filtres, en fondu doux (0.3s CSS).
-// Le texte est remplacé pendant le creux du fondu ; reduced-motion aplatit
-// la transition (règle globale) — le texte change alors sans battement.
-function renderChapterLine(filter) {
-  const el = document.getElementById('gallery-chapter-line');
-  if (!el) return;
-  const text = CHAPTER_LINES[filter] || CHAPTER_LINES.all;
-  if (el.textContent === text) return;
-  el.classList.add('fading');
-  window.setTimeout(() => {
-    el.textContent = text;
-    el.classList.remove('fading');
-  }, 180);
-}
-
-// Compteurs de filtres calculés depuis works.json (les valeurs hardcodées
-// d'index.html sont le repli no-JS ; on les remet à jour au chargement).
-function updateFilterCounts(works) {
-  const counts = { all: works.length, paintings: 0, encres: 0, shooting: 0 };
-  works.forEach(w => { if (counts[w.category] !== undefined) counts[w.category]++; });
-
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    const span = btn.querySelector('.count');
-    const key = btn.dataset.filter;
-    if (span && counts[key] !== undefined) span.textContent = counts[key];
-  });
-}
-
-// Entrée en scène (clip-path reveal) au scroll.
-function observeGalleryReveal(grid) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05, rootMargin: '0px 0px 80px 0px' });
-
-  grid.querySelectorAll('.gallery-item').forEach((item, i) => {
-    item.style.transitionDelay = `${(i % 8) * 0.05}s`;
-    observer.observe(item);
-  });
-}
-
-function initFilters(grid) {
-  const btns = document.querySelectorAll('.filter-btn');
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      setFilter(btn.dataset.filter, grid);
-      btns.forEach(b => {
-        const active = b === btn;
-        b.classList.toggle('active', active);
-        b.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-    });
-  });
-}
-
-function setFilter(filter, grid) {
-  currentFilter = filter;
-  renderChapterLine(filter);
-  grid.querySelectorAll('.gallery-item').forEach((item, i) => {
-    const match = filter === 'all' || item.dataset.category === filter;
-    item.classList.toggle('hidden', !match);
-    if (match) item.style.transitionDelay = `${(i % 6) * 0.04}s`;
-  });
-}
-
-// ══════════════════════════════════════════════
-// SEO — JSON-LD injecté depuis works.json
-// Un seul <script type="application/ld+json"> dans le <head> :
-// Person (l'artiste) + ItemList de VisualArtwork (les 55 œuvres,
-// l'atelier étant de la documentation, pas des œuvres).
-// ══════════════════════════════════════════════
-function injectJsonLd(works) {
-  const personId = SITE + '#camilo-rivera';
-  const person = {
-    '@type': 'Person',
-    '@id': personId,
-    name: 'Camilo Rivera',
-    jobTitle: 'Artiste peintre',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Bramois',
-      addressRegion: 'Valais',
-      addressCountry: 'CH'
+  const english = {
+    location: 'Bramois, Valais · Switzerland', works: 'The works', about: 'About', contact: 'Contact',
+    heroEyebrow: 'Painting & creation', heroLine1: 'From pigment', heroLine2: 'to <em>pixel.</em>',
+    heroDescription: 'Oil for texture. Ink for the figure.<br>Digital to explore new possibilities.<br>The same need to create.',
+    explore: 'Explore the works', heroFootnote: 'A bridge between abstraction<br>and figuration.',
+    viewWork: 'View the work', oil: 'Oil on canvas', originalWork: 'Original artwork · Camilo Rivera',
+    heroSignature: 'An artist born in Chile, rooted in Valais.', scroll: 'Follow your gaze',
+    collection: 'The collection', galleryTitle: 'What the gesture<br><em>leaves behind.</em>',
+    galleryIntro: 'Texture, line, silence.<br>Each work, another way<br>of seeing.',
+    allWorks: 'The works', paintings: 'Paintings', inks: 'Inks', studio: 'The studio',
+    galleryTip: 'Something catches your eye? Come closer.',
+    galleryError: 'The full collection could not be loaded. You can still explore these first works.',
+    retry: 'Try again', loadMore: 'Continue exploring',
+    matterKicker: 'Closer to the material', matterLine1: 'It all begins', matterLine2: 'with a gesture.',
+    matterDetail: 'Oil on canvas · Detail', matterNote: 'Take a moment to look.',
+    behindWorks: 'Behind the works', portraitCaption: 'In the studio, Bramois',
+    aboutTitle: 'Paint.<br>Draw.<br><em>Build.</em>',
+    aboutLead: 'Born in Chile. Raised in Valais.<br>And always, the need to create.',
+    aboutBody1: 'I have been painting for about ten years. First in oils: the texture, the gesture, the abstraction. Then came India ink, and with it, the figure. A more exposed, more direct line.',
+    aboutBody2: 'That same impulse leads me to create websites and applications at OSOM Labs, the agency I founded in Bramois. From canvas to code, starting with nothing and building something that holds.',
+    discoverOsom: 'The other side of the gesture: OSOM Labs',
+    studioNotebook: 'Studio notebook', studioTitle: 'Where it all<br><em>takes shape.</em>', visitStudio: 'Step into the studio',
+    conversation: 'The conversation continues', contactTitle: 'A work.<br>An idea.<br><em>Let’s talk.</em>',
+    contactText: 'A question about a work, a collaboration,<br>or simply a wish to connect.',
+    share: 'Share', close: 'Close', imageError: 'The image could not be loaded.',
+    inquire: 'Ask about this work', zoom: 'Enlarge', viewerHint: 'Swipe to explore', copyLink: 'Copy this link'
+  };
+  const labels = {
+    fr: {
+      title: 'Camilo Rivera — Du pigment au pixel',
+      technique: {paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Photographie d’atelier'},
+      loading: 'La collection se prépare…', images: 'images', shown: 'affichées', of: 'sur',
+      unknown: 'Cette œuvre ne figure pas dans la collection.', copied: 'Lien copié',
+      zoomIn: 'Agrandir', zoomOut: 'Réduire', motionOff: 'Réduire les animations',
+      motionOn: 'Activer les animations', systemMotion: 'Animations réduites selon votre réglage système',
+      selection: 'Les œuvres — huile sur toile et encre de Chine.',
+      paintings: 'La matière, le geste, l’abstraction.', encres: 'Le trait, la figure, le vide.',
+      shooting: 'Le quotidien de l’atelier, à Bramois.',
+      studioTitle: 'À l’atelier', inquiry: 'À propos de', imageAlt: 'de Camilo Rivera',
+      network: 'La collection n’a pas pu être chargée.', sold: 'Collection privée', available: 'Disponible',
+      stage: 'Image agrandie, faites défiler pour explorer'
     },
-    url: SITE,
-    sameAs: [
-      'https://www.instagram.com/camilohimself/',
-      'https://www.osom.ch'
-    ]
+    en: {
+      title: 'Camilo Rivera — From pigment to pixel',
+      technique: {paintings: 'Oil on canvas', encres: 'India ink', shooting: 'Studio photograph'},
+      loading: 'Preparing the collection…', images: 'images', shown: 'shown', of: 'of',
+      unknown: 'This work could not be found in the collection.', copied: 'Link copied',
+      zoomIn: 'Enlarge', zoomOut: 'Reduce', motionOff: 'Reduce animations',
+      motionOn: 'Enable animations', systemMotion: 'Animations reduced by your system preference',
+      selection: 'The works — oil on canvas and India ink.',
+      paintings: 'Texture, gesture, abstraction.', encres: 'Line, figure, empty space.',
+      shooting: 'Everyday moments in the studio, in Bramois.',
+      studioTitle: 'In the studio', inquiry: 'About', imageAlt: 'by Camilo Rivera',
+      network: 'The collection could not be loaded.', sold: 'Private collection', available: 'Available',
+      stage: 'Enlarged image, scroll to explore'
+    }
+  };
+  const attributeTranslations = {
+    '.skip-link': {text: 'Skip to content'},
+    '.wordmark[aria-label]': {'aria-label': 'Camilo Rivera, home'},
+    '.desktop-nav': {'aria-label': 'Main navigation'},
+    '.mobile-dock': {'aria-label': 'Mobile navigation'},
+    '.hero-art-link': {'aria-label': 'View Abstrait 996'},
+    '.hero-art-image img': {alt: 'Abstrait 996, oil painting with white, black, blue and ochre gestures'},
+    '.gallery-filters': {'aria-label': 'Filter the collection'},
+    '.matter-image img': {alt: 'Detail of painted texture in blue, green and yellow'},
+    '.about-portrait img': {alt: 'Camilo Rivera working in his studio'},
+    '.studio-photo': {'aria-label': 'Explore the studio photographs'},
+    '.studio-photo img': {alt: 'A moment in Camilo Rivera’s studio'},
+    '.contact-round': {'aria-label': 'Write to Camilo Rivera'},
+    '.back-top': {'aria-label': 'Back to top'},
+    '.viewer-share': {'aria-label': 'Share this work'},
+    '.viewer-close': {'aria-label': 'Close the viewer'},
+    '.viewer-prev': {'aria-label': 'Previous work'},
+    '.viewer-next': {'aria-label': 'Next work'},
+    '.share-fallback-close': {'aria-label': 'Close the share link'}
   };
 
-  const oeuvres = works.filter(w => w.category !== 'shooting');
-  const itemList = {
-    '@type': 'ItemList',
-    name: 'Œuvres de Camilo Rivera',
-    numberOfItems: oeuvres.length,
-    itemListElement: oeuvres.map((w, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'VisualArtwork',
-        name: w.title,
-        artform: w.category === 'paintings' ? 'Peinture' : 'Dessin',
-        artMedium: w.technique,
-        creator: { '@id': personId },
-        url: SITE + '#oeuvre/' + w.slug,
-        image: SITE + encodeURI(PATHS[w.category] + w.file)
-      }
-    }))
-  };
-
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': [person, itemList] });
-  document.head.appendChild(script);
-}
-
-// ══════════════════════════════════════════════
-// DEEP-LINKS — #oeuvre/<slug>
-// ══════════════════════════════════════════════
-function parseOeuvreHash() {
-  const m = location.hash.match(/^#oeuvre\/(.+)$/);
-  return m ? decodeURIComponent(m[1]) : null;
-}
-
-function slugSelector(slug) {
-  const safe = (window.CSS && CSS.escape) ? CSS.escape(slug) : slug;
-  return `[data-slug="${safe}"]`;
-}
-
-function openWorkBySlug(slug, opts) {
-  const grid = document.getElementById('gallery-grid');
-  if (!grid) return;
-  const el = grid.querySelector(slugSelector(slug));
-  if (el) openLightbox(el, opts);
-}
-
-// Au chargement avec #oeuvre/<slug> : positionne la galerie en arrière-plan
-// puis ouvre la lightbox. Slug inconnu → ignore silencieusement.
-function handleInitialDeepLink(grid) {
-  const slug = parseOeuvreHash();
-  if (!slug) return;
-  if (!WORKS_BY_SLUG[slug]) return;
-  const el = grid.querySelector(slugSelector(slug));
-  if (!el) return;
-  el.scrollIntoView({ block: 'center' });
-  openLightbox(el, { history: 'replace' });
-}
-
-// push  : ouverture par clic → empile une entrée #oeuvre/<slug>
-// replace: deep-link au chargement / navigation flèche → remplace en place
-// none  : réouverture via bouton Suivant du navigateur → ne touche pas l'historique
-function syncLightboxHistory(slug, mode) {
-  const url = '#oeuvre/' + slug;
-  if (mode === 'push') history.pushState(null, '', url);
-  else if (mode === 'replace') history.replaceState(null, '', url);
-}
-
-function onPopState() {
-  if (lightboxOpen) {
-    // Bouton Retour du navigateur alors que la lightbox est ouverte → on ferme.
-    // L'historique a déjà bougé : teardown seul (pas de nouvelle manip d'historique).
-    closeLightbox({ fromPopstate: true });
-    return;
+  function readPreference(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
   }
-  // Bouton Suivant vers un état #oeuvre → on rouvre la lightbox.
-  const slug = parseOeuvreHash();
-  if (slug && WORKS_BY_SLUG[slug]) openWorkBySlug(slug, { history: 'none' });
-}
+  function savePreference(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* Preferences are optional. */ }
+  }
+  function t(key) { return labels[language][key]; }
+  function reducedMotion() { return userReduced || systemMotion.matches; }
+  function imagePath(work) { return 'images/' + work.category + '/' + work.file; }
+  function workTitle(work) {
+    return work.title || (t('studioTitle') + ' · ' + work.slug.split('-').pop());
+  }
+  function workTechnique(work) {
+    // A curator may add a more specific technique; preserve it in the source language.
+    const known = {paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Atelier'};
+    return work.technique === known[work.category] ? t('technique')[work.category] : work.technique;
+  }
+  function workAlt(work) { return workTitle(work) + ' — ' + workTechnique(work) + ', ' + t('imageAlt'); }
+  function filteredWorks() {
+    return works.filter(work => currentFilter === 'all' ? work.category !== 'shooting' : work.category === currentFilter);
+  }
 
-// ══════════════════════════════════════════════
-// LIGHTBOX — Cinematic FLIP animation
-// ══════════════════════════════════════════════
-// Cartel de musée : titre (Cormorant italique) au-dessus d'une méta ligne
-// (technique · dimensions · année, DM Sans petites capitales), séparés d'un
-// filet doré. Atelier (title null) → méta seule, sans filet. Année &
-// dimensions n'apparaissent que renseignées (null aujourd'hui → ignorées).
-// Retourne du markup (innerHTML) car le cartel est structuré, plus une ligne.
-function lightboxCaption(work) {
-  const title = work.title;
-  const meta = [work.technique, work.dimensions, work.year].filter(Boolean).join(' · ');
-  let html = '';
-  if (title) html += `<span class="cartel-title">${escapeHtml(title)}</span>`;
-  if (title && meta) html += '<span class="cartel-rule" aria-hidden="true"></span>';
-  if (meta) html += `<span class="cartel-meta">${escapeHtml(meta)}</span>`;
-  return html;
-}
-
-// Libellé accessible (aria-label du dialog) : titre de l'œuvre, ou technique
-// pour l'atelier (title null).
-function lightboxLabel(work) {
-  return work.title || work.technique;
-}
-
-// Précharge les voisines (index-1 / index+1, modulo) dans le cache
-// navigateur : la flèche/le swipe suivant affiche une image déjà
-// chargée — fini le flash noir pendant le fetch.
-function preloadLightboxNeighbors(index) {
-  if (lightboxGallery.length <= 1) return;
-  const nextItem = lightboxGallery[(index + 1) % lightboxGallery.length];
-  const prevItem = lightboxGallery[(index - 1 + lightboxGallery.length) % lightboxGallery.length];
-  new Image().src = nextItem.src;
-  new Image().src = prevItem.src;
-}
-
-function initLightbox() {
-  document.addEventListener('keydown', (e) => {
-    if (!lightboxOpen) return;
-    switch (e.key) {
-      case 'Escape': closeLightbox(); break;
-      case 'ArrowLeft': e.preventDefault(); navigateLightbox(-1); break;
-      case 'ArrowRight': e.preventDefault(); navigateLightbox(1); break;
-      case 'Tab': trapLightboxFocus(e); break;
+  function setLanguage(next) {
+    language = next === 'en' ? 'en' : 'fr';
+    root.lang = language;
+    document.title = t('title');
+    for (const [el, french] of originalCopy) {
+      el.innerHTML = language === 'en' ? (english[el.dataset.i18n] || french) : french;
     }
-  });
-
-  // Bouton Retour/Suivant du navigateur.
-  window.addEventListener('popstate', onPopState);
-}
-
-// Focus trap : Tab / Shift+Tab cyclent entre les contrôles de la lightbox.
-function trapLightboxFocus(e) {
-  const lb = document.getElementById('lightbox');
-  if (!lb) return;
-  const focusables = Array.from(lb.querySelectorAll('.lightbox-close, .lightbox-nav'))
-    .filter(el => el.offsetParent !== null);   // ignore les contrôles masqués (display:none)
-  if (!focusables.length) return;
-
-  const first = focusables[0];
-  const last = focusables[focusables.length - 1];
-  const active = document.activeElement;
-
-  if (!lb.contains(active)) {
-    e.preventDefault();
-    first.focus();
-  } else if (e.shiftKey && active === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && active === last) {
-    e.preventDefault();
-    first.focus();
+    for (const [selector, attributes] of Object.entries(attributeTranslations)) {
+      $$(selector).forEach(el => {
+        for (const [attribute, value] of Object.entries(attributes)) {
+          const key = el;
+          if (!originalAttributes.has(key)) originalAttributes.set(key, {});
+          const originals = originalAttributes.get(key);
+          if (!(attribute in originals)) originals[attribute] = attribute === 'text' ? el.textContent : el.getAttribute(attribute);
+          const nextValue = language === 'en' ? value : originals[attribute];
+          if (attribute === 'text') el.textContent = nextValue;
+          else el.setAttribute(attribute, nextValue);
+        }
+      });
+    }
+    const toggle = $('.language-toggle');
+    toggle.textContent = language === 'fr' ? 'EN' : 'FR';
+    toggle.setAttribute('aria-label', language === 'fr' ? 'Switch to English' : 'Passer en français');
+    updateMotionControl();
+    if (works.length) {
+      renderGallery();
+      if (viewer.open) renderViewer();
+    }
+    savePreference('cr-language', language);
+    scheduleScroll();
   }
-}
 
-// openLightbox : dispatcher. Deux chemins d'entrée qui gèrent CHACUN leur
-// cycle complet. Le chemin View Transitions ne partage rien avec le
-// setTimeout 600ms du FLIP (nettoyage des transform inline) : structure
-// volontairement séparée pour éviter tout héritage croisé.
-function openLightbox(sourceEl, opts = {}) {
-  const histMode = opts.history || 'push';
-  if (useViewTransition()) openLightboxVT(sourceEl, histMode);
-  else openLightboxFlip(sourceEl, histMode);
-}
+  function updateMotionControl() {
+    const calm = reducedMotion();
+    root.classList.toggle('motion-reduced', calm);
+    const button = $('.motion-toggle');
+    const label = systemMotion.matches ? t('systemMotion') : calm ? t('motionOn') : t('motionOff');
+    button.setAttribute('aria-pressed', String(calm));
+    button.setAttribute('aria-label', label);
+    button.title = label;
+    button.disabled = systemMotion.matches;
+    $('.motion-symbol').textContent = calm ? '▷' : 'Ⅱ';
+    if (calm) $$('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
 
-// Construit et monte la lightbox : DOM + état + événements + focus +
-// historique + préchargement voisins. SANS mise en scène d'entrée — chaque
-// chemin (FLIP / VT) pose ensuite la sienne. `initialSrc` (optionnel) sert
-// d'image de départ (chemin VT) ; à défaut on affiche la pleine réso.
-// Retourne les nœuds utiles + `fullSrc` (URL pleine résolution à rétablir).
-function createLightboxDOM(sourceEl, histMode, initialSrc) {
-  const slug = sourceEl.dataset.slug;
+  let revealObserver;
+  function observeReveals(scope = document) {
+    if (!revealObserver || reducedMotion()) {
+      $$('.reveal', scope).forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    $$('.reveal:not(.is-visible)', scope).forEach(el => revealObserver.observe(el));
+  }
 
-  // Galerie de la lightbox = items visibles (respecte le filtre courant).
-  const items = document.querySelectorAll('.gallery-item:not(.hidden)');
-  lightboxGallery = Array.from(items).map(el => ({
-    slug: el.dataset.slug,
-    // .src (l'attribut) reste l'URL PLEINE RÉSOLUTION même si le navigateur a
-    // chargé une variante srcset ; la lightbox affiche donc bien la pleine réso.
-    src: el.querySelector('img').src,
-    work: WORKS_BY_SLUG[el.dataset.slug],
-    el
-  }));
-
-  lightboxIndex = lightboxGallery.findIndex(it => it.slug === slug);
-  if (lightboxIndex === -1) lightboxIndex = 0;
-
-  const entry = lightboxGallery[lightboxIndex];
-  const work = entry.work;
-  const isTouch = 'ontouchstart' in window;
-
-  lightboxSourceEl = sourceEl;
-
-  const lb = document.createElement('div');
-  lb.className = 'lightbox';
-  lb.id = 'lightbox';
-  lb.setAttribute('role', 'dialog');
-  lb.setAttribute('aria-modal', 'true');
-  lb.setAttribute('aria-label', lightboxLabel(work));
-
-  const bg = document.createElement('div');
-  bg.className = 'lightbox-bg';
-
-  const wrap = document.createElement('div');
-  wrap.className = 'lightbox-image-wrap';
-  const img = document.createElement('img');
-  // initialSrc (chemin VT) = variante DÉJÀ peinte de la vignette : la boîte de
-  // l'image est ainsi correctement proportionnée (image chargée) dès le snapshot
-  // « après » du morph. À défaut (FLIP), on affiche directement la pleine réso.
-  img.src = initialSrc || entry.src;
-  img.alt = altFor(work);
-  wrap.appendChild(img);
-
-  const controls = document.createElement('div');
-  controls.className = 'lightbox-controls';
-
-  const closeBtn = document.createElement('button');
-  closeBtn.className = 'lightbox-close';
-  closeBtn.setAttribute('aria-label', 'Fermer');
-  closeBtn.textContent = '×';
-
-  const prevBtn = document.createElement('button');
-  prevBtn.className = 'lightbox-nav lightbox-prev';
-  prevBtn.setAttribute('aria-label', 'Œuvre précédente');
-  prevBtn.textContent = '‹';
-
-  const nextBtn = document.createElement('button');
-  nextBtn.className = 'lightbox-nav lightbox-next';
-  nextBtn.setAttribute('aria-label', 'Œuvre suivante');
-  nextBtn.textContent = '›';
-
-  // Cartel de musée : markup structuré (titre + filet + méta).
-  const cartel = document.createElement('div');
-  cartel.className = 'lightbox-cartel';
-  cartel.innerHTML = lightboxCaption(work);
-
-  const counter = document.createElement('span');
-  counter.className = 'lightbox-counter';
-  counter.textContent = `${lightboxIndex + 1} / ${lightboxGallery.length}`;
-
-  controls.appendChild(closeBtn);
-  controls.appendChild(prevBtn);
-  controls.appendChild(nextBtn);
-  controls.appendChild(cartel);
-  controls.appendChild(counter);
-
-  lb.appendChild(bg);
-  lb.appendChild(wrap);
-  lb.appendChild(controls);
-
-  document.body.appendChild(lb);
-  document.body.style.overflow = 'hidden';
-  document.body.classList.add('cursor-hidden');
-  lightboxOpen = true;
-  lightboxPushed = (histMode === 'push');
-
-  preloadLightboxNeighbors(lightboxIndex);
-  syncLightboxHistory(slug, histMode);
-
-  // Focus initial sur le bouton fermer (preventScroll : la page ne bouge pas).
-  closeBtn.focus({ preventScroll: true });
-
-  // Events
-  closeBtn.addEventListener('click', () => closeLightbox());
-  prevBtn.addEventListener('click', () => navigateLightbox(-1));
-  nextBtn.addEventListener('click', () => navigateLightbox(1));
-  bg.addEventListener('click', () => closeLightbox());
-
-  // ── MOBILE TOUCH: pinch-zoom, pan, swipe nav, swipe-down close ──
-  if (isTouch) {
-    initLightboxTouch(lb, wrap, img);
-  } else {
-    // Desktop: click to toggle zoom
-    img.addEventListener('click', (e) => {
-      e.stopPropagation();
-      img.classList.toggle('zoomed');
+  function initMotion() {
+    if ('IntersectionObserver' in window) {
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, {threshold: .06, rootMargin: '0px 0px 24px 0px'});
+      root.classList.add('motion-ready');
+    }
+    updateMotionControl();
+    observeReveals();
+    $('.motion-toggle').addEventListener('click', () => {
+      userReduced = !userReduced;
+      savePreference('cr-motion', userReduced ? 'reduced' : 'full');
+      updateMotionControl();
+      scheduleScroll();
     });
-  }
-
-  return { lb, img, wrap, fullSrc: entry.src };
-}
-
-// ── Chemin FLIP (repli universel, inchangé) ──────
-// Zoom cinématique depuis la vignette. Le nettoyage des transform/transition
-// inline à 600ms rend la main à la règle CSS .zoomed (click-to-zoom desktop).
-function openLightboxFlip(sourceEl, histMode) {
-  const { lb, img } = createLightboxDOM(sourceEl, histMode);
-
-  if (sourceEl) {
-    const sourceRect = sourceEl.getBoundingClientRect();
-    const destX = window.innerWidth / 2;
-    const destY = window.innerHeight / 2;
-    const sourceX = sourceRect.left + sourceRect.width / 2;
-    const sourceY = sourceRect.top + sourceRect.height / 2;
-
-    img.style.transform = `translate(${sourceX - destX}px, ${sourceY - destY}px) scale(0.3)`;
-    img.style.opacity = '0.5';
-
-    requestAnimationFrame(() => {
-      lb.classList.add('active', 'flip-entrance');
-      img.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s';
-      img.style.transform = 'translate(0, 0) scale(1)';
-      img.style.opacity = '1';
-
-      // Fin du FLIP : on lâche transform/transition inline (cf. .zoomed).
-      setTimeout(() => {
-        img.style.transform = '';
-        img.style.transition = '';
-      }, 600);
+    systemMotion.addEventListener('change', () => {
+      updateMotionControl();
+      scheduleScroll();
     });
-  } else {
-    requestAnimationFrame(() => lb.classList.add('active', 'flip-entrance'));
+    window.addEventListener('scroll', scheduleScroll, {passive: true});
+    window.addEventListener('resize', scheduleScroll, {passive: true});
+    scheduleScroll();
   }
-}
 
-// ── Chemin View Transitions (progressive enhancement) ──
-// Morph natif vignette → œuvre. L'IMG source porte view-transition-name dans
-// le snapshot « avant » ; l'IMG lightbox le porte dans le snapshot « après »
-// (un seul élément nommé par snapshot, sinon l'API annule le morph). Aucun
-// transform inline, aucun setTimeout 600ms : le navigateur orchestre, on ne
-// fait que nettoyer les noms à la fin.
-function openLightboxVT(sourceEl, histMode) {
-  const sourceImg = sourceEl.querySelector('img');
-  // Image de départ = la variante DÉJÀ peinte de la vignette : garantit une
-  // boîte bien proportionnée au snapshot « après ». On passe en pleine réso
-  // une fois le morph terminé (même image, plus fine → swap invisible).
-  const seedSrc = (sourceImg && (sourceImg.currentSrc || sourceImg.src)) || undefined;
-  if (sourceImg) sourceImg.style.viewTransitionName = VT_NAME;
+  function scheduleScroll() {
+    if (requestedFrame) return;
+    requestedFrame = true;
+    requestAnimationFrame(updateScroll);
+  }
 
-  let fullSrc;
-  const vt = document.startViewTransition(() => {
-    // On retire le nom de la vignette AVANT de le poser sur l'image lightbox.
-    if (sourceImg) sourceImg.style.viewTransitionName = '';
-    const built = createLightboxDOM(sourceEl, histMode, seedSrc);
-    fullSrc = built.fullSrc;
-    // vt-run coupe les transitions CSS fond/contrôles → snapshot « après » net.
-    built.lb.classList.add('active', 'vt-run');
-    if (built.img) built.img.style.viewTransitionName = VT_NAME;
-  });
+  function updateScroll() {
+    requestedFrame = false;
+    if (viewer.open) return;
+    const viewport = window.innerHeight;
+    const y = window.scrollY;
+    const maxScroll = root.scrollHeight - viewport;
+    $('.scroll-progress').style.transform = 'scaleX(' + (maxScroll > 0 ? y / maxScroll : 0) + ')';
+    const navPoint = viewport * .42;
+    let active = '';
+    for (const id of ['gallery', 'about', 'contact']) {
+      const rect = document.getElementById(id).getBoundingClientRect();
+      if (rect.top <= navPoint && rect.bottom > navPoint) active = id;
+    }
+    $$('[data-section]').forEach(link => {
+      if (link.dataset.section === active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    if (reducedMotion()) return;
+    const hero = $('.hero');
+    if (hero.getBoundingClientRect().bottom > 0) {
+      const mobile = window.innerWidth <= 700;
+      $('.hero-art').style.setProperty('--hero-shift', Math.max(mobile ? -22 : -55, -y * .09) + 'px');
+      $('.hero-art').style.setProperty('--hero-rotate', Math.max(-.8, 1.5 - y * .003) + 'deg');
+    }
+    const matter = $('.matter');
+    const rect = matter.getBoundingClientRect();
+    if (rect.top < viewport && rect.bottom > 0) {
+      const progress = Math.max(0, Math.min(1, (viewport - rect.top) / rect.height));
+      matter.style.setProperty('--matter-inset', Math.max(0, 19 - progress * 34) + '%');
+      matter.style.setProperty('--matter-scale', String(1.15 - progress * .15));
+      matter.style.setProperty('--matter-left', ((1 - progress) * -65) + 'px');
+      matter.style.setProperty('--matter-right', ((1 - progress) * 65) + 'px');
+      matter.style.setProperty('--matter-progress', String(progress));
+    }
+  }
 
-  vt.finished.finally(() => {
-    if (sourceImg) sourceImg.style.viewTransitionName = '';
-    const lb = document.getElementById('lightbox');
-    if (lb) {
-      lb.classList.remove('vt-run');
-      const img = lb.querySelector('.lightbox-image-wrap img');
-      if (img) {
-        img.style.viewTransitionName = '';
-        // Passage en pleine résolution (invisible : même image, plus fine).
-        // img.src (IDL) est absolu, fullSrc aussi → comparaison fiable.
-        if (fullSrc && img.src !== fullSrc) img.src = fullSrc;
+  function makeCard(work) {
+    const link = document.createElement('a');
+    link.className = 'work-card reveal';
+    link.href = imagePath(work);
+    link.dataset.work = work.slug;
+    link.setAttribute('aria-label', (language === 'fr' ? 'Voir ' : 'View ') + workAlt(work));
+    link.setAttribute('aria-haspopup', 'dialog');
+    const frame = document.createElement('div');
+    frame.className = 'work-image';
+    const img = document.createElement('img');
+    img.alt = workAlt(work);
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    const dims = typeof DIMS !== 'undefined' ? DIMS[work.category + '/' + work.file] : null;
+    if (dims) {
+      img.width = dims[0];
+      img.height = dims[1];
+      const stem = imagePath(work).replace(/\.webp$/, '');
+      const variants = [480, 800].filter(width => width < dims[0]).map(width => encodeURI(stem + '-' + width + '.webp') + ' ' + width + 'w');
+      variants.push(encodeURI(imagePath(work)) + ' ' + dims[0] + 'w');
+      img.sizes = '(max-width: 700px) ' + (grid.childElementCount === 0 ? '90vw' : '44vw') + ', 29vw';
+      img.srcset = variants.join(', ');
+    }
+    img.src = imagePath(work);
+    frame.append(img);
+    const caption = document.createElement('div');
+    caption.className = 'work-caption';
+    const title = document.createElement('span');
+    title.textContent = workTitle(work);
+    const technique = document.createElement('small');
+    technique.textContent = workTechnique(work);
+    title.append(technique);
+    const arrow = document.createElement('span');
+    arrow.textContent = '↗';
+    arrow.setAttribute('aria-hidden', 'true');
+    caption.append(title, arrow);
+    link.append(frame, caption);
+    return link;
+  }
+
+  function renderGallery(append = false) {
+    const filtered = filteredWorks();
+    if (!append) {
+      $$('.reveal', grid).forEach(el => revealObserver?.unobserve(el));
+      grid.replaceChildren();
+    }
+    const start = grid.childElementCount;
+    for (const work of filtered.slice(start, visibleCount)) grid.append(makeCard(work));
+    $('#gallery-count').textContent = Math.min(visibleCount, filtered.length) + ' ' + t('of') + ' ' + filtered.length + ' ' + t('images');
+    $('#gallery-status').textContent = currentFilter === 'all' ? t('selection') : t(currentFilter);
+    $('#load-more').hidden = visibleCount >= filtered.length;
+    $$('.filter-btn').forEach(button => {
+      const filter = button.dataset.filter;
+      const count = works.filter(work => filter === 'all' ? work.category !== 'shooting' : work.category === filter).length;
+      $('.count', button).textContent = count;
+      const selected = filter === currentFilter;
+      button.classList.toggle('active', selected);
+      button.setAttribute('aria-pressed', String(selected));
+    });
+    observeReveals(grid);
+    scheduleScroll();
+  }
+
+  function setFilter(filter) {
+    if (!works.length || !['all', ...CATEGORIES].includes(filter)) return;
+    currentFilter = filter;
+    visibleCount = PAGE_SIZE;
+    renderGallery();
+  }
+
+  async function loadCollection() {
+    if (collectionLoading) return;
+    collectionLoading = true;
+    $('#gallery-status').textContent = t('loading');
+    $('#gallery-retry').disabled = true;
+    grid.setAttribute('aria-busy', 'true');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+      const response = await fetch('works.json', {signal: controller.signal});
+      if (!response.ok) throw new Error('Collection HTTP ' + response.status);
+      const data = await response.json();
+      const slugs = new Set();
+      if (!Array.isArray(data) || !data.length || !data.every(work => {
+        if (!work || typeof work.slug !== 'string' || !/^[a-z0-9-]+$/.test(work.slug) || slugs.has(work.slug)) return false;
+        slugs.add(work.slug);
+        return CATEGORIES.includes(work.category) && typeof work.file === 'string' &&
+          !/[\\\/]/.test(work.file) && work.file.endsWith('.webp') && typeof work.technique === 'string';
+      })) throw new Error('Invalid collection');
+      works = data;
+      bySlug = new Map(works.map(work => [work.slug, work]));
+      $('#gallery-error').hidden = true;
+      renderGallery();
+      injectStructuredData();
+      syncFromUrl();
+    } catch {
+      $('#gallery-error').hidden = false;
+      $('#gallery-status').textContent = t('network');
+    } finally {
+      clearTimeout(timeout);
+      collectionLoading = false;
+      $('#gallery-retry').disabled = false;
+      grid.setAttribute('aria-busy', 'false');
+    }
+  }
+
+  function injectStructuredData() {
+    const personId = SITE + '#camilo-rivera';
+    const person = {'@type': 'Person', '@id': personId, name: 'Camilo Rivera', jobTitle: 'Artiste peintre', url: SITE,
+      address: {'@type': 'PostalAddress', addressLocality: 'Bramois', addressRegion: 'Valais', addressCountry: 'CH'},
+      sameAs: ['https://www.instagram.com/camilohimself/', 'https://www.osom.ch']};
+    const artworks = works.filter(work => work.category !== 'shooting');
+    const list = {'@type': 'ItemList', name: 'Œuvres de Camilo Rivera', numberOfItems: artworks.length,
+      itemListElement: artworks.map((work, index) => ({
+        '@type': 'ListItem', position: index + 1,
+        item: {'@type': 'VisualArtwork', name: work.title, artMedium: work.technique,
+          creator: {'@id': personId}, url: SITE + '#oeuvre/' + work.slug,
+          image: SITE + encodeURI(imagePath(work))}
+      }))};
+    let script = $('#collection-schema');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'collection-schema';
+      script.type = 'application/ld+json';
+      document.head.append(script);
+    }
+    script.textContent = JSON.stringify({'@context': 'https://schema.org', '@graph': [person, list]});
+  }
+
+  function hashSlug() {
+    if (!location.hash.startsWith('#oeuvre/')) return null;
+    try { return decodeURIComponent(location.hash.slice(8)); } catch { return null; }
+  }
+
+  function openWork(slug, source = null, mode = 'push') {
+    const work = bySlug.get(slug);
+    if (!work || typeof viewer.showModal !== 'function') return;
+    const wasOpen = viewer.open;
+    if (!wasOpen) {
+      sourceElement = source || document.activeElement;
+      returnUrl = location.pathname + location.search + (location.hash.startsWith('#oeuvre/') ? '#gallery' : location.hash);
+      const current = filteredWorks();
+      viewerWorks = current.some(item => item.slug === slug) ? current :
+        works.filter(item => work.category === 'shooting' ? item.category === 'shooting' : item.category !== 'shooting');
+      savedScroll = window.scrollY;
+      viewer.showModal();
+      document.body.style.top = '-' + savedScroll + 'px';
+      document.body.classList.add('viewer-open');
+    }
+    viewerIndex = viewerWorks.findIndex(item => item.slug === slug);
+    if (viewerIndex < 0) {
+      viewerWorks = works.filter(item => work.category === 'shooting' ? item.category === 'shooting' : item.category !== 'shooting');
+      viewerIndex = viewerWorks.findIndex(item => item.slug === slug);
+    }
+    if (mode === 'push') {
+      viewerPushed = true;
+      history.pushState({portfolioViewer: true}, '', '#oeuvre/' + slug);
+    } else {
+      viewerPushed = Boolean(history.state?.portfolioViewer);
+    }
+    renderViewer();
+    if (!wasOpen) {
+      $('.viewer-close').focus({preventScroll: true});
+      if (!reducedMotion() && typeof viewerImage.animate === 'function') {
+        viewerImage.animate([
+          {opacity: .2, transform: 'translateY(18px) scale(.97)'},
+          {opacity: 1, transform: 'translateY(0) scale(1)'}
+        ], {duration: 550, easing: 'cubic-bezier(.16,1,.3,1)'});
       }
     }
-  });
-}
-
-// ── Mobile Touch Handler ──────────────────────
-function initLightboxTouch(lb, wrap, img) {
-  let scale = 1;
-  let panX = 0, panY = 0;
-  let startTouches = null;
-  let startScale = 1;
-  let startPanX = 0, startPanY = 0;
-  let lastTapTime = 0;
-  let swipeStartX = 0, swipeStartY = 0;
-  let isSwiping = false;
-  let isPinching = false;
-  let swipeDismissY = 0;
-
-  function applyTransform() {
-    img.style.transition = 'none';
-    img.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
   }
 
-  function animateTransform() {
-    img.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-    img.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  function renderViewer() {
+    const work = viewerWorks[viewerIndex];
+    if (!work) return;
+    resetZoom();
+    $('.share-fallback').hidden = true;
+    $('.viewer-message').textContent = '';
+    clearTimeout(shareTimer);
+    $('#viewer-title').textContent = workTitle(work);
+    $('#viewer-meta').textContent = workTechnique(work);
+    $('#viewer-extra').textContent = [
+      work.dimensions, work.year,
+      work.available === true ? t('available') : null
+    ].filter(value => value !== null && value !== undefined && value !== '').join(' · ');
+    $('#viewer-counter').textContent = String(viewerIndex + 1).padStart(2, '0') + ' / ' + String(viewerWorks.length).padStart(2, '0');
+    viewerImage.alt = workAlt(work);
+    $('.viewer-image-error').hidden = true;
+    const nextSrc = new URL(imagePath(work), location.href).href;
+    if (viewerImage.src !== nextSrc) {
+      stage.classList.add('image-loading');
+      viewerImage.src = imagePath(work);
+    }
+    const subject = t('inquiry') + ' ' + workTitle(work);
+    const body = SITE + '#oeuvre/' + work.slug;
+    $('#viewer-inquire').href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    $('#viewer-inquire [data-i18n]').textContent = work.category === 'shooting'
+      ? (language === 'fr' ? 'Parlons de l’atelier' : 'Ask about the studio')
+      : (language === 'fr' ? 'À propos de cette œuvre' : 'Ask about this work');
+    // Only one adjacent full-size image is prefetched; Save-Data opts out.
+    if (!navigator.connection?.saveData && viewerWorks.length > 1) {
+      const next = viewerWorks[(viewerIndex + 1) % viewerWorks.length];
+      new Image().src = imagePath(next);
+    }
+  }
+
+  function navigateViewer(direction) {
+    if (!viewer.open || !viewerWorks.length) return;
+    viewerIndex = (viewerIndex + direction + viewerWorks.length) % viewerWorks.length;
+    const slug = viewerWorks[viewerIndex].slug;
+    history.replaceState(history.state, '', '#oeuvre/' + slug);
+    renderViewer();
+    if (!reducedMotion() && typeof viewerImage.animate === 'function') {
+      viewerImage.animate([{opacity: .25, transform: 'translateX(' + (direction * 22) + 'px)'}, {opacity: 1, transform: 'translateX(0)'}], {duration: 280, easing: 'cubic-bezier(.16,1,.3,1)'});
+    }
+  }
+
+  function closeViewer(fromHistory = false) {
+    if (!viewer.open) return;
+    viewer.close();
+    resetZoom();
+    document.body.classList.remove('viewer-open');
+    document.body.style.top = '';
+    window.scrollTo({top: savedScroll, behavior: 'instant'});
+    const goBack = viewerPushed;
+    viewerPushed = false;
+    if (!fromHistory) {
+      if (goBack) history.back();
+      else if (location.hash.startsWith('#oeuvre/')) history.replaceState(null, '', returnUrl);
+    }
+    if (sourceElement?.isConnected) sourceElement.focus({preventScroll: true});
+    sourceElement = null;
+    clearTimeout(shareTimer);
+    scheduleScroll();
+  }
+
+  function syncFromUrl() {
+    const slug = hashSlug();
+    if (slug && bySlug.has(slug)) {
+      if (!viewer.open || viewerWorks[viewerIndex]?.slug !== slug) openWork(slug, null, 'history');
+    } else {
+      if (viewer.open) closeViewer(true);
+      if (slug) $('#gallery-status').textContent = t('unknown');
+    }
   }
 
   function resetZoom() {
-    scale = 1;
-    panX = 0;
-    panY = 0;
-    animateTransform();
-    lb.classList.remove('lightbox-zoomed');
+    stage.classList.remove('is-zoomed');
+    stage.removeAttribute('tabindex');
+    stage.removeAttribute('aria-label');
+    $('.viewer-zoom').setAttribute('aria-pressed', 'false');
+    $('.viewer-zoom [data-i18n]').textContent = t('zoomIn');
+    $('.viewer-zoom>span:last-child').textContent = '+';
+    stage.scrollTop = 0;
+    stage.scrollLeft = 0;
   }
 
-  function clampPan() {
-    if (scale <= 1) { panX = 0; panY = 0; return; }
-    const rect = img.getBoundingClientRect();
-    const imgW = rect.width;
-    const imgH = rect.height;
-    const viewW = window.innerWidth;
-    const viewH = window.innerHeight;
-    const maxPanX = Math.max(0, (imgW - viewW) / 2);
-    const maxPanY = Math.max(0, (imgH - viewH) / 2);
-    panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
-    panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
+  function toggleZoom() {
+    if (stage.classList.contains('is-zoomed')) return resetZoom();
+    stage.classList.add('is-zoomed');
+    stage.tabIndex = 0;
+    stage.setAttribute('aria-label', t('stage'));
+    $('.viewer-zoom').setAttribute('aria-pressed', 'true');
+    $('.viewer-zoom [data-i18n]').textContent = t('zoomOut');
+    $('.viewer-zoom>span:last-child').textContent = '−';
+    stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2;
+    stage.scrollTop = (stage.scrollHeight - stage.clientHeight) / 2;
   }
 
-  function getTouchDistance(t1, t2) {
-    return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-  }
-
-  function getTouchCenter(t1, t2) {
-    return { x: (t1.clientX + t2.clientX) / 2, y: (t1.clientY + t2.clientY) / 2 };
-  }
-
-  // Prevent default to stop browser zoom / scroll
-  wrap.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 2) {
-      e.preventDefault();
-      isPinching = true;
-      isSwiping = false;
-      startTouches = { d: getTouchDistance(e.touches[0], e.touches[1]) };
-      startScale = scale;
-      startPanX = panX;
-      startPanY = panY;
-    } else if (e.touches.length === 1) {
-      isPinching = false;
-      swipeStartX = e.touches[0].clientX;
-      swipeStartY = e.touches[0].clientY;
-      startPanX = panX;
-      startPanY = panY;
-      isSwiping = true;
-      swipeDismissY = 0;
-    }
-  }, { passive: false });
-
-  wrap.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 2 && isPinching) {
-      e.preventDefault();
-      const newDist = getTouchDistance(e.touches[0], e.touches[1]);
-      const ratio = newDist / startTouches.d;
-      scale = Math.max(1, Math.min(4, startScale * ratio));
-
-      if (scale > 1) {
-        lb.classList.add('lightbox-zoomed');
+  async function shareWork() {
+    const work = viewerWorks[viewerIndex];
+    if (!work) return;
+    const url = SITE + '#oeuvre/' + work.slug;
+    const title = workTitle(work) + ' — Camilo Rivera';
+    try {
+      if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+        await navigator.share({title, url});
+        return;
       }
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(url);
+      if (!viewer.open) return;
+      $('.viewer-message').textContent = t('copied');
+      shareTimer = setTimeout(() => { $('.viewer-message').textContent = ''; }, 2600);
+    } catch (error) {
+      if (error.name === 'AbortError' || !viewer.open) return;
+      $('.share-fallback').hidden = false;
+      $('#share-url').value = url;
+      $('#share-url').focus();
+      $('#share-url').select();
+    }
+  }
 
-      clampPan();
-      applyTransform();
-    } else if (e.touches.length === 1 && isSwiping) {
-      const dx = e.touches[0].clientX - swipeStartX;
-      const dy = e.touches[0].clientY - swipeStartY;
-
-      if (scale > 1.05) {
-        // Panning while zoomed
-        e.preventDefault();
-        panX = startPanX + dx;
-        panY = startPanY + dy;
-        clampPan();
-        applyTransform();
-      } else {
-        // Swipe navigation or dismiss
-        swipeDismissY = dy;
-        // Vertical drag → dismiss feedback
-        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
-          e.preventDefault();
-          const opacity = Math.max(0.2, 1 - Math.abs(dy) / 300);
-          img.style.transition = 'none';
-          img.style.transform = `translateY(${dy * 0.6}px) scale(${1 - Math.abs(dy) * 0.0008})`;
-          lb.querySelector('.lightbox-bg').style.opacity = opacity;
+  function initViewer() {
+    viewer.addEventListener('cancel', event => {
+      event.preventDefault();
+      closeViewer();
+    });
+    $('.viewer-close').addEventListener('click', () => closeViewer());
+    $('.viewer-prev').addEventListener('click', () => navigateViewer(-1));
+    $('.viewer-next').addEventListener('click', () => navigateViewer(1));
+    $('.viewer-zoom').addEventListener('click', toggleZoom);
+    $('.viewer-share').addEventListener('click', shareWork);
+    $('.share-fallback-close').addEventListener('click', () => {
+      $('.share-fallback').hidden = true;
+      $('.viewer-share').focus();
+    });
+    viewerImage.addEventListener('load', () => {
+      stage.classList.remove('image-loading');
+      $('.viewer-image-error').hidden = true;
+    });
+    viewerImage.addEventListener('error', () => {
+      stage.classList.remove('image-loading');
+      $('.viewer-image-error').hidden = false;
+    });
+    viewerImage.addEventListener('dblclick', toggleZoom);
+    viewer.addEventListener('keydown', event => {
+      if (event.key === 'Tab') {
+        const controls = $$('a[href], button:not(:disabled), input, [tabindex="0"]', viewer)
+          .filter(el => el.getClientRects().length > 0);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (first && ((!event.shiftKey && document.activeElement === last) ||
+            (event.shiftKey && document.activeElement === first) ||
+            !viewer.contains(document.activeElement))) {
+          event.preventDefault();
+          (event.shiftKey ? last : first).focus();
         }
+        return;
       }
-    }
-  }, { passive: false });
-
-  wrap.addEventListener('touchend', (e) => {
-    if (isPinching && e.touches.length < 2) {
-      isPinching = false;
-      if (scale < 1.1) resetZoom();
-      else { clampPan(); animateTransform(); }
-      return;
-    }
-
-    if (!isSwiping) return;
-    isSwiping = false;
-
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const dx = endX - swipeStartX;
-    const dy = endY - swipeStartY;
-
-    // If zoomed → snap pan
-    if (scale > 1.05) {
-      clampPan();
-      animateTransform();
-      return;
-    }
-
-    // Swipe down to close
-    if (Math.abs(dy) > 120 && Math.abs(dy) > Math.abs(dx)) {
-      closeLightbox();
-      return;
-    }
-
-    // Reset dismiss feedback
-    if (Math.abs(swipeDismissY) > 10) {
-      img.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-      img.style.transform = 'translateY(0) scale(1)';
-      lb.querySelector('.lightbox-bg').style.opacity = '';
-      lb.querySelector('.lightbox-bg').style.transition = 'opacity 0.3s';
-    }
-
-    // Horizontal swipe → navigate (avec inertie ressort sur l'image sortante)
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      navigateLightbox(dx < 0 ? 1 : -1, { spring: true });
-      return;
-    }
-  });
-
-  // Double-tap to zoom
-  wrap.addEventListener('click', (e) => {
-    const now = Date.now();
-    if (now - lastTapTime < 300) {
-      e.stopPropagation();
-      if (scale > 1.05) {
-        resetZoom();
-      } else {
-        scale = 2.5;
-        panX = 0;
-        panY = 0;
-        lb.classList.add('lightbox-zoomed');
-        animateTransform();
+      if (event.target.matches('input') || stage.classList.contains('is-zoomed')) return;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        navigateViewer(event.key === 'ArrowRight' ? 1 : -1);
       }
-    }
-    lastTapTime = now;
-  });
-}
-
-// dir : ±1. opts.spring : au relâchement d'un swipe validé, l'image sortante
-// glisse avec un ressort (spring) doux plutôt que l'easing par défaut. Les
-// flèches (clavier/boutons) gardent le slide standard — inchangé.
-function navigateLightbox(dir, opts = {}) {
-  if (lightboxGallery.length <= 1) return;
-  const spring = opts.spring === true && !prefersReducedMotion();
-
-  lightboxIndex = (lightboxIndex + dir + lightboxGallery.length) % lightboxGallery.length;
-  const entry = lightboxGallery[lightboxIndex];
-  const work = entry.work;
-  const lb = document.getElementById('lightbox');
-  if (!lb) return;
-
-  preloadLightboxNeighbors(lightboxIndex);
-
-  const img = lb.querySelector('.lightbox-image-wrap img');
-  const cartel = lb.querySelector('.lightbox-cartel');
-  const counter = lb.querySelector('.lightbox-counter');
-
-  lb.setAttribute('aria-label', lightboxLabel(work));
-
-  // Ressort de swipe : easing spring-like, 0.35s, discret. Sinon on laisse
-  // la transition CSS par défaut (.lightbox-image-wrap img) porter le slide.
-  const out = spring ? 60 : 40;
-  if (spring) {
-    img.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.3s';
+    });
+    let pointerStart = null;
+    stage.addEventListener('pointerdown', event => {
+      if (!event.isPrimary || stage.classList.contains('is-zoomed')) { pointerStart = null; return; }
+      if (event.pointerType === 'mouse') return;
+      pointerStart = {x: event.clientX, y: event.clientY, id: event.pointerId};
+      stage.setPointerCapture(event.pointerId);
+    });
+    stage.addEventListener('pointerup', event => {
+      if (!pointerStart || pointerStart.id !== event.pointerId) return;
+      const dx = event.clientX - pointerStart.x;
+      const dy = event.clientY - pointerStart.y;
+      pointerStart = null;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) navigateViewer(dx < 0 ? 1 : -1);
+    });
+    stage.addEventListener('pointercancel', () => { pointerStart = null; });
+    window.addEventListener('popstate', syncFromUrl);
+    window.addEventListener('hashchange', syncFromUrl);
   }
 
-  img.style.opacity = '0';
-  img.style.transform = `translateX(${dir * out}px) scale(0.97)`;
-  img.classList.remove('zoomed');
-  lb.classList.remove('lightbox-zoomed');
-
-  setTimeout(() => {
-    img.src = entry.src;
-    img.alt = altFor(work);
-    if (cartel) cartel.innerHTML = lightboxCaption(work);
-    counter.textContent = `${lightboxIndex + 1} / ${lightboxGallery.length}`;
-
-    img.style.transform = `translateX(${-dir * out}px) scale(0.97)`;
-    requestAnimationFrame(() => {
-      img.style.opacity = '1';
-      img.style.transform = 'translateX(0) scale(1)';
-
-      // Fin du slide : on relâche transform/transition inline (cf. .zoomed).
-      setTimeout(() => {
-        img.style.transform = '';
-        img.style.transition = '';
-      }, 600);
-    });
-  }, 200);
-
-  // Deep-link : remplace le hash par le slug courant, sans empiler d'historique.
-  syncLightboxHistory(entry.slug, 'replace');
-}
-
-// closeLightbox : dispatcher symétrique de l'ouverture. Chaque chemin gère
-// son cycle (le VT ne dépend pas du setTimeout 500ms de fondu du FLIP).
-function closeLightbox({ fromPopstate = false } = {}) {
-  const lb = document.getElementById('lightbox');
-  if (!lb) return;
-  if (useViewTransition()) closeLightboxVT(lb, fromPopstate);
-  else closeLightboxFlip(lb, fromPopstate);
-}
-
-// État commun de fermeture : sortie du mode modal, historique, restitution du
-// focus. Partagé par les deux chemins ; ne touche PAS au DOM de la lightbox
-// (retrait spécifique à chaque chemin).
-function finalizeCloseState(fromPopstate) {
-  lightboxOpen = false;
-  document.body.style.overflow = '';
-  document.body.classList.remove('cursor-hidden');
-
-  // Historique : ne rien faire si la fermeture découle déjà d'un popstate
-  // (le navigateur a déjà dépilé l'entrée).
-  if (!fromPopstate) {
-    if (lightboxPushed) {
-      // On avait empilé une entrée #oeuvre à l'ouverture → on la dépile.
-      // Le popstate qui suit voit lightboxOpen=false → aucun double teardown.
-      history.back();
-    } else {
-      // Ouverture par deep-link direct (aucune entrée empilée) → on nettoie le hash.
-      history.replaceState(null, '', location.pathname + location.search);
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[data-work]');
+    if (link && bySlug.has(link.dataset.work) && typeof viewer.showModal === 'function' &&
+        !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      openWork(link.dataset.work, link);
+      return;
     }
-  }
-  lightboxPushed = false;
-
-  // Restitution du focus à la vignette d'origine.
-  if (lightboxSourceEl && typeof lightboxSourceEl.focus === 'function') {
-    lightboxSourceEl.focus({ preventScroll: true });
-  }
-  lightboxSourceEl = null;
-}
-
-// ── Fermeture FLIP (repli universel, inchangé) ──
-// Fondu via retrait de .active, puis retrait du nœud à 500ms.
-function closeLightboxFlip(lb, fromPopstate) {
-  lb.classList.remove('active');
-  lb.classList.remove('lightbox-zoomed');
-  setTimeout(() => lb.remove(), 500);
-  finalizeCloseState(fromPopstate);
-}
-
-// ── Fermeture View Transitions ──
-// Morph inverse œuvre → vignette. L'IMG lightbox est nommée pour le snapshot
-// « avant » ; le teardown (retrait de la lightbox + nom reposé sur la vignette)
-// constitue le snapshot « après ». On capture la vignette AVANT finalize
-// (qui remet lightboxSourceEl à null).
-function closeLightboxVT(lb, fromPopstate) {
-  const img = lb.querySelector('.lightbox-image-wrap img');
-  const sourceEl = lightboxSourceEl;
-  const sourceImg = sourceEl && sourceEl.querySelector('img');
-
-  lb.classList.remove('lightbox-zoomed');
-  lb.classList.add('vt-run');
-  if (img) img.style.viewTransitionName = VT_NAME;
-
-  const vt = document.startViewTransition(() => {
-    lb.remove();
-    if (sourceImg) sourceImg.style.viewTransitionName = VT_NAME;
+    const studioLink = event.target.closest('[data-show-studio]');
+    if (studioLink && works.length) {
+      event.preventDefault();
+      setFilter('shooting');
+      $('#gallery').scrollIntoView({behavior: reducedMotion() ? 'instant' : 'smooth'});
+      history.replaceState(null, '', '#gallery');
+      $('.filter-btn[data-filter="shooting"]').focus({preventScroll: true});
+    }
   });
 
-  vt.finished.finally(() => {
-    if (sourceImg) sourceImg.style.viewTransitionName = '';
+  $$('.filter-btn').forEach(button => button.addEventListener('click', () => {
+    setFilter(button.dataset.filter);
+  }));
+  $('#load-more').addEventListener('click', () => {
+    const previousCount = grid.childElementCount;
+    visibleCount += PAGE_SIZE;
+    renderGallery(true);
+    const nextCard = grid.children[previousCount];
+    if (nextCard) {
+      nextCard.classList.add('is-visible');
+      nextCard.focus({preventScroll: true});
+      nextCard.scrollIntoView({block: 'start', behavior: reducedMotion() ? 'instant' : 'smooth'});
+    }
   });
-
-  finalizeCloseState(fromPopstate);
-}
-
-// ══════════════════════════════════════════════
-// PARALLAX
-// ══════════════════════════════════════════════
-function initParallax() {
-  const parallaxEls = document.querySelectorAll('[data-parallax]');
-  if (!parallaxEls.length) return;
-
-  // getBoundingClientRect() par élément : acceptable une fois par frame,
-  // c'est pourquoi ça reste dans le callback rAF du dispatcher commun.
-  scrollCallbacks.push(() => {
-    parallaxEls.forEach(el => {
-      const speed = parseFloat(el.dataset.parallax) || 0.1;
-      const rect = el.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      const offset = (center - window.innerHeight / 2) * speed;
-
-      const img = el.querySelector('img');
-      if (img) {
-        img.style.transform = `translateY(${offset}px)`;
-      }
-    });
-  });
-}
-
-// ══════════════════════════════════════════════
-// TEXT REVEAL — character by character
-// ══════════════════════════════════════════════
-function initTextReveal() {
-  document.querySelectorAll('.section-title[data-reveal]').forEach(title => {
-    let i = 0;
-
-    // Wrap each character of a text node in a <span class="char">,
-    // incrementing the delay counter globally across the whole title.
-    const wrapChars = (str) => {
-      const frag = document.createDocumentFragment();
-      [...str].forEach(char => {
-        const span = document.createElement('span');
-        span.className = 'char';
-        span.textContent = char === ' ' ? ' ' : char;
-        span.style.transitionDelay = `${i * 0.025}s`;
-        i++;
-        frag.appendChild(span);
-      });
-      return frag;
-    };
-
-    // Walk childNodes instead of textContent so <br> and other elements
-    // (ex. <em>) survive the rebuild.
-    const walk = (node) => {
-      const out = document.createDocumentFragment();
-      node.childNodes.forEach(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          out.appendChild(wrapChars(child.textContent));
-        } else if (child.nodeName === 'BR') {
-          out.appendChild(child.cloneNode(true));
-        } else if (child.nodeType === Node.ELEMENT_NODE) {
-          const clone = child.cloneNode(false);
-          clone.appendChild(walk(child));
-          out.appendChild(clone);
-        }
-      });
-      return out;
-    };
-
-    const rebuilt = walk(title);
-    title.innerHTML = '';
-    title.appendChild(rebuilt);
-  });
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.section-title[data-reveal]').forEach(el => observer.observe(el));
-}
-
-// ══════════════════════════════════════════════
-// SCROLL REVEAL
-// ══════════════════════════════════════════════
-function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
-}
-
-// ══════════════════════════════════════════════
-// SCROLL PROGRESS
-// ══════════════════════════════════════════════
-function initScrollProgress() {
-  const bar = document.querySelector('.scroll-progress');
-  if (!bar) return;
-
-  scrollCallbacks.push(() => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-  });
-}
-
-// ══════════════════════════════════════════════
-// BACK TO TOP
-// ══════════════════════════════════════════════
-function initBackToTop() {
-  const btn = document.querySelector('.back-to-top');
-  if (!btn) return;
-
-  scrollCallbacks.push(() => {
-    btn.classList.toggle('visible', window.scrollY > 400);
-  });
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
+  $('#gallery-retry').addEventListener('click', loadCollection);
+  $('.language-toggle').addEventListener('click', () => setLanguage(language === 'fr' ? 'en' : 'fr'));
+  $('#year').textContent = new Date().getFullYear();
+  initMotion();
+  initViewer();
+  if (readPreference('cr-language') === 'en') setLanguage('en');
+  loadCollection();
+})();
