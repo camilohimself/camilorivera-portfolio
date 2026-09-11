@@ -2,7 +2,11 @@
 
 Site personnel de Camilo Rivera, artiste peintre à Bramois, Valais.
 
-La version `version-astra` réunit une galerie bilingue et un journal d’artiste en six pages. L’accueil met en scène Abstrait 996 parmi des fragments de carnet et d’atelier, du kraft déchiré et du ciel. Le journal accueille 114 images d’archives, dont les 73 fragments de la réserve, et deux films en complément du film de l’accueil. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier.
+La branche `codex/art-digital` ouvre le site dans une encre bleue en mouvement, accompagnée de photographies personnelles. Le nouveau chapitre **Hors cadre** rapproche 85 archives : visages, ateliers, écriture, lieux et cinq suites d’états de peinture à parcourir au doigt. Une seconde encre animée devient un paysage en négatif. Les huit pages restent bilingues. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier ; le journal réunit maintenant 199 archives, dont les 73 fragments de la réserve.
+
+Les deux nouveaux fonds vidéo sont recadrés et déformés avant encodage, en versions portrait et paysage, silencieuses. L’accueil affiche d’abord son image fixe, puis autorise la lecture 900 ms après le chargement de la page. La lecture automatique respecte le mouvement réduit et l’économie de données. Les lecteurs s’arrêtent hors écran, en arrière-plan et derrière la visionneuse ; les choix explicites de pause persistent pendant la visite.
+
+Les 85 originaux de `PROJECT CAMILO2` restent hors du site. Leurs 250 exports WebP, variantes comprises, occupent 34,2 Mo ; les grandes images seules passent de 150,1 à 21,3 Mo. L’intégralité des petites variantes représente 3,39 Mo, chargés progressivement selon les cadres visités. Les vidéos mobiles pèsent 779 225 et 1 657 678 octets. Voir `docs/HORS-CADRE.md` pour la cartographie et les choix de production.
 
 Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
 
@@ -32,7 +36,12 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.
 - `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017, et trois nouveaux fragments d’exposition.
 - `journal/reserves/index.html` : les 73 nouvelles images, regroupées en figures, atelier, expositions et à-côtés ; liens directs et ouverture progressive par lots de seize.
-- `journal/archives.json` : inventaire des sources, variantes, descriptions françaises et anglaises et crédits connus.
+- `journal/archives.json` : inventaire des sources, variantes, descriptions françaises et anglaises et crédits connus.
+- `journal/hors-cadre/index.html` : nouveau chapitre, 85 liens d’archives présents sans JavaScript, cinq suites horizontales natives et dix-neuf feuilles supplémentaires dans un ensemble dépliable.
+- `journal/hors-cadre/selection.json` et `media.json` : choix éditoriaux, correspondance avec les originaux, recadrages, descriptions FR/EN, crédit de la référence et dimensions des exports.
+- `css/art-digital.css` et `js/art-digital.js` : nouvelle ouverture, compositions de Hors cadre, zoom d’ambiance et commandes des suites de peinture.
+- `tools/prepare-hors-cadre.mjs` : préparation reproductible depuis le dossier original, avec ImageMagick, cwebp et FFmpeg. Aucun de ces outils n’est nécessaire au site publié.
+- `tools/verify-hors-cadre.mjs` : parcours de navigateur facultatifs avec Playwright fourni par l’environnement et axe-core facultatif.
 - `css/journal.css` et `js/journal.js` : compositions, langues, préférences et visionneuse des archives.
 - `css/intensity.css` : matières, ciel, papiers et contrastes communs aux sept pages du site.
 - `css/accrochages.css` : grands formats, collages et chevauchements des galeries, adaptés au téléphone.
@@ -57,7 +66,7 @@ Les chapitres sont reliés par un sommaire, des liens de page précédente et su
 
 Les préférences de langue et de mouvement sont mémorisées localement. Si ce stockage est bloqué, le site continue de fonctionner. Le réglage système de réduction des animations est prioritaire.
 
-Le film se trouve entre la collection et la présentation de l’atelier, à l’ancre `#geste`. Il démarre en silence lorsqu’au moins un quart de son cadre est visible et se met en pause hors écran, dans un onglet masqué ou derrière la visionneuse. Le bouton de pause conserve le choix pendant la visite. Aucun fichier vidéo n’est demandé au premier affichage de l’accueil. Avec une préférence de mouvement réduit, une économie de données ou un réseau annoncé en 2G, une image reste affichée et la lecture attend un geste volontaire. Le fichier mobile est également utilisé sur un réseau annoncé en 3G. Aucun changement de fichier en cours de lecture lors d’une rotation d’écran.
+Le film du geste reste entre la collection et la présentation de l’atelier, à l’ancre `#geste`. Les lecteurs démarrent automatiquement en silence lorsqu’au moins un quart de leur cadre est visible. Une lecture volontaire reste active tant qu’une partie du cadre est visible. Ils se mettent en pause hors écran, dans un onglet masqué ou derrière la visionneuse. Le bouton de pause conserve le choix pendant la visite. Avec une préférence de mouvement réduit, une économie de données ou un réseau annoncé en 2G, une image reste affichée et la lecture attend un geste volontaire. Le fichier mobile est également utilisé sur un réseau annoncé en 3G. Aucun changement de fichier en cours de lecture lors d’une rotation d’écran.
 
 ## Contrôles locaux
 
@@ -68,6 +77,7 @@ node --check js/films.js
 node --check js/reserve.js
 node --check js/motion.js
 node --check js/viewer-motion.js
+node --check js/art-digital.js
 node tools/validate-portfolio.mjs
 node tools/validate-journal.mjs
 git diff --check

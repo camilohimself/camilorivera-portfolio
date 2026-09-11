@@ -4,9 +4,10 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const routes=['index.html','journal/index.html',...['carnets','matieres','les-caves','traces','reserves'].map(s=>'journal/'+s+'/index.html')];
+const routes=['index.html','journal/index.html',...['carnets','matieres','les-caves','traces','reserves','hors-cadre'].map(s=>'journal/'+s+'/index.html')];
 const sources=new Map(routes.map(p=>[p,fs.readFileSync(path.join(repo,p),'utf8')]));
 const archives=JSON.parse(fs.readFileSync(path.join(repo,'journal/archives.json'),'utf8'));
+const personal=JSON.parse(fs.readFileSync(path.join(repo,'journal/hors-cadre/media.json'),'utf8'));
 let localLinks=0;
 let imageVariants=0;
 const used=new Set();
@@ -29,7 +30,9 @@ for(const[route,html]of sources){
   assert.ok(fs.existsSync(path.join(repo,target)),route+' → '+raw+' : fichier absent');
   if(url.hash&&target.endsWith('.html')){
    const content=sources.get(target)||fs.readFileSync(path.join(repo,target),'utf8');
-   assert.ok(content.includes('id="'+url.hash.slice(1)+'"'),route+' → '+raw+' : ancre absente');
+   const hash=decodeURIComponent(url.hash.slice(1));
+   const reference=hash.startsWith('fragment/')?'data-photo="'+hash.slice(9)+'"':'id="'+hash+'"';
+   assert.ok(content.includes(reference),route+' → '+raw+' : ancre absente');
   }
   localLinks++;
  }
@@ -39,7 +42,7 @@ for(const[route,html]of sources){
   assert.ok(!/\ssrc=/.test(tag[0]),route+' : pas de chargement vidéo initial');
  }
 }
-for(const a of archives){
+for(const a of [...archives,...personal]){
  assert.ok(used.has(a.id),'Archive non utilisée : '+a.id);
  assert.ok(a.width>0&&a.height>0&&a.alt.fr&&a.alt.en,'Métadonnées manquantes : '+a.id);
  for(const file of [a.file,...a.variants.map(v=>v.file)]){
@@ -54,9 +57,15 @@ for(const fact of ['Sabine Leyat Filliez','La Tour Lombarde','2 juin au 2 juille
 assert.equal(archives.length,114);
 assert.equal(archives.filter(a=>a.group==='reserves').length,73);
 assert.equal(new Set(archives.map(a=>a.id)).size,114);
+assert.equal(personal.length,85);
+assert.equal(new Set([...archives,...personal].map(a=>a.id)).size,199);
+const personalPage=sources.get('journal/hors-cadre/index.html');
+assert.equal((personalPage.match(/data-photo="hc-/g)||[]).length,85,'Chaque archive personnelle présente une fois');
+assert.equal((personalPage.match(/class="paint-sequence"/g)||[]).length,5,'Cinq suites de peinture');
+assert.ok(personalPage.includes('luigigrieco.photogr'),'Attribution de l’image de référence');
 const reserve=sources.get('journal/reserves/index.html');
 assert.equal((reserve.match(/data-reserve-item data-hang="[1-8]"/g)||[]).length,73,'Accrochage des archives sans script');
 assert.equal((sources.get('index.html').match(/class="work-card" data-hang="[1-3]"/g)||[]).length,3,'Premières œuvres composées sans script');
 console.log(`OK — ${routes.length} pages, ${localLinks} références locales, aucune ancre manquante.`);
-console.log(`OK — 114 archives utilisées, ${imageVariants} images et variantes, descriptions FR et EN.`);
+console.log(`OK — ${archives.length + personal.length} archives utilisées, ${imageVariants} images et variantes, descriptions FR et EN.`);
 console.log('OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.');

@@ -17,6 +17,7 @@
     const message = $('.film-message', scope);
     const connection = navigator.connection;
     let inView = false;
+    let visibleOnDemand = false;
     let userPaused = false;
     let userStarted = false;
     let blocked = false;
@@ -24,13 +25,14 @@
     let pendingPlay = null;
     let lastReduced = reducedMotion();
     let lastEconomy = saveBandwidth();
+    let openingReady = !scope.hasAttribute('data-film-defer');
 
     function saveBandwidth() {
       return Boolean(connection?.saveData || /^(slow-)?2g$/.test(connection?.effectiveType || ''));
     }
     function shouldPlay() {
-      return inView && !document.hidden && !document.querySelector('dialog[open]') && !userPaused && !blocked &&
-        (userStarted || (!reducedMotion() && !saveBandwidth()));
+      return (userStarted ? visibleOnDemand : inView) && !document.hidden && !document.querySelector('dialog[open]') && !userPaused && !blocked &&
+        (userStarted || (openingReady && !reducedMotion() && !saveBandwidth()));
     }
     function updateButton() {
       const playing = !film.paused || Boolean(pendingPlay && shouldPlay());
@@ -58,13 +60,16 @@
         updateButton();
         return;
       }
-      pendingPlay = Promise.resolve(film.play());
+      const attempt = Promise.resolve(film.play());
+      pendingPlay = attempt;
       updateButton();
-      pendingPlay.catch(error => {
+      attempt.catch(error => {
+        if (pendingPlay !== attempt) return;
         // A viewport exit can abort a pending play. Browser autoplay refusals
         // wait for a deliberate tap instead of retrying in a loop.
         if (error.name !== 'AbortError') blocked = true;
       }).finally(() => {
+        if (pendingPlay !== attempt) return;
         pendingPlay = null;
         if (!shouldPlay()) film.pause();
         else if (film.paused) sync();
@@ -79,18 +84,27 @@
       lastEconomy = economy;
       sync();
     }
+    // The opening poster and text get the connection first. A deliberate play
+    // still starts immediately, including in data-saving and reduced motion.
+    if (!openingReady) {
+      const afterLoad = () => setTimeout(() => { openingReady = true; sync(); }, 900);
+      if (document.readyState === 'complete') afterLoad();
+      else window.addEventListener('load', afterLoad, {once:true});
+    }
     button.hidden = false;
     button.addEventListener('click', () => {
-      if (!film.paused || (pendingPlay && shouldPlay())) {
+      if (!failed && (!film.paused || (pendingPlay && shouldPlay()))) {
         userPaused = true;
       } else {
         userPaused = false;
         userStarted = true;
         blocked = false;
         if (failed) {
+          pendingPlay = null;
+          film.pause();
+          failed = false;
           film.removeAttribute('src');
           film.load();
-          failed = false;
         }
       }
       sync();
@@ -104,18 +118,23 @@
     film.addEventListener('error', () => {
       failed = true;
       blocked = true;
+      film.pause();
       frame.classList.remove('has-film');
       updateButton();
     });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(entries => {
         inView = entries[0].isIntersecting && entries[0].intersectionRatio >= .25;
+        // A tap on the controls can leave just the bottom of a tall background
+        // visible. Honour that request while any of the image remains on screen.
+        visibleOnDemand = entries[0].isIntersecting && entries[0].intersectionRatio > 0;
         sync();
-      }, {threshold: [0, .25]}).observe(frame);
+      }, {threshold: [0, .01, .25]}).observe(frame);
     } else {
       const checkVisibility = () => {
         const rect = frame.getBoundingClientRect();
         inView = rect.top < innerHeight * .75 && rect.bottom > innerHeight * .25;
+        visibleOnDemand = rect.top < innerHeight && rect.bottom > 0;
         sync();
       };
       window.addEventListener('scroll', checkVisibility, {passive: true});

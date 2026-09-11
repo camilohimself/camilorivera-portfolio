@@ -1,5 +1,23 @@
 # Vérification de la refonte
 
+## 11 septembre 2026 — Hors cadre, branche `codex/art-digital`
+
+La suite `tools/verify-hors-cadre.mjs` termine avec **20/20 groupes de contrôles** dans Chrome local. Elle couvre les 85 archives, les cinq suites de peinture, le zoom, les liens directs, le retour au lien d’origine, les flèches, le curseur au clavier et un glissement tactile envoyé au moteur du navigateur.
+
+Les deux nouvelles pages ont été contrôlées en français et anglais à 320, 360, 390, 430, 768, 1024, 1440 et 1920 px : **32 compositions**, sans débordement de page ni de titre. Les six pages existantes du journal ont aussi été parcourues à 390 et 1440 px avec leur lien vers Hors cadre. La collection existante a été utilisée : filtre des encres, visionneuse, fermeture et passage de 12 à 24 œuvres.
+
+Les deux nouveaux films ont réellement décodé des images dans le navigateur mobile émulé. Silence, choix de la source mobile, pause volontaire, arrêt hors écran et derrière la visionneuse, changement de langue, mouvement réduit et économie de données ont été vérifiés. Une panne réseau simulée affiche le poster et un message ; le bouton recharge ensuite le film avec succès. Une lecture demandée depuis les commandes reste possible lorsque seule une partie du fond est visible.
+
+Trois audits axe WCAG 2 A/AA et 2.1 AA — accueil, nouveau chapitre et visionneuse — ne détectent aucune violation. Les pages et les suites natives restent utilisables sans JavaScript. Aucune erreur JavaScript, aucune requête vers un service extérieur et aucun téléchargement de fichier HEIC ou JPEG d’origine n’ont été observés dans ces parcours.
+
+Les 250 fichiers WebP des nouvelles archives ont été inspectés : dimensions conformes au manifeste, variantes de largeur correcte et espace sRGB. Les quatre MP4 ont une seule piste H.264 à 24 images/s, sans audio, avec index de lecture placé avant les données. Les mesures de taille sont consignées dans `HORS-CADRE.md`.
+
+Les validations statiques passent : 115 œuvres, 8 pages, 907 références locales, 199 archives utilisées, 583 images et variantes référencées. Syntaxe de `app.js`, `films.js`, `motion.js` et `art-digital.js`, puis `git diff --check`, sans erreur. Les nouveaux écrans et sections ont été relus visuellement dans les captures mobile et ordinateur.
+
+Limites : émulation Chrome, sans iPhone physique ni Safari/Firefox. Les tailles de fichiers ne sont pas des mesures de vitesse sur un réseau mobile réel. Les audits automatisés ne constituent pas une certification. Aucun push, aucune fusion, aucune publication.
+
+---
+
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
 ## Texte brut de Camilo

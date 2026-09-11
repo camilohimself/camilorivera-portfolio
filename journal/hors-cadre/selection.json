@@ -1,0 +1,1113 @@
+[
+  {
+    "id": "hc-01",
+    "source": "0b951baf-c730-43b3-9905-27f813afb720.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Un instant à deux",
+      "en": "A moment together"
+    },
+    "alt": {
+      "fr": "Deux personnes réunies sous les feuillages",
+      "en": "Two people together beneath foliage"
+    }
+  },
+  {
+    "id": "hc-02",
+    "source": "10362db6-68b2-4f3d-859d-f410aba32328.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Portrait ancien",
+      "en": "An old portrait"
+    },
+    "alt": {
+      "fr": "Photographie sépia d’un jeune homme de profil",
+      "en": "Sepia photograph of a young man in profile"
+    }
+  },
+  {
+    "id": "hc-03",
+    "source": "22183400-A6E3-4E9D-891A-5D2BD023935B.jpg",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — dernier état",
+      "en": "The greys — final recorded state"
+    },
+    "alt": {
+      "fr": "Peinture abstraite en gris, blanc et noir, photographiée à l’atelier",
+      "en": "Abstract painting in grey, white and black, photographed in the studio"
+    }
+  },
+  {
+    "id": "hc-04",
+    "source": "2CF101F5-5FB2-4B23-97AE-59A2106B59A4.jpg",
+    "group": "peinture",
+    "caption": {
+      "fr": "Bleu dans la terre",
+      "en": "Blue in the earth"
+    },
+    "alt": {
+      "fr": "Peinture aux traces bleues et noires sur un fond brun et ocre",
+      "en": "Blue and black marks on a brown and ochre painting"
+    }
+  },
+  {
+    "id": "hc-05",
+    "source": "4F9CB35A-F34A-4D53-B785-53F2C264A2CC.JPG",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — dernier état",
+      "en": "The passage — final recorded state"
+    },
+    "alt": {
+      "fr": "Une peinture aux deux masses bleues traversée de matière claire",
+      "en": "Two blue masses crossed by light paint"
+    }
+  },
+  {
+    "id": "hc-06",
+    "source": "64d3a452-ad01-4cf4-93ba-88e2f7e4d2f7.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Une photographie gardée",
+      "en": "A photograph kept"
+    },
+    "alt": {
+      "fr": "Photographie ancienne en noir et blanc de deux personnes debout",
+      "en": "Old black and white photograph of two people standing together"
+    }
+  },
+  {
+    "id": "hc-07",
+    "source": "96B1EA9E-4C56-4141-8E34-0DEB810F101C.JPG",
+    "group": "atelier",
+    "caption": {
+      "fr": "La toile et la table",
+      "en": "The canvas and the table"
+    },
+    "alt": {
+      "fr": "Grande toile orange et bleue au-dessus d’une table encombrée",
+      "en": "Large orange and blue canvas above a crowded worktable"
+    }
+  },
+  {
+    "id": "hc-08",
+    "source": "9ac3f10e-5fed-43fd-9597-29498d13d0fc.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Reflets superposés",
+      "en": "Layered reflections"
+    },
+    "alt": {
+      "fr": "Portrait en noir et blanc dans une vitre, traversé par les reflets d’une fenêtre",
+      "en": "Black and white portrait in glass crossed by window reflections"
+    }
+  },
+  {
+    "id": "hc-09",
+    "source": "AB7279DF-FD6C-4DFF-8856-4372C15B132B.jpg",
+    "group": "carnet",
+    "caption": {
+      "fr": "Figure sur feuille",
+      "en": "Figure on paper"
+    },
+    "alt": {
+      "fr": "Une figure dessinée au crayon sur une feuille inclinée",
+      "en": "A pencil figure on an angled sheet"
+    }
+  },
+  {
+    "id": "hc-10",
+    "source": "C02001B6-E7C4-4E98-8719-A72A5C222221.jpg",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — dernier état",
+      "en": "The fragments — final recorded state"
+    },
+    "alt": {
+      "fr": "Peinture composée de fragments blancs, bleus et ocres",
+      "en": "Painting made of white, blue and ochre fragments"
+    }
+  },
+  {
+    "id": "hc-11",
+    "source": "c6f372c3-8368-4a6b-ad41-a0725c71a69d.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Dans le jardin",
+      "en": "In the garden"
+    },
+    "alt": {
+      "fr": "Photographie ancienne d’un enfant dans un jardin",
+      "en": "Old photograph of a child in a garden"
+    }
+  },
+  {
+    "id": "hc-12",
+    "source": "DA381FB0-8774-4F18-A775-176A062AA833.jpg",
+    "group": "bleus",
+    "caption": {
+      "fr": "Les bleus — dernier état",
+      "en": "The blues — final recorded state"
+    },
+    "alt": {
+      "fr": "Peinture bleue et turquoise traversée de touches jaunes",
+      "en": "Blue and turquoise painting with yellow marks"
+    }
+  },
+  {
+    "id": "hc-13",
+    "source": "F5769F73-A5C9-4CAA-9605-20246809B361.JPG",
+    "group": "peinture",
+    "caption": {
+      "fr": "Lumière bleue",
+      "en": "Blue light"
+    },
+    "alt": {
+      "fr": "Peinture aux éclats bleus dans une lumière ocre",
+      "en": "Painting with blue fragments in ochre light"
+    }
+  },
+  {
+    "id": "hc-14",
+    "source": "f6a4bafb-9e16-4010-96d6-870df5e7aa84.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Tout près",
+      "en": "Close together"
+    },
+    "alt": {
+      "fr": "Photographie ancienne d’un adulte et d’un enfant, assis dehors",
+      "en": "Old photograph of an adult and a child sitting outside"
+    }
+  },
+  {
+    "id": "hc-15",
+    "source": "FA261FBD-CB95-427F-A772-0D0A9E998D9E.jpg",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — dernier état",
+      "en": "The sky — final recorded state"
+    },
+    "alt": {
+      "fr": "Peinture blanche et bleue aux fragments en suspension",
+      "en": "White and blue painting with suspended fragments"
+    }
+  },
+  {
+    "id": "hc-16",
+    "source": "IMG_0003.JPG",
+    "group": "peinture",
+    "caption": {
+      "fr": "Le blanc travaille",
+      "en": "White at work"
+    },
+    "alt": {
+      "fr": "Touches blanches, grises et brunes sur une toile",
+      "en": "White, grey and brown brushstrokes on canvas"
+    }
+  },
+  {
+    "id": "hc-17",
+    "source": "IMG_0068.JPG",
+    "group": "peinture",
+    "caption": {
+      "fr": "Une autre lumière",
+      "en": "Another light"
+    },
+    "alt": {
+      "fr": "Vue d’une peinture aux traces bleues et ocres",
+      "en": "View of a painting with blue and ochre traces"
+    }
+  },
+  {
+    "id": "hc-18",
+    "source": "IMG_0112.JPG",
+    "group": "peinture",
+    "caption": {
+      "fr": "Jaune, bleu, presque noir",
+      "en": "Yellow, blue, almost black"
+    },
+    "alt": {
+      "fr": "Forme noire sur une peinture jaune, bleue et rose",
+      "en": "Black form on a yellow, blue and pink painting"
+    }
+  },
+  {
+    "id": "hc-19",
+    "source": "IMG_0170.JPG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Sous la lumière",
+      "en": "Under the light"
+    },
+    "alt": {
+      "fr": "Portrait en noir et blanc, visage incliné et lunettes",
+      "en": "Black and white portrait with glasses and a lowered face"
+    }
+  },
+  {
+    "id": "hc-20",
+    "source": "IMG_0243.JPG",
+    "group": "carnet",
+    "caption": {
+      "fr": "Une tête, quelques lignes",
+      "en": "A head, a few lines"
+    },
+    "alt": {
+      "fr": "Tête dessinée par des boucles et des lignes noires",
+      "en": "Head drawn in black loops and lines"
+    }
+  },
+  {
+    "id": "hc-21",
+    "source": "IMG_0290.HEIC",
+    "group": "carnet",
+    "caption": {
+      "fr": "Chercher la figure",
+      "en": "Searching for the figure"
+    },
+    "alt": {
+      "fr": "Étude au crayon d’un corps en mouvement",
+      "en": "Pencil study of a body in motion"
+    }
+  },
+  {
+    "id": "hc-22",
+    "source": "IMG_0386.PNG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Portrait d’enfance",
+      "en": "Childhood portrait"
+    },
+    "alt": {
+      "fr": "Photographie ancienne d’un enfant, extraite d’une capture de téléphone",
+      "en": "Old photograph of a child, cropped from a phone screenshot"
+    },
+    "crop": "828x1300+0+252"
+  },
+  {
+    "id": "hc-23",
+    "source": "IMG_0392.JPG",
+    "group": "carnet",
+    "caption": {
+      "fr": "Figure dans la marge",
+      "en": "Figure in the margin"
+    },
+    "alt": {
+      "fr": "Une figure à l’encre auprès d’une bande hachurée",
+      "en": "An ink figure beside a hatched strip"
+    }
+  },
+  {
+    "id": "hc-24",
+    "source": "IMG_0434.HEIC",
+    "group": "carnet",
+    "caption": {
+      "fr": "Corps au trait",
+      "en": "Body in lines"
+    },
+    "alt": {
+      "fr": "Figure dessinée à l’encre sur une page claire",
+      "en": "Figure drawn in ink on a light page"
+    }
+  },
+  {
+    "id": "hc-25",
+    "source": "IMG_0497.JPG",
+    "group": "carnet",
+    "caption": {
+      "fr": "Le visage barré",
+      "en": "The crossed-out face"
+    },
+    "alt": {
+      "fr": "Visage au crayon traversé par deux grandes traces d’encre noire",
+      "en": "Pencil face crossed by two broad black ink marks"
+    }
+  },
+  {
+    "id": "hc-26",
+    "source": "IMG_0532.PNG",
+    "group": "personnel",
+    "caption": {
+      "fr": "Dans la vitre",
+      "en": "In the glass"
+    },
+    "alt": {
+      "fr": "Portrait en pied dans un reflet de vitre, en noir et blanc",
+      "en": "Full-length portrait reflected in a window, in black and white"
+    }
+  },
+  {
+    "id": "hc-27",
+    "source": "IMG_0534.HEIC",
+    "group": "bleus",
+    "caption": {
+      "fr": "Les bleus — état 01",
+      "en": "The blues — state 01"
+    },
+    "alt": {
+      "fr": "Premier état photographié d’une toile bleue, verte et ocre",
+      "en": "First photographed state of a blue, green and ochre canvas"
+    }
+  },
+  {
+    "id": "hc-28",
+    "source": "IMG_0535.HEIC",
+    "group": "bleus",
+    "caption": {
+      "fr": "Les bleus — état 02",
+      "en": "The blues — state 02"
+    },
+    "alt": {
+      "fr": "La toile bleue avec des touches claires au centre",
+      "en": "The blue canvas with lighter marks in the centre"
+    }
+  },
+  {
+    "id": "hc-29",
+    "source": "IMG_0536.HEIC",
+    "group": "bleus",
+    "caption": {
+      "fr": "Les bleus — état 03",
+      "en": "The blues — state 03"
+    },
+    "alt": {
+      "fr": "Une reprise de la toile aux bleus et aux verts",
+      "en": "A reworking of the blue and green canvas"
+    }
+  },
+  {
+    "id": "hc-30",
+    "source": "IMG_0537.HEIC",
+    "group": "bleus",
+    "caption": {
+      "fr": "Les bleus — état 04",
+      "en": "The blues — state 04"
+    },
+    "alt": {
+      "fr": "La toile bleue et verte dans une lumière plus vive",
+      "en": "The blue and green canvas in brighter light"
+    }
+  },
+  {
+    "id": "hc-31",
+    "source": "IMG_0557.heic",
+    "group": "atelier",
+    "caption": {
+      "fr": "À même la couleur",
+      "en": "Right in the colour"
+    },
+    "alt": {
+      "fr": "Gros plan sur des empâtements roses, bleus, verts et jaunes",
+      "en": "Close view of thick pink, blue, green and yellow paint"
+    }
+  },
+  {
+    "id": "hc-32",
+    "source": "IMG_0564.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 01",
+      "en": "The fragments — state 01"
+    },
+    "alt": {
+      "fr": "Fragments clairs dans une composition bleue et rose",
+      "en": "Light fragments in a blue and pink composition"
+    }
+  },
+  {
+    "id": "hc-33",
+    "source": "IMG_0565.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 02",
+      "en": "The fragments — state 02"
+    },
+    "alt": {
+      "fr": "La composition d’éclats avec un fond gris et ocre",
+      "en": "The composition of fragments with a grey and ochre background"
+    }
+  },
+  {
+    "id": "hc-34",
+    "source": "IMG_0566.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 03",
+      "en": "The fragments — state 03"
+    },
+    "alt": {
+      "fr": "Une reprise de la peinture aux fragments clairs",
+      "en": "A reworking of the painting with light fragments"
+    }
+  },
+  {
+    "id": "hc-35",
+    "source": "IMG_0570.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 04",
+      "en": "The fragments — state 04"
+    },
+    "alt": {
+      "fr": "Les éclats blancs entourés de zones bleues et grises",
+      "en": "White fragments surrounded by blue and grey areas"
+    }
+  },
+  {
+    "id": "hc-36",
+    "source": "IMG_0571.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 05",
+      "en": "The fragments — state 05"
+    },
+    "alt": {
+      "fr": "Détail de la composition d’éclats blancs, bleus et ocres",
+      "en": "Detail of the composition of white, blue and ochre fragments"
+    }
+  },
+  {
+    "id": "hc-37",
+    "source": "IMG_0572.heic",
+    "group": "eclats",
+    "caption": {
+      "fr": "Les éclats — état 06",
+      "en": "The fragments — state 06"
+    },
+    "alt": {
+      "fr": "Une autre vue de la peinture aux éclats blancs et bleus",
+      "en": "Another view of the painting with white and blue fragments"
+    }
+  },
+  {
+    "id": "hc-38",
+    "source": "IMG_0574.JPG",
+    "group": "ailleurs",
+    "caption": {
+      "fr": "Le couloir",
+      "en": "The corridor"
+    },
+    "alt": {
+      "fr": "Long couloir sombre et clair, carrelage blanc au sol",
+      "en": "Long corridor with dark and light walls and white floor tiles"
+    }
+  },
+  {
+    "id": "hc-39",
+    "source": "IMG_0577.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 01",
+      "en": "The greys — state 01"
+    },
+    "alt": {
+      "fr": "Grandes traces brunes et grises sur une toile claire",
+      "en": "Broad brown and grey marks on a light canvas"
+    }
+  },
+  {
+    "id": "hc-40",
+    "source": "IMG_0579.jpg",
+    "group": "atelier",
+    "caption": {
+      "fr": "La peinture sur la peau",
+      "en": "Paint on skin"
+    },
+    "alt": {
+      "fr": "Main ouverte et avant-bras tachés de peinture",
+      "en": "Open hand and forearm marked with paint"
+    }
+  },
+  {
+    "id": "hc-41",
+    "source": "IMG_0580.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 02",
+      "en": "The greys — state 02"
+    },
+    "alt": {
+      "fr": "Premiers rectangles clairs dans la composition grise",
+      "en": "Early light rectangles in the grey composition"
+    }
+  },
+  {
+    "id": "hc-42",
+    "source": "IMG_0580.jpg",
+    "group": "atelier",
+    "caption": {
+      "fr": "Ce qui reste sur les mains",
+      "en": "What stays on the hands"
+    },
+    "alt": {
+      "fr": "Paume et poignet couverts de traces brunes et blanches",
+      "en": "Palm and wrist covered with brown and white marks"
+    }
+  },
+  {
+    "id": "hc-43",
+    "source": "IMG_0581.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 03",
+      "en": "The greys — state 03"
+    },
+    "alt": {
+      "fr": "La toile grise se densifie de touches noires et blanches",
+      "en": "The grey canvas becomes denser with black and white strokes"
+    }
+  },
+  {
+    "id": "hc-44",
+    "source": "IMG_0582.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 04",
+      "en": "The greys — state 04"
+    },
+    "alt": {
+      "fr": "La peinture grise et noire traversée de touches de blanc",
+      "en": "Grey and black painting crossed by white marks"
+    }
+  },
+  {
+    "id": "hc-45",
+    "source": "IMG_0583.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 05",
+      "en": "The greys — state 05"
+    },
+    "alt": {
+      "fr": "Vue de la toile avec davantage de blanc au centre",
+      "en": "View of the canvas with more white in the centre"
+    }
+  },
+  {
+    "id": "hc-46",
+    "source": "IMG_0584.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 06",
+      "en": "The greys — state 06"
+    },
+    "alt": {
+      "fr": "Les formes claires et sombres se rencontrent sur la toile",
+      "en": "Light and dark forms meet on the canvas"
+    }
+  },
+  {
+    "id": "hc-47",
+    "source": "IMG_0586.heic",
+    "group": "noirs",
+    "caption": {
+      "fr": "Les gris — état 07",
+      "en": "The greys — state 07"
+    },
+    "alt": {
+      "fr": "Une autre vue de la toile blanche, noire et grise",
+      "en": "Another view of the white, black and grey canvas"
+    }
+  },
+  {
+    "id": "hc-48",
+    "source": "IMG_0592.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 01",
+      "en": "The sky — state 01"
+    },
+    "alt": {
+      "fr": "Fond bleu traversé de traces blanches et translucides",
+      "en": "Blue ground crossed by white and translucent marks"
+    }
+  },
+  {
+    "id": "hc-49",
+    "source": "IMG_0598.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 02",
+      "en": "The sky — state 02"
+    },
+    "alt": {
+      "fr": "Les premières formes apparaissent dans le bleu",
+      "en": "Early forms appearing in the blue"
+    }
+  },
+  {
+    "id": "hc-50",
+    "source": "IMG_0599.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 03",
+      "en": "The sky — state 03"
+    },
+    "alt": {
+      "fr": "La toile bleue s’emplit de fragments gris et blancs",
+      "en": "Grey and white fragments fill the blue canvas"
+    }
+  },
+  {
+    "id": "hc-51",
+    "source": "IMG_0600.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 04",
+      "en": "The sky — state 04"
+    },
+    "alt": {
+      "fr": "Vue rapprochée de la composition dans le bleu",
+      "en": "Close view of the composition in blue"
+    }
+  },
+  {
+    "id": "hc-52",
+    "source": "IMG_0601.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 05",
+      "en": "The sky — state 05"
+    },
+    "alt": {
+      "fr": "La peinture bleue et blanche avec des lignes sombres",
+      "en": "Blue and white painting with dark lines"
+    }
+  },
+  {
+    "id": "hc-53",
+    "source": "IMG_0603.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 06",
+      "en": "The sky — state 06"
+    },
+    "alt": {
+      "fr": "Une reprise de la peinture bleue aux éclats clairs",
+      "en": "A reworking of the blue painting with light fragments"
+    }
+  },
+  {
+    "id": "hc-54",
+    "source": "IMG_0604.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 07",
+      "en": "The sky — state 07"
+    },
+    "alt": {
+      "fr": "La toile bleue densifiée de formes blanches et grises",
+      "en": "The blue canvas with denser white and grey forms"
+    }
+  },
+  {
+    "id": "hc-55",
+    "source": "IMG_0605.HEIC",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 08",
+      "en": "The sky — state 08"
+    },
+    "alt": {
+      "fr": "La toile bleue et blanche posée sur un chevalet",
+      "en": "The blue and white canvas on an easel"
+    }
+  },
+  {
+    "id": "hc-56",
+    "source": "IMG_0606.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 09",
+      "en": "The sky — state 09"
+    },
+    "alt": {
+      "fr": "Détail des formes blanches, bleues et grises",
+      "en": "Detail of the white, blue and grey forms"
+    }
+  },
+  {
+    "id": "hc-57",
+    "source": "IMG_0607.heic",
+    "group": "ciel",
+    "caption": {
+      "fr": "Le ciel — état 10",
+      "en": "The sky — state 10"
+    },
+    "alt": {
+      "fr": "Une autre photographie de la composition bleue et blanche",
+      "en": "Another photograph of the blue and white composition"
+    }
+  },
+  {
+    "id": "hc-58",
+    "source": "IMG_0640.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 01",
+      "en": "The passage — state 01"
+    },
+    "alt": {
+      "fr": "Deux grandes masses bleues se rejoignent sur un fond ocre",
+      "en": "Two broad blue masses meet on an ochre ground"
+    }
+  },
+  {
+    "id": "hc-59",
+    "source": "IMG_0641.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 02",
+      "en": "The passage — state 02"
+    },
+    "alt": {
+      "fr": "Des fragments clairs apparaissent entre les masses bleues",
+      "en": "Light fragments emerge between the blue masses"
+    }
+  },
+  {
+    "id": "hc-60",
+    "source": "IMG_0642.HEIC",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 03",
+      "en": "The passage — state 03"
+    },
+    "alt": {
+      "fr": "La toile bleue et ocre sur un chevalet",
+      "en": "The blue and ochre canvas on an easel"
+    }
+  },
+  {
+    "id": "hc-61",
+    "source": "IMG_0654.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 04",
+      "en": "The passage — state 04"
+    },
+    "alt": {
+      "fr": "La matière se densifie au centre de la toile",
+      "en": "Paint becomes denser in the centre of the canvas"
+    }
+  },
+  {
+    "id": "hc-62",
+    "source": "IMG_0655.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 05",
+      "en": "The passage — state 05"
+    },
+    "alt": {
+      "fr": "Reprise des touches claires entre deux zones bleues",
+      "en": "Reworked light marks between two blue areas"
+    }
+  },
+  {
+    "id": "hc-63",
+    "source": "IMG_0656.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 06",
+      "en": "The passage — state 06"
+    },
+    "alt": {
+      "fr": "Une autre vue de la toile au centre resserré",
+      "en": "Another view of the canvas with its narrow centre"
+    }
+  },
+  {
+    "id": "hc-64",
+    "source": "IMG_0657.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 07",
+      "en": "The passage — state 07"
+    },
+    "alt": {
+      "fr": "Les bleus profonds et la matière claire dans la peinture",
+      "en": "Deep blues and light paint in the composition"
+    }
+  },
+  {
+    "id": "hc-65",
+    "source": "IMG_0658.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 08",
+      "en": "The passage — state 08"
+    },
+    "alt": {
+      "fr": "Vue de la toile avec des éclats jaunes et roses",
+      "en": "View of the canvas with yellow and pink fragments"
+    }
+  },
+  {
+    "id": "hc-66",
+    "source": "IMG_0659.heic",
+    "group": "sablier",
+    "caption": {
+      "fr": "Le passage — état 09",
+      "en": "The passage — state 09"
+    },
+    "alt": {
+      "fr": "Dernière reprise photographiée de la composition bleue et ocre",
+      "en": "Last photographed reworking of the blue and ochre composition"
+    }
+  },
+  {
+    "id": "hc-67",
+    "source": "IMG_0726.HEIC",
+    "group": "peinture",
+    "caption": {
+      "fr": "Presque la nuit",
+      "en": "Almost night"
+    },
+    "alt": {
+      "fr": "Surface de peinture sombre, traces grises et petites touches rouges",
+      "en": "Dark painted surface with grey traces and small red marks"
+    }
+  },
+  {
+    "id": "hc-68",
+    "source": "IMG_0860.HEIC",
+    "group": "personnel",
+    "caption": {
+      "fr": "Portrait de passage",
+      "en": "A passing portrait"
+    },
+    "alt": {
+      "fr": "Portrait rapproché, lunettes, cheveux longs et écharpe",
+      "en": "Close portrait with glasses, long hair and a scarf"
+    }
+  },
+  {
+    "id": "hc-69",
+    "source": "IMG_0906.HEIC",
+    "group": "ailleurs",
+    "caption": {
+      "fr": "Une ombre dans l’eau",
+      "en": "A shadow in water"
+    },
+    "alt": {
+      "fr": "Ombre d’une personne dans une flaque, au milieu des cailloux",
+      "en": "A person’s shadow in a puddle among pebbles"
+    }
+  },
+  {
+    "id": "hc-70",
+    "source": "IMG_0982.HEIC",
+    "group": "ailleurs",
+    "caption": {
+      "fr": "Au pied des tableaux",
+      "en": "Beneath the paintings"
+    },
+    "alt": {
+      "fr": "Deux personnes assises au sol devant des tableaux dans une salle d’exposition",
+      "en": "Two people sitting on the floor in front of paintings in an exhibition room"
+    }
+  },
+  {
+    "id": "hc-71",
+    "source": "IMG_0999.PNG",
+    "group": "ailleurs",
+    "caption": {
+      "fr": "Regarder ensemble",
+      "en": "Looking together"
+    },
+    "alt": {
+      "fr": "Deux personnes vues de dos devant une œuvre dans une exposition",
+      "en": "Two people seen from behind looking at a work in an exhibition"
+    }
+  },
+  {
+    "id": "hc-72",
+    "source": "IMG_1027.jpg",
+    "group": "personnel",
+    "caption": {
+      "fr": "De profil",
+      "en": "In profile"
+    },
+    "alt": {
+      "fr": "Portrait de profil en noir et blanc avec des lunettes",
+      "en": "Black and white profile portrait with glasses"
+    }
+  },
+  {
+    "id": "hc-73",
+    "source": "IMG_1663.HEIC",
+    "group": "peinture",
+    "caption": {
+      "fr": "Sous le rouge",
+      "en": "Beneath the red"
+    },
+    "alt": {
+      "fr": "Peinture rouge, bleue et grise aux bords irréguliers",
+      "en": "Red, blue and grey painting with uneven edges"
+    }
+  },
+  {
+    "id": "hc-74",
+    "source": "IMG_1805.HEIC",
+    "group": "carnet",
+    "caption": {
+      "fr": "Sur la page ouverte",
+      "en": "On the open page"
+    },
+    "alt": {
+      "fr": "Dessins de figures à l’encre dans un carnet ouvert",
+      "en": "Ink figures in an open notebook"
+    }
+  },
+  {
+    "id": "hc-75",
+    "source": "IMG_1807.HEIC",
+    "group": "carnet",
+    "caption": {
+      "fr": "Écrire, rayer, dessiner",
+      "en": "Write, cross out, draw"
+    },
+    "alt": {
+      "fr": "Chiffres manuscrits et grandes hachures noires sur papier quadrillé",
+      "en": "Handwritten numbers and broad black hatching on squared paper"
+    }
+  },
+  {
+    "id": "hc-76",
+    "source": "IMG_1997.HEIC",
+    "group": "peinture",
+    "caption": {
+      "fr": "Jaune sur gris",
+      "en": "Yellow on grey"
+    },
+    "alt": {
+      "fr": "Peinture verticale jaune et grise, traversée de petites bandes rouges",
+      "en": "Vertical yellow and grey painting crossed by small red strips"
+    }
+  },
+  {
+    "id": "hc-77",
+    "source": "IMG_2111.PNG",
+    "group": "reference",
+    "caption": {
+      "fr": "Une image qui reste",
+      "en": "An image that stays"
+    },
+    "alt": {
+      "fr": "Photographie de silhouettes et d’ombres dans une rue, conservée comme référence visuelle",
+      "en": "Photograph of figures and shadows in a street, kept as a visual reference"
+    },
+    "crop": "1125x1410+0+558",
+    "credit": {
+      "fr": "Image de référence. Compte visible sur la capture fournie : luigigrieco.photogr…",
+      "en": "Reference image. Account visible in the supplied screenshot: luigigrieco.photogr…"
+    }
+  },
+  {
+    "id": "hc-78",
+    "source": "IMG_6389.JPG",
+    "group": "atelier",
+    "caption": {
+      "fr": "La toile debout",
+      "en": "The upright canvas"
+    },
+    "alt": {
+      "fr": "Toile grise et noire posée verticalement dans une pièce",
+      "en": "Grey and black canvas standing upright in a room"
+    }
+  },
+  {
+    "id": "hc-79",
+    "source": "IMG_6390.JPG",
+    "group": "atelier",
+    "caption": {
+      "fr": "Avant l’accrochage",
+      "en": "Before hanging"
+    },
+    "alt": {
+      "fr": "Toile jaune, grise et noire photographiée dans l’atelier",
+      "en": "Yellow, grey and black canvas photographed in the studio"
+    }
+  },
+  {
+    "id": "hc-80",
+    "source": "IMG_6391.JPG",
+    "group": "atelier",
+    "caption": {
+      "fr": "Au ras du sol",
+      "en": "Close to the floor"
+    },
+    "alt": {
+      "fr": "Petite toile grise appuyée au bas d’un mur",
+      "en": "Small grey canvas resting against the base of a wall"
+    }
+  },
+  {
+    "id": "hc-81",
+    "source": "IMG_6394.JPG",
+    "group": "atelier",
+    "caption": {
+      "fr": "Le rouge dans la pièce",
+      "en": "Red in the room"
+    },
+    "alt": {
+      "fr": "Grande toile noire et rouge appuyée dans une pièce",
+      "en": "Large black and red canvas leaning in a room"
+    }
+  },
+  {
+    "id": "hc-82",
+    "source": "IMG_6399.jpg",
+    "group": "peinture",
+    "caption": {
+      "fr": "Rouge en mouvement",
+      "en": "Red in motion"
+    },
+    "alt": {
+      "fr": "Gestes rouges, noirs et gris sur une toile claire",
+      "en": "Red, black and grey gestures on a light canvas"
+    }
+  },
+  {
+    "id": "hc-83",
+    "source": "IMG_6400.jpg",
+    "group": "peinture",
+    "caption": {
+      "fr": "Revenir au rouge",
+      "en": "Returning to red"
+    },
+    "alt": {
+      "fr": "Une autre vue d’une toile aux gestes rouges et gris",
+      "en": "Another view of a canvas with red and grey gestures"
+    }
+  },
+  {
+    "id": "hc-84",
+    "source": "IMG_6500.jpg",
+    "group": "atelier",
+    "caption": {
+      "fr": "La table de travail",
+      "en": "The worktable"
+    },
+    "alt": {
+      "fr": "Tubes de couleur, pinceaux et outils sur une table tachée",
+      "en": "Paint tubes, brushes and tools on a stained table"
+    }
+  },
+  {
+    "id": "hc-85",
+    "source": "IMG_6760.JPG",
+    "group": "ailleurs",
+    "caption": {
+      "fr": "Face au lieu",
+      "en": "Facing the place"
+    },
+    "alt": {
+      "fr": "Une petite silhouette dans un grand espace industriel sombre",
+      "en": "A small figure in a large dark industrial space"
+    }
+  }
+]

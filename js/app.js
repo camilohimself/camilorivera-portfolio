@@ -249,7 +249,7 @@
     });
     if (reducedMotion()) return;
     const hero = $('.hero');
-    if (hero.getBoundingClientRect().bottom > 0) {
+    if (hero.getBoundingClientRect().bottom > 0 && $('.hero-art')) {
       const mobile = window.innerWidth <= 700;
       $('.hero-art').style.setProperty('--hero-shift', Math.max(mobile ? -22 : -55, -y * .09) + 'px');
       $('.hero-art').style.setProperty('--hero-rotate', Math.max(-.8, 1.5 - y * .003) + 'deg');

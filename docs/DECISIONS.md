@@ -1,5 +1,14 @@
 # Décisions du portfolio
 
+## 11 septembre 2026 — Hors cadre
+
+- **Demande** : Camilo fournit `PROJECT CAMILO2`, donne carte blanche sur le récit et la présentation, demande des fonds vidéo en ultra gros plan, déformés, avec une attention particulière aux optimisations et au mobile. Travail uniquement sur la branche.
+- **Direction** : ouverture dans l’encre bleue animée ; photographies personnelles au premier plan ; nouveau chapitre « Hors cadre » relié aux six pages du journal. La seconde encre devient un interlude en négatif. La phrase d’accueil de Camilo reste inchangée.
+- **Archives** : les 85 images trouvent une place dans les visages, l’atelier, l’écriture, les lieux, cinq suites de peinture et les feuilles libres. Les rapprochements sont éditoriaux. Aucune date, relation familiale ou nouvelle attribution à Camilo n’est inventée ; le compte visible sur la capture de référence reste cité.
+- **Mobile** : défilement natif, suites horizontales tactiles avec commandes au clavier, images agrandissables en entier, légendes bilingues. Le détail de chaque image reste accessible par URL.
+- **Production** : 250 WebP issus directement des originaux, deux recadrages par vidéo, déformation précalculée, quatre MP4 silencieux et quatre posters. Le lecteur commun conserve les pauses volontaires et gère la reprise après erreur. Pas de nouvelle dépendance de production.
+- **Branche** : `codex/art-digital`, depuis `8f6b0d3`. Aucune publication. Cartographie, fichiers et tailles détaillés dans `HORS-CADRE.md`.
+
 ## 10 septembre 2026 — Conserver le texte brut
 
 - **Contexte** : Camilo précise qu’il veut conserver son texte brut, pourvu que le français et la prose soient corrects. Cette instruction remplace le choix de resserrement décrit dans l’entrée précédente.

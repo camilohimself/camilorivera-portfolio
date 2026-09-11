@@ -5,7 +5,7 @@
   const system = matchMedia('(prefers-reduced-motion: reduce)');
   const calm = () => system.matches || root.classList.contains('motion-reduced');
   try { if (localStorage.getItem('cr-motion') === 'reduced') root.classList.add('motion-reduced'); } catch {}
-  const chapters = ['/', '/journal/', '/journal/carnets/', '/journal/matieres/', '/journal/les-caves/', '/journal/traces/', '/journal/reserves/'];
+  const chapters = ['/', '/journal/', '/journal/carnets/', '/journal/matieres/', '/journal/les-caves/', '/journal/traces/', '/journal/reserves/', '/journal/hors-cadre/'];
   let pageTransition = null;
   function setDirection(from, to) {
     if (!from || !to) return;
