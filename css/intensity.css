@@ -215,12 +215,12 @@
 .reserve-opening{background:var(--night);color:var(--chalk);display:grid;grid-template-columns:1fr 1fr;gap:6%;padding-block:85px 135px;position:relative;isolation:isolate}
 .reserve-opening::before{content:"";position:absolute;right:0;top:0;width:50%;height:100%;background:url('../images/matieres/kraft-ciel.webp') right center/cover;z-index:-1;clip-path:var(--tear)}
 .reserve-opening-copy{z-index:3}
-.reserve-opening .eyebrow{color:var(--kraft-light);font-size:10px;letter-spacing:.07em;margin:15px 0 35px}
+.reserve-opening .eyebrow{color:var(--kraft-light);font-size:var(--t-micro);letter-spacing:.07em;margin:15px 0 35px}
 .reserve-opening h1{font-size:clamp(80px,9vw,154px);line-height:.93}
 .reserve-opening h1 em{display:inline-block;color:var(--chalk);background:var(--oxide);padding:0 .11em .15em .04em;transform:rotate(-4deg);clip-path:var(--tear)}
 .reserve-opening .journal-lead{color:var(--chalk);max-width:320px}
 .reserve-opening-copy>.text-link{margin-top:20px;border-bottom:1px solid var(--dark-line)}
-.reserve-count{display:flex;gap:20px;align-items:center;margin-top:30px;font-size:10px}
+.reserve-count{display:flex;gap:20px;align-items:center;margin-top:30px;font-size:var(--t-micro)}
 .reserve-count b{font-family:var(--font-display);font-size:70px;font-weight:300;line-height:1;color:var(--kraft-light)}
 .reserve-opening-collage{position:relative;min-height:610px;align-self:center}
 .reserve-portrait{width:70%;margin-left:13%;transform:rotate(6deg);padding:8px;background:var(--kraft);z-index:1}
@@ -238,10 +238,10 @@
 .reserve-toolbar{position:sticky;top:calc(var(--header-h) - 1px);background:var(--paper);z-index:10;padding:12px 0 14px;margin-bottom:45px;border-block:1px solid var(--line)}
 .reserve-filters{display:flex;gap:5px;flex-wrap:wrap}
 .reserve-filter{display:flex;align-items:center;gap:13px;min-height:46px;padding:5px 16px;font-size:12px}
-.reserve-filter small{font-size:9px}
+.reserve-filter small{font-size:var(--t-micro)}
 .reserve-filter[aria-pressed="true"]{background:var(--ink);color:var(--chalk);transform:rotate(-2deg)}
 .reserve-filter:hover:not([aria-pressed="true"]){background:var(--canvas)}
-.reserve-status{font-size:10px;color:var(--muted);margin-top:10px;min-height:16px}
+.reserve-status{font-size:var(--t-micro);color:var(--muted);margin-top:10px;min-height:16px}
 .reserve-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:55px 28px;align-items:start}
 .reserve-item{min-width:0;scroll-margin-top:calc(var(--header-h) + 150px)}
 .reserve-item:nth-child(4n+2){padding-top:45px}
@@ -253,13 +253,12 @@
 .reserve-item[data-kind="a-cote"] .photo-link{background:var(--night)}
 .reserve-grid .photo-link img{aspect-ratio:.76;object-fit:contain;background:var(--paper)}
 .reserve-item[data-kind="atelier"] .photo-link img,.reserve-item[data-kind="a-cote"] .photo-link img{object-fit:cover}
-.reserve-grid figcaption{gap:8px;font-size:10px;line-height:1.6}
+.reserve-grid figcaption{gap:8px;font-size:var(--t-micro);line-height:1.6}
 .reserve-more{display:flex;justify-content:center;margin-top:60px}
 .reserve-exit{background:var(--cobalt);color:var(--chalk);padding-block:85px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px 7%;align-items:end}
 .reserve-exit h2{grid-row:1/3;font-size:clamp(65px,7vw,114px)}
 .reserve-exit>.text-link{border-bottom:1px solid var(--dark-muted);justify-self:start}
 .reserve-opening :focus-visible,.reserve-invitation :focus-visible,.reserve-exit :focus-visible,.ink-collision :focus-visible,.lived-room :focus-visible,.paint-opening :focus-visible,.traces-opening :focus-visible{outline-color:var(--chalk)}
-.intense [hidden]{display:none}
 
 @media(max-width:1100px){
   .intense.home-journal .hero-title{font-size:9.4vw}
@@ -284,16 +283,16 @@
   .intense.home-journal .hero .eyebrow{margin-bottom:30px}
   .intense.home-journal .hero-description{font-size:12px;max-width:290px;margin-top:19px;margin-bottom:15px;padding-block:7px}
   .intense.home-journal .hero-copy>.text-link{font-size:11px;min-height:48px}
-  .intense.home-journal .hero-footnote{margin-top:19px;font-size:9px;padding:8px}
+  .intense.home-journal .hero-footnote{margin-top:19px;font-size:var(--t-micro);padding:8px}
   .intense.home-journal .hero-art{width:calc(100% - 28px);margin:74px 6px 80px 17px}
   .intense.home-journal .hero-art-link{padding:7px 7px 12px}
   .intense.home-journal .hero-art-link::before{width:65px;height:24px;top:-10px}
   .intense .hero-stamp{width:31%;top:-51px;right:-3%;border-width:4px}
   .intense .hero-scrap{width:29%;left:-27px;bottom:-53px;padding:5px 5px 11px}
   .intense .hero-scrap>span{font-size:15px}
-  .intense.home-journal .hero-art figcaption{font-size:9px;gap:10px;padding:6px 10px;max-width:76%}
-  .intense.home-journal .hero-art-aside{font-size:8px;right:-13px}
-  .intense.home-journal .hero-bottom{margin-top:0;padding-block:14px;font-size:9px;gap:25px}
+  .intense.home-journal .hero-art figcaption{font-size:var(--t-micro);gap:10px;padding:6px 10px;max-width:76%}
+  .intense.home-journal .hero-art-aside{font-size:var(--t-micro);right:-13px}
+  .intense.home-journal .hero-bottom{margin-top:0;padding-block:14px;font-size:var(--t-micro);gap:25px}
   .intense .journal-door{padding-top:62px}
   .intense .door-heading h2{font-size:clamp(48px,11.7vw,78px)}
   .intense .door-board{gap:35px 27px;padding-bottom:42px}
@@ -306,7 +305,7 @@
   .reserve-door-image{width:63px}
   .reserve-door-image img{height:91px}
   .reserve-door-copy>strong{font-size:32px}
-  .reserve-door-copy>span{font-size:9px;line-height:1.6}
+  .reserve-door-copy>span{font-size:var(--t-micro);line-height:1.6}
   .between-worlds{display:flex;flex-direction:column;gap:50px;padding-block:67px 115px}
   .between-worlds::before{background-size:auto 130%;background-position:0 0}
   .worlds-left .eyebrow{margin-bottom:25px}
@@ -353,7 +352,7 @@
   .intense .colour-wall .photo-link{outline-width:2px;outline-offset:3px}
   .lived-room{display:flex;flex-direction:column;gap:45px;align-items:stretch;padding-block:60px 120px}
   .lived-copy h2{font-size:clamp(64px,14.8vw,100px)}
-  .lived-copy>.eyebrow{font-size:10px;margin-bottom:25px}
+  .lived-copy>.eyebrow{font-size:var(--t-micro);margin-bottom:25px}
   .lived-photos{min-height:0;height:117vw;max-height:670px;margin-inline:8px}
   .lived-concert{width:91%}
   .lived-concert img{max-height:88vw}
@@ -362,17 +361,17 @@
   .reserve-invitation{gap:20px;padding-block:38px 47px}
   .reserve-invitation-number{font-size:96px}
   .reserve-invitation h2{font-size:34px}
-  .reserve-invitation .text-link{font-size:10px;gap:10px;margin-top:8px}
+  .reserve-invitation .text-link{font-size:var(--t-micro);gap:10px;margin-top:8px}
   .reserve-opening{display:flex;flex-direction:column;gap:55px;padding-block:40px 110px}
   .reserve-opening::before{width:100%;height:49%;top:auto;bottom:0;background-position:70% center;transform:rotate(6deg)}
   .reserve-opening h1{font-size:clamp(68px,17vw,115px)}
-  .reserve-opening .eyebrow{font-size:9px;margin-top:0;margin-bottom:28px}
+  .reserve-opening .eyebrow{font-size:var(--t-micro);margin-top:0;margin-bottom:28px}
   .reserve-opening .journal-lead{font-size:13px;max-width:310px;margin-top:25px}
   .reserve-count{margin-top:20px}
   .reserve-count b{font-size:57px}
   .reserve-opening-collage{min-height:0;height:123vw;max-height:690px;width:100%;margin-top:15px}
   .reserve-portrait{width:75%;margin-left:11%}
-  .reserve-portrait figcaption{font-size:8px}
+  .reserve-portrait figcaption{font-size:var(--t-micro)}
   .reserve-shadow{width:40%;bottom:-4px;left:-1%;border-width:5px}
   .reserve-moth{right:-1%;bottom:4%;width:34%;border-width:4px}
   .cut-label{font-size:24px;max-width:220px;bottom:-51px;padding:10px 15px 14px}
@@ -382,13 +381,13 @@
   .reserve-inventory-heading .journal-prose{margin-top:22px;font-size:12px;max-width:290px}
   .reserve-toolbar{margin-bottom:35px;padding-block:10px 12px}
   .reserve-filters{gap:3px}
-  .reserve-filter{padding:5px 10px;font-size:10px;gap:8px}
-  .reserve-filter small{font-size:8px}
+  .reserve-filter{padding:5px 10px;font-size:var(--t-micro);gap:8px}
+  .reserve-filter small{font-size:var(--t-micro)}
   .reserve-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 23px;padding-inline:2px}
   .reserve-item:nth-child(3n+2){padding-top:0}
   .reserve-item:nth-child(even){padding-top:40px}
   .reserve-grid .photo-link{padding:5px}
-  .reserve-grid figcaption{font-size:9px;gap:6px}
+  .reserve-grid figcaption{font-size:var(--t-micro);gap:6px}
   .reserve-more{margin-top:40px}
   .reserve-exit{display:flex;flex-direction:column;align-items:start;gap:22px;padding-block:58px}
   .reserve-exit h2{font-size:clamp(57px,13vw,85px);margin-bottom:8px}

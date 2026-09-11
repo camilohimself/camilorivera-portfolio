@@ -67,9 +67,14 @@ html.motion-ready:not(.motion-reduced) .work-card.reveal .work-image { transitio
 
 /* Garder de la place pour les œuvres, même sur un petit téléphone. */
 @media (max-width:700px) {
-  .gallery-filters { width: 100%; justify-content: space-between; gap: 0; overflow: visible; }
-  .filter-btn { padding-inline: 8px; font-size: 10px; gap: 6px; min-height: 46px; }
-  .filter-btn .count { font-size: 8px; }
+  .gallery-filters {
+    width: 100%; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto;
+    overscroll-behavior-x: contain; gap: 4px; padding: 3px 1px 6px;
+    scrollbar-width: thin; scrollbar-color: var(--kraft-light) var(--night);
+    scroll-padding-inline: 5px;
+  }
+  .filter-btn { flex: 0 0 auto; padding-inline: 9px; font-size: 11px; gap: 5px; min-height: 46px; }
+  .filter-btn .count { font-size: 11px; }
   .intense .reserve-toolbar { padding-block: 6px 8px; margin-bottom: 20px; }
   .reserve-filters {
     flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; gap: 4px;
@@ -82,7 +87,7 @@ html.motion-ready:not(.motion-reduced) .work-card.reveal .work-image { transitio
 }
 @media (max-width:360px) {
   .gallery-toolbar { padding-inline: 12px; }
-  .filter-btn { padding-inline: 7px; }
+  .filter-btn { padding-inline: 7px; gap: 4px; }
 }
 @media (max-height:520px) and (orientation:landscape) {
   .intense .reserve-toolbar { display: flex; align-items: center; gap: 15px; padding-block: 5px; }

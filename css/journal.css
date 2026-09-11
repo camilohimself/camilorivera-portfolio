@@ -8,7 +8,7 @@
 .home-journal main,.journal-page main{overflow:clip}
 .home-journal .site-header,.journal-page .site-header{gap:24px}
 .home-journal .desktop-nav,.journal-page .desktop-nav{gap:22px}
-.home-journal .header-location{font-size:9px}
+.home-journal .header-location{font-size:var(--t-micro)}
 .home-journal .hero,.journal-page main{background-image:url("../images/journal/paper-grain.svg");background-size:180px 180px}
 .paper-edge{clip-path:polygon(0 .4%,6% 0,13% .5%,22% .1%,29% .7%,37% .2%,46% .6%,58% 0,70% .5%,79% 0,89% .7%,100% .2%,99.8% 19%,100% 38%,99.5% 57%,100% 72%,99.6% 87%,100% 99.4%,91% 100%,83% 99.5%,72% 100%,60% 99.4%,49% 100%,36% 99.6%,24% 100%,12% 99.3%,0 100%,.4% 84%,0 65%,.4% 48%,0 30%)}
 .home-journal .hero{padding-top:70px;column-gap:7%;grid-template-columns:1fr 1fr;padding-bottom:8px}
@@ -51,20 +51,20 @@
 .door-les-caves .door-image img{height:clamp(150px,17vw,260px)}
 .door-traces{--tilt:7deg;margin-top:100px}
 .door-traces .door-image img{object-position:center;aspect-ratio:604/1024;height:auto}
-.door-caption{display:flex;gap:10px;align-items:baseline;margin-top:16px;font-size:10px}
+.door-caption{display:flex;gap:10px;align-items:baseline;margin-top:16px;font-size:var(--t-micro)}
 .door-caption>span:last-child{margin-left:auto;font-size:20px;line-height:1}
 .door-name{font-family:var(--font-display);font-size:clamp(22px,2.4vw,37px);letter-spacing:-.035em;line-height:1}
-.door-number{color:var(--dark-muted);font-size:9px}
+.door-number{color:var(--dark-muted);font-size:var(--t-micro)}
 .door-footer{display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid var(--dark-line);padding-top:24px}
 .door-footer>p{font-family:var(--font-display);font-size:25px;font-style:italic;color:var(--dark-muted)}
 .journal-door :focus-visible{outline-color:var(--paper)}
 .matter-journal-link{color:var(--paper);margin-top:22px;border-bottom:1px solid var(--dark-line)}
 
 /* Shared language for the five journal pages. */
-.folio-line{display:flex;justify-content:space-between;align-items:center;gap:22px;padding-block:21px;font-size:10px;color:var(--muted);border-bottom:1px solid var(--line)}
+.folio-line{display:flex;justify-content:space-between;align-items:center;gap:22px;padding-block:21px;font-size:var(--t-micro);color:var(--muted);border-bottom:1px solid var(--line)}
 .folio-line nav{display:flex;gap:13px;align-items:center;flex-wrap:wrap}
 .folio-line a{display:inline-flex;align-items:center;min-height:44px}
-.folio-line .text-link{font-size:10px;gap:16px}
+.folio-line .text-link{font-size:var(--t-micro);gap:16px}
 .folio-line svg{width:16px;height:16px;transform:rotate(180deg)}
 .folio-line>span{font-variant-numeric:tabular-nums;white-space:nowrap}
 .chapter-opening{display:grid;grid-template-columns:1fr 1fr;gap:6%;align-items:center;padding-top:65px;padding-bottom:95px;position:relative}
@@ -84,7 +84,7 @@
 .archive-photo{min-width:0;position:relative}
 .photo-link{display:block;position:relative}
 .archive-photo img{width:100%;height:auto}
-.archive-photo figcaption{display:flex;gap:16px;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:13px;line-height:1.5}
+.archive-photo figcaption{display:flex;gap:16px;justify-content:space-between;font-size:var(--t-micro);color:var(--muted);margin-top:13px;line-height:1.5}
 .archive-photo figcaption>span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
 .photo-enlarge{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:36px;height:36px;background:var(--sheet);color:var(--ink);font-size:20px;opacity:0;transform:translateY(4px);transition:transform .4s var(--ease),opacity .3s}
 .photo-link:hover .photo-enlarge,.photo-link:focus-visible .photo-enlarge{opacity:1;transform:none}
@@ -113,7 +113,7 @@
 .film-copy>.eyebrow{color:var(--dark-muted)}
 .film-controls{display:flex;gap:18px;align-items:center;margin-top:36px;padding-top:20px;border-top:1px solid var(--dark-line)}
 .journal-film .film-toggle{font-size:12px;transition:border-color .25s}
-.film-silent{font-size:10px;color:var(--dark-muted)}
+.film-silent{font-size:var(--t-micro);color:var(--dark-muted)}
 .journal-film .film-frame{position:relative;display:grid;max-height:calc(100svh - var(--header-h) - 50px);max-width:100%;justify-self:center;min-height:0;overflow:hidden}
 .journal-film .film-frame .film-poster{height:100%;width:100%;max-height:calc(100svh - var(--header-h) - 50px);object-fit:contain}
 .film-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .6s ease}
@@ -176,7 +176,7 @@
 .caves-title{position:relative;z-index:1;pointer-events:none;padding:55px var(--gutter);width:100%}
 .caves-title .eyebrow{margin-bottom:30px}
 .caves-title h1{font-size:clamp(94px,11vw,180px);line-height:.85}
-.caves-title .caves-credit{font-size:10px;margin-top:32px}
+.caves-title .caves-credit{font-size:var(--t-micro);margin-top:32px}
 .caves-hero-image .photo-enlarge{opacity:1;right:var(--gutter);bottom:55px;z-index:3}
 .caves-story{display:grid;grid-template-columns:.8fr 1.2fr;gap:8%;align-items:center;padding-block:125px}
 .caves-story .eyebrow{margin-bottom:32px}
@@ -198,7 +198,7 @@
 .homage-note h2{font-size:clamp(67px,7vw,110px)}
 .homage .journal-lead{color:var(--muted);font-size:19px;max-width:530px}
 .homage-credit{display:flex;flex-direction:column;gap:5px;border-top:1px solid var(--line);margin-top:45px;padding-top:23px;font-size:11px}
-.homage-credit>span{color:var(--muted);font-size:10px}
+.homage-credit>span{color:var(--muted);font-size:var(--t-micro)}
 .homage-credit strong{font-size:15px;font-weight:500}
 .chapter-les-caves .journal-related{border-color:var(--dark-line)}
 .chapter-les-caves .journal-related .eyebrow{color:var(--dark-muted)}
@@ -275,7 +275,7 @@
 .turn-links a:first-child{border-right:1px solid var(--line);padding-right:24px}
 .turn-links a:last-child{text-align:right;padding-left:24px}
 .turn-links a:hover{background:color-mix(in srgb,var(--sheet) 60%,transparent)}
-.turn-direction{display:block;font-size:10px;color:var(--muted);margin-bottom:18px}
+.turn-direction{display:block;font-size:var(--t-micro);color:var(--muted);margin-bottom:18px}
 .turn-title{font-family:var(--font-display);font-size:clamp(50px,6vw,95px);letter-spacing:-.05em;line-height:.96}
 .archive-viewer .archive-stage>img{width:auto;height:auto;max-width:100%;max-height:100%}
 .archive-viewer .archive-stage.is-zoomed>img{width:200%;height:200%;max-width:none;max-height:none;object-fit:contain}
@@ -306,7 +306,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .journal-cover-opening{min-height:570px}
   .journal-cover-opening h1{font-size:10vw}
   .chapter-opening h1{font-size:9vw}
-  .opening-copy .eyebrow{font-size:10px}
+  .opening-copy .eyebrow{font-size:var(--t-micro)}
   .journal-film{gap:5%;padding-block:80px}
   .index-entry{grid-template-columns:35px 1fr 1fr;gap:4%}
 }
@@ -341,16 +341,16 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .door-traces .door-image img{height:210px;object-fit:cover}
   .door-caption{gap:7px;margin-top:13px}
   .door-name{font-size:26px}
-  .door-number{font-size:8px}
+  .door-number{font-size:var(--t-micro)}
   .door-footer{display:block;padding-top:21px}
   .door-footer>p{font-size:22px;max-width:260px;line-height:1.25;margin-bottom:13px}
   .matter-journal-link{display:none}
-  .folio-line{padding-block:8px;font-size:9px;gap:12px}
+  .folio-line{padding-block:8px;font-size:var(--t-micro);gap:12px}
   .folio-line nav{gap:9px}
-  .folio-line .text-link{font-size:9px}
+  .folio-line .text-link{font-size:var(--t-micro)}
   .chapter-opening{display:flex;flex-direction:column;align-items:stretch;padding-top:36px;padding-bottom:60px;gap:36px}
   .chapter-opening h1{font-size:clamp(66px,16vw,106px);line-height:.94}
-  .opening-copy .eyebrow,.cover-copy .eyebrow{margin-bottom:24px;font-size:10px}
+  .opening-copy .eyebrow,.cover-copy .eyebrow{margin-bottom:24px;font-size:var(--t-micro)}
   .journal-lead{font-size:14px;line-height:1.8;margin-top:23px;max-width:370px}
   .opening-copy .text-link,.cover-copy .text-link{margin-top:15px;font-size:11px}
   .notebook-cover{width:90%;margin:0 auto;padding-right:16%;padding-top:10px}
@@ -359,7 +359,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .word-fragment{right:-4px;bottom:25px;width:29%}
   .journal-section{padding-block:55px}
   .journal-heading{display:block;margin-bottom:43px}
-  .journal-heading .eyebrow{margin-bottom:23px;font-size:10px}
+  .journal-heading .eyebrow{margin-bottom:23px;font-size:var(--t-micro)}
   .journal-heading h2{font-size:clamp(51px,11.5vw,78px)}
   .journal-heading .journal-prose{margin-top:23px}
   .scrap-spread{gap:24px 25px;padding-inline:3px;padding-bottom:25px}
@@ -367,7 +367,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .scrap-spread>div:nth-child(4n+3){width:90%;justify-self:end}
   .scrap-spread .photo-link{padding:7px 7px 16px}
   .scrap-spread .photo-link::before{width:45px;height:17px;left:calc(50% - 22px);top:-8px}
-  .archive-photo figcaption{font-size:9px;margin-top:10px;gap:7px}
+  .archive-photo figcaption{font-size:var(--t-micro);margin-top:10px;gap:7px}
   .photo-enlarge{width:28px;height:28px;font-size:16px;right:6px;bottom:6px}
   .final-sheets{grid-template-columns:1fr}
   .final-sheets>div:first-child{width:94%;justify-self:center}
@@ -405,9 +405,9 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .caves-opening{min-height:calc(88svh - 72px)}
   .caves-hero-image img{object-position:44% center}
   .caves-title{padding:35px var(--gutter)}
-  .caves-title .eyebrow{font-size:9px;letter-spacing:.045em;margin-bottom:22px;max-width:270px;line-height:1.6}
+  .caves-title .eyebrow{font-size:var(--t-micro);letter-spacing:.045em;margin-bottom:22px;max-width:270px;line-height:1.6}
   .caves-title h1{font-size:clamp(68px,17vw,106px);line-height:.91}
-  .caves-title .caves-credit{font-size:9px;margin-top:25px}
+  .caves-title .caves-credit{font-size:var(--t-micro);margin-top:25px}
   .caves-hero-image .photo-enlarge{bottom:30px;right:var(--gutter)}
   .caves-story{display:flex;flex-direction:column;gap:40px;padding-block:60px}
   .caves-story h2{font-size:clamp(55px,13vw,79px)}
@@ -422,7 +422,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .caves-passage>.archive-photo{width:96%}
   .passage-note{font-size:38px;padding-top:24px}
   .homage{padding-block:65px;margin-bottom:25px}
-  .homage-note .eyebrow{font-size:9px;margin-bottom:26px}
+  .homage-note .eyebrow{font-size:var(--t-micro);margin-bottom:26px}
   .homage-note h2{font-size:clamp(54px,13.7vw,86px)}
   .homage .journal-lead{font-size:17px;line-height:1.7}
   .homage-credit{margin-top:32px;padding-top:22px}
@@ -462,7 +462,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .entry-copy{position:relative;z-index:2}
   .entry-copy h2{font-size:clamp(41px,10vw,63px);line-height:.94}
   .entry-copy .journal-prose{font-size:11px;line-height:1.7;margin-block:17px 10px}
-  .entry-copy .text-link{font-size:10px;gap:8px;line-height:1.5}
+  .entry-copy .text-link{font-size:var(--t-micro);gap:8px;line-height:1.5}
   .entry-copy .text-link svg{width:15px;height:15px}
   .entry-image,.index-carnets .entry-image,.index-matieres .entry-image{height:200px;width:96%}
   .index-carnets .entry-image{padding:6px}
@@ -472,7 +472,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .journal-related{padding-block:30px;display:block}
   .journal-related .text-link{margin-top:14px;font-size:11px;gap:16px}
   .journal-related h2{font-size:43px}
-  .journal-related .eyebrow{font-size:10px}
+  .journal-related .eyebrow{font-size:var(--t-micro)}
   .chapter-turn{padding-block:36px 42px}
   .turn-heading{display:block;margin-bottom:22px}
   .turn-heading h2{font-size:43px;max-width:250px}
@@ -480,16 +480,16 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .turn-links a{padding-block:26px}
   .turn-links a:first-child{padding-right:14px}
   .turn-links a:last-child{padding-left:14px}
-  .turn-direction{font-size:9px;margin-bottom:15px}
+  .turn-direction{font-size:var(--t-micro);margin-bottom:15px}
   .turn-title{font-size:clamp(36px,8.9vw,56px)}
   .archive-viewer .viewer-details h2{font-size:26px}
-  .archive-viewer .viewer-details p{font-size:10px;line-height:1.6}
+  .archive-viewer .viewer-details p{font-size:var(--t-micro);line-height:1.6}
   .archive-copy>span{display:none}
   .archive-copy-fallback{flex-wrap:wrap;padding:12px;gap:10px;top:65px}
   .archive-copy-fallback label{width:calc(100% - 50px)}
   .archive-copy-fallback .archive-link-close{position:absolute;right:0;top:0}
   .archive-copy-fallback input{width:100%;flex-basis:100%;font-size:16px}
-  .archive-zoom{font-size:10px;gap:8px}
+  .archive-zoom{font-size:var(--t-micro);gap:8px}
 }
 @media(max-width:360px){
   .home-journal .hero-title{font-size:66px}
@@ -502,7 +502,7 @@ html.journal-ready:not(.motion-reduced) .cover-poster{animation-delay:.36s}
   .cover-collage{height:295px}
   .journal-cover-opening h1{font-size:69px}
   .chapter-opening h1{font-size:61px}
-  .folio-line nav{gap:7px;font-size:8px}
+  .folio-line nav{gap:7px;font-size:var(--t-micro)}
   .entry-copy h2{font-size:37px}
   .entry-image,.index-carnets .entry-image,.index-matieres .entry-image{height:175px}
   .index-les-caves .entry-image{height:150px}
@@ -521,4 +521,3 @@ html.motion-reduced .cover-photo,html.motion-reduced .hero-scrap,html.motion-red
   .paper-reveal{opacity:1;transform:none}
   .cover-photo,.hero-scrap,.hero-stamp,.entry-image,.door-card{animation:none;transition:none}
 }
-[hidden]{display:none}
