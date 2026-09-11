@@ -1,5 +1,19 @@
 # Vérification de la refonte
 
+## 11 septembre 2026 — Le journal, par échos
+
+`tools/verify-reverie.mjs` passe **13/13 groupes** et la suite de non-régression `tools/verify-hors-cadre.mjs` repasse **21/21 groupes** sur le code final.
+
+Les six pages concernées sont vérifiées en FR/EN à 320, 360, 390, 430, 700, 768, 1440 et 1920 px : **96 compositions** sans débordement de page, titre, texte principal ou légende d’association. Douze audits axe, un par page et par langue, ne signalent aucune violation WCAG A/AA. Les associations ouvertes sont incluses dans ces audits. Les captures des compositions clés ont été relues à 390 et 1440 px.
+
+Contrôles fonctionnels : six liens directs du sommaire ; fragment choisi stable ; texte original de Camilo ; manuscrit ouvrable ; ordre des quatre photographies des caves, crédits et hommage ; correspondance du gros plan avec l’image entière ; affiche, dates et noms conservés ; neuf images d’associations ouvertes au toucher avec retour au lien d’origine ; fermeture d’une association au clavier ; 73 éléments d’inventaire, filtres et passage de 16 à 32 éléments ; trois liens visuels entre les pages. Sans JavaScript, les associations natives s’ouvrent, l’inventaire entier est visible et un lien accède directement au WebP.
+
+Un rejet de transition native a été reproduit en ouvrant un WebP sans JavaScript. Le mode sans script n’active plus ces transitions décoratives ; avec script, les promesses des transitions annulées sont traitées. Un test d’annulation explicite et le parcours réel sans script passent. Aucun rejet JavaScript, service externe ou fichier original HEIC/JPEG/TIFF observé dans la suite finale.
+
+Validations statiques : 115 œuvres, 8 pages, 942 références locales, 198 archives utilisées et 580 fichiers/variantes référencés. Syntaxe de `js/motion.js` et du test, puis `git diff --check`, sans erreur. Aucun nouveau fichier image ou vidéo ; la nouvelle feuille de composition est limitée aux six pages. L’accueil et Hors cadre ne reçoivent que le correctif partagé de navigation.
+
+Limites : Chrome local, formats mobiles et toucher émulés ; aucun iPhone physique ni audit Safari/Firefox. Les audits automatisés ne constituent pas une certification d’accessibilité. Travail local sur `codex/art-digital`.
+
 ## 11 septembre 2026 — Révision des souvenirs et retrait de la photo erronée
 
 La suite navigateur passe **21/21 groupes** après mise à jour des attentes à 84 archives. Nouveau contrôle : les neuf souvenirs gardent chacun une surface présente dans le cadre à 320, 390, 700, 768 et 1440 px, avec masque et transparence ; les neuf liens s’ouvrent à la touche Entrée et la visionneuse se ferme avec Échap sur mobile émulé. Les vérifications existantes FR/EN, sans JavaScript, vidéo, navigation et les trois audits axe restent verts.

@@ -7,6 +7,14 @@
   try { if (localStorage.getItem('cr-motion') === 'reduced') root.classList.add('motion-reduced'); } catch {}
   const chapters = ['/', '/journal/', '/journal/carnets/', '/journal/matieres/', '/journal/les-caves/', '/journal/traces/', '/journal/reserves/', '/journal/hors-cadre/'];
   let pageTransition = null;
+  function retainTransition(transition) {
+    pageTransition = transition;
+    // Native navigation still succeeds when a decorative transition is skipped
+    // (reduced motion, rapid navigation, or an opt-out on the arriving page).
+    transition.ready.catch(() => {});
+    const release = () => { if (pageTransition === transition) pageTransition = null; };
+    transition.finished.then(release, release);
+  }
   function setDirection(from, to) {
     if (!from || !to) return;
     const previous = chapters.indexOf(new URL(from, location.href).pathname);
@@ -17,13 +25,13 @@
   }
   window.addEventListener('pageswap', event => {
     if (!event.viewTransition) return;
-    pageTransition = event.viewTransition;
+    retainTransition(event.viewTransition);
     if (calm()) event.viewTransition.skipTransition();
     else setDirection(location.href, event.activation?.entry?.url);
   });
   window.addEventListener('pagereveal', event => {
     if (!event.viewTransition) return;
-    pageTransition = event.viewTransition;
+    retainTransition(event.viewTransition);
     if (calm()) event.viewTransition.skipTransition();
     else setDirection(window.navigation?.activation?.from?.url, location.href);
   });

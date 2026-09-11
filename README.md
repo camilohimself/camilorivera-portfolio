@@ -10,6 +10,8 @@ Les 85 originaux de `PROJECT CAMILO2` restent hors du site et intacts. La photog
 
 Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
 
+Les autres pages du journal prolongent désormais les souvenirs par des traitements distincts : distances et silence dans les caves, écriture en marge des carnets, détail puis peinture entière, documents publics lisibles et présences personnelles décentrées. Le sommaire s’ouvre sur un fragment choisi et une citation de Camilo. Trois associations facultatives précèdent les 73 fragments de la réserve ; trois liens visuels font revenir les mains, les silhouettes et les reflets entre les pages. Aucune nouvelle image, vidéo ou dépendance de production. Voir `docs/REVERIE.md`.
+
 Des réflexions confiées par Camilo nourrissent l’accueil (« La peinture, c’est quelque chose qui ne ment jamais. »), l’ouverture des peintures et le passage des carnets consacré au geste, du poignet au corps entier. Ses formulations, répétitions et hésitations sont conservées : seules la transcription, la grammaire et la ponctuation sont corrigées. Les titres peuvent reprendre des fragments de ses phrases. L’anglais suit cette même parole.
 
 Le parcours mobile ajoute des transitions entre chapitres comme des feuilles tirées en travers, une réponse à la pression et une visionneuse qui suit le doigt. Les filtres prennent moins de hauteur et ramènent au début du nouvel accrochage. Le mouvement réduit supprime ces effets ; les liens et le défilement gardent leur comportement natif.
@@ -30,7 +32,7 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `index.html` : structure de la page, textes français et premier contenu accessible sans script.
 - `css/style.css` : couleurs, typographie locale, compositions et comportements adaptatifs.
 - `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences et effets au défilement.
-- `journal/index.html` : sommaire du journal, relié aux cinq chapitres.
+- `journal/index.html` : fragment éditorial choisi, citation de Camilo et sommaire des six chapitres.
 - `journal/carnets/index.html` : douze archives de carnets, trois nouvelles figures et deux films du geste.
 - `journal/matieres/index.html` : vingt archives de peinture et trois photographies de pigments et d’outils.
 - `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.

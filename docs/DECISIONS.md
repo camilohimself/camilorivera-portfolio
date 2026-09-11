@@ -1,5 +1,13 @@
 # Décisions du portfolio
 
+## 11 septembre 2026 — Étendre le rêve au journal
+
+- **Autorisation** : Camilo valide les huit propositions et demande leur réalisation directe sur la branche.
+- **Choix** : une forme propre à chaque page : distance dans les caves, marges dans les carnets, changement d’échelle dans la matière, distinction entre documents publics et présences personnelles dans les traces. Trois associations courtes dans la réserve et trois passages visuels entre les chapitres.
+- **Voix** : citation réelle dans l’ouverture du sommaire, maintien des réflexions originales, réduction de plusieurs grands titres éditoriaux et du volume des invitations de navigation.
+- **Production** : nouveau CSS limité aux six pages concernées, médias optimisés existants, HTML natif et bilingue. Aucun média supplémentaire ni animation permanente. L’accueil et Hors cadre gardent leur composition.
+- **Référence** : détails, identifiants et principes de vérification dans `REVERIE.md`.
+
 ## 11 septembre 2026 — Des souvenirs, pas un album
 
 - **Retour de Camilo** : les photographies d’enfance et de famille sont trop explicitement exposées. Les rendre oniriques, confondues avec les fonds, à moitié hors cadre ; conserver le reste.
