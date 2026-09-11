@@ -1979,33 +1979,6 @@
     "bytes": 127238
   },
   {
-    "id": "hc-75",
-    "source": "IMG_1807.HEIC",
-    "group": "carnet",
-    "caption": {
-      "fr": "Écrire, rayer, dessiner",
-      "en": "Write, cross out, draw"
-    },
-    "alt": {
-      "fr": "Chiffres manuscrits et grandes hachures noires sur papier quadrillé",
-      "en": "Handwritten numbers and broad black hatching on squared paper"
-    },
-    "file": "images/hors-cadre/hc-75.webp",
-    "width": 1350,
-    "height": 1800,
-    "variants": [
-      {
-        "file": "images/hors-cadre/hc-75-480.webp",
-        "width": 480
-      },
-      {
-        "file": "images/hors-cadre/hc-75-900.webp",
-        "width": 900
-      }
-    ],
-    "bytes": 441428
-  },
-  {
     "id": "hc-76",
     "source": "IMG_1997.HEIC",
     "group": "peinture",

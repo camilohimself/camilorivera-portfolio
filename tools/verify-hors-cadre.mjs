@@ -30,9 +30,10 @@ async function tick(page) {
 const context = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2});
 const page = await context.newPage();watch(page);
 
-await check('85 archives, 5 suites et 19 feuilles libres',async()=>{
+await check('84 archives, 5 suites et 19 feuilles libres',async()=>{
   await ready(page);
-  assert.equal(await page.locator('a[data-photo]').count(),85);
+  assert.equal(await page.locator('a[data-photo]').count(),84);
+  assert.equal(await page.locator('#hc-75').count(),0);
   assert.equal(await page.locator('.paint-sequence').count(),5);
   assert.equal(await page.locator('.hc-sheets .hc-photo').count(),19);
   assert.equal(await page.locator('#encre video').getAttribute('src'),null);
@@ -52,7 +53,7 @@ await check('Ouverture, zoom, clavier et retour à la photographie',async()=>{
   assert.equal(await page.evaluate(()=>document.activeElement.dataset.photo),'hc-08');
 });
 await check('Liens profonds vers les archives, y compris dans un ensemble fermé',async()=>{
-  for (const n of ['14','75','83','30']) {
+  for (const n of ['14','74','83','30']) {
     await ready(page,`/journal/hors-cadre/#fragment/hc-${n}`);
     await page.waitForFunction(()=>document.querySelector('#archive-viewer').open);
     await page.waitForFunction(()=>document.querySelector('#archive-image').naturalWidth>0);
@@ -116,7 +117,7 @@ await check('Film noir : décodage réel, silence, pause et agrandissement',asyn
 });
 await check('Pause derrière la visionneuse et hors écran',async()=>{
   // Open a real archive through its link while keeping the film in the viewport.
-  await page.locator('#hc-75 .photo-link').evaluate(a=>a.click());
+  await page.locator('#hc-74 .photo-link').evaluate(a=>a.click());
   await page.waitForFunction(()=>document.querySelector('#archive-viewer').open);
   await page.waitForFunction(()=>document.querySelector('#encre video').paused);
   await page.keyboard.press('Escape');
@@ -136,10 +137,10 @@ await check('Langue anglaise, légendes, contrôles et préférence persistante'
   await page.waitForFunction(()=>!document.querySelector('#archive-viewer').open);
   await page.locator('.language-toggle').click();
 });
-await check('85 images utilisables et sans erreur média après ouverture des ensembles',async()=>{
+await check('84 images utilisables et sans erreur média après ouverture des ensembles',async()=>{
   await page.evaluate(()=>document.querySelectorAll('details').forEach(d=>{d.removeAttribute('name');d.open=true;}));
   const failures=await page.locator('a[data-photo] img').evaluateAll(async images=>{
-    // Decode one at a time: the test does not create a burst of 85 requests.
+    // Decode one at a time: the test does not create a burst of 84 requests.
     const bad=[];
     for(const img of images) {
       img.loading='eager';
@@ -152,6 +153,37 @@ await check('85 images utilisables et sans erreur média après ouverture des en
 
 const calmContext=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
 const calmPage=await calmContext.newPage();watch(calmPage);
+await check('Souvenirs : neuf fragments au clavier, masques et cadrages mobile/ordinateur',async()=>{
+  await ready(calmPage);
+  for(const width of [320,390,700,768,1440]) {
+    await calmPage.setViewportSize({width,height:900});
+    const composition=await calmPage.locator('#visages').evaluate(section=>{
+      const bounds=section.getBoundingClientRect();
+      return [...section.querySelectorAll('.hc-memory')].map(figure=>{
+        const box=figure.getBoundingClientRect();
+        const crop=getComputedStyle(figure.querySelector('.hc-memory-crop'));
+        return {id:figure.id,visibleWidth:Math.min(box.right,bounds.right)-Math.max(box.left,bounds.left),visibleHeight:Math.min(box.bottom,bounds.bottom)-Math.max(box.top,bounds.top),mask:crop.maskImage,opacity:Number(crop.opacity)};
+      });
+    });
+    assert.equal(composition.length,9);
+    for(const fragment of composition) {
+      assert.ok(fragment.visibleWidth>44&&fragment.visibleHeight>44,`${width}: ${fragment.id} garde une surface accessible`);
+      assert.notEqual(fragment.mask,'none');
+      assert.ok(fragment.opacity<.8,'Image fondue dans la surface');
+    }
+    assert.equal(await calmPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+  }
+  await calmPage.setViewportSize({width:390,height:844});
+  for(const link of await calmPage.locator('#visages a[data-photo]').all()) {
+    await link.focus();
+    assert.equal(await link.evaluate(a=>document.activeElement===a),true);
+    await calmPage.keyboard.press('Enter');
+    await calmPage.waitForFunction(()=>document.querySelector('#archive-viewer').open);
+    assert.match(calmPage.url(),new RegExp('/'+await link.getAttribute('data-photo')+'$'));
+    await calmPage.keyboard.press('Escape');
+    await calmPage.waitForFunction(()=>!document.querySelector('#archive-viewer').open);
+  }
+});
 await check('Mouvement réduit : aucune vidéo automatique, lecture volontaire possible',async()=>{
   await ready(calmPage,'/');
   await calmPage.waitForTimeout(1100);
@@ -252,7 +284,7 @@ await check('Sans JavaScript : images, détails natifs et navigation',async()=>{
   const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
   const staticPage=await noJS.newPage();
   await staticPage.goto(base+'/journal/hors-cadre/');
-  assert.equal(await staticPage.locator('a[data-photo]').count(),85);
+  assert.equal(await staticPage.locator('a[data-photo]').count(),84);
   await staticPage.locator('#suite-bleus summary').click();
   assert.equal(await staticPage.locator('#suite-bleus').getAttribute('open'),'');
   await staticPage.locator('#hc-27 a').click();

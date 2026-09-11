@@ -57,10 +57,13 @@ for(const fact of ['Sabine Leyat Filliez','La Tour Lombarde','2 juin au 2 juille
 assert.equal(archives.length,114);
 assert.equal(archives.filter(a=>a.group==='reserves').length,73);
 assert.equal(new Set(archives.map(a=>a.id)).size,114);
-assert.equal(personal.length,85);
-assert.equal(new Set([...archives,...personal].map(a=>a.id)).size,199);
+assert.equal(personal.length,84);
+assert.equal(new Set([...archives,...personal].map(a=>a.id)).size,198);
+assert.ok(!personal.some(a=>a.id==='hc-75'),'La photographie écartée ne doit pas être réexportée');
+for(const file of ['hc-75.webp','hc-75-480.webp','hc-75-900.webp'])assert.ok(!fs.existsSync(path.join(repo,'images/hors-cadre',file)),'Export écarté absent : '+file);
 const personalPage=sources.get('journal/hors-cadre/index.html');
-assert.equal((personalPage.match(/data-photo="hc-/g)||[]).length,85,'Chaque archive personnelle présente une fois');
+assert.equal((personalPage.match(/data-photo="hc-/g)||[]).length,84,'Chaque archive personnelle présente une fois');
+assert.ok(!personalPage.includes('hc-75'),'Photographie écartée absente de la page');
 assert.equal((personalPage.match(/class="paint-sequence"/g)||[]).length,5,'Cinq suites de peinture');
 assert.ok(personalPage.includes('luigigrieco.photogr'),'Attribution de l’image de référence');
 const reserve=sources.get('journal/reserves/index.html');

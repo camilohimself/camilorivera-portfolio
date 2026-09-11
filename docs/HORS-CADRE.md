@@ -6,7 +6,9 @@ Travail local sur `codex/art-digital`, à partir de `8f6b0d3`. Aucune fusion, au
 
 L’encre devient un espace dans lequel entrent les archives. L’accueil remplace le décor de kraft et de ciel par un très gros plan animé de l’encre bleue fournie par Camilo. Les photographies de reflet et de souvenir restent des objets distincts, à ouvrir. La phrase d’accueil de Camilo est conservée.
 
-Une nouvelle porte « Hors cadre » associe la main tachée et le visage barré. Le nouveau chapitre alterne des pages ivoire, des salles sombres et une surface vert pâle pour les états de peinture. Les lettres, les chiffres raturés et les dessins proviennent des vraies archives ; aucune photographie ou écriture de remplacement n’a été générée.
+Une nouvelle porte « Hors cadre » associe la main tachée et le visage barré. Le nouveau chapitre alterne des pages ivoire, des salles sombres et une surface vert pâle pour les états de peinture. L’écriture et les dessins proviennent des vraies archives ; aucune photographie ou écriture de remplacement n’a été générée.
+
+Après le retour de Camilo, la section des visages abandonne le collage et le titre explicatif. « par bribes » devient un passage de souvenirs : neuf images mêlées au fond par des masques progressifs et des modes de fusion, zooms et cadrages décentrés. La composition mobile possède ses propres placements ; aucun mouvement, script, média ou filtre animé supplémentaire. Les liens, les descriptions bilingues et la visionneuse entière restent disponibles, avec un focus clavier non masqué. Les légendes ne s’affichent plus dans cette surface.
 
 ## Cartographie
 
@@ -15,15 +17,17 @@ L’accueil conduit directement à `/journal/hors-cadre/`. Le sommaire du journa
 Dans Hors cadre :
 
 - Ouverture : souvenir, reflet et visage dessiné.
-- Les visages : neuf autres photographies personnelles.
+- Les visages / par bribes : neuf photographies personnelles fondues dans un paysage de souvenirs.
 - L’atelier : mains tachées, outils, table et peinture.
-- L’écriture : page quadrillée, chiffres, hachures et carnet.
+- L’écriture : carnet de figures à l’encre ; la photographie de chiffres raturés a été retirée.
 - Le trait déborde : seconde encre en mouvement, en très gros plan et en négatif.
 - Métamorphoses : cinq suites, 41 vues au total ; 8 gris, 5 bleus, 11 vues du ciel, 10 du passage et 7 éclats.
 - Ailleurs : espace industriel, expositions, couloir, référence visuelle et reflet dans l’eau.
 - Feuilles libres : 19 autres dessins, peintures et photographies, dans un ensemble dépliable.
 
-Les 85 images ont chacune un identifiant `hc-01` à `hc-85`, un lien `#fragment/hc-XX`, une description et une légende dans les deux langues. Les sources, dimensions et recadrages sont dans `journal/hors-cadre/media.json`. Les noms des suites sont éditoriaux, pas de nouveaux titres d’œuvres. Les dates et liens familiaux non confirmés ne sont pas inventés. La référence issue d’Instagram reprend le compte visible dans la capture fournie, sans attribuer l’image à Camilo.
+Les 84 images retenues gardent leur identifiant `hc-01` à `hc-85`, sauf `hc-75`, sans renumérotation des liens existants. Chacune possède un lien `#fragment/hc-XX`, une description et une légende dans les deux langues. Les sources, dimensions et recadrages sont dans `journal/hors-cadre/media.json`. Les noms des suites sont éditoriaux, pas de nouveaux titres d’œuvres. Les dates et liens familiaux individuels non confirmés ne sont pas inventés. La référence issue d’Instagram reprend le compte visible dans la capture fournie, sans attribuer l’image à Camilo.
+
+`IMG_1807.HEIC` (`hc-75`, chiffres et hachures sur papier quadrillé) est exclue de la page, de la sélection et du manifeste. Ses trois WebP sont retirés du site ; l’original source et l’historique Git permettent de les retrouver. L’outil de préparation suit la sélection et ne la réexportera donc plus.
 
 ## Images
 
@@ -31,10 +35,10 @@ Les originaux HEIC, JPEG et PNG du dossier fourni restent intacts. Les fichiers 
 
 | Ensemble | Octets |
 | --- | ---: |
-| 85 originaux | 150 109 818 |
-| 85 grandes images WebP | 21 312 504 |
-| Grandes images et variantes, 250 fichiers | 34 212 728 |
-| Une petite variante par image | 3 385 492 |
+| 84 originaux retenus | 146 941 379 |
+| 84 grandes images WebP | 20 871 076 |
+| Grandes images et variantes, 247 fichiers | 33 436 062 |
+| Une petite variante par image | 3 295 260 |
 
 Les grandes images sont donc environ 86 % plus légères. Toutes les variantes ne sont pas téléchargées : `srcset` et `sizes` laissent le navigateur choisir. Le chargement est différé sous le premier écran ; les ensembles fermés restent légers. Les images de peinture et la visionneuse montrent les proportions complètes. Quelques cadrages de couverture utilisent `object-fit: cover`, avec accès à l’image entière.
 

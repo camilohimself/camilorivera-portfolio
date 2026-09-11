@@ -1,5 +1,15 @@
 # Vérification de la refonte
 
+## 11 septembre 2026 — Révision des souvenirs et retrait de la photo erronée
+
+La suite navigateur passe **21/21 groupes** après mise à jour des attentes à 84 archives. Nouveau contrôle : les neuf souvenirs gardent chacun une surface présente dans le cadre à 320, 390, 700, 768 et 1440 px, avec masque et transparence ; les neuf liens s’ouvrent à la touche Entrée et la visionneuse se ferme avec Échap sur mobile émulé. Les vérifications existantes FR/EN, sans JavaScript, vidéo, navigation et les trois audits axe restent verts.
+
+Les captures de la surface entière ont été relues à 390 et 1440 px, ainsi que le carnet désormais seul. La composition mobile coupe volontairement les images, sans débordement horizontal de la page. Les effets réutilisent les WebP existants ; `sizes` suit les nouvelles largeurs. Aucun nouveau média ni animation continue.
+
+La photo de chiffres raturés `hc-75` est absente du HTML, de la sélection, du manifeste et du répertoire d’exports. Ses trois WebP restent récupérables dans l’historique Git ; l’original source est intact. Validations statiques : 115 œuvres, 8 pages, 905 références locales, 198 archives utilisées et 580 fichiers/variantes référencés. Syntaxe du test et `git diff --check` passent.
+
+Vérifications sous Chrome local avec émulation mobile ; pas de test sur iPhone physique ou Safari. Modifications locales uniquement sur `codex/art-digital`.
+
 ## 11 septembre 2026 — Hors cadre, branche `codex/art-digital`
 
 La suite `tools/verify-hors-cadre.mjs` termine avec **20/20 groupes de contrôles** dans Chrome local. Elle couvre les 85 archives, les cinq suites de peinture, le zoom, les liens directs, le retour au lien d’origine, les flèches, le curseur au clavier et un glissement tactile envoyé au moteur du navigateur.

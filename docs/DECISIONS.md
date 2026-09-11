@@ -1,5 +1,12 @@
 # Décisions du portfolio
 
+## 11 septembre 2026 — Des souvenirs, pas un album
+
+- **Retour de Camilo** : les photographies d’enfance et de famille sont trop explicitement exposées. Les rendre oniriques, confondues avec les fonds, à moitié hors cadre ; conserver le reste.
+- **Traitement** : remplacement de « Avant l’image. Déjà des traces. » par une surface sans grille ni légendes visibles. Masques et fusions CSS, cadrages agrandis, composition mobile distincte, passage du papier à l’ombre. Pas de média supplémentaire ni d’animation permanente.
+- **Retrait demandé** : `hc-75`, photographie de chiffres raturés fournie par erreur. Suppression de la page, des deux manifestes et des trois exports WebP. Original `IMG_1807.HEIC` conservé hors du site. Le carnet restant prend sa place seul ; les autres sections sont inchangées.
+- **Intégrité** : 84 images retenues, identifiants stables, descriptions et visionneuse conservées. Les effets restent dans le rendu ; les WebP optimisés ne sont pas réencodés.
+
 ## 11 septembre 2026 — Hors cadre
 
 - **Demande** : Camilo fournit `PROJECT CAMILO2`, donne carte blanche sur le récit et la présentation, demande des fonds vidéo en ultra gros plan, déformés, avec une attention particulière aux optimisations et au mobile. Travail uniquement sur la branche.
