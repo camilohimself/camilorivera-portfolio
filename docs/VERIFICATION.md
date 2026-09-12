@@ -1,5 +1,74 @@
 # Vérification de la refonte
 
+## 12 septembre 2026 — Corrections et nettoyage
+
+Les deux suites de navigateur ont été jouées trois fois : sur la branche brute, après les sept corrections, puis sur l'état final. Même résultat aux trois passages, `verify-hors-cadre.mjs` **20/20 groupes**, code de sortie 0, et `verify-reverie.mjs` **12/13**, code de sortie 1. Le seul groupe en échec est l'audit d'accessibilité, qui exige `AXE_PATH` : aucune dépendance n'a été installée dans le dépôt pour cette passe, et cet échec est déjà celui de la branche avant toute modification. Les vingt et un groupes annoncés le 11 septembre comptaient cet audit.
+
+Seize captures pleine page, les huit pages à 390 et à 1440 pixels, animations désactivées, ont été prises avant puis après le nettoyage : **16 sur 16 identiques au pixel près**, hauteurs comprises, de 3 814 à 19 644 pixels de haut. La chaîne de capture a d'abord été vérifiée déterministe, deux prises successives du même code donnant elles aussi 16 sur 16 à zéro pixel d'écart ; sans cela la comparaison ne prouverait rien. Aucune erreur JavaScript dans les trente-deux chargements.
+
+Les sept corrections ont été mesurées une à une dans le navigateur, pas seulement relues. Après un événement `pagehide`, un défilement fait encore varier la dérive de l'encre, de −3 à 3 pixels. Les positions 1, 4 et 7 d'une suite de huit états répondent exactement, l'écart du rail étant lu à 18 pixels en colonne sur un conteneur en flex. Les cinq compteurs d'état portent `aria-live="off"`. Le bouton d'approche reste caché au chargement en mouvement réduit, se cache et annule l'approche en cours quand la préférence devient active, et revient quand elle disparaît. En anglais, le poster du film du geste reçoit sa description et celui du fond d'encre garde son alternative vide.
+
+Le retrait de `css/art-digital.css` des six pages du journal a été précédé d'un relevé des classes : sur les quatre-vingt-neuf classes que cette feuille définit hors du préfixe `.art-digital`, une seule, `.hc-nav-entry`, sert à ces pages. Retirées sans précaution, l'entrée de navigation passait de `flex`, 78 pixels de haut, filet inférieur et titre de 32 pixels en Cormorant Garamond, à `inline`, sans hauteur ni filet, titre de 16 pixels en DM Sans. Les quatre règles ont été déplacées vers `css/reverie.css` avant le retrait des liens.
+
+Poids : les six pages ne demandent plus une feuille de 29 076 octets et perdent 76 à 79 octets de HTML. Les feuilles passent de 31 170 à 28 091 octets pour `style.css`, de 30 111 à 26 184 pour `intensity.css`, de 37 707 à 33 061 pour `journal.css`, de 29 076 à 28 483 pour `art-digital.css` ; `reverie.css` monte de 22 405 à 22 904 octets et `js/app.js` descend de 33 469 à 32 210. `fonts/dm-sans-300.woff2` quitte le dépôt.
+
+Validations statiques sur l'état final :
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — ancres, identifiants, polices, dimensions et références des œuvres.
+OK — 8 pages, 936 références locales, aucune ancre manquante.
+OK — 198 archives utilisées, 580 images et variantes, descriptions FR et EN.
+OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.
+```
+
+Les 942 références locales du 11 septembre deviennent 936 : ce sont les six liens de feuille retirés, un par page. La syntaxe des huit fichiers de `js/`, `js/dims.generated.js` compris, et `git diff --check` passent sans erreur.
+
+Limites : Chrome stable local en mode sans fenêtre, formats mobiles émulés. Aucun iPhone physique, aucun essai sous Safari ou Firefox, aucune mesure sur le site publié. Une comparaison de captures ne voit pas ce qui se joue au survol, au clavier ou au toucher ; ces chemins-là restent couverts par les deux suites. Aucun audit d'accessibilité automatisé dans cette passe. Aucun envoi, aucune fusion, aucune publication.
+
+## 11 septembre 2026 — Le journal, par échos
+
+`tools/verify-reverie.mjs` passe **13/13 groupes** et la suite de non-régression `tools/verify-hors-cadre.mjs` repasse **21/21 groupes** sur le code final.
+
+Les six pages concernées sont vérifiées en FR/EN à 320, 360, 390, 430, 700, 768, 1440 et 1920 px : **96 compositions** sans débordement de page, titre, texte principal ou légende d’association. Douze audits axe, un par page et par langue, ne signalent aucune violation WCAG A/AA. Les associations ouvertes sont incluses dans ces audits. Les captures des compositions clés ont été relues à 390 et 1440 px.
+
+Contrôles fonctionnels : six liens directs du sommaire ; fragment choisi stable ; texte original de Camilo ; manuscrit ouvrable ; ordre des quatre photographies des caves, crédits et hommage ; correspondance du gros plan avec l’image entière ; affiche, dates et noms conservés ; neuf images d’associations ouvertes au toucher avec retour au lien d’origine ; fermeture d’une association au clavier ; 73 éléments d’inventaire, filtres et passage de 16 à 32 éléments ; trois liens visuels entre les pages. Sans JavaScript, les associations natives s’ouvrent, l’inventaire entier est visible et un lien accède directement au WebP.
+
+Un rejet de transition native a été reproduit en ouvrant un WebP sans JavaScript. Le mode sans script n’active plus ces transitions décoratives ; avec script, les promesses des transitions annulées sont traitées. Un test d’annulation explicite et le parcours réel sans script passent. Aucun rejet JavaScript, service externe ou fichier original HEIC/JPEG/TIFF observé dans la suite finale.
+
+Validations statiques : 115 œuvres, 8 pages, 942 références locales, 198 archives utilisées et 580 fichiers/variantes référencés. Syntaxe de `js/motion.js` et du test, puis `git diff --check`, sans erreur. Aucun nouveau fichier image ou vidéo ; la nouvelle feuille de composition est limitée aux six pages. L’accueil et Hors cadre ne reçoivent que le correctif partagé de navigation.
+
+Limites : Chrome local, formats mobiles et toucher émulés ; aucun iPhone physique ni audit Safari/Firefox. Les audits automatisés ne constituent pas une certification d’accessibilité. Travail local sur `codex/art-digital`.
+
+## 11 septembre 2026 — Révision des souvenirs et retrait de la photo erronée
+
+La suite navigateur passe **21/21 groupes** après mise à jour des attentes à 84 archives. Nouveau contrôle : les neuf souvenirs gardent chacun une surface présente dans le cadre à 320, 390, 700, 768 et 1440 px, avec masque et transparence ; les neuf liens s’ouvrent à la touche Entrée et la visionneuse se ferme avec Échap sur mobile émulé. Les vérifications existantes FR/EN, sans JavaScript, vidéo, navigation et les trois audits axe restent verts.
+
+Les captures de la surface entière ont été relues à 390 et 1440 px, ainsi que le carnet désormais seul. La composition mobile coupe volontairement les images, sans débordement horizontal de la page. Les effets réutilisent les WebP existants ; `sizes` suit les nouvelles largeurs. Aucun nouveau média ni animation continue.
+
+La photo de chiffres raturés `hc-75` est absente du HTML, de la sélection, du manifeste et du répertoire d’exports. Ses trois WebP restent récupérables dans l’historique Git ; l’original source est intact. Validations statiques : 115 œuvres, 8 pages, 905 références locales, 198 archives utilisées et 580 fichiers/variantes référencés. Syntaxe du test et `git diff --check` passent.
+
+Vérifications sous Chrome local avec émulation mobile ; pas de test sur iPhone physique ou Safari. Modifications locales uniquement sur `codex/art-digital`.
+
+## 11 septembre 2026 — Hors cadre, branche `codex/art-digital`
+
+La suite `tools/verify-hors-cadre.mjs` termine avec **20/20 groupes de contrôles** dans Chrome local. Elle couvre les 85 archives, les cinq suites de peinture, le zoom, les liens directs, le retour au lien d’origine, les flèches, le curseur au clavier et un glissement tactile envoyé au moteur du navigateur.
+
+Les deux nouvelles pages ont été contrôlées en français et anglais à 320, 360, 390, 430, 768, 1024, 1440 et 1920 px : **32 compositions**, sans débordement de page ni de titre. Les six pages existantes du journal ont aussi été parcourues à 390 et 1440 px avec leur lien vers Hors cadre. La collection existante a été utilisée : filtre des encres, visionneuse, fermeture et passage de 12 à 24 œuvres.
+
+Les deux nouveaux films ont réellement décodé des images dans le navigateur mobile émulé. Silence, choix de la source mobile, pause volontaire, arrêt hors écran et derrière la visionneuse, changement de langue, mouvement réduit et économie de données ont été vérifiés. Une panne réseau simulée affiche le poster et un message ; le bouton recharge ensuite le film avec succès. Une lecture demandée depuis les commandes reste possible lorsque seule une partie du fond est visible.
+
+Trois audits axe WCAG 2 A/AA et 2.1 AA — accueil, nouveau chapitre et visionneuse — ne détectent aucune violation. Les pages et les suites natives restent utilisables sans JavaScript. Aucune erreur JavaScript, aucune requête vers un service extérieur et aucun téléchargement de fichier HEIC ou JPEG d’origine n’ont été observés dans ces parcours.
+
+Les 250 fichiers WebP des nouvelles archives ont été inspectés : dimensions conformes au manifeste, variantes de largeur correcte et espace sRGB. Les quatre MP4 ont une seule piste H.264 à 24 images/s, sans audio, avec index de lecture placé avant les données. Les mesures de taille sont consignées dans `HORS-CADRE.md`.
+
+Les validations statiques passent : 115 œuvres, 8 pages, 907 références locales, 199 archives utilisées, 583 images et variantes référencées. Syntaxe de `app.js`, `films.js`, `motion.js` et `art-digital.js`, puis `git diff --check`, sans erreur. Les nouveaux écrans et sections ont été relus visuellement dans les captures mobile et ordinateur.
+
+Limites : émulation Chrome, sans iPhone physique ni Safari/Firefox. Les tailles de fichiers ne sont pas des mesures de vitesse sur un réseau mobile réel. Les audits automatisés ne constituent pas une certification. Aucun push, aucune fusion, aucune publication.
+
+---
+
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 
 ## Texte brut de Camilo

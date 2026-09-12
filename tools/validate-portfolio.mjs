@@ -42,7 +42,8 @@ for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
   if (url.startsWith('#')) {
     assert.ok(ids.includes(url.slice(1)), 'Ancre introuvable : ' + url);
   } else {
-    assert.ok(existsSync(resolve(root, decodeURI(url.split('?')[0]))), 'Ressource introuvable : ' + url);
+    const target = new URL(url, 'https://local.test/');
+    assert.ok(existsSync(resolve(root, decodeURI(target.pathname.slice(1)))), 'Ressource introuvable : ' + url);
   }
 }
 for (const match of html.matchAll(/data-work="([^"]+)"/g)) {

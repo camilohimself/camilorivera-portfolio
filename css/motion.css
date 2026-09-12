@@ -28,7 +28,7 @@
 
 /* Une pression brève, puis un rebond de papier. Pas d’effet sur un geste de défilement. */
 .touch-held { scale: .958; transition: scale 100ms ease-out; }
-:is(.photo-link,.work-card,.hero-art-link,.cover-photo,.entry-image,.door-card,.hero-scrap).touch-held { scale: .984; }
+:is(.photo-link,.work-card,.entry-image,.door-card).touch-held { scale: .984; }
 .touch-release { animation: touch-return 360ms var(--touch-ease); }
 @keyframes touch-return { 0% { scale: .958; } 55% { scale: 1.016; } 100% { scale: 1; } }
 .button, .filter-btn, .reserve-filter { position: relative; isolation: isolate; }

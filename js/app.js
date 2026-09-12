@@ -37,9 +37,7 @@
     location: 'Bramois, Valais · Switzerland', works: 'The works', about: 'About', contact: 'Contact',
     heroEyebrow: 'Scattered notes of a painter', heroLine1: 'Paint.', heroLine2: 'Keep <em>traces.</em>',
     heroDescription: 'Painting is something that never lies.',
-    explore: 'Open the journal', heroFootnote: 'From a line on paper<br>to a place remembered.',
-    viewWork: 'View the work', oil: 'Oil on canvas', originalWork: 'Original artwork · Camilo Rivera',
-    heroSignature: 'An artist born in Chile, rooted in Valais.', scroll: 'Follow your gaze',
+    heroSignature: 'An artist born in Chile, rooted in Valais.',
     collection: 'The collection', galleryTitle: 'What the gesture<br><em>leaves behind.</em>',
     galleryIntro: 'Texture, line, silence.<br> Each work, another way<br> of seeing.',
     allWorks: 'The works', paintings: 'Paintings', inks: 'Inks', studio: 'The studio',
@@ -66,7 +64,7 @@
     fr: {
       title: 'Camilo Rivera — Peindre et garder des traces',
       technique: {paintings: 'Huile sur toile', encres: 'Encre de Chine', shooting: 'Photographie d’atelier'},
-      loading: 'La collection se prépare…', images: 'images', shown: 'affichées', of: 'sur',
+      loading: 'La collection se prépare…', images: 'images', of: 'sur',
       unknown: 'Cette œuvre ne figure pas dans la collection.', copied: 'Lien copié',
       zoomIn: 'Agrandir', zoomOut: 'Réduire', motionOff: 'Réduire les animations',
       motionOn: 'Activer les animations', systemMotion: 'Animations réduites selon votre réglage système',
@@ -74,16 +72,13 @@
       paintings: 'La matière, le geste, l’abstraction.', encres: 'Le trait, la figure, le vide.',
       shooting: 'Le quotidien de l’atelier, à Bramois.',
       studioTitle: 'À l’atelier', inquiry: 'À propos de', imageAlt: 'de Camilo Rivera',
-      network: 'La collection n’a pas pu être chargée.', sold: 'Collection privée', available: 'Disponible',
-      stage: 'Image agrandie, faites défiler pour explorer',
-      filmPlay: 'Lire le film', filmPause: 'Pause', filmPlayLabel: 'Lire la vidéo sans son',
-      filmPauseLabel: 'Mettre la vidéo en pause',
-      filmError: 'Le film n’a pas pu être chargé. Vous pouvez réessayer.'
+      network: 'La collection n’a pas pu être chargée.', available: 'Disponible',
+      stage: 'Image agrandie, faites défiler pour explorer'
     },
     en: {
       title: 'Camilo Rivera — Paint and keep traces',
       technique: {paintings: 'Oil on canvas', encres: 'India ink', shooting: 'Studio photograph'},
-      loading: 'Preparing the collection…', images: 'images', shown: 'shown', of: 'of',
+      loading: 'Preparing the collection…', images: 'images', of: 'of',
       unknown: 'This work could not be found in the collection.', copied: 'Link copied',
       zoomIn: 'Enlarge', zoomOut: 'Reduce', motionOff: 'Reduce animations',
       motionOn: 'Enable animations', systemMotion: 'Animations reduced by your system preference',
@@ -91,11 +86,8 @@
       paintings: 'Texture, gesture, abstraction.', encres: 'Line, figure, empty space.',
       shooting: 'Everyday moments in the studio, in Bramois.',
       studioTitle: 'In the studio', inquiry: 'About', imageAlt: 'by Camilo Rivera',
-      network: 'The collection could not be loaded.', sold: 'Private collection', available: 'Available',
-      stage: 'Enlarged image, scroll to explore',
-      filmPlay: 'Play the film', filmPause: 'Pause', filmPlayLabel: 'Play the silent video',
-      filmPauseLabel: 'Pause the video',
-      filmError: 'The film could not be loaded. You can try again.'
+      network: 'The collection could not be loaded.', available: 'Available',
+      stage: 'Enlarged image, scroll to explore'
     }
   };
   const attributeTranslations = {
@@ -103,10 +95,8 @@
     '.wordmark[aria-label]': {'aria-label': 'Camilo Rivera, home'},
     '.desktop-nav': {'aria-label': 'Main navigation'},
     '.mobile-dock': {'aria-label': 'Mobile navigation'},
-    '.hero-art-link': {'aria-label': 'View Abstrait 996'},
-    '.hero-art-image img': {alt: 'Abstrait 996, oil painting with white, black, blue and ochre gestures'},
     '.gallery-filters': {'aria-label': 'Filter the collection'},
-    '.film-poster': {alt: 'An ink figure with washes of blue and purple, in the process of being created'},
+    '#geste .film-poster': {alt: 'An ink figure with washes of blue and purple, in the process of being created'},
     '#atelier-film': {'aria-label': 'A figure takes shape in ink'},
     '.about-portrait img': {alt: 'Camilo Rivera working in his studio'},
     '.studio-photo': {'aria-label': 'Explore the studio photographs'},
@@ -248,12 +238,6 @@
       else link.removeAttribute('aria-current');
     });
     if (reducedMotion()) return;
-    const hero = $('.hero');
-    if (hero.getBoundingClientRect().bottom > 0) {
-      const mobile = window.innerWidth <= 700;
-      $('.hero-art').style.setProperty('--hero-shift', Math.max(mobile ? -22 : -55, -y * .09) + 'px');
-      $('.hero-art').style.setProperty('--hero-rotate', Math.max(-.8, 1.5 - y * .003) + 'deg');
-    }
     const matter = $('.matter');
     const rect = matter.getBoundingClientRect();
     if (rect.top < viewport && rect.bottom > 0) {

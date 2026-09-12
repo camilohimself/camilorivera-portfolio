@@ -88,24 +88,6 @@ em{font-weight:300}
 .text-link{display:inline-flex;gap:22px;align-items:center;min-height:48px;font-size:12px;font-weight:500}
 .text-link>svg{width:19px;height:19px;transition:transform .4s var(--ease)}
 .text-link:hover>svg{transform:translate(3px,-2px)}
-.round-arrow{display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--ink);border-radius:50%;transition:color .3s,background .3s,transform .4s var(--ease)}
-.text-link:hover .round-arrow{background:var(--ink);color:var(--paper);transform:translateX(5px)}
-.hero-footnote{margin-top:62px;display:flex;gap:28px;align-items:start;color:var(--muted);font-size:var(--t-micro);line-height:1.55}
-.hero-footnote .tiny-index{color:var(--accent);padding-top:2px}
-.hero-art{position:relative;margin-right:24px;transform:translate3d(0,var(--hero-shift,0px),0) rotate(var(--hero-rotate,1.5deg));transform-origin:60% 60%}
-.hero-art-link{display:block;position:relative;padding:16px;background:var(--canvas);box-shadow:0 25px 45px -28px rgb(22 22 22 / .35)}
-.hero-art-image{overflow:hidden;aspect-ratio:1200/1231}
-.hero-art img{width:100%;height:100%;object-fit:contain;transition:transform 1.2s var(--ease)}
-.hero-art-link:hover img{transform:scale(1.025)}
-.art-open{position:absolute;bottom:32px;right:32px;background:var(--paper);display:flex;gap:25px;align-items:center;padding:13px 16px;font-size:var(--t-micro);box-shadow:0 2px 12px rgb(22 22 22 / .15);transition:background .3s,color .3s}
-.art-open svg{width:18px;height:18px}
-.hero-art-link:hover .art-open{background:var(--ink);color:var(--paper)}
-.hero-art figcaption{display:flex;justify-content:space-between;margin-top:17px;font-size:var(--t-micro);gap:12px}
-.hero-art figcaption>span:last-child{color:var(--muted)}
-.hero-art-aside{position:absolute;top:0;right:-28px;writing-mode:vertical-rl;font-size:var(--t-micro);letter-spacing:.12em;color:var(--muted)}
-.hero-bottom{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:var(--t-micro);color:var(--muted);margin-top:52px;padding-block:21px;border-top:1px solid var(--line)}
-.hero-bottom>a{display:flex;gap:22px;align-items:center;min-height:44px}
-.hero-bottom svg{height:16px;width:16px;transform:rotate(90deg)}
 .gallery{padding-top:110px;padding-bottom:108px;background:var(--paper)}
 .section-heading .eyebrow{margin-bottom:36px}
 .heading-row{display:flex;align-items:end;justify-content:space-between;gap:30px}
@@ -210,13 +192,9 @@ html.motion-ready:not(.motion-reduced) .work-card.reveal .work-image{clip-path:i
 html.motion-ready:not(.motion-reduced) .work-card.reveal.is-visible .work-image{clip-path:inset(0)}
 html.motion-ready:not(.motion-reduced) .hero-title .title-line>span{animation:title-in 1.2s var(--ease) both}
 html.motion-ready:not(.motion-reduced) .hero-title .title-line:nth-child(2)>span{animation-delay:.13s}
-html.motion-ready:not(.motion-reduced) .hero-enter{animation:fade-in 1s var(--ease) both;animation-delay:.15s}
 html.motion-ready:not(.motion-reduced) .hero-description{animation-delay:.25s}
 html.motion-ready:not(.motion-reduced) .hero .text-link{animation-delay:.35s}
-html.motion-ready:not(.motion-reduced) .hero-art-image{animation:art-in 1.35s var(--ease) both}
 @keyframes title-in{from{transform:translateY(115%)}to{transform:translateY(0)}}
-@keyframes fade-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes art-in{from{clip-path:inset(100% 0 0)}to{clip-path:inset(0)}}
 
 /* Native modal dialog keeps the background inert and traps keyboard focus. */
 .viewer{position:fixed;inset:0;border:0;padding:0;margin:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;color:var(--paper);background:var(--ink);overscroll-behavior:contain;--viewer-pad:clamp(20px,4vw,60px)}
@@ -259,7 +237,6 @@ html.motion-ready:not(.motion-reduced) .hero-art-image{animation:art-in 1.35s va
 .share-fallback-close{display:inline-flex;font-size:24px}
 html.motion-reduced{scroll-behavior:auto}
 html.motion-reduced *,html.motion-reduced *::before,html.motion-reduced *::after{animation:none;transition:none}
-html.motion-reduced .hero-art{transform:none}
 html.motion-reduced .matter{height:100svh}
 html.motion-reduced .matter-stage{position:relative}
 html.motion-reduced .matter-image{clip-path:none;transform:none}
@@ -275,9 +252,6 @@ html.motion-reduced .matter h2>span,html.motion-reduced .matter h2>em{transform:
   .hero{column-gap:4%;padding-top:40px}
   .hero-title{font-size:9.3vw}
   .hero .eyebrow{margin-bottom:28px}
-  .hero-footnote{margin-top:35px}
-  .hero-art{margin-right:16px}
-  .hero-art-aside{right:-22px}
   .gallery-tip{display:none}
   .gallery-grid{gap:36px 20px}
   .about-grid{gap:8%}
@@ -303,16 +277,6 @@ html.motion-reduced .matter h2>span,html.motion-reduced .matter h2>em{transform:
   .hero-title{font-size:clamp(73px,13.8vw,99px);line-height:.86;letter-spacing:-.06em}
   .hero-description{font-size:14px;line-height:1.7;margin:18px 0}
   .hero .text-link{font-size:12px;gap:18px}
-  .round-arrow{width:40px;height:40px}
-  .hero-footnote{display:none}
-  .hero-art{margin:37px 4px 0 0;max-width:540px;align-self:center;width:calc(100% - 10px)}
-  .hero-art-link{padding:10px}
-  .art-open{bottom:24px;right:24px;padding:10px 12px;gap:20px;font-size:var(--t-micro)}
-  .hero-art figcaption{font-size:var(--t-micro);margin-top:12px}
-  .hero-art-aside{right:-20px;font-size:var(--t-micro)}
-  .hero-bottom{margin-top:38px;font-size:var(--t-micro);padding-block:16px;gap:20px}
-  .hero-bottom>span{max-width:175px}
-  .hero-bottom>a{gap:10px;white-space:nowrap}
   .gallery{padding-top:64px;padding-bottom:64px}
   h2{font-size:clamp(49px,9vw,68px)}
   .section-heading .eyebrow{margin-bottom:25px}
@@ -423,7 +387,6 @@ html.motion-reduced .matter h2>span,html.motion-reduced .matter h2>em{transform:
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none;transition:none}
-  .hero-art{transform:none}
   .matter{height:100svh}
   .matter-stage{position:relative}
   .matter-image{clip-path:none;transform:none}

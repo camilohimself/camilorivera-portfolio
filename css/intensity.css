@@ -20,7 +20,6 @@
 .intense .site-header{background:var(--paper);backdrop-filter:none}
 .intense .wordmark>span{font-size:1.35em;color:var(--oxide)}
 .intense .scroll-progress{height:3px;background:var(--oxide)}
-.intense .paper-edge{clip-path:var(--tear)}
 .intense .photo-link{isolation:isolate}
 .intense .photo-enlarge{opacity:1;transform:none;box-shadow:0 2px 8px rgb(0 0 0 / .12)}
 
@@ -39,22 +38,6 @@
 .intense.home-journal .hero .eyebrow{color:var(--ink);letter-spacing:.06em}
 .intense.home-journal .hero-description{color:var(--ink);max-width:345px;background:rgb(223 190 145 / .92);padding:10px 14px 11px 0;clip-path:var(--tear)}
 .intense.home-journal .hero-copy>.text-link{color:var(--chalk);background:var(--ink);padding:5px 10px 5px 19px;transform:rotate(-1.5deg)}
-.intense.home-journal .hero-copy .round-arrow{border-color:var(--chalk);border-radius:0}
-.intense.home-journal .hero-footnote{color:var(--ink);margin-top:33px;background:var(--kraft-light);display:inline-flex;padding:10px 16px 10px 10px;clip-path:var(--tear);transform:rotate(2deg)}
-.intense.home-journal .hero-footnote .tiny-index{color:var(--ink)}
-.intense.home-journal .hero-art{margin:20px 10px 55px 24px;z-index:2}
-.intense.home-journal .hero-art-link{background:var(--ink);padding:9px 9px 15px;box-shadow:12px 28px 28px -10px rgb(0 0 0 / .45);outline:1px solid rgb(255 248 233 / .4)}
-.intense.home-journal .hero-art-link::before{left:8%;width:105px;height:32px;background:var(--kraft-light);transform:rotate(-17deg);opacity:.88}
-.intense.home-journal .hero-art figcaption{background:var(--ink);color:var(--chalk);margin:12px 0 0 auto;padding:7px 13px;width:max-content;max-width:90%;transform:rotate(-3deg);clip-path:var(--tear)}
-.intense.home-journal .hero-art figcaption>span:last-child{color:var(--dark-muted)}
-.intense.home-journal .hero-art-aside{color:var(--chalk);background:var(--ink);right:-17px;padding:8px 3px}
-.intense .hero-stamp{width:29%;right:-1%;top:-67px;transform:rotate(11deg);padding:0;z-index:4;border:5px solid var(--kraft-light)}
-.intense .hero-stamp img{aspect-ratio:.9;object-fit:cover;object-position:60% 27%}
-.intense .hero-scrap{width:31%;max-width:185px;left:-62px;bottom:-61px;transform:rotate(-15deg);padding:9px 7px 13px;background:var(--sheet);z-index:4}
-.intense .hero-scrap img{aspect-ratio:.72;object-fit:contain}
-.intense .hero-scrap>span{font-size:22px}
-.intense.home-journal .hero-bottom{position:relative;background:var(--ink);color:var(--chalk);border:0;margin:0 calc(-1 * var(--gutter));padding:19px var(--gutter);z-index:4}
-.intense .art-open{background:var(--chalk);color:var(--ink)}
 
 /* Breaks in scale, paper strips and a fifth entrance. */
 .intense .journal-door{background:var(--night);padding-top:110px;isolation:isolate}
@@ -121,14 +104,6 @@
 .intense.chapter-cover .cover-copy h1 em{display:inline-block;background:var(--oxide);color:var(--chalk);transform:rotate(-4deg);padding:0 .12em .14em .03em;margin-top:.03em;clip-path:var(--tear)}
 .intense.chapter-cover .cover-copy .journal-lead{color:var(--chalk);max-width:350px}
 .intense.chapter-cover .cover-copy .text-link{border-color:var(--dark-line)}
-.intense.chapter-cover .cover-collage{z-index:2}
-.intense.chapter-cover .cover-photo{padding:0}
-.intense.chapter-cover .cover-atelier{transform:rotate(-12deg);width:80%;top:45px}
-.intense.chapter-cover .cover-encre{transform:rotate(14deg);right:-2%;top:-25px;clip-path:var(--tear)}
-.intense.chapter-cover .cover-paint{transform:rotate(-9deg);left:0;bottom:-5px}
-.intense.chapter-cover .cover-poster{transform:rotate(12deg);right:0;bottom:-35px;background:var(--sheet);padding:5px}
-.intense.chapter-cover .reading-note{position:relative;z-index:2}
-.intense.chapter-cover .reading-note>p{background:var(--kraft);color:var(--ink);padding:13px 28px;clip-path:var(--tear);transform:rotate(-7deg)}
 .intense.chapter-cover .chapter-index{padding-top:0}
 .intense.chapter-cover .index-entry{border-color:var(--dark-line);padding-block:80px}
 .intense.chapter-cover .entry-copy .journal-prose,.intense.chapter-cover .journal-related .eyebrow{color:var(--dark-muted)}
@@ -262,8 +237,6 @@
 
 @media(max-width:1100px){
   .intense.home-journal .hero-title{font-size:9.4vw}
-  .intense .hero-stamp{top:-45px}
-  .intense .hero-scrap{left:-30px}
   .worlds-photos{min-height:450px}
   .collision-images{min-height:520px}
   .pigment-stack{min-height:480px}
@@ -283,16 +256,6 @@
   .intense.home-journal .hero .eyebrow{margin-bottom:30px}
   .intense.home-journal .hero-description{font-size:12px;max-width:290px;margin-top:19px;margin-bottom:15px;padding-block:7px}
   .intense.home-journal .hero-copy>.text-link{font-size:11px;min-height:48px}
-  .intense.home-journal .hero-footnote{margin-top:19px;font-size:var(--t-micro);padding:8px}
-  .intense.home-journal .hero-art{width:calc(100% - 28px);margin:74px 6px 80px 17px}
-  .intense.home-journal .hero-art-link{padding:7px 7px 12px}
-  .intense.home-journal .hero-art-link::before{width:65px;height:24px;top:-10px}
-  .intense .hero-stamp{width:31%;top:-51px;right:-3%;border-width:4px}
-  .intense .hero-scrap{width:29%;left:-27px;bottom:-53px;padding:5px 5px 11px}
-  .intense .hero-scrap>span{font-size:15px}
-  .intense.home-journal .hero-art figcaption{font-size:var(--t-micro);gap:10px;padding:6px 10px;max-width:76%}
-  .intense.home-journal .hero-art-aside{font-size:var(--t-micro);right:-13px}
-  .intense.home-journal .hero-bottom{margin-top:0;padding-block:14px;font-size:var(--t-micro);gap:25px}
   .intense .journal-door{padding-top:62px}
   .intense .door-heading h2{font-size:clamp(48px,11.7vw,78px)}
   .intense .door-board{gap:35px 27px;padding-bottom:42px}
@@ -322,13 +285,6 @@
   .intense.chapter-cover .journal-cover-opening::before{top:auto;bottom:-3%;right:-19%;height:52%;width:96%;transform:rotate(-9deg)}
   .intense.chapter-cover .cover-copy h1{font-size:clamp(68px,17.3vw,120px);line-height:.95}
   .intense.chapter-cover .cover-copy .journal-lead{font-size:13px;max-width:310px}
-  .intense.chapter-cover .cover-collage{margin-top:40px;height:100vw;max-height:520px}
-  .intense.chapter-cover .cover-atelier{top:23px;left:0;width:82%}
-  .intense.chapter-cover .cover-encre{right:-3%;top:-15px}
-  .intense.chapter-cover .cover-paint{left:0;bottom:0}
-  .intense.chapter-cover .cover-poster{right:-1%;bottom:-24px}
-  .intense.chapter-cover .reading-note{padding-top:15px;padding-bottom:25px}
-  .intense.chapter-cover .reading-note>p{font-size:26px;margin-right:0}
   .intense.chapter-cover .index-entry{padding-block:52px}
   .intense.chapter-cover .index-reserves .entry-image{height:260px;width:62%;margin-top:35px}
   .intense .notebook-opening h1 em{text-decoration-thickness:3px;text-underline-offset:5px}

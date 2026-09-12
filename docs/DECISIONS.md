@@ -1,5 +1,42 @@
 # Décisions du portfolio
 
+## 12 septembre 2026 — Audit et nettoyage avant la fusion de Hors cadre
+
+- **Contexte** : la branche construite le 11 septembre est relue ligne à ligne avant fusion. L'audit distingue ce qu'elle a ajouté de ce qu'elle a laissé derrière elle : sept défauts dans le nouveau code, et du code hérité devenu sans objet depuis que l'accueil et la couverture du sommaire ont changé de forme.
+- **Corrections** : le compteur d'image animée est remis à zéro au départ de la page, sans quoi un retour depuis le cache de navigation laisse l'encre immobile. Les suites de peinture reçoivent une garde sur leur rail et leurs commandes. L'écart entre deux états est lu sur la feuille de style au lieu d'y être recopié. Les cinq compteurs d'état passent en `aria-live="off"`, leur texte étant réécrit à chaque image du défilement. Le bouton d'approche de l'encre n'est plus dévoilé quand le mouvement réduit le masque déjà. L'alternative anglaise du film du geste ne vise plus le poster décoratif du fond d'encre.
+- **Code mort** : 141 règles sans élément à peindre sont retirées de quatre feuilles, ainsi que deux animations, une parallaxe, deux traductions d'attributs, six clés anglaises et sept libellés doublés par `js/films.js`. Chaque classe a été cherchée dans tout le HTML et tout le JavaScript avant suppression ; une règle en liste n'a perdu que ses membres morts.
+- **Feuille limitée** : `css/art-digital.css` n'est plus chargée que par l'accueil et par Hors cadre. Une exception a été mesurée avant le retrait : `.hc-nav-entry`, le lien vers Hors cadre présent sur cinq chapitres, y est défini sans préfixe. Ces quatre règles rejoignent `css/reverie.css`, feuille de ces mêmes pages, plutôt que de disparaître.
+- **Police orpheline** : `fonts/dm-sans-300.woff2` n'était déclarée par aucun `@font-face` ni préchargée nulle part.
+- **`.gitignore`** : quatre lignes pour les fichiers de travail locaux, absentes jusqu'ici du dépôt.
+- **Pourquoi** : une branche qui double la surface du site se fusionne d'autant mieux qu'elle ne transporte pas les règles de la version qu'elle remplace. Le nettoyage n'a de valeur que s'il ne change rien à l'écran : seize captures pleine page des huit pages, à 390 et 1440 pixels, sont identiques au pixel près avant et après.
+- **Écarté** : déplacer les manifestes JSON hors du répertoire publié, Camilo les y laisse ; réencoder le fond vidéo, arbitrage produit qui ne relève pas d'un audit.
+- **Branche** : `claude/art-digital-audit`, depuis `684d99f`.
+- **Tranché par** : Camilo.
+
+## 11 septembre 2026 — Étendre le rêve au journal
+
+- **Autorisation** : Camilo valide les huit propositions et demande leur réalisation directe sur la branche.
+- **Choix** : une forme propre à chaque page : distance dans les caves, marges dans les carnets, changement d’échelle dans la matière, distinction entre documents publics et présences personnelles dans les traces. Trois associations courtes dans la réserve et trois passages visuels entre les chapitres.
+- **Voix** : citation réelle dans l’ouverture du sommaire, maintien des réflexions originales, réduction de plusieurs grands titres éditoriaux et du volume des invitations de navigation.
+- **Production** : nouveau CSS limité aux six pages concernées, médias optimisés existants, HTML natif et bilingue. Aucun média supplémentaire ni animation permanente. L’accueil et Hors cadre gardent leur composition.
+- **Référence** : détails, identifiants et principes de vérification dans `REVERIE.md`.
+
+## 11 septembre 2026 — Des souvenirs, pas un album
+
+- **Retour de Camilo** : les photographies d’enfance et de famille sont trop explicitement exposées. Les rendre oniriques, confondues avec les fonds, à moitié hors cadre ; conserver le reste.
+- **Traitement** : remplacement de « Avant l’image. Déjà des traces. » par une surface sans grille ni légendes visibles. Masques et fusions CSS, cadrages agrandis, composition mobile distincte, passage du papier à l’ombre. Pas de média supplémentaire ni d’animation permanente.
+- **Retrait demandé** : `hc-75`, photographie de chiffres raturés fournie par erreur. Suppression de la page, des deux manifestes et des trois exports WebP. Original `IMG_1807.HEIC` conservé hors du site. Le carnet restant prend sa place seul ; les autres sections sont inchangées.
+- **Intégrité** : 84 images retenues, identifiants stables, descriptions et visionneuse conservées. Les effets restent dans le rendu ; les WebP optimisés ne sont pas réencodés.
+
+## 11 septembre 2026 — Hors cadre
+
+- **Demande** : Camilo fournit `PROJECT CAMILO2`, donne carte blanche sur le récit et la présentation, demande des fonds vidéo en ultra gros plan, déformés, avec une attention particulière aux optimisations et au mobile. Travail uniquement sur la branche.
+- **Direction** : ouverture dans l’encre bleue animée ; photographies personnelles au premier plan ; nouveau chapitre « Hors cadre » relié aux six pages du journal. La seconde encre devient un interlude en négatif. La phrase d’accueil de Camilo reste inchangée.
+- **Archives** : les 85 images trouvent une place dans les visages, l’atelier, l’écriture, les lieux, cinq suites de peinture et les feuilles libres. Les rapprochements sont éditoriaux. Aucune date, relation familiale ou nouvelle attribution à Camilo n’est inventée ; le compte visible sur la capture de référence reste cité.
+- **Mobile** : défilement natif, suites horizontales tactiles avec commandes au clavier, images agrandissables en entier, légendes bilingues. Le détail de chaque image reste accessible par URL.
+- **Production** : 250 WebP issus directement des originaux, deux recadrages par vidéo, déformation précalculée, quatre MP4 silencieux et quatre posters. Le lecteur commun conserve les pauses volontaires et gère la reprise après erreur. Pas de nouvelle dépendance de production.
+- **Branche** : `codex/art-digital`, depuis `8f6b0d3`. Aucune publication. Cartographie, fichiers et tailles détaillés dans `HORS-CADRE.md`.
+
 ## 10 septembre 2026 — Conserver le texte brut
 
 - **Contexte** : Camilo précise qu’il veut conserver son texte brut, pourvu que le français et la prose soient corrects. Cette instruction remplace le choix de resserrement décrit dans l’entrée précédente.
@@ -117,6 +154,7 @@ Cette première adaptation est remplacée par la consigne de fidélité au texte
 - **Pourquoi ces garde-fous** : les dimensions sont portées par le HTML en `width`, `height` et par 394 descripteurs `srcset` en `Nw` ; les modifier fausserait le calcul de ratio et les descripteurs. Le plancher q74 évite les artefacts de bloc sur les aplats, qu'une moyenne de PSNR peut masquer. Les neuf fichiers dont le cadrage diffère de leur original ont été laissés intacts plutôt que redressés au jugé.
 - **Écarté** : descendre sous q74 malgré un PSNR encore favorable ; réencoder les cinq films pour 3 à 5 % ; toucher au journal, dont les sources sont des exports en 1 080 pixels déjà compressés, où le réencodage ne gagnerait qu'en dégradant.
 - **Non traité, laissé à l'arbitrage de Camilo** : `videos/hero-drone-optimized.mp4`, `videos/hero-drone-mobile.mp4` et les quatre `images/hero/hero-matiere-*.webp`, soit 13,3 Mo hérités de `main` et référencés par aucun code. Supprimer n'est pas optimiser.
+  - *Note du 12 septembre 2026* : les six fichiers ont été retirés par le commit `885f425`, « chore(medias) : retirer six fichiers que plus aucune page n'appelle », le 10 septembre 2026. Le point est clos.
 - **Intégrité** : aucun fichier de code, de style ou de contenu n'a été touché. Les 40 fichiers non médias sont identiques bit à bit à `version-astra` et la liste des fichiers est inchangée. Transitions, animations, effets de défilement et visionneuses restent ceux de la branche.
 - **Contrôles** : `validate-portfolio.mjs` et `validate-journal.mjs` passent, six sorties conformes. Zéro écart de dimension sur les 377 fichiers, zéro fichier illisible. Les sept pages répondent, aucune erreur ni avertissement en console, aucune image cassée, et le film réencodé se lit dans le navigateur.
 - **Branche** : `claude/optimisation-medias`, depuis `version-astra`.
