@@ -204,3 +204,70 @@
   .intense .collision-images figcaption{font-size:var(--t-micro)}
   .intense .memory-spread{grid-template-columns:1.2fr .8fr;gap:0;padding-inline:0}
 }
+
+/* Quinze feuilles d’un même matin (carnets, 13 septembre 2026).
+   Les traitements — sur-zoom, saturation, retournement, négatif, reprise —
+   restent dans le rendu : chaque lien ouvre la feuille entière, non modifiée. */
+.sheet-storm{
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 0;
+  padding:30px 0 90px;align-items:start;position:relative;isolation:isolate;
+}
+.sheet-storm>div{min-width:0;position:relative;z-index:1}
+.sheet-storm>div:focus-within{z-index:25}
+.sheet-storm .photo-link{
+  display:block;overflow:hidden;background:var(--sheet);padding:0;
+  box-shadow:10px 22px 0 -13px var(--oxide),0 25px 45px -15px rgb(0 0 0 / .6);
+}
+.sheet-storm .photo-link img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}
+.sheet-storm figcaption{
+  background:var(--sheet);color:var(--ink);padding:9px 13px;margin:10px 8px 0;position:relative;z-index:4;
+}
+.sheet-storm .archive-photo{transform:rotate(var(--tilt,-5deg))}
+/* Traitements */
+.sheet-storm .s-sat img{filter:saturate(2.3) contrast(1.12)}
+.sheet-storm .s-neg img{filter:invert(1) contrast(1.25) saturate(1.4)}
+.sheet-storm .s-neg .photo-link{background:var(--ink);box-shadow:0 0 0 1px var(--dark-muted),0 25px 45px -15px rgb(0 0 0 / .8)}
+.sheet-storm .s-flip .photo-link img{transform:rotate(180deg)}
+.sheet-storm .s-mirror .photo-link img{transform:scaleX(-1)}
+.sheet-storm .s-zoom .photo-link{aspect-ratio:var(--box,1)}
+.sheet-storm .s-zoom .photo-link img{width:100%;height:100%;object-fit:cover;transform:scale(var(--zoom,2.4));transform-origin:var(--focus,50% 50%)}
+.sheet-storm .s-zoom.s-mirror .photo-link img{transform:scale(var(--zoom,2.4)) scaleX(-1)}
+@media(prefers-reduced-motion:no-preference){
+  html:not(.motion-reduced) .sheet-storm .s-zoom .photo-link img{transition:transform 1.4s var(--ease)}
+  html:not(.motion-reduced) .sheet-storm .s-zoom .photo-link:hover img,
+  html:not(.motion-reduced) .sheet-storm .s-zoom .photo-link:focus-visible img{transform:scale(calc(var(--zoom,2.4) * 1.12))}
+}
+/* Placement des vingt pièces */
+.sheet-storm .p1{grid-column:1/9;--tilt:-6deg}
+.sheet-storm .p2{grid-column:8/13;margin-top:-72%;z-index:2;--tilt:9deg}
+.sheet-storm .p3{grid-column:2/6;margin-top:-60%;z-index:3;--tilt:-3deg}
+.sheet-storm .p4{grid-column:6/12;margin-top:-70%;--tilt:4deg}
+.sheet-storm .p5{grid-column:1/10;margin-top:-25%;--tilt:-8deg}
+.sheet-storm .p6{grid-column:7/13;margin-top:-60%;z-index:2;--tilt:12deg}
+.sheet-storm .p7{grid-column:1/5;margin-top:-90%;z-index:3;--tilt:-14deg}
+.sheet-storm .p8{grid-column:4/12;margin-top:-20%;--tilt:3deg}
+.sheet-storm .p9{grid-column:9/13;margin-top:-80%;z-index:3;--tilt:-7deg}
+.sheet-storm .p10{grid-column:1/8;margin-top:-10%;--tilt:5deg}
+.sheet-storm .p11{grid-column:6/13;margin-top:-58%;z-index:2;--tilt:-11deg}
+.sheet-storm .p12{grid-column:1/6;margin-top:2%;--tilt:7deg}
+.sheet-storm .p13{grid-column:5/10;margin-top:-75%;z-index:3;--tilt:-5deg}
+.sheet-storm .p14{grid-column:3/13;margin-top:-5%;--tilt:2deg}
+.sheet-storm .p15{grid-column:1/6;margin-top:-60%;z-index:3;--tilt:-9deg}
+.sheet-storm .p16{grid-column:6/13;margin-top:-60%;--tilt:6deg}
+.sheet-storm .p17{grid-column:1/9;margin-top:0;--tilt:-4deg}
+.sheet-storm .p18{grid-column:8/13;margin-top:-72%;z-index:2;--tilt:13deg}
+.sheet-storm .p19{grid-column:2/11;margin-top:-10%;--tilt:-2deg}
+.sheet-storm .p20{grid-column:8/13;margin-top:-68%;z-index:3;--tilt:8deg}
+@media(max-width:1100px){
+  .sheet-storm{padding:20px 2% 45px;gap:36px 0}
+  .sheet-storm figcaption{font-size:var(--t-micro);padding:7px 8px;margin-inline:0;gap:6px}
+}
+@media(max-width:700px){
+  .sheet-storm{grid-template-columns:repeat(6,minmax(0,1fr));gap:26px 0}
+  .sheet-storm>div{margin-top:0}
+  .sheet-storm>div:nth-child(odd){grid-column:1/6}
+  .sheet-storm>div:nth-child(even){grid-column:2/7;margin-top:-18%}
+  .sheet-storm .p3,.sheet-storm .p9,.sheet-storm .p15,.sheet-storm .p20{grid-column:2/6;margin-top:-10%}
+  .sheet-storm .p11{grid-column:1/7;margin-top:-6%}
+  .sheet-storm .p14,.sheet-storm .p19{grid-column:1/7}
+}

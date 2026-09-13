@@ -1,5 +1,9 @@
 # Vérification de la refonte
 
+## 13 septembre 2026 — Quinze feuilles d’un même matin
+
+Quinze HEIC convertis en WebP (1800 px, variantes 480 et 900) : 45 fichiers, 6 833 570 octets. `node tools/validate-journal.mjs` : 8 pages, 982 références locales, 213 archives utilisées, 625 images et variantes, descriptions FR et EN. `node --check js/journal.js` et `git diff --check` sans erreur. Contrôle Playwright en local à 1440 px : la section `#feuilles` compte vingt liens `data-photo`, la page trente identifiants uniques, la visionneuse annonce « 13 / 30 » sur le fusain en négatif, aucune erreur console, aucun débordement horizontal. Rendu vérifié à 390 px de large.
+
 ## 11 septembre 2026 — Le journal, par échos
 
 `tools/verify-reverie.mjs` passe **13/13 groupes** et la suite de non-régression `tools/verify-hors-cadre.mjs` repasse **21/21 groupes** sur le code final.
