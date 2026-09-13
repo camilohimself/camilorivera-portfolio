@@ -1,5 +1,9 @@
 # Vérification de la refonte
 
+## 13 septembre 2026 — Quinze feuilles d’un même matin
+
+Quinze HEIC convertis en WebP (1800 px, variantes 480 et 900) : 45 fichiers, 6 833 570 octets. `node tools/validate-journal.mjs`, après report du commit sur `main` : 8 pages, 976 références locales, 213 archives utilisées, 625 images et variantes, descriptions FR et EN. `node --check js/journal.js` et `git diff --check` sans erreur. Contrôle Playwright en local à 1440 px : la section `#feuilles` compte vingt liens `data-photo`, la page trente identifiants uniques, la visionneuse annonce « 13 / 30 » sur le fusain en négatif, aucune erreur console, aucun débordement horizontal. Rendu vérifié à 390 px de large.
+
 ## 12 septembre 2026 — Corrections et nettoyage
 
 Les deux suites de navigateur ont été jouées trois fois : sur la branche brute, après les sept corrections, puis sur l'état final. Même résultat aux trois passages, `verify-hors-cadre.mjs` **20/20 groupes**, code de sortie 0, et `verify-reverie.mjs` **12/13**, code de sortie 1. Le seul groupe en échec est l'audit d'accessibilité, qui exige `AXE_PATH` : aucune dépendance n'a été installée dans le dépôt pour cette passe, et cet échec est déjà celui de la branche avant toute modification. Les vingt et un groupes annoncés le 11 septembre comptaient cet audit.

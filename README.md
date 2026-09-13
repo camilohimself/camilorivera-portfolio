@@ -2,7 +2,7 @@
 
 Site personnel de Camilo Rivera, artiste peintre à Bramois, Valais.
 
-Le site s’ouvre dans une encre bleue en mouvement, accompagnée de photographies personnelles. Le nouveau chapitre **Hors cadre** rapproche 84 archives : souvenirs, ateliers, écriture, lieux et cinq suites d’états de peinture à parcourir au doigt. Les photographies intimes se fondent dans une surface allant du papier à l’ombre : fragments agrandis, recadrés et partiellement hors écran. Une seconde encre animée devient un paysage en négatif. Les huit pages restent bilingues. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier ; le journal réunit maintenant 198 archives, dont les 73 fragments de la réserve.
+Le site s’ouvre dans une encre bleue en mouvement, accompagnée de photographies personnelles. Le nouveau chapitre **Hors cadre** rapproche 84 archives : souvenirs, ateliers, écriture, lieux et cinq suites d’états de peinture à parcourir au doigt. Les photographies intimes se fondent dans une surface allant du papier à l’ombre : fragments agrandis, recadrés et partiellement hors écran. Une seconde encre animée devient un paysage en négatif. Les huit pages restent bilingues. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier ; le journal réunit maintenant 213 archives, dont les 73 fragments de la réserve et quinze feuilles de carnet photographiées le 13 septembre 2026.
 
 Les deux nouveaux fonds vidéo sont recadrés et déformés avant encodage, en versions portrait et paysage, silencieuses. L’accueil affiche d’abord son image fixe, puis autorise la lecture 900 ms après le chargement de la page. La lecture automatique respecte le mouvement réduit et l’économie de données. Les lecteurs s’arrêtent hors écran, en arrière-plan et derrière la visionneuse ; les choix explicites de pause persistent pendant la visite.
 
@@ -33,7 +33,7 @@ Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charge
 - `css/style.css` : couleurs, typographie locale, compositions et comportements adaptatifs.
 - `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences et effets au défilement.
 - `journal/index.html` : fragment éditorial choisi, citation de Camilo et sommaire des six chapitres.
-- `journal/carnets/index.html` : douze archives de carnets, trois nouvelles figures et deux films du geste.
+- `journal/carnets/index.html` : douze archives de carnets, quinze feuilles d’un même matin (13 septembre 2026) présentées en vingt pièces, dont cinq reprises agrandies, saturées, retournées ou en négatif par CSS uniquement, trois figures et deux films du geste.
 - `journal/matieres/index.html` : vingt archives de peinture et trois photographies de pigments et d’outils.
 - `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.
 - `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017, et trois nouveaux fragments d’exposition.

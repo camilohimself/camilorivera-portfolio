@@ -3163,5 +3163,350 @@
       "en": "Portrait in the shadow of foliage"
     },
     "credit": ""
+  },
+  {
+    "id": "mains-au-crayon",
+    "group": "carnets",
+    "source": "IMG_8579.HEIC",
+    "file": "images/journal/mains-au-crayon.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/mains-au-crayon-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/mains-au-crayon-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Deux mains esquissées au crayon, doigts repliés",
+      "en": "Two hands sketched in pencil, fingers curled"
+    },
+    "credit": null
+  },
+  {
+    "id": "lavis-brun",
+    "group": "carnets",
+    "source": "IMG_8580.HEIC",
+    "file": "images/journal/lavis-brun.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/lavis-brun-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/lavis-brun-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Taches d’encre noire et de lavis brun sur papier, traits fins",
+      "en": "Black ink stains and brown wash on paper, fine lines"
+    },
+    "credit": null
+  },
+  {
+    "id": "figure-couchee",
+    "group": "carnets",
+    "source": "IMG_8581.HEIC",
+    "file": "images/journal/figure-couchee.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/figure-couchee-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/figure-couchee-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une figure allongée au trait, lavis bleu et ocre pâle",
+      "en": "A reclining figure in line, pale blue and ochre wash"
+    },
+    "credit": null
+  },
+  {
+    "id": "boucles-bleues",
+    "group": "carnets",
+    "source": "IMG_8582.HEIC",
+    "file": "images/journal/boucles-bleues.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/boucles-bleues-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/boucles-bleues-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Boucles au stylo bleu formant un visage",
+      "en": "Blue ballpoint loops forming a face"
+    },
+    "credit": null
+  },
+  {
+    "id": "main-au-lavis",
+    "group": "carnets",
+    "source": "IMG_8583.HEIC",
+    "file": "images/journal/main-au-lavis.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/main-au-lavis-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/main-au-lavis-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une main ouverte à l’encre noire sur un lavis gris",
+      "en": "An open hand in black ink over a grey wash"
+    },
+    "credit": null
+  },
+  {
+    "id": "cubes-et-cylindres",
+    "group": "carnets",
+    "source": "IMG_8584.HEIC",
+    "file": "images/journal/cubes-et-cylindres.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/cubes-et-cylindres-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/cubes-et-cylindres-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Cubes, cylindres et cônes au trait, une tache violette",
+      "en": "Cubes, cylinders and cones in line, a purple stain"
+    },
+    "credit": null
+  },
+  {
+    "id": "cylindres",
+    "group": "carnets",
+    "source": "IMG_8585.HEIC",
+    "file": "images/journal/cylindres.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/cylindres-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/cylindres-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Cylindres et cubes dessinés en série au feutre",
+      "en": "Cylinders and cubes drawn in series with a felt pen"
+    },
+    "credit": null
+  },
+  {
+    "id": "fusain-et-ocre",
+    "group": "carnets",
+    "source": "IMG_8586.HEIC",
+    "file": "images/journal/fusain-et-ocre.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/fusain-et-ocre-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/fusain-et-ocre-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Fusain dense, traits bleus et taches ocre",
+      "en": "Dense charcoal, blue lines and ochre stains"
+    },
+    "credit": null
+  },
+  {
+    "id": "visage-bleu",
+    "group": "carnets",
+    "source": "IMG_8587.HEIC",
+    "file": "images/journal/visage-bleu.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/visage-bleu-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/visage-bleu-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Un visage au fusain traversé de traits bleus",
+      "en": "A charcoal face crossed by blue lines"
+    },
+    "credit": null
+  },
+  {
+    "id": "griffonnages",
+    "group": "carnets",
+    "source": "IMG_8588.HEIC",
+    "file": "images/journal/griffonnages.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/griffonnages-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/griffonnages-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Figures griffonnées au stylo noir, page couverte",
+      "en": "Figures scribbled in black pen across the page"
+    },
+    "credit": null
+  },
+  {
+    "id": "ecriture-violette",
+    "group": "carnets",
+    "source": "IMG_8590.HEIC",
+    "file": "images/journal/ecriture-violette.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/ecriture-violette-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/ecriture-violette-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une silhouette debout au-dessus de mots au feutre violet",
+      "en": "A standing figure above words in purple felt pen"
+    },
+    "credit": null
+  },
+  {
+    "id": "boucles-noires",
+    "group": "carnets",
+    "source": "IMG_8591.HEIC",
+    "file": "images/journal/boucles-noires.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/boucles-noires-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/boucles-noires-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Boucles au stylo noir et hachures au fusain",
+      "en": "Black pen loops and charcoal hatching"
+    },
+    "credit": null
+  },
+  {
+    "id": "trois-figures",
+    "group": "carnets",
+    "source": "IMG_8592.HEIC",
+    "file": "images/journal/trois-figures.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/trois-figures-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/trois-figures-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Trois silhouettes au trait sur un lavis gris",
+      "en": "Three line figures on a grey wash"
+    },
+    "credit": null
+  },
+  {
+    "id": "tete-olive",
+    "group": "carnets",
+    "source": "IMG_8594.HEIC",
+    "file": "images/journal/tete-olive.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/tete-olive-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/tete-olive-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une tête au stylo noir, touches vert olive et rose",
+      "en": "A head in black pen with olive green and pink touches"
+    },
+    "credit": null
+  },
+  {
+    "id": "figure-et-mains",
+    "group": "carnets",
+    "source": "IMG_8595.HEIC",
+    "file": "images/journal/figure-et-mains.webp",
+    "width": 1800,
+    "height": 1350,
+    "variants": [
+      {
+        "file": "images/journal/figure-et-mains-480.webp",
+        "width": 480
+      },
+      {
+        "file": "images/journal/figure-et-mains-900.webp",
+        "width": 900
+      }
+    ],
+    "alt": {
+      "fr": "Une figure debout et des mains levées sur un lavis bleu et brun",
+      "en": "A standing figure and raised hands on a blue and brown wash"
+    },
+    "credit": null
   }
 ]

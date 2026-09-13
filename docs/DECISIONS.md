@@ -1,5 +1,15 @@
 # Décisions du portfolio
 
+## 13 septembre 2026 — Quinze feuilles d’un même matin
+
+- **Demande** : Camilo fournit quinze photographies HEIC de pages de carnet (`IMG_8579` à `IMG_8595`, prises le 13 septembre 2026 entre 11 h 22 et 11 h 25 d’après les métadonnées) à intégrer au journal, avec carte blanche sur le rendu : sur-zoomer, saturer, retourner, copier.
+- **Emplacement** : nouvelle section `#feuilles` dans les carnets, entre « Figures, à l’encre » et « Feuillets libres ». Le sommaire signale « Quinze feuilles d’un même matin ». Aucune autre page ne change de composition.
+- **Traitement** : les quinze feuilles sont présentées en vingt pièces. Cinq reprises reviennent sous une autre forme : deux détails agrandis et saturés (main au lavis, écriture violette, figure et mains), un stylo bleu retourné, un fusain en négatif, un visage en miroir. Tous les effets sont en CSS (`.sheet-storm` dans `accrochages.css`) ; les WebP ne sont pas retouchés et chaque lien ouvre la feuille entière. La visionneuse dédoublonne par identifiant : une feuille reprise n’apparaît qu’une fois dans le défilement.
+- **Production** : quinze WebP à 1800 px depuis les originaux (via TIFF, cwebp q 80 ; fusain à q 70 pour rester sous 620 Ko), variantes 480 et 900. Quarante-cinq fichiers, 6 833 570 octets (6,8 Mo), dont 4,6 Mo pour les quinze grandes images, chargées seulement à l’agrandissement. Les HEIC restent hors du site.
+- **Voix** : texte de Camilo, confié le 13 septembre 2026 : « Il est temps de partager, il est temps d’ouvrir les cahiers et montrer étape par étape ce qui mène à : un parcours, une recherche, une vertigineuse découverte d’un potentiel, une vertigineuse série de choses à apprendre, à maîtriser. Tomber c’est accepter, se relever, obligatoire. » Fin corrigée deux fois par Camilo dans la foulée (première version : « Tomber et accepter, se relever, indispensable ou obligatoire. Peut-être obligatoire, c’est mieux. »). Répétitions conservées, ponctuation seule ajustée ; le titre reprend son fragment « Il est temps d’ouvrir les cahiers ». L’anglais suit au plus près. La date affichée est celle des métadonnées de prise de vue.
+- **Intégrité** : `archives.json` passe à 129 entrées (213 archives avec Hors cadre) ; le validateur, le README et le sitemap suivent.
+- **Branche** : commit `67867dc` sur `codex/art-digital`, reporté sur `main` pour la publication Netlify ; seuls README, DECISIONS et VERIFICATION ont demandé une résolution manuelle.
+
 ## 12 septembre 2026 — Audit et nettoyage avant la fusion de Hors cadre
 
 - **Contexte** : la branche construite le 11 septembre est relue ligne à ligne avant fusion. L'audit distingue ce qu'elle a ajouté de ce qu'elle a laissé derrière elle : sept défauts dans le nouveau code, et du code hérité devenu sans objet depuis que l'accueil et la couverture du sommaire ont changé de forme.
