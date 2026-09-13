@@ -2,34 +2,7 @@
 
 ## 13 septembre 2026 — Quinze feuilles d’un même matin
 
-Quinze HEIC convertis en WebP (1800 px, variantes 480 et 900) : 45 fichiers, 6 833 570 octets. `node tools/validate-journal.mjs`, après report du commit sur `main` : 8 pages, 976 références locales, 213 archives utilisées, 625 images et variantes, descriptions FR et EN. `node --check js/journal.js` et `git diff --check` sans erreur. Contrôle Playwright en local à 1440 px : la section `#feuilles` compte vingt liens `data-photo`, la page trente identifiants uniques, la visionneuse annonce « 13 / 30 » sur le fusain en négatif, aucune erreur console, aucun débordement horizontal. Rendu vérifié à 390 px de large.
-
-## 12 septembre 2026 — Corrections et nettoyage
-
-Les deux suites de navigateur ont été jouées trois fois : sur la branche brute, après les sept corrections, puis sur l'état final. Même résultat aux trois passages, `verify-hors-cadre.mjs` **20/20 groupes**, code de sortie 0, et `verify-reverie.mjs` **12/13**, code de sortie 1. Le seul groupe en échec est l'audit d'accessibilité, qui exige `AXE_PATH` : aucune dépendance n'a été installée dans le dépôt pour cette passe, et cet échec est déjà celui de la branche avant toute modification. Les vingt et un groupes annoncés le 11 septembre comptaient cet audit.
-
-Seize captures pleine page, les huit pages à 390 et à 1440 pixels, animations désactivées, ont été prises avant puis après le nettoyage : **16 sur 16 identiques au pixel près**, hauteurs comprises, de 3 814 à 19 644 pixels de haut. La chaîne de capture a d'abord été vérifiée déterministe, deux prises successives du même code donnant elles aussi 16 sur 16 à zéro pixel d'écart ; sans cela la comparaison ne prouverait rien. Aucune erreur JavaScript dans les trente-deux chargements.
-
-Les sept corrections ont été mesurées une à une dans le navigateur, pas seulement relues. Après un événement `pagehide`, un défilement fait encore varier la dérive de l'encre, de −3 à 3 pixels. Les positions 1, 4 et 7 d'une suite de huit états répondent exactement, l'écart du rail étant lu à 18 pixels en colonne sur un conteneur en flex. Les cinq compteurs d'état portent `aria-live="off"`. Le bouton d'approche reste caché au chargement en mouvement réduit, se cache et annule l'approche en cours quand la préférence devient active, et revient quand elle disparaît. En anglais, le poster du film du geste reçoit sa description et celui du fond d'encre garde son alternative vide.
-
-Le retrait de `css/art-digital.css` des six pages du journal a été précédé d'un relevé des classes : sur les quatre-vingt-neuf classes que cette feuille définit hors du préfixe `.art-digital`, une seule, `.hc-nav-entry`, sert à ces pages. Retirées sans précaution, l'entrée de navigation passait de `flex`, 78 pixels de haut, filet inférieur et titre de 32 pixels en Cormorant Garamond, à `inline`, sans hauteur ni filet, titre de 16 pixels en DM Sans. Les quatre règles ont été déplacées vers `css/reverie.css` avant le retrait des liens.
-
-Poids : les six pages ne demandent plus une feuille de 29 076 octets et perdent 76 à 79 octets de HTML. Les feuilles passent de 31 170 à 28 091 octets pour `style.css`, de 30 111 à 26 184 pour `intensity.css`, de 37 707 à 33 061 pour `journal.css`, de 29 076 à 28 483 pour `art-digital.css` ; `reverie.css` monte de 22 405 à 22 904 octets et `js/app.js` descend de 33 469 à 32 210. `fonts/dm-sans-300.woff2` quitte le dépôt.
-
-Validations statiques sur l'état final :
-
-```text
-OK — 115 entrées, 230 variantes, aucun lien local manquant.
-OK — 29 peintures, 26 encres, 60 photographies.
-OK — ancres, identifiants, polices, dimensions et références des œuvres.
-OK — 8 pages, 936 références locales, aucune ancre manquante.
-OK — 198 archives utilisées, 580 images et variantes, descriptions FR et EN.
-OK — crédits des caves, affiche de 2017, vidéos silencieuses sans source initiale.
-```
-
-Les 942 références locales du 11 septembre deviennent 936 : ce sont les six liens de feuille retirés, un par page. La syntaxe des huit fichiers de `js/`, `js/dims.generated.js` compris, et `git diff --check` passent sans erreur.
-
-Limites : Chrome stable local en mode sans fenêtre, formats mobiles émulés. Aucun iPhone physique, aucun essai sous Safari ou Firefox, aucune mesure sur le site publié. Une comparaison de captures ne voit pas ce qui se joue au survol, au clavier ou au toucher ; ces chemins-là restent couverts par les deux suites. Aucun audit d'accessibilité automatisé dans cette passe. Aucun envoi, aucune fusion, aucune publication.
+Quinze HEIC convertis en WebP avec orientation EXIF appliquée (quatorze en 1350 × 1800, une en 1800 × 1350), variantes 480 et 900 : 45 fichiers, 6 258 780 octets, dont 712 Ko chargés au plus sur mobile et 1952 Ko sur ordinateur pour toute la section. `node tools/validate-journal.mjs`, après report des commits sur `main` : 8 pages, 976 références locales, 213 archives utilisées, 625 images et variantes, descriptions FR et EN. `node --check js/journal.js` et `git diff --check` sans erreur. Contrôle Playwright en local : à 1440 px la section `#feuilles` compte vingt liens `data-photo`, la page trente identifiants uniques, la visionneuse annonce « 13 / 30 » sur le fusain en négatif, aucune erreur console, aucune requête en échec, aucun débordement horizontal ; à 390 px, vingt et une pièces révélées, aucun débordement.
 
 ## 11 septembre 2026 — Le journal, par échos
 
