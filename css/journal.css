@@ -191,6 +191,10 @@
 .chapter-les-caves .turn-links,.chapter-les-caves .turn-links a:first-child{border-color:var(--dark-line)}
 .chapter-les-caves .turn-direction,.chapter-les-caves .site-footer>span{color:var(--dark-muted)}
 .chapter-les-caves .turn-links a:hover{background:var(--dark-line)}
+.chapter-reserves .chapter-turn,.chapter-hors-cadre .chapter-turn{color:var(--paper)}
+.chapter-reserves .turn-links,.chapter-reserves .turn-links a:first-child,.chapter-hors-cadre .turn-links,.chapter-hors-cadre .turn-links a:first-child{border-color:var(--dark-line)}
+.chapter-reserves .turn-direction,.chapter-hors-cadre .turn-direction{color:var(--dark-muted)}
+.chapter-reserves .turn-links a:hover,.chapter-hors-cadre .turn-links a:hover{background:var(--dark-line)}
 
 /* A poster, two photographs and a few things kept. */
 .traces-opening{padding-top:80px;padding-bottom:120px;grid-template-columns:.75fr 1.25fr;gap:9%}

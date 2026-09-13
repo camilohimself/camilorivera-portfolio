@@ -189,23 +189,6 @@
 .reserve-associations :focus-visible {outline-color:#4a5c38}
 .reverie .reserve-opening {padding-bottom:85px}
 
-/* An echo is a real link with a destination, not a duplicate gallery. */
-.journal-echo {padding-block:80px;background:#e7e2d5;color:#242d24}
-.journal-echo>a {display:grid;grid-template-columns:.8fr 1fr;gap:12%;align-items:center;max-width:850px;margin:auto}
-.echo-image {display:block;height:300px;overflow:hidden;rotate:-4deg;mask-image:linear-gradient(transparent,#000 15%,#000 84%,transparent)}
-.echo-image img {width:100%;height:100%;object-fit:cover}
-.echo-copy {display:flex;flex-direction:column;align-items:start;gap:20px}
-.echo-label {font-size:10px;color:#59604e}
-.echo-title {font-family:var(--font-display);font-size:clamp(34px,4vw,56px);line-height:1.03;letter-spacing:-.03em;max-width:380px}
-.echo-copy>span:last-child {font-size:23px}
-.journal-echo>a:focus-visible {outline-color:#4b5b3b;outline-offset:10px}
-
-/* Entrée de navigation vers Hors cadre, présente sur les cinq chapitres.
-   Venue de art-digital.css, que ces pages ne chargent plus. */
-.hc-nav-entry {display:flex;align-items:center;gap:20px;min-height:78px;padding-block:20px;border-bottom:1px solid currentColor;margin-bottom:28px}
-.hc-nav-entry>span:nth-child(2) {font-family:var(--font-display);font-size:32px;line-height:1}
-.hc-nav-entry>span:last-child {margin-left:auto;font-size:25px}
-
 @media(max-width:1000px) {
   .journal-quick-index {grid-template-columns:repeat(3,minmax(0,1fr))}
   .reverie .collision-images {min-height:650px}
@@ -297,17 +280,10 @@
   .association-images img {max-height:330px}
   .association-images figcaption {font-size:9px;margin-top:10px}
   .association-note {font-size:10px}
-  .journal-echo {padding-block:50px}
-  .journal-echo>a {grid-template-columns:.85fr 1fr;gap:9%}
-  .echo-image {height:200px}
-  .echo-copy {gap:15px}
-  .echo-label {font-size:9px;line-height:1.7}
-  .echo-title {font-size:33px}
   .reverie .reserve-invitation {padding-block:28px;gap:20px}
   .reverie .reserve-invitation-number {font-size:52px}
   .reverie .reserve-invitation h2 {font-size:29px}
   .reverie .reserve-invitation .text-link {font-size:11px}
   .reverie .chapter-turn {padding-block:40px}
   .reverie .turn-heading h2 {font-size:30px}
-  .hc-nav-entry>span:nth-child(2) {font-size:27px}
 }

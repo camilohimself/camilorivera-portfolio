@@ -65,7 +65,7 @@ Dans la réserve, 37 figures, 15 photographies d’atelier, 14 images d’exposi
 
 Les commandes de partage proposent l’URL canonique de l’œuvre. La prise de contact ouvre un courrier avec la référence de l’œuvre, sans l’envoyer.
 
-Les chapitres sont reliés par un sommaire, des liens de page précédente et suivante, et des liens vers la collection avec sa sélection déjà active : `?collection=paintings#gallery`, `?collection=encres#gallery` et `?collection=shooting#gallery`. Les photos du journal ont une adresse propre dans leur chapitre : `#fragment/<identifiant>`. Le bouton de copie conserve l’adresse de la version consultée, y compris pour un aperçu local. Les pages et les images restent accessibles sans JavaScript.
+Les six chapitres se lisent dans l’ordre annoncé par le sommaire : chacun porte une page précédente et une page suivante, des carnets à Hors cadre, qui ne boucle pas sur le premier mais ouvre la sortie vers la collection. L’accueil se termine sur un passage vers le journal, et Hors cadre renvoie vers les chapitres qui y conduisent. Ils sont aussi reliés par le sommaire, et des liens vers la collection avec sa sélection déjà active : `?collection=paintings#gallery`, `?collection=encres#gallery` et `?collection=shooting#gallery`. Les photos du journal ont une adresse propre dans leur chapitre : `#fragment/<identifiant>`. Le bouton de copie conserve l’adresse de la version consultée, y compris pour un aperçu local. Les pages et les images restent accessibles sans JavaScript.
 
 Les préférences de langue et de mouvement sont mémorisées localement. Si ce stockage est bloqué, le site continue de fonctionner. Le réglage système de réduction des animations est prioritaire.
 
