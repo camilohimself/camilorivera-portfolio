@@ -1,5 +1,152 @@
 # Vérification de la refonte
 
+## 1er octobre 2026 — Favicon et cartes de partage
+
+- Monogramme tracé depuis `fonts/dm-sans-400.woff2` (unités de 1 000, avances 572, 370 et 198, interlettrage −0,12 em, point décalé de 3/37 em). Rendu relu à 256, 32 et 16 pixels et en icône iOS de 180 pixels : « c » et « r » se touchent comme dans l’en-tête.
+- Neuf cartes générées, toutes en 1200 × 630, de 46,2 Ko (traces) à 85,7 Ko (accueil). Relues une à une ; la carte d’accueil est passée sur une ligne et l’image réduite de 340 à 286 pixels de large après une première relecture, le nom étant trop couvert par le dessin.
+- Servies localement : `favicon.ico` en `image/x-icon`, `favicon.svg` en `image/svg+xml`, `apple-touch-icon.png` en `image/png`, cartes en `image/jpeg`, réponses 200. Les neuf pages se chargent sans erreur à 390 × 844 et 1440 × 1000.
+- `node tools/validate-journal.mjs` contrôle désormais, pour chaque page, une carte JPEG de 1200 × 630 sous 300 Ko, ses dimensions, son type et sa description déclarés, le nom du site, l’adresse partagée égale à l’adresse canonique et les trois icônes. Le contrôle a été vu échouer sur une copie jetable : carte réduite à 800 × 420, nom du site retiré.
+
+```text
+OK — 9 cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.
+```
+
+Limites : aucun partage réel n’a été fait vers WhatsApp, iMessage ou un réseau ; le rendu des aperçus dépend de chaque application et de son cache. Le favicon n’a pas été observé dans un onglet de navigateur réel, ni en mode sombre.
+
+## 1er octobre 2026 — Intégration de `main` dans `version-astra`
+
+Contrôles exécutés localement avec Chromium sans interface, piloté par Playwright déjà présent sur le poste, sans paquet ajouté au dépôt. Trois serveurs locaux : la référence (`abcba58`), la même référence munie des images de `main` pour neutraliser les réencodages, et l’intégration. Captures à 320 × 568, 390 × 844, 844 × 390 et 1440 × 1000, en français et en anglais, horloge figée et films arrêtés sur la même image (6 s).
+
+- **Héros** : 37 positions de défilement (0 à 1,8 écran, pas de 0,05) par format et par langue, soit 296 captures. Comparées à la référence munie des images de `main` : 296 identiques au pixel près. Le nom initial, l’agrandissement du O, sa sortie, la coulure et l’arrivée de la première peinture sont donc inchangés. Contre la référence brute, les écarts se limitent à l’intérieur d’« Abstrait 996 », dont le fichier `IMG_0586.webp` a été réencodé sur `main` (`2942756`) aux mêmes dimensions.
+- **Accueil et collection** : 196 captures pleine fenêtre, hauteurs de page identiques dans les huit combinaisons. Douze captures diffèrent. Les trois plus marquées ont été examinées : écarts dans l’image du film du geste, sur un bord du champ WebGL et dans des tracés fins. Deux captures successives de la référence diffèrent dans cinq de ces mêmes vues. La comparaison géométrique ci-dessous ne relève aucun écart sur ces deux pages.
+- **Géométrie des huit pages** : position, taille et styles calculés de chaque élément, mesurés relativement à leur bloc, transformations neutralisées, dans les quatre formats et les deux langues. Tous les blocs communs sont identiques, sauf les changements voulus : numérotation `0X / 06`, page précédente des carnets (le sommaire) et page suivante des traces (la réserve), libellés et entrée 06 du sommaire. Aucun style calculé ne change : les modifications de `main` dans `style.css` et `motion.css` n’atteignent pas les pages d’Astra.
+- **Écart corrigé** : l’alternance haut/bas du défilement comptait les photographies insérées par `main` ; le parcours dans le rouge (une photographie) et les rapprochements (neuf) inversaient toutes les images suivantes de la matière et de la réserve. `js/journey-scroll.js` les ignore désormais ; la comparaison géométrique et les captures confirment le retour au rendu de référence.
+- **Parcours complet de l’intégration** : neuf pages, quatre formats, deux langues, 72 parcours et 1 128 captures. Aucun débordement horizontal, aucune erreur JavaScript ni ressource manquante ; seuls des avertissements de performance du pilote WebGL apparaissent.
+- **Interactions** (65 essais réussis sur 67) : collection filtrée par `?collection=paintings#gallery` (18 sur 29), lot suivant (29), visionneuse au clavier, flèche droite, zoom, Échap et retour du focus, lien direct `#oeuvre/abstrait-996` ; anciennes ancres `#mouvement`, `#gallery`, `#journal`, `#hors-cadre`, `#oeuvres`, `#about` ; film d’entrée en version mobile à 390 et ordinateur à 1440, silencieux au départ, pause volontaire conservée après un aller-retour, reprise, arrêt hors écran ; mouvement réduit sans source vidéo et entrée d’un écran ; visionneuses des carnets, des feuilles, de la réserve, des rapprochements et de Hors cadre (ouverture, suivante, zoom, fermeture, focus rendu au lien) ; liens directs `#fragment/la-main`, `#fragment/fusain-et-ocre`, `#fragment/hc-08` ; réserve `?regard=atelier` (15) ; rapprochements dépliables ; index à neuf entrées à 390 × 844, 844 × 390 et 1440 × 1000, dernière entrée visible, fermeture et focus ; textes anglais des blocs ajoutés et de Hors cadre.
+- **Les deux essais en échec** : `#seuil` mène dans la section contact, mais la fin de page l’empêche de remonter sous l’en-tête, comme `#contact`. Le film du geste à 390 pixels est resté une fois en pause au retour, après un enchaînement pause, aller-retour, reprise, sortie d’écran. Rejoué trois fois sur chaque version, le même arrêt se produit une fois sur trois sur la référence et aucune fois sur l’intégration : le comportement existait déjà et n’est pas corrigé dans cette passe.
+- **Lisibilité** : la chambre des feuilles passe du ton gris au ton violet après relecture des captures à 320 et 390 pixels, où la prose devenait illisible sur les zones grises.
+
+Sorties des contrôles :
+
+```text
+$ node tools/validate-portfolio.mjs
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 9 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 759 sources responsive, couverture et catalogue accessibles sans script.
+$ node tools/validate-journal.mjs
+OK — 9 pages reliées sans script, 1772 références locales, aucune ancre manquante.
+OK — 213 archives utilisées (129 du journal, 84 de Hors cadre), 625 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+```
+
+`node --check` passe sur les quinze scripts de `js/` et les cinq outils `.mjs` de `tools/`. `git diff --check` ne signale rien.
+
+Limites : fenêtres simulées dans Chromium, sans téléphone physique ni Safari ou Firefox. Les captures neutralisent le temps ; la fluidité réelle et le réseau mobile ne sont pas mesurés. La lecture automatique est forcée par une option du navigateur de test. Les préférences système de mouvement réduit et d’économie de données ne sont pas simulées : le réglage du site a été utilisé. Les parcours `tools/verify-hors-cadre.mjs` et `tools/verify-reverie.mjs` de `main` n’ont pas été exécutés : ils décrivent la version précédente. Aucun envoi distant, aucune fusion vers `main`, aucun déploiement.
+
+## 1er octobre 2026 — Raccord plus court après le O
+
+Le passage immobilisé occupe désormais 160svh sur ordinateur et 155svh sur mobile, au lieu de 210svh et 195svh. L’ouverture du O suit la hauteur réelle de la scène ; la section peut donc commencer à sortir pendant la fin de son agrandissement. La coulure est déclenchée plus tôt et limitée à 40 % de la scène, pour ne pas couvrir tout l’écran avant l’arrivée des œuvres. L’espace avant le titre et la première peinture est resserré.
+
+Contrôles exécutés dans le navigateur intégré :
+
+- À 1219 × 998, après environ 0,68 écran de défilement, le sommet des œuvres est à 918 pixels et son titre à 982 pixels : la section entre déjà à la fin du passage. À 0,90 écran, le titre et le début de la peinture sont visibles, tandis que le film reste présent au-dessus de la coulure. Aller-retour dans la transition relu visuellement.
+- À 390 × 844, après environ 0,72 écran, les œuvres commencent à 701 pixels et leur titre à 801 pixels. Aucun débordement horizontal. L’accès direct aux œuvres les place à 70 pixels sous le haut de la fenêtre ; le film est alors arrêté hors écran.
+- Le réglage réduit conserve une entrée et une scène de 844 pixels, sans longueur supplémentaire. Le mouvement normal est rétabli et l’aperçu laissé à l’entrée.
+- `node --check js/hero-immersion.js` et `git diff --check` passent. Les deux validateurs passent également : 115 entrées, 114 archives, 8 pages, 1101 références locales et aucune ancre manquante.
+
+Limites : contrôles sur fenêtres simulées, sans appareil physique ni nouvelle vérification séparée Safari/Firefox. Aucun envoi distant, fusion ou déploiement.
+
+## 1er octobre 2026 — Le nom devient le passage
+
+Cette passe remplace le voile du héros par une composition noire et blanche du nom devant le film, puis par une traversée du « o » au défilement. Le reste du parcours et les fichiers médias sont inchangés.
+
+- Entrée relue dans le navigateur intégré à 320 × 568, 390 × 844, 763 × 998, 844 × 390 et 1440 × 1000. Un contrôle supplémentaire à 1024 × 768 confirme que le nom et les commandes tiennent aussi dans la hauteur disponible. Les boîtes des trois parties du nom restent dans la largeur de l’écran et aucun débordement horizontal n’a été observé. Les commandes restent dans l’écran, y compris en paysage. Français relu sur téléphone et anglais sur petit écran et ordinateur.
+- Passage natif observé à plusieurs positions : nom entier à l’entrée, autres lettres écartées, « o » agrandi à environ 41 % de progression, puis film traversé par la coulure blanche lors de la sortie. Le défilement au clavier a aussi été exécuté. Les rubans s’effacent tôt et ne coupent pas le « o » pendant son agrandissement.
+- Le lien « Voir les œuvres » rejoint la sélection sous l’en-tête. Une correction réserve la hauteur du passage dès le début du document : après rechargement à `#oeuvres`, la mesure reste identique avant/après (`scrollY: 1576`, sommet de section à environ 70 pixels sur une fenêtre de 390 × 844).
+- Lecture silencieuse observée avec le fichier ordinateur et sur téléphone ; pause volontaire par la commande et sur la surface du film, reprise, arrêt hors écran et arrêt à l’ouverture de l’index vérifiés. Le canvas utilise le film déjà présent, sans nouveau lecteur ni nouveau fichier vidéo.
+- Mouvement réduit choisi dans le site puis rechargement : entrée de 844 pixels dans une fenêtre de 844 pixels de haut, scène en position relative, vidéo arrêtée sans source affectée, nom composé fixe. Lecture volontaire ensuite possible. Le réglage normal et le français sont rétablis après les essais.
+- Aucun avertissement ni erreur dans les journaux consultés. `node --check js/hero-immersion.js`, `node --check js/journey-home.js` et `git diff --check` terminent avec le code de sortie 0.
+
+Sorties des deux validateurs :
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 8 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 403 sources responsive, couverture et catalogue accessibles sans script.
+OK — 8 pages reliées sans script, 1101 références locales, aucune ancre manquante.
+OK — 114 archives utilisées, 333 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+```
+
+Limites : fenêtres simulées, aucun téléphone physique ni mesure de fluidité sur appareil peu puissant. Pas d’essai séparé Safari/Firefox, de panne canvas forcée, de navigation sans script ni de nouvel audit d’accessibilité automatique dans cette passe. La préférence système et l’économie de données n’ont pas été simulées ; le réglage de mouvement du site a été utilisé. Aucune compilation ni commande de lint n’est déclarée dans ce site statique sans `package.json`. Aucun envoi distant, fusion ou déploiement.
+
+## 1er octobre 2026 — Nouveau rythme de la page d’accueil
+
+L’accueil suit désormais six sections : film d’entrée, œuvres, geste, mémoire et chemins du journal, présentation, contact. Les essais ci-dessous concernent cette nouvelle organisation ; les comptes rendus suivants restent l’historique des versions antérieures.
+
+- Rendu examiné dans le navigateur intégré à 320 × 568, 390 × 844, 763 × 998 et 1440 × 1000. Les largeurs du document et des titres ont aussi été contrôlées à 844 × 390. Aucun débordement horizontal détecté. Français et anglais contrôlés à 320, 844 et 1440 pixels.
+- Le lien « Voir les œuvres » rejoint la première sélection sous l’en-tête fixe. « Abstrait 996 » ouvre sa visionneuse et retrouve le focus après fermeture. La photographie « La main » s’agrandit toujours ; son lien adjacent ouvre réellement le chapitre des traces.
+- Les six fragments de mémoire ont chacun leur lien de chapitre. Les cinq identifiants de souvenirs et les six identifiants d’œuvres déjà présents dans l’accueil sont conservés ; le fragment « Le rouge revient » est ajouté à la composition.
+- Lecture réelle du film d’entrée observée avec la version mobile à 390 pixels et la version ordinateur à 1440 pixels, sans son. Pause explicite, retour à l’entrée sans reprise intempestive, reprise volontaire et arrêt hors écran vérifiés. Le film du geste est ensuite observé en lecture tandis que celui du héros reste arrêté.
+- Réduction des mouvements par le bouton du site, puis rechargement : héros arrêté et aucune source vidéo affectée. Lecture volontaire ensuite possible. Retour au mouvement normal et au français effectué à la fin des essais.
+- Voile de contraste ajouté derrière le nom après inspection : les détails du film rendaient initialement les caractères inversés difficiles à lire. Nom et commandes relus sur petit écran et ordinateur. Les commandes du film mesurent au moins 44 pixels de haut à 320 pixels.
+- Aucun message d’erreur ou avertissement dans les journaux consultés. `node --check js/journey-home.js` et `git diff --check` terminent avec le code de sortie 0.
+
+Les deux nouveaux fichiers du héros ont été inspectés : 313 images, 24 images par seconde, 13,041667 secondes, H.264 yuv420p et index de lecture en tête. La piste AAC est identique à celle du fichier fourni. La version ordinateur pèse 3 800 047 octets (740 × 1000), la version mobile 1 848 689 octets (540 × 730). Le fichier source reste inchangé. Comparaison visuelle réalisée sur un photogramme à six secondes.
+
+Sorties des validateurs après les modifications :
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 8 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 403 sources responsive, couverture et catalogue accessibles sans script.
+OK — 8 pages reliées sans script, 1099 références locales, aucune ancre manquante.
+OK — 114 archives utilisées, 333 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+```
+
+Limites : dimensions simulées, sans appareil physique ni essai séparé dans Safari ou Firefox. Le mouvement réduit a été testé avec le réglage du site ; les préférences système, l’économie de données et les refus réseau n’ont pas été simulés pour cette passe. Aucun nouvel audit automatique d’accessibilité ni mesure de performance en réseau réel. Site statique sans `package.json` : aucune compilation, suite TypeScript ou commande de lint à exécuter. Aucun envoi distant, fusion ou déploiement.
+
+## 1er octobre 2026 — Vidéo de fond de la section 03
+
+Le film remplit la section sur toute sa largeur et au moins une hauteur d’écran. Lecture automatique silencieuse à partir de 20 % de section visible ; arrêt hors écran, onglet masqué ou fenêtre ouverte. La surface du film et le bouton visible partagent la commande pause/reprise. Une pause volontaire reste mémorisée pendant la visite. Mouvement réduit et économie de données attendent une lecture volontaire.
+
+Contrôles exécutés dans le navigateur intégré : démarrage sans clic, silence initial, pause sur la vidéo, reprise au clavier et via le bouton, maintien de la pause après sortie/retour, arrêt hors écran et reprise automatique lorsque le visiteur n’avait pas mis en pause. Rendu examiné à 390 × 844, 763 × 998 et 1440 × 1000 ; la vidéo remplit le cadre et aucun débordement horizontal observé. Aucune erreur dans les journaux consultés. Les conditions système de réduction des animations et d’économie de données n’ont pas été simulées pour cette passe ; aucun appareil physique testé.
+
+## 1er octobre 2026 — Site complet, espace intérieur
+
+Contrôles exécutés localement sur `version-astra`, dans le navigateur intégré, à `http://127.0.0.1:8000/`. Cette passe concerne les huit pages du site complet. Les comptes rendus plus bas décrivent les versions antérieures.
+
+- Les huit pages ont été chargées en français et en anglais à 320 × 568 et 1440 × 1000, soit 32 combinaisons. Aucun débordement horizontal du document, aucune boîte de titre hors écran et aucune image déjà chargée en erreur dans ces contrôles. Les premières vues et plusieurs scènes intérieures ont également été examinées à 390 × 844 et dans la fenêtre normale de l’aperçu.
+- Contrastes et superposition des textes/photos corrigés dans les chambres du journal et l’ouverture de la collection. Les photos de couverture, carnets, matières, traces, réserve et les œuvres agrandies ont été relues visuellement.
+- Collection : filtres peintures et souvenirs, lot suivant de 18 à 36, visionneuse, image suivante, zoom, fermeture Échap, retour du focus à la carte et lien direct vers `#fragment/la-main` exécutés. L’ancien lien d’accueil `?collection=paintings#gallery` ouvre bien 18 peintures sur 29 ; les deux fermetures successives rendent la page puis le focus au logo.
+- Réserve : filtre atelier (15 sur 15), retour à tout (16 sur 73), progression (32 sur 73), ouverture d’une archive, zoom, image suivante et fermeture exécutés.
+- Index partagé : ouverture sur mobile, huit liens présents, fermeture et navigation réelle vers l’accueil. Langue et mouvement réduit conservés entre journal et accueil ; le réglage réduit désactive la rivière horizontale liée au scroll.
+- Les quatre films ont été chargés et leur lecture observée : progression du temps, fichiers valides, silence initial. Les deux films des carnets ont été lus sur grand écran ; les deux films de l’accueil ont été contrôlés à 390 pixels. Le film des carnets se met en pause à l’ouverture de l’index.
+- Les cartes du catalogue utilisent maintenant les variantes 480/800/1200 pixels ; les visionneuses gardent le fichier entier. Les sources responsive ont été constatées dans le document chargé.
+- Aucune erreur ou alerte JavaScript dans les journaux consultés pendant ces parcours. Syntaxe des onze scripts actifs et des deux validateurs contrôlée avec `node --check`. `git diff --check` sans erreur.
+
+Sorties des validateurs :
+
+```text
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 8 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 400 sources responsive, couverture et catalogue accessibles sans script.
+OK — 8 pages reliées sans script, 1095 références locales, aucune ancre manquante.
+OK — 114 archives utilisées, 333 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+```
+
+Limites : tailles de fenêtre simulées, sans téléphone physique ni validation Safari/Firefox séparée. Pas de mesure de performance sur réseau mobile réel, pas de test de partage vers une application externe. Le glissement tactile de la nouvelle collection reste à essayer sur appareil physique. La navigation sans JavaScript est contrôlée statiquement par les liens HTML, pas par une session de navigateur dédiée. Ce site statique ne dispose pas de compilation, TypeScript ou scripts npm. Aucun paquet installé, aucune fusion, aucun envoi et aucun déploiement.
+
 ## 13 septembre 2026 — Quinze feuilles d’un même matin
 
 Quinze HEIC convertis en WebP avec orientation EXIF appliquée (quatorze en 1350 × 1800, une en 1800 × 1350), variantes 480 et 900 : 45 fichiers, 6 258 780 octets, dont 712 Ko chargés au plus sur mobile et 1952 Ko sur ordinateur pour toute la section. `node tools/validate-journal.mjs`, après report des commits sur `main` : 8 pages, 976 références locales, 213 archives utilisées, 625 images et variantes, descriptions FR et EN. `node --check js/journal.js` et `git diff --check` sans erreur. Contrôle Playwright en local : à 1440 px la section `#feuilles` compte vingt liens `data-photo`, la page trente identifiants uniques, la visionneuse annonce « 13 / 30 » sur le fusain en négatif, aucune erreur console, aucune requête en échec, aucun débordement horizontal ; à 390 px, vingt et une pièces révélées, aucun débordement.
@@ -44,7 +191,7 @@ Les validations statiques passent : 115 œuvres, 8 pages, 907 références local
 
 Limites : émulation Chrome, sans iPhone physique ni Safari/Firefox. Les tailles de fichiers ne sont pas des mesures de vitesse sur un réseau mobile réel. Les audits automatisés ne constituent pas une certification. Aucun push, aucune fusion, aucune publication.
 
----
+## Historique — 10 septembre 2026
 
 Contrôles exécutés le 10 septembre 2026 sur la branche `version-astra`, dans un navigateur Chromium local. Les formats mobiles ont été émulés avec événements tactiles.
 

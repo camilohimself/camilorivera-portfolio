@@ -1,12 +1,11 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { existsSync, statSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
+import { auditSite, read, repo, routes } from './validate-journal.mjs';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const read = file => readFileSync(resolve(root, file), 'utf8');
-const works = JSON.parse(read('works.json'));
+const site = auditSite();
+const works = site.works;
 const dimensions = {};
 runInNewContext(read('js/dims.generated.js') + '; this.values = DIMS;', dimensions);
 const slugs = new Set();
@@ -21,42 +20,32 @@ for (const work of works) {
   counts[work.category]++;
   const file = work.category + '/' + work.file;
   const dims = dimensions.values[file];
-  assert.ok(dims && dims.every(value => Number.isInteger(value) && value > 0), 'Dimensions manquantes : ' + file);
-  assert.ok(existsSync(resolve(root, 'images', file)), 'Image manquante : ' + file);
+  assert.ok(dims && dims.length === 2 && dims.every(value => Number.isInteger(value) && value > 0), 'Dimensions manquantes : ' + file);
+  const original = resolve(repo, 'images', file);
+  assert.ok(existsSync(original) && statSync(original).size > 0, 'Image manquante ou vide : ' + file);
   for (const width of [480, 800].filter(width => width < dims[0])) {
     const variant = 'images/' + file.replace(/\.webp$/, '-' + width + '.webp');
-    assert.ok(existsSync(resolve(root, variant)), 'Variante manquante : ' + variant);
-    assert.ok(statSync(resolve(root, variant)).size > 0, 'Variante vide : ' + variant);
+    assert.ok(existsSync(resolve(repo, variant)), 'Variante manquante : ' + variant);
+    assert.ok(statSync(resolve(repo, variant)).size > 0, 'Variante vide : ' + variant);
     variants++;
   }
   // Unknown metadata must remain absent rather than become fabricated defaults.
-  for (const key of ['year', 'dimensions', 'available']) assert.ok(Object.hasOwn(work, key));
+  for (const key of ['year', 'dimensions', 'available']) assert.ok(Object.hasOwn(work, key), 'Métadonnée omise : ' + work.slug + ' / ' + key);
 }
 
-const html = read('index.html');
-const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
-assert.equal(ids.length, new Set(ids).size, 'Identifiants HTML dupliqués');
-for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
-  const url = match[1];
-  if (/^(https?:|mailto:|data:)/.test(url)) continue;
-  if (url.startsWith('#')) {
-    assert.ok(ids.includes(url.slice(1)), 'Ancre introuvable : ' + url);
-  } else {
-    const target = new URL(url, 'https://local.test/');
-    assert.ok(existsSync(resolve(root, decodeURI(target.pathname.slice(1)))), 'Ressource introuvable : ' + url);
-  }
+for (const anchor of ['gallery', 'about', 'geste', 'contact', 'hors-cadre', 'seuil']) assert.ok(site.ids.get('index.html').includes(anchor), 'Ancienne ancre d’accueil conservée : ' + anchor);
+assert.ok(site.ids.get('oeuvres/index.html').includes('gallery'), 'Ancre du catalogue conservée');
+for (const route of ['index.html', 'oeuvres/index.html']) {
+  const tags = site.pages.get(route);
+  assert.ok(tags.some(tag => tag.tag === 'dialog'), route + ' : visionneuse native attendue');
+  assert.ok(tags.some(tag => tag.tag === 'noscript'), route + ' : repli sans script absent');
+  const covers = tags.filter(tag => 'data-piece' in tag.attrs);
+  assert.ok(new Set(covers.map(tag => tag.attrs['data-piece'])).size >= 3, route + ' : premières œuvres sans script');
 }
-for (const match of html.matchAll(/data-work="([^"]+)"/g)) {
-  assert.ok(slugs.has(match[1]), 'Œuvre de couverture introuvable : ' + match[1]);
-}
-for (const match of read('css/style.css').matchAll(/url\("([^"]+)"\)/g)) {
-  assert.ok(existsSync(resolve(root, 'css', match[1])), 'Police introuvable : ' + match[1]);
-}
-assert.equal((html.match(/<h1\b/g) || []).length, 1, 'Un seul titre principal est attendu');
-assert.ok(html.includes('viewport-fit=cover'), 'Gestion des marges de sécurité mobile absente');
-assert.ok(html.includes('<dialog'), 'Visionneuse native attendue');
-assert.ok(html.includes('<noscript>'), 'Repli sans script absent');
+const catalogue = site.pages.get('oeuvres/index.html');
+for (const filter of ['all', 'paintings', 'encres', 'shooting', 'memories']) assert.ok(catalogue.some(tag => tag.attrs['data-filter'] === filter), 'Filtre de collection absent : ' + filter);
 
-console.log('OK — ' + works.length + ' entrées, ' + variants + ' variantes, aucun lien local manquant.');
+console.log('OK — ' + works.length + ' entrées, ' + variants + ' variantes, aucun lien local manquant sur ' + routes.length + ' pages.');
 console.log('OK — ' + counts.paintings + ' peintures, ' + counts.encres + ' encres, ' + counts.shooting + ' photographies.');
-console.log('OK — ancres, identifiants, polices, dimensions et références des œuvres.');
+console.log('OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.');
+console.log('OK — ' + site.sourceVariants + ' sources responsive, couverture et catalogue accessibles sans script.');

@@ -366,3 +366,14 @@
   .process-rail {display:grid;grid-template-columns:repeat(3,1fr);overflow:visible}
   .process-rail .photo-link {height:200px}
 }
+
+/* Hors cadre dans le voyage (1er octobre 2026) : palette et caractères d'Astra,
+   compositions de la page inchangées. */
+.journey-journal.art-digital {
+  --art-paper: var(--white);
+  --art-night: var(--black);
+  --art-muted: var(--dark-muted);
+  --acid: var(--lavender);
+}
+.journey-journal.art-digital :is(h1, h2, h3) { font-family: var(--font-body); font-weight: 400; letter-spacing: -.065em; }
+.journey-journal.art-digital :is(h1, h2, h3) em { font-family: Cormorant, Georgia, serif; font-weight: 300; }

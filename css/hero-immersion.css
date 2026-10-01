@@ -1,0 +1,148 @@
+/* One native scroll carries the name into the film, then into the first work. */
+.journey-home .home-film {
+  display: block;
+  height: auto;
+  min-height: 100svh;
+  padding: 0;
+  overflow: visible;
+  background: var(--white);
+  --hero-copy-opacity: 1;
+  --hero-film-scale: 1;
+  --hero-wash: 0;
+}
+.journey-home .hero-scene {
+  position: relative;
+  height: 100svh;
+  min-height: 520px;
+  overflow: clip;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 108px var(--gutter) 26px;
+  background: var(--black);
+}
+.hero-immersion-enabled .journey-home .home-film { height: 160svh; }
+.hero-immersion-enabled .journey-home .hero-scene { position: sticky; top: 0; }
+.hero-immersion-enabled .journey-home .home-works { padding-top: 64px; }
+.hero-immersion-enabled .journey-home .home-works-heading { margin-bottom: 48px; }
+.journey-home .home-film .film-portal {
+  inset: 0;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+.journey-home .home-film .film-portal::after { display: none; }
+.journey-home #film-surface-toggle { scale: 1; animation: none; }
+.journey-home .home-film .film-portal video {
+  object-position: 50% 47%;
+  transform: scale(var(--hero-film-scale));
+  transform-origin: 61% 48%;
+}
+.journey-home #hero-name-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.journey-home .hero-film-name {
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 22px 0 20px;
+  mix-blend-mode: normal;
+  color: var(--black);
+  pointer-events: none;
+}
+.journey-home .hero-film-name h1 {
+  margin: 24px 0 27px;
+  font-size: min(31.5vw, 37svh, calc(58.8svh - 197px), 460px);
+  line-height: .76;
+  letter-spacing: -.075em;
+  color: var(--black);
+  -webkit-text-stroke: 1px var(--white);
+  paint-order: stroke fill;
+}
+.journey-home .hero-first-name { display: flex; align-items: baseline; width: max-content; }
+.journey-home #hero-camil, .journey-home #hero-o { display: inline-block; }
+.journey-home #hero-o { letter-spacing: 0; }
+.journey-home .hero-film-name h1 em {
+  display: block;
+  width: max-content;
+  font: italic 300 1.13em/.83 Cormorant, Georgia, serif;
+  letter-spacing: -.063em;
+  margin: .035em 0 0 -.025em;
+}
+.journey-home .hero-canvas-ready #name { opacity: 0; }
+.journey-home .hero-film-name :is(.small-label, .hero-thought) {
+  width: fit-content;
+  padding: 3px 7px;
+  background: var(--white);
+  font-size: 10px;
+  opacity: var(--hero-copy-opacity);
+}
+.journey-home .home-film .entrance-meta { grid-row: 1; z-index: 4; opacity: var(--hero-copy-opacity); }
+.journey-home .home-film .entrance-meta > span { padding: 4px 7px; }
+.journey-home .hero-film-bottom { grid-row: 3; z-index: 5; align-items: center; gap: 16px; }
+.journey-home .hero-film-controls { max-width: 45%; padding-inline: 12px; gap: 0 20px; }
+.journey-home .hero-film-bottom .flow-link { border-radius: 0; min-height: 48px; padding-inline: 13px; gap: 24px; }
+.journey-home .hero-scroll-cue {
+  position: relative;
+  font-size: 9px;
+  letter-spacing: .06em;
+  padding: 8px 11px;
+  background: var(--white);
+  color: var(--black);
+  opacity: var(--hero-copy-opacity);
+}
+.journey-home .hero-scroll-cue::before { content: ''; display: inline-block; height: 20px; width: 1px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+.journey-home .hero-wash {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 40%;
+  fill: var(--white);
+  pointer-events: none;
+  transform: translateY(calc((1 - var(--hero-wash)) * 101%));
+}
+.journey-home .hero-film-fallback { position: absolute; bottom: 88px; left: var(--gutter); }
+@media (max-width: 1000px) {
+  .journey-home .hero-film-name h1 { font-size: min(31.5vw, 38svh, calc(58.8svh - 197px)); }
+  .journey-home .hero-scroll-cue { display: none; }
+  .journey-home .hero-film-controls { max-width: 64%; }
+}
+@media (max-width: 600px) {
+  .journey-home .hero-scene { padding: 88px var(--gutter) 24px; }
+  .hero-immersion-enabled .journey-home .home-film { height: 155svh; }
+  .hero-immersion-enabled .journey-home .home-works { padding-top: 48px; }
+  .journey-home .hero-film-name { padding-block: 20px; }
+  .journey-home .hero-film-name h1 { font-size: min(31.3vw, calc(58.8svh - 197px)); margin-block: 30px; }
+  .journey-home .hero-film-name :is(.small-label, .hero-thought) { font-size: 9px; }
+  .journey-home .home-film .entrance-meta { font-size: 8px; }
+  .journey-home .hero-film-bottom { gap: 12px; align-items: flex-end; }
+  .journey-home .hero-film-controls { max-width: 100%; gap: 0 16px; }
+  .journey-home .hero-film-bottom .flow-link { min-height: 46px; margin-left: auto; gap: 20px; }
+}
+@media (max-height: 500px) {
+  .journey-home .hero-scene { min-height: 380px; padding-top: 88px; padding-bottom: 18px; }
+  .journey-home .hero-film-name { padding: 0; }
+  .journey-home .hero-film-name h1 { font-size: min(27vw, 30svh); margin: 15px 0; }
+  .journey-home .hero-film-name :is(.small-label, .hero-thought), .journey-home .entrance-meta { display: none; }
+  .journey-home .hero-film-bottom { flex-wrap: nowrap; align-items: center; }
+  .journey-home .hero-film-controls { max-width: 60%; gap: 0 12px; }
+  .journey-home .hero-scroll-cue { display: none; }
+}
+.motion-reduced .journey-home .home-film { height: auto; }
+.motion-reduced .journey-home .hero-scene { position: relative; }
+.motion-reduced .journey-home .hero-wash { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-immersion-enabled .journey-home .home-film { height: auto; }
+  .hero-immersion-enabled .journey-home .hero-scene { position: relative; }
+  .journey-home .hero-wash { display: none; }
+}

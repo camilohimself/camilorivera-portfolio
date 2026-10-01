@@ -1,98 +1,121 @@
-# Camilo Rivera — portfolio
+# Camilo Rivera — Espace intérieur
 
-Site personnel de Camilo Rivera, artiste peintre à Bramois, Valais.
+Site personnel bilingue de Camilo Rivera, artiste peintre à Bramois, Valais. La branche `version-astra` transpose l’ensemble du portfolio dans l’univers V01 : contrastes blanc/noir, couleurs liquides, grandes images et parcours entre œuvres et souvenirs.
 
-Le site s’ouvre dans une encre bleue en mouvement, accompagnée de photographies personnelles. Le nouveau chapitre **Hors cadre** rapproche 84 archives : souvenirs, ateliers, écriture, lieux et cinq suites d’états de peinture à parcourir au doigt. Les photographies intimes se fondent dans une surface allant du papier à l’ombre : fragments agrandis, recadrés et partiellement hors écran. Une seconde encre animée devient un paysage en négatif. Les huit pages restent bilingues. La collection comprend 29 peintures, 26 encres et 60 photographies d’atelier ; le journal réunit maintenant 213 archives, dont les 73 fragments de la réserve et quinze feuilles de carnet photographiées le 13 septembre 2026.
-
-Les deux nouveaux fonds vidéo sont recadrés et déformés avant encodage, en versions portrait et paysage, silencieuses. L’accueil affiche d’abord son image fixe, puis autorise la lecture 900 ms après le chargement de la page. La lecture automatique respecte le mouvement réduit et l’économie de données. Les lecteurs s’arrêtent hors écran, en arrière-plan et derrière la visionneuse ; les choix explicites de pause persistent pendant la visite.
-
-Les 85 originaux de `PROJECT CAMILO2` restent hors du site et intacts. La photographie de chiffres raturés (`hc-75`) a été écartée à la demande de Camilo. Les 84 images retenues donnent 247 exports WebP, variantes comprises, pour 33,4 Mo ; les grandes images seules passent de 146,9 à 20,9 Mo. L’intégralité des petites variantes représente 3,30 Mo, chargés progressivement selon les cadres visités. Les vidéos mobiles pèsent 779 225 et 1 657 678 octets. Voir `docs/HORS-CADRE.md` pour la cartographie et les choix de production.
-
-Les galeries forment des accrochages irréguliers : grands changements d’échelle, superpositions, rotations et passages du noir au rouge. Les images agrandies restent accessibles dans leurs proportions complètes.
-
-Les autres pages du journal prolongent désormais les souvenirs par des traitements distincts : distances et silence dans les caves, écriture en marge des carnets, détail puis peinture entière, documents publics lisibles et présences personnelles décentrées. Le sommaire s’ouvre sur un fragment choisi et une citation de Camilo. Trois associations facultatives précèdent les 73 fragments de la réserve ; trois liens visuels font revenir les mains, les silhouettes et les reflets entre les pages. Aucune nouvelle image, vidéo ou dépendance de production. Voir `docs/REVERIE.md`.
-
-Des réflexions confiées par Camilo nourrissent l’accueil (« La peinture, c’est quelque chose qui ne ment jamais. »), l’ouverture des peintures et le passage des carnets consacré au geste, du poignet au corps entier. Ses formulations, répétitions et hésitations sont conservées : seules la transcription, la grammaire et la ponctuation sont corrigées. Les titres peuvent reprendre des fragments de ses phrases. L’anglais suit cette même parole.
-
-Le parcours mobile ajoute des transitions entre chapitres comme des feuilles tirées en travers, une réponse à la pression et une visionneuse qui suit le doigt. Les filtres prennent moins de hauteur et ramènent au début du nouvel accrochage. Le mouvement réduit supprime ces effets ; les liens et le défilement gardent leur comportement natif.
+Neuf pages composent le voyage : l’accueil, la collection, le journal, les carnets, la matière, les caves, les traces, la réserve et Hors cadre. Un index commun permet de changer de chemin. Le logo `cr.` et la typographie inversée accompagnent tout le site.
 
 ## Aperçu local
 
-Le site est statique, sans dépendance ni compilation. Depuis la racine du dépôt :
+Le site est statique, sans dépendance ni compilation. Depuis la racine du dépôt :
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Puis ouvrir `http://127.0.0.1:8000`. Un serveur HTTP est nécessaire pour charger `works.json`.
+Ouvrir `http://127.0.0.1:8000/`. Un serveur HTTP est nécessaire au chargement des inventaires JSON. Le dossier `v01/` conserve la première exploration ; l’expérience complète est maintenant à la racine.
 
-## Contenu
+## Contenus conservés
 
-- `works.json` : titres, ordre, techniques et métadonnées du catalogue. Les identifiants existants sont permanents.
-- `index.html` : structure de la page, textes français et premier contenu accessible sans script.
-- `css/style.css` : couleurs, typographie locale, compositions et comportements adaptatifs.
-- `js/app.js` : galerie, traduction anglaise, visionneuse, historique, préférences et effets au défilement.
-- `journal/index.html` : fragment éditorial choisi, citation de Camilo et sommaire des six chapitres.
-- `journal/carnets/index.html` : douze archives de carnets, quinze feuilles d’un même matin (13 septembre 2026) présentées en vingt pièces, dont cinq reprises agrandies, saturées, retournées ou en négatif par CSS uniquement, trois figures et deux films du geste.
-- `journal/matieres/index.html` : vingt archives de peinture et trois photographies de pigments et d’outils.
-- `journal/les-caves/index.html` : quatre photographies des anciennes caves Provins à St-Léonard, créditées à David Zuber, et hommage à Alban Reynard.
-- `journal/traces/index.html` : cinq archives personnelles, dont l’affiche de La Tour Lombarde de 2017, et trois nouveaux fragments d’exposition.
-- `journal/reserves/index.html` : les 73 nouvelles images, regroupées en figures, atelier, expositions et à-côtés ; liens directs et ouverture progressive par lots de seize.
-- `journal/archives.json` : inventaire des sources, variantes, descriptions françaises et anglaises et crédits connus.
-- `journal/hors-cadre/index.html` : nouveau chapitre, 85 liens d’archives présents sans JavaScript, cinq suites horizontales natives et dix-neuf feuilles supplémentaires dans un ensemble dépliable.
-- `journal/hors-cadre/selection.json` et `media.json` : choix éditoriaux, correspondance avec les originaux, recadrages, descriptions FR/EN, crédit de la référence et dimensions des exports.
-- `css/art-digital.css` et `js/art-digital.js` : ouverture de l’accueil, compositions de Hors cadre, zoom d’ambiance et commandes des suites de peinture. Ces deux fichiers ne sont chargés que par l’accueil et par Hors cadre.
-- `css/reverie.css` : compositions propres aux six autres pages du journal, distance, marges, changements d’échelle et échos entre chapitres.
-- `tools/prepare-hors-cadre.mjs` : préparation reproductible depuis le dossier original, avec ImageMagick, cwebp et FFmpeg. Aucun de ces outils n’est nécessaire au site publié. Les quatre films et leurs quatre images de repli déjà présents sont conservés tels quels ; le drapeau `--reencode-video` force leur réencodage.
-- `tools/verify-hors-cadre.mjs` et `tools/verify-reverie.mjs` : parcours de navigateur facultatifs, l’un pour l’accueil et Hors cadre, l’autre pour les six pages du journal.
-- `css/journal.css` et `js/journal.js` : compositions, langues, préférences et visionneuse des archives.
-- `css/intensity.css` : matières, ciel, papiers et contrastes communs aux sept pages du site.
-- `css/accrochages.css` : grands formats, collages et chevauchements des galeries, adaptés au téléphone.
-- `css/motion.css` et `js/motion.js` : transitions natives entre pages, réponse des boutons au toucher, repère mobile et entrées des fragments.
-- `css/viewer-motion.css` et `js/viewer-motion.js` : glissement direct, retour élastique, changement directionnel et ouverture depuis la vignette, partagés par les deux visionneuses.
-- `js/reserve.js` : filtres, progression et composition de la réserve ; adresse `?regard=atelier#inventaire`, par exemple.
-- `images/reserve/` : 73 images préparées pour le web et leurs variantes ; les fichiers fournis restent inchangés.
-- `images/matieres/kraft-ciel.webp` : fond décoratif, distinct des œuvres et des photographies d’archives.
-- `js/films.js` : lecteur silencieux commun aux trois films.
-- `js/dims.generated.js` : dimensions générées des images, à conserver comme fichier généré.
-- `images/` et `fonts/` : ressources locales, sans téléchargement depuis un service tiers.
-- `videos/geste-encre-mobile.mp4` et `videos/geste-encre-desktop.mp4` : film de 21,3 secondes, sans piste audio, en deux tailles. L’image de repli est `images/hero/geste-encre-poster.webp`.
-- `videos/deux-figures-*.mp4` et `videos/encre-en-mouvement-*.mp4` : films des carnets en deux tailles, respectivement 32,6 et 16,83 secondes, sans piste audio. Leurs images de repli sont dans `images/journal/`.
+- `works.json` : 115 entrées, dont 29 peintures, 26 encres et 60 photographies d’atelier. Identifiants et métadonnées existants inchangés.
+- `journal/archives.json` : 129 souvenirs — les 114 d’origine et les quinze feuilles de carnet photographiées le 13 septembre 2026 —, leurs variantes, descriptions françaises et anglaises et crédits connus.
+- `journal/hors-cadre/media.json` : les 84 photographies personnelles de Hors cadre, avec leurs recadrages, descriptions et dimensions d’export. La photographie `hc-75` reste écartée.
+- `journal/reserves/` : 73 fragments, affichés progressivement par lots de seize et filtrables par regard.
+- Les textes personnels du journal, la présentation de Camilo, les photographies des caves créditées à David Zuber, l’hommage à Alban Reynard et l’affiche de La Tour Lombarde sont conservés.
+- Les trois films du geste sont rejoints par le film d’espace intérieur. Les fichiers sources fournis ne sont pas modifiés.
 
-Le filtre initial présente les peintures et encres dans l’ordre du catalogue. Les photos ont leur propre filtre. Douze images sont affichées à la fois ; la visionneuse permet de parcourir toute la catégorie choisie.
+Les valeurs inconnues du catalogue restent vides. Les œuvres ouvertes sont montrées dans leurs proportions complètes, avec accès au fichier original web. La collection propose les œuvres, peintures, encres, photos d’atelier et souvenirs par lots de dix-huit.
 
-Dans la réserve, 37 figures, 15 photographies d’atelier, 14 images d’exposition et 7 à-côtés se répondent. Le filtre recalcule l’accrochage à partir des seules images retenues. Sans JavaScript, les 73 liens restent présents et utilisables.
+## Parcours de l’accueil
 
-Les commandes de partage proposent l’URL canonique de l’œuvre. La prise de contact ouvre un courrier avec la référence de l’œuvre, sans l’envoyer.
+L’accueil alterne six temps, dans un défilement vertical natif :
 
-Les six chapitres se lisent dans l’ordre annoncé par le sommaire : chacun porte une page précédente et une page suivante, des carnets à Hors cadre, qui ne boucle pas sur le premier mais ouvre la sortie vers la collection. L’accueil se termine sur un passage vers le journal, et Hors cadre renvoie vers les chapitres qui y conduisent. Ils sont aussi reliés par le sommaire, et des liens vers la collection avec sa sélection déjà active : `?collection=paintings#gallery`, `?collection=encres#gallery` et `?collection=shooting#gallery`. Les photos du journal ont une adresse propre dans leur chapitre : `#fragment/<identifiant>`. Le bouton de copie conserve l’adresse de la version consultée, y compris pour un aperçu local. Les pages et les images restent accessibles sans JavaScript.
+1. `#entree` : le film d’espace intérieur remplit l’écran sans voile dégradé. Le nom se compose en noir et blanc au-dessus de l’image ; des ouvertures fines dans les lettres laissent le film les traverser. Au défilement, le « o » de Camilo s’agrandit jusqu’à devenir un passage, puis une coulure blanche ouvre sur les œuvres. Le bouton « Voir les œuvres » conduit directement à la sélection.
+2. `#oeuvres` : cinq œuvres dans une composition plus calme, avec « Abstrait 996 » en premier, puis quatre peintures et encres.
+3. `#geste` : le film original du geste à l’encre et la parole de Camilo relient les œuvres à leur fabrication.
+4. `#memoire` : six fragments de mémoire, accompagnés des liens vers les chapitres correspondants. Les portes du journal sont intégrées à ce passage, sans seconde galerie des mêmes images.
+5. `#about` : le portrait et la présentation de Camilo.
+6. `#contact` : la conversation et les chemins pour poursuivre la visite.
 
-Les préférences de langue et de mouvement sont mémorisées localement. Si ce stockage est bloqué, le site continue de fonctionner. Le réglage système de réduction des animations est prioritaire.
+L’en-tête fixe conserve le monogramme `cr.`, l’accès direct à la collection et l’index. Les visiteurs peuvent suivre le voyage ou rejoindre les œuvres à tout moment. L’ancien déplacement horizontal de la rivière d’œuvres est supprimé ; les œuvres se regardent dans le fil vertical de la page.
 
-Le film du geste reste entre la collection et la présentation de l’atelier, à l’ancre `#geste`. Les lecteurs démarrent automatiquement en silence lorsqu’au moins un quart de leur cadre est visible. Une lecture volontaire reste active tant qu’une partie du cadre est visible. Ils se mettent en pause hors écran, dans un onglet masqué ou derrière la visionneuse. Le bouton de pause conserve le choix pendant la visite. Avec une préférence de mouvement réduit, une économie de données ou un réseau annoncé en 2G, une image reste affichée et la lecture attend un geste volontaire. Le fichier mobile est également utilisé sur un réseau annoncé en 3G. Aucun changement de fichier en cours de lecture lors d’une rotation d’écran.
+## Ce que la branche reprend de `main`
+
+La fusion du 1er octobre 2026 rejoint les neuf commits publiés sur `main` entre le 10 et le 13 septembre. Le rendu d’Astra reste la référence ; les contenus de `main` y prennent place :
+
+- **Hors cadre** (`journal/hors-cadre/`) : sixième chapitre du journal, avec ses compositions, ses deux films d’encre et ses cinq suites de peinture. La page reçoit l’en-tête, l’index, la signature `cr.`, la palette et les caractères du voyage.
+- **Les quinze feuilles des cahiers** (`#feuilles` dans les carnets) : vingt pièces éparpillées dans une chambre sombre, avec les traitements de `main` (détail agrandi, saturation, retournement, négatif) ; chaque lien ouvre la feuille entière.
+- **Le maillage** : chapitres numérotés sur six, accès rapide sous l’ouverture du journal, entrée 06 du sommaire, passages vers Hors cadre, échos entre chapitres, parcours « dans le rouge » de la matière, trois rapprochements avant les 73 fragments de la réserve. Les chapitres se suivent des carnets à Hors cadre, qui ouvre ensuite sur la collection.
+- **Les médias** : 377 visuels réencodés depuis les originaux et le film du geste réencodé, aux mêmes dimensions.
+
+Les titres et compositions que `main` avait réécrits pour sa version « rêverie » (petits titres, titres masqués, tailles d’images) ne sont pas repris : les blocs communs gardent le rendu d’Astra. Le détail figure dans `docs/DECISIONS.md`.
+
+## Architecture
+
+- `index.html` : entrée vidéo, œuvres, geste, mémoire et passages vers les chapitres, présentation et contact.
+- `oeuvres/index.html` : collection complète, navigation et visionneuse.
+- `journal/` : sept pages reliées, avec leurs textes, images et films.
+- `css/journey.css`, `journey-space.css`, `journey-site.css` : langage visuel commun et accueil.
+- `css/journey-homepage.css` : séquence de l’accueil, scène d’entrée immersive, œuvres posées et souvenirs reliés aux chapitres.
+- `css/hero-immersion.css` : scène du nom, passage au défilement, coulure blanche et présentation adaptée au mouvement réduit.
+- `css/journey-journal.css`, `journey-catalogue.css` : compositions des chapitres, collection et visionneuses.
+- `js/chromatic.js` : champs de couleur WebGL, palettes et variations entre chapitres ; fond CSS de repli.
+- `js/journey-home.js`, `journey-scroll.js` : transformations liées au défilement natif.
+- `js/hero-immersion.js` : composition du nom sur un calque transparent, passage par le « o » et liaison du premier écran au défilement.
+- `js/journey-nav.js` : index partagé des neuf pages.
+- `js/collection.js` : filtres, progression, visionneuse, zoom, glissement, historique et liens directs.
+- `js/journey-preferences.js` : langue et mouvement de la collection ; l’accueil et le journal partagent les mêmes préférences.
+- `js/journal.js`, `reserve.js`, `viewer-motion.js` : interactions des souvenirs et de la réserve.
+- `js/films.js` : lecture silencieuse des films du geste, mise en pause hors écran et derrière une fenêtre ouverte.
+- `css/motion.css`, `js/motion.js` : transitions entre pages et réponses tactiles.
+- `journal/hors-cadre/index.html`, `css/art-digital.css`, `js/art-digital.js` : Hors cadre, ses films d’encre et ses suites de peinture. `selection.json` et `media.json` tracent les choix éditoriaux et les exports.
+- `css/journey-journal.css`, fin de feuille : feuilles des cahiers, passages vers Hors cadre, échos, accès rapide, parcours dans le rouge et rapprochements.
+
+Les anciennes feuilles de composition restent dans le dépôt pour l’historique, comme `css/reverie.css`, `css/intensity.css`, `css/accrochages.css` et `js/app.js` venus de `main`. Les neuf pages actives utilisent les nouvelles compositions ; elles n’affichent plus les décors kraft/ciel. Les parcours `tools/verify-hors-cadre.mjs` et `tools/verify-reverie.mjs` décrivent la version de `main` et ne valident plus ce rendu.
+
+## Partage et icônes
+
+Chaque page déclare une carte de partage propre, lue par WhatsApp, iMessage, Signal, Telegram et les réseaux : `images/partage/<page>.jpg`, JPEG de 1200 × 630 pixels, entre 46 et 86 Ko. L’image de la page est posée au centre et le titre la traverse en noir et blanc inversé, comme le nom traverse le film à l’accueil ; le centre reste lisible quand une application recadre l’aperçu en carré. Les balises `og:image:width`, `og:image:height`, `og:image:type`, `og:image:alt` et `og:site_name` accompagnent la carte. `tools/generate-share-cards.mjs` la régénère (Playwright indiqué par `PLAYWRIGHT_MODULE`, rien n’est installé dans le dépôt).
+
+Le favicon reprend le monogramme `cr.` de l’en-tête, tracé depuis `fonts/dm-sans-400.woff2` avec le même interlettrage : `favicon.svg` (inversé en mode sombre), `favicon.ico` (16, 32 et 48 pixels) et `apple-touch-icon.png` (180 pixels). `tools/generate-icons.py` les régénère (fontTools, brotli et ImageMagick du poste).
+
+Une application peut garder l’ancien aperçu d’une adresse déjà partagée pendant un temps ; les nouveaux partages lisent les nouvelles balises.
+
+## Navigation et mouvement
+
+L’index, les liens entre chapitres et les retours vers la collection permettent une lecture libre. Les adresses `?collection=paintings#gallery`, `?collection=encres#gallery`, `?collection=shooting#gallery` et `?collection=memories#gallery` sélectionnent la collection. Les œuvres et souvenirs ont des liens directs. Les anciens liens de l’accueil restent pris en charge : `#mouvement` rejoint désormais l’entrée vidéo, `#gallery` les œuvres, `#journal` et `#hors-cadre` la mémoire, `#seuil` le contact. La réserve conserve `?regard=atelier#inventaire`.
+
+Les préférences FR/EN et de mouvement sont mémorisées localement. Le réglage système de réduction des animations est prioritaire. Les champs liquides se stabilisent au repos et s’arrêtent hors écran, dans un onglet masqué ou derrière une fenêtre. Le défilement reste natif.
+
+L’entrée reste temporairement ancrée à l’écran pendant le passage à travers le nom ; avancer ou remonter dans la page fait évoluer la même composition. Le monogramme `cr.`, les commandes du film et l’accès aux œuvres restent disponibles. Le nom dessiné sur canvas complète un véritable titre `h1`, conservé pour l’accessibilité et comme repli si le rendu n’est pas disponible. Le calque transparent révèle la vidéo existante sans second lecteur ni second décodage. En mouvement réduit, l’entrée occupe un seul écran et la transformation liée au défilement disparaît. Ce travail concerne uniquement l’entrée de l’accueil : ordre des sections, catalogue et photographies de souvenirs restent inchangés.
+
+Les films se lancent sans son lorsqu’ils entrent dans l’écran. Le film d’espace intérieur occupe tout le fond du premier écran et démarre à l’arrivée : un clic sur la vidéo ou sa commande permet de le mettre en pause et de le relancer. Une pause volontaire est conservée pendant la visite, même après un aller-retour dans la page. En mouvement réduit ou économie de données, la lecture attend un geste volontaire.
+
+La vidéo d’entrée dispose de deux fichiers adaptés à l’écran : `videos/espace-interieur-desktop.mp4` (740 × 1000 pixels, 3 800 047 octets) et `videos/espace-interieur-mobile.mp4` (540 × 730 pixels, 1 848 689 octets). La source est affectée à la première lecture. Ces versions conservent les 313 images à 24 images par seconde, les 13,041667 secondes et la piste audio du fichier fourni ; le lecteur impose le silence. Les originaux restent inchangés.
+
+Les commandes de contact ouvrent un courrier avec la référence sans l’envoyer. Les liens des images et des chapitres restent utilisables sans JavaScript ; les fonds CSS remplacent WebGL si nécessaire.
 
 ## Contrôles locaux
 
 ```sh
-node --check js/app.js
-node --check js/journal.js
-node --check js/films.js
-node --check js/reserve.js
-node --check js/motion.js
-node --check js/viewer-motion.js
-node --check js/art-digital.js
-node --check js/dims.generated.js
 node tools/validate-portfolio.mjs
 node tools/validate-journal.mjs
+node --check js/chromatic.js
+node --check js/collection.js
+node --check js/journey-home.js
+node --check js/hero-immersion.js
+node --check js/journey-nav.js
+node --check js/journey-scroll.js
+node --check js/journey-preferences.js
+node --check js/films.js
+node --check js/motion.js
+node --check js/art-digital.js
 git diff --check
 ```
 
-Les deux parcours `tools/verify-*.mjs` demandent le serveur local sur le port 8000, Chrome stable installé, et le chemin du module Playwright dans `PLAYWRIGHT_MODULE` : aucune dépendance n’est installée dans le dépôt. Le chemin `AXE_PATH` est facultatif ; sans lui, le seul groupe d’audit d’accessibilité de `verify-reverie.mjs` échoue et les douze autres passent.
+Les validateurs contrôlent les inventaires, ressources, identifiants et liens locaux. Les interactions et le rendu doivent également être examinés dans un navigateur. Les essais réellement exécutés et leurs limites figurent dans `docs/VERIFICATION.md` ; les choix de conception dans `docs/DECISIONS.md`.
 
-Le validateur vérifie les références aux images, variantes et polices, les métadonnées du catalogue, les identifiants, les ancres et les liens locaux. Les interactions et le rendu demandent également des essais dans un navigateur.
-
-Consulter `works.README.md` pour enrichir le catalogue et `docs/DECISIONS.md` pour les choix de cette refonte. `RAPPORT-PORTFOLIO-2026.md` décrit une version antérieure et reste un document historique.
+Consulter `works.README.md` pour enrichir le catalogue. `RAPPORT-PORTFOLIO-2026.md` documente une version antérieure.
 
 ## Publication
 
-La configuration existante est conservée. Cette branche doit être revue avant toute fusion ou publication.
+Travail local sur `version-astra`, qui contient désormais `main`. Aucun envoi, fusion vers `main` ou déploiement n’est effectué par cette intégration.

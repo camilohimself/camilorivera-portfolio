@@ -1,0 +1,1037 @@
+/* Journal V01 — des pièces traversées, des images qui restent entières. */
+.journey-journal {
+  --paper: var(--white);
+  --canvas: var(--white);
+  --ink: var(--black);
+  --accent: var(--black);
+  --dark-line: color-mix(in srgb, var(--white) 24%, transparent);
+  --font-body: DM, Arial, sans-serif;
+  --font-display: Cormorant, Georgia, serif;
+  --header-h: 80px;
+  --room-space: clamp(90px, 11vw, 190px);
+  --caption-surface: var(--white);
+  --caption-ink: var(--black);
+  background: var(--white);
+  color: var(--black);
+}
+
+.journey-journal main { overflow: clip; }
+.journey-journal :is(h1, h2, h3) {
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: -.065em;
+}
+.journey-journal em { font-family: Cormorant, Georgia, serif; }
+.journey-journal .topbar { position: relative; z-index: 30; }
+.journey-journal .topbar nav a[aria-current] { text-decoration: underline; }
+.journey-journal .scroll-progress { z-index: 60; background: var(--ultramarine); }
+.journey-journal .eyebrow {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .035em;
+  line-height: 1.6;
+}
+.journey-journal .text-link {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  gap: 26px;
+  border-bottom: 1px solid currentColor;
+  padding-block: 9px;
+}
+.journey-journal .text-link svg { width: 19px; height: 19px; }
+.journey-journal .paper-edge { clip-path: none; }
+.journey-journal .button-outline { border-color: currentColor; border-radius: 40px; }
+.journey-journal .button-outline:hover { background: var(--white); color: var(--black); }
+
+/* Une scène contient son liquide et son contraste ; aucune image n'est filtrée. */
+.chromatic-chamber { position: relative; isolation: isolate; }
+/* Les copies restent dans le contexte de la scène : le blanc peut y inverser le liquide. */
+.chromatic-chamber > :not(.chapter-field) { position: relative; z-index: auto; }
+/* Les plans photographiques passent devant le canevas, sans isoler le texte. */
+.chromatic-chamber > :is(
+  .cover-collage,
+  .notebook-cover,
+  .traces-collage,
+  .opening-paint,
+  .collision-images,
+  .pigment-stack,
+  .lived-photos,
+  .reserve-opening-collage,
+  .caves-hero-image,
+  .entry-image,
+  .scrap-spread,
+  .colour-wall,
+  .archive-photo
+) { z-index: 1; }
+.chapter-field { z-index: 0; }
+.chapter-field[data-palette="light"] {
+  background:
+    radial-gradient(ellipse at 95% 90%, var(--ultramarine), transparent 48%),
+    radial-gradient(ellipse at 55% 110%, var(--violet), transparent 48%),
+    var(--white);
+}
+.chapter-field[data-palette="dark"] {
+  background:
+    radial-gradient(ellipse at 80% 45%, var(--ultramarine), transparent 55%),
+    radial-gradient(ellipse at 4% 95%, var(--violet), transparent 50%),
+    var(--black);
+}
+.chapter-field[data-tone="amber"] {
+  background:
+    radial-gradient(ellipse at 85% 80%, var(--amber), transparent 60%),
+    radial-gradient(ellipse at 4% 85%, var(--violet), transparent 50%),
+    var(--white);
+}
+.chapter-field[data-tone="mono"] {
+  background:
+    radial-gradient(ellipse at 90% 110%, var(--black) 14%, transparent 62%),
+    var(--white);
+}
+.chapter-field[data-palette="dark"][data-tone="amber"] {
+  background:
+    radial-gradient(ellipse at 85% 80%, var(--amber), transparent 68%),
+    var(--black);
+}
+.journey-journal :is(.cover-copy, .opening-copy, .reserve-opening-copy) h1,
+.journey-journal .chromatic-chamber :is(h2, .eyebrow),
+.journey-journal .caves-title {
+  color: var(--white);
+  mix-blend-mode: difference;
+}
+.journey-journal .chromatic-chamber :is(.journal-lead, .journal-prose, .text-link) {
+  color: var(--white);
+  mix-blend-mode: difference;
+}
+.journey-journal .chromatic-chamber :is(h1, h2) em { color: inherit; }
+
+/* Fil d'Ariane, proportions et lecture commune aux six chapitres. */
+.folio-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--muted);
+}
+.folio-line nav { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.folio-line a { display: inline-flex; align-items: center; min-height: 44px; }
+.journey-journal .folio-line .text-link { font-size: 10px; gap: 18px; border: 0; }
+.folio-line svg { width: 15px; height: 15px; transform: rotate(180deg); }
+.folio-line > span { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.chapter-opening,
+.journal-cover-opening,
+.reserve-opening {
+  display: grid;
+  grid-template-columns: 1.06fr .94fr;
+  align-items: center;
+  gap: 3vw;
+  min-height: min(900px, 94svh);
+  padding-block: clamp(70px, 8vw, 130px);
+}
+.opening-copy, .cover-copy, .reserve-opening-copy { min-width: 0; }
+.opening-copy .eyebrow,
+.cover-copy .eyebrow,
+.reserve-opening-copy .eyebrow { margin-bottom: 37px; }
+.journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 {
+  font-size: clamp(80px, 11.4vw, 190px);
+  line-height: .83;
+  letter-spacing: -.077em;
+  position: relative;
+  z-index: 3;
+}
+.journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 em {
+  display: inline-block;
+  font-size: 1.12em;
+  line-height: .83;
+  letter-spacing: -.055em;
+}
+.journal-lead {
+  font-size: 13px;
+  line-height: 1.95;
+  max-width: 340px;
+  margin-top: 35px;
+  color: var(--muted);
+}
+.journal-prose { font-size: 12px; line-height: 1.95; color: var(--muted); max-width: 340px; }
+:is(.opening-copy, .cover-copy, .reserve-opening-copy) > .text-link { margin-top: 24px; }
+.journal-section { padding-block: var(--room-space); position: relative; }
+.journal-heading {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.55fr .65fr;
+  align-items: end;
+  gap: 28px 9%;
+  margin-bottom: clamp(70px, 8vw, 130px);
+}
+.journal-heading > .eyebrow { grid-column: 1 / -1; }
+.journey-journal .journal-heading h2 { font-size: clamp(58px, 7.6vw, 122px); line-height: .89; }
+.journal-heading .journal-prose { padding-bottom: 5px; }
+
+/* Les légendes ont leur propre fond : la lumière ne les rend jamais illisibles. */
+.archive-photo { position: relative; min-width: 0; translate: 0 var(--drift-y, 0px); }
+.photo-link { display: block; position: relative; }
+.archive-photo img { width: 100%; height: auto; object-fit: contain; }
+.archive-photo figcaption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 11px;
+  margin-top: 10px;
+  font-size: 9px;
+  line-height: 1.6;
+  background: var(--caption-surface);
+  color: var(--caption-ink);
+}
+.archive-photo figcaption > span:first-child { min-width: 0; }
+.archive-photo figcaption > span:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.photo-enlarge {
+  position: absolute;
+  right: 13px;
+  bottom: 13px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  font-size: 21px;
+  transition: scale .4s var(--ease), background .4s;
+}
+.photo-link:hover .photo-enlarge { scale: 1.12; }
+.photo-link:focus-visible { outline-offset: 8px; }
+.journey-journal [data-journey-motion] { translate: 0 var(--drift-y, 0px); }
+.journey-journal :is(.cover-collage, .notebook-cover, .traces-collage) {
+  transform: translate3d(0, var(--opening-drift, 0px), 0);
+}
+.journey-journal .opening-paint {
+  scale: calc(1 + var(--flow-progress, 0) * .055);
+  transform-origin: 60% 50%;
+}
+
+/* Le seuil du journal : quatre souvenirs sur des plans différents. */
+.journal-cover-opening { padding-bottom: 110px; }
+.cover-collage { position: relative; height: clamp(470px, 45vw, 690px); margin-left: -8%; }
+.cover-photo { display: block; position: absolute; transition: scale .65s var(--ease); }
+.cover-photo:hover { scale: 1.045; z-index: 7; }
+.cover-atelier { left: 0; top: 21%; width: 84%; z-index: 1; }
+.cover-atelier img { aspect-ratio: 1.22; object-fit: cover; }
+.cover-encre { right: 0; top: 0; width: 39%; z-index: 2; }
+.cover-encre img { aspect-ratio: .73; object-fit: contain; }
+.cover-paint { left: 9%; bottom: 0; width: 48%; z-index: 3; }
+.cover-paint img { aspect-ratio: 1; object-fit: contain; }
+.cover-poster { right: 1%; bottom: 3%; width: 24%; z-index: 4; }
+.reading-note { display: flex; justify-content: flex-end; padding-block: 55px 95px; }
+.reading-note p { font: italic 300 clamp(30px, 4vw, 62px)/.98 Cormorant, Georgia, serif; max-width: 660px; }
+.chapter-index { padding-block: 0; }
+.index-entry {
+  display: grid;
+  grid-template-columns: 42px 1fr 1.2fr;
+  align-items: center;
+  gap: 5%;
+  min-height: 82svh;
+  padding-block: 95px;
+  border-top: 1px solid var(--line);
+}
+.entry-number { align-self: start; font-size: 12px; font-variant-numeric: tabular-nums; }
+.journey-journal .entry-copy h2 { font-size: clamp(65px, 8.5vw, 140px); line-height: .87; }
+.entry-copy .journal-prose { max-width: 275px; margin-block: 30px 15px; }
+.entry-image { display: block; position: relative; width: 100%; }
+.entry-image img { width: 100%; height: min(62svh, 680px); object-fit: contain; transition: scale .8s var(--ease); }
+.entry-image:hover img { scale: 1.03; }
+.index-carnets .entry-image { width: 76%; justify-self: end; }
+.index-matieres .entry-image { width: 96%; }
+.index-les-caves {
+  min-height: 88svh;
+  color: var(--white);
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+}
+.index-les-caves .entry-image { width: 108%; margin-left: -8%; }
+.index-les-caves .entry-image img { object-fit: contain; }
+.index-traces .entry-image { width: 50%; justify-self: center; }
+.index-reserves .entry-image { width: 65%; justify-self: end; }
+.entry-corner {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  font-size: 25px;
+}
+.journal-reserve-last { padding-block: 35px 65px; }
+
+/* Carnets : un trait noir devient une chambre ; les pages se répondent. */
+.notebook-cover { position: relative; width: 100%; padding: 0 14% 0 0; }
+.opening-figure { width: 100%; }
+.word-fragment { position: absolute; bottom: -9%; right: 0; width: 32%; }
+.word-fragment img { width: 100%; height: auto; }
+.ink-collision,
+.pigment-room,
+.lived-room {
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  align-items: center;
+  gap: 7%;
+  padding-block: var(--room-space);
+  background: var(--black);
+  color: var(--white);
+}
+.ink-collision::before,
+.lived-room::before {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: -55px;
+  height: 115px;
+  border-radius: 48% 52% 0 0 / 95% 95% 0 0;
+  background: var(--black);
+  z-index: 0;
+  pointer-events: none;
+}
+.collision-copy .eyebrow,
+.pigment-copy .eyebrow,
+.lived-copy .eyebrow { margin-bottom: 35px; }
+.journey-journal :is(.collision-copy, .pigment-copy, .lived-copy) h2 {
+  font-size: clamp(64px, 8.2vw, 136px);
+  line-height: .89;
+}
+:is(.collision-copy, .pigment-copy, .lived-copy) .journal-prose { margin-block: 30px 20px; max-width: 285px; }
+.collision-images { position: relative; min-height: clamp(610px, 63vw, 960px); }
+.ink-tower { width: 73%; margin-left: 9%; }
+.ink-knot { position: absolute; width: 40%; right: 0; bottom: 3%; z-index: 3; }
+.ink-blue { position: absolute; width: 35%; left: 0; bottom: 9%; z-index: 2; }
+.scrap-spread,
+.paint-spread,
+.colour-wall {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(90px, 10vw, 170px) 3%;
+  padding-bottom: 45px;
+}
+:is(.scrap-spread, .paint-spread, .colour-wall) > div { min-width: 0; }
+.scrap-spread > div:nth-child(4n + 1) { grid-column: 1 / 8; }
+.scrap-spread > div:nth-child(4n + 2) { grid-column: 9 / 13; padding-top: 35%; }
+.scrap-spread > div:nth-child(4n + 3) { grid-column: 2 / 6; }
+.scrap-spread > div:nth-child(4n) { grid-column: 7 / 13; padding-top: 15%; }
+.ochre-pages { background: var(--white); }
+.ochre-pages .scrap-spread > div:first-child { grid-column: 1 / 9; }
+.ochre-pages .scrap-spread > div:nth-child(2) { grid-column: 10 / 13; }
+.final-sheets > div:first-child { grid-column: 1 / 9; }
+.final-sheets > div:nth-child(2) { grid-column: 10 / 13; padding-top: 50%; }
+.journal-film {
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  align-items: center;
+  gap: 10%;
+  padding-block: var(--room-space);
+  background: var(--black);
+  color: var(--white);
+}
+.journal-film .film-copy h2 { font-size: clamp(60px, 7vw, 115px); margin-block: 35px 30px; }
+.journal-film .journal-prose { color: var(--dark-muted); }
+.film-controls { display: flex; align-items: center; gap: 20px; margin-top: 32px; }
+.journal-film .film-toggle { min-height: 48px; padding: 11px 20px; border: 1px solid currentColor; border-radius: 30px; font-size: 11px; }
+.film-silent { font-size: 10px; color: var(--dark-muted); }
+.journal-film .film-frame { position: relative; max-width: 100%; min-width: 0; }
+.journal-film .film-poster { max-height: 75svh; object-fit: contain; }
+.journal-film .film-frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
+.journal-film .film-frame.has-film video { opacity: 1; }
+.journal-film .film-frame.has-film .film-poster { visibility: hidden; }
+.film-message { margin-top: 18px; font-size: 11px; line-height: 1.7; max-width: 330px; }
+.journal-film#film-02 { background: var(--white); color: var(--black); border-bottom: 1px solid var(--line); }
+.journal-film#film-02 :is(.journal-prose, .film-silent, .eyebrow) { color: var(--muted); }
+.journal-film#film-02 .film-copy { order: 2; }
+
+/* Matières : changement d'échelle, pigments suspendus et longues respirations. */
+.paint-opening { grid-template-columns: .9fr 1.1fr; }
+.opening-paint { width: 94%; margin-left: 6%; }
+.opening-paint img { max-height: 72svh; }
+.pigment-room { grid-template-columns: .8fr 1.2fr; }
+.pigment-stack { position: relative; min-height: clamp(650px, 66vw, 1000px); }
+.pigment-white { width: 85%; }
+.pigment-blue { position: absolute; top: 10%; right: 0; width: 38%; z-index: 2; }
+.pigment-red { position: absolute; bottom: 0; right: 8%; width: 47%; z-index: 3; }
+.paint-spread > div:nth-child(4n + 1) { grid-column: 1 / 9; }
+.paint-spread > div:nth-child(4n + 2) { grid-column: 10 / 13; padding-top: 55%; }
+.paint-spread > div:nth-child(4n + 3) { grid-column: 1 / 6; padding-top: 20%; }
+.paint-spread > div:nth-child(4n) { grid-column: 7 / 13; }
+.night-paint {
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+  background: var(--black);
+  color: var(--white);
+  padding-block: var(--room-space);
+  position: relative;
+  isolation: isolate;
+}
+.night-paint .journal-heading { display: block; position: relative; z-index: 2; margin-bottom: -7%; pointer-events: none; }
+.night-paint .eyebrow { margin-bottom: 28px; }
+.journey-journal .night-paint .journal-heading h2 { font-size: clamp(70px, 10vw, 170px); }
+.night-canvas { width: 86%; margin-left: auto; }
+.night-canvas img { max-height: 100svh; object-fit: contain; }
+.night-paint > .text-link { display: flex; width: fit-content; margin: 36px 0 0 auto; }
+.colour-wall > div:nth-child(6n + 1) { grid-column: 1 / 7; }
+.colour-wall > div:nth-child(6n + 2) { grid-column: 8 / 12; padding-top: 32%; }
+.colour-wall > div:nth-child(6n + 3) { grid-column: 2 / 6; }
+.colour-wall > div:nth-child(6n + 4) { grid-column: 7 / 13; padding-top: 20%; }
+.colour-wall > div:nth-child(6n + 5) { grid-column: 1 / 9; }
+.colour-wall > div:nth-child(6n) { grid-column: 10 / 13; padding-top: 25%; }
+.quiet-pages { background: var(--white); }
+.paint-signs { --caption-surface: var(--black); --caption-ink: var(--white); background: var(--black); color: var(--white); }
+.paint-signs .journal-prose { color: var(--dark-muted); }
+.paint-signs .colour-wall > div:last-child { grid-column: 3 / 11; padding-top: 0; }
+.horizon-page { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; gap: 10%; padding-block: var(--room-space); }
+.journey-journal .horizon-page h2 { font-size: clamp(56px, 7vw, 110px); }
+
+/* Les caves : une fenêtre dans le noir, puis du silence autour de l'hommage. */
+.chapter-les-caves {
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+  background: var(--black);
+  color: var(--white);
+}
+.chapter-les-caves .topbar { color: var(--white); background: var(--black); border-color: var(--dark-line); }
+.chapter-les-caves .topbar #motion-toggle { border-color: var(--dark-line); }
+.chapter-les-caves .folio-line { color: var(--dark-muted); border-color: var(--dark-line); }
+.chapter-les-caves :is(.journal-prose, .journal-lead) { color: var(--dark-muted); }
+.caves-opening { min-height: min(1000px, 110svh); padding: 110px var(--gutter) 75px; display: grid; align-items: end; }
+.caves-opening .caves-hero-image { position: relative; width: 82%; margin-left: auto; }
+.caves-hero-image img { width: 100%; max-height: 80svh; object-fit: contain; }
+.caves-hero-image figcaption { display: none; }
+.caves-opening .caves-title { position: absolute; left: var(--gutter); top: 10%; z-index: 3; pointer-events: none; }
+.caves-title .eyebrow { margin-bottom: 35px; max-width: 500px; }
+.journey-journal .caves-title h1 { font-size: clamp(100px, 12vw, 200px); line-height: .79; letter-spacing: -.077em; }
+.caves-credit { margin-top: 35px; font-size: 10px; }
+.caves-story { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 10%; }
+.caves-story .eyebrow { margin-bottom: 34px; }
+.journey-journal .caves-story h2 { font-size: clamp(62px, 7vw, 115px); }
+.caves-story .journal-prose { margin-top: 28px; }
+.caves-story .text-link { margin-top: 24px; }
+.caves-silence { padding-block: 30px 100px; }
+.caves-silence > .archive-photo { width: 83%; margin-inline: auto; }
+.absence-note { display: flex; align-items: end; justify-content: space-between; gap: 10%; margin-block: 85px 30px; }
+.journey-journal .absence-note h2 { font-size: clamp(65px, 8vw, 132px); }
+.absence-note .journal-prose { max-width: 290px; }
+.caves-passage { padding-block: 95px 150px; }
+.caves-passage > .archive-photo { width: 80%; }
+.passage-note { padding-top: 45px; margin-left: 30%; font: italic 300 clamp(35px, 5vw, 78px)/1 Cormorant, Georgia, serif; }
+.homage { --caption-surface: var(--white); --caption-ink: var(--black); background: var(--white); color: var(--black); padding-block: clamp(110px, 15vw, 230px); }
+.homage-note { max-width: 800px; margin-inline: auto; }
+.homage-note .eyebrow { margin-bottom: 45px; }
+.journey-journal .homage-note h2 { font-size: clamp(76px, 9vw, 145px); }
+.chapter-les-caves .homage .journal-lead { color: var(--muted); font-size: 17px; max-width: 560px; }
+.homage-credit { margin-top: 55px; padding-top: 25px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 7px; font-size: 11px; }
+.homage-credit strong { font-weight: 400; font-size: 16px; }
+.homage-credit > span { color: var(--muted); }
+
+/* Traces : les lieux et les personnes gardent la même place que les œuvres. */
+.traces-opening { grid-template-columns: .85fr 1.15fr; gap: 5%; padding-bottom: 165px; }
+.traces-collage { position: relative; padding-right: 8%; }
+.studio-memory img { object-fit: contain; }
+.mirror-memory { position: absolute; right: 0; bottom: -17%; width: 28%; }
+.exhibition-page { display: grid; grid-template-columns: 1fr .8fr; align-items: center; gap: 14%; }
+.poster-sheet { width: 78%; justify-self: center; }
+.journey-journal .exhibition-copy h2 { font-size: clamp(155px, 21vw, 340px); line-height: .85; letter-spacing: -.085em; position: relative; margin-top: 38px; }
+.date-rule { position: absolute; left: 0; right: 8%; bottom: 8%; height: 2px; background: currentColor; }
+.journey-journal .exhibition-copy h3 { font-size: clamp(38px, 4.5vw, 68px); line-height: 1; margin-top: 36px; }
+.exhibition-names { font-size: 13px; line-height: 1.8; margin-block: 25px; }
+.exhibition-date { font-size: 12px; }
+.exhibition-copy .journal-prose { margin-top: 14px; }
+.exhibition-copy .text-link { margin-top: 22px; }
+.lived-room { position: relative; }
+.lived-photos { position: relative; min-height: clamp(580px, 64vw, 950px); }
+.lived-concert { width: 92%; }
+.lived-people { position: absolute; width: 41%; left: 0; bottom: 2%; z-index: 2; }
+.lived-poster { position: absolute; width: 40%; right: 0; bottom: -2%; z-index: 3; }
+.memory-spread { display: grid; grid-template-columns: 1.2fr .8fr; align-items: start; gap: 15%; padding-inline: 8%; }
+.window-note { padding-top: 63%; }
+.margin-note { font: italic 300 clamp(32px, 4vw, 61px)/1.05 Cormorant, Georgia, serif; margin-top: 45px; }
+
+/* Réserve : une collection lisible, avec de grands écarts d'échelle. */
+.reserve-opening { padding-bottom: 160px; }
+.reserve-count { display: flex; align-items: center; gap: 20px; margin-top: 35px; font-size: 10px; color: var(--white); mix-blend-mode: difference; }
+.reserve-count b { font-size: 75px; letter-spacing: -.07em; font-weight: 400; line-height: 1; }
+.reserve-opening-collage { position: relative; min-height: clamp(600px, 60vw, 920px); width: 100%; }
+.reserve-portrait { width: 76%; margin-left: 10%; }
+.reserve-shadow { position: absolute; width: 39%; left: 0; bottom: 0; z-index: 2; }
+.reserve-moth { position: absolute; width: 30%; right: 0; bottom: 7%; z-index: 3; }
+.reserve-shadow img, .reserve-moth img { object-fit: contain; }
+.cut-label { position: absolute; right: 0; bottom: -72px; max-width: 320px; font: italic 300 clamp(30px, 3vw, 45px)/1.05 Cormorant, Georgia, serif; color: var(--white); mix-blend-mode: difference; }
+.reserve-inventory {
+  --caption-surface: var(--black);
+  --caption-ink: var(--white);
+  padding-block: var(--room-space);
+  background: var(--black);
+  color: var(--white);
+}
+.reserve-inventory-heading { display: flex; justify-content: space-between; align-items: end; gap: 10%; margin-bottom: 55px; }
+.journey-journal .reserve-inventory-heading h2 { max-width: 750px; font-size: clamp(65px, 8vw, 130px); line-height: .9; }
+.reserve-inventory-heading .journal-prose { color: var(--dark-muted); max-width: 275px; }
+.reserve-toolbar { position: sticky; top: 0; z-index: 12; background: var(--black); padding-block: 12px; border-block: 1px solid var(--dark-line); margin-bottom: 65px; }
+.reserve-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.reserve-filter { display: inline-flex; align-items: center; gap: 16px; min-height: 44px; padding: 8px 18px; border-radius: 32px; font-size: 11px; }
+.reserve-filter small { font-size: 9px; }
+.reserve-filter[aria-pressed="true"] { background: var(--white); color: var(--black); }
+.reserve-filter:hover:not([aria-pressed="true"]) { background: var(--dark-line); }
+.reserve-status { font-size: 10px; line-height: 1.6; color: var(--dark-muted); margin-top: 10px; min-height: 16px; }
+.reserve-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: clamp(75px, 10vw, 170px) 4%; }
+.reserve-item { min-width: 0; scroll-margin-top: 160px; }
+.reserve-item[data-hang="1"] { grid-column: 1 / 9; }
+.reserve-item[data-hang="2"] { grid-column: 10 / 13; padding-top: 45%; }
+.reserve-item[data-hang="3"] { grid-column: 2 / 6; }
+.reserve-item[data-hang="4"] { grid-column: 7 / 13; padding-top: 17%; }
+.reserve-item[data-hang="5"] { grid-column: 1 / 8; }
+.reserve-item[data-hang="6"] { grid-column: 9 / 13; padding-top: 38%; }
+.reserve-item[data-hang="7"] { grid-column: 1 / 5; padding-top: 15%; }
+.reserve-item[data-hang="8"] { grid-column: 6 / 13; }
+.reserve-grid .photo-link img { max-height: 85svh; width: 100%; object-fit: contain; }
+.reserve-grid figcaption { padding-inline: 0; }
+.reserve-more { display: flex; justify-content: center; margin-top: 80px; }
+.reserve-more .button { min-height: 54px; padding: 12px 30px; }
+.reserve-exit { display: grid; grid-template-columns: 1.4fr 1fr; align-items: end; gap: 28px 10%; padding-block: var(--room-space); background: var(--black); color: var(--white); }
+.journey-journal .reserve-exit h2 { grid-row: 1 / 3; font-size: clamp(70px, 8vw, 130px); line-height: .88; }
+.reserve-exit .text-link { justify-self: start; }
+
+/* Sorties : on poursuit dans un autre souvenir ou l'on retrouve le voyage. */
+.journal-related { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding-block: 65px; border-top: 1px solid var(--line); }
+.journey-journal .journal-related h2 { font-size: clamp(38px, 4.6vw, 74px); }
+.journal-related .text-link { max-width: 430px; }
+.reserve-invitation { display: grid; grid-template-columns: .5fr 1fr; align-items: center; justify-content: center; gap: 7%; padding-block: 85px; background: var(--black); color: var(--white); }
+.reserve-invitation-number { justify-self: end; font-size: clamp(100px, 16vw, 260px); letter-spacing: -.09em; line-height: .8; }
+.journey-journal .reserve-invitation h2 { font-size: clamp(43px, 5.5vw, 86px); max-width: 700px; }
+.reserve-invitation .text-link { margin-top: 22px; }
+.chapter-turn { padding-block: 90px 100px; background: var(--white); color: var(--black); }
+.turn-heading { display: flex; align-items: end; justify-content: space-between; gap: 35px; margin-bottom: 50px; }
+.journey-journal .turn-heading h2 { font-size: clamp(45px, 5vw, 82px); }
+.turn-links { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--line); }
+.turn-links a { display: block; padding-block: 42px; transition: padding .4s var(--ease); }
+.turn-links a:first-child { border-right: 1px solid var(--line); padding-right: 35px; }
+.turn-links a:last-child { text-align: right; padding-left: 35px; }
+.turn-links a:hover { padding-inline: 20px; }
+.turn-direction { display: block; font-size: 10px; color: var(--muted); margin-bottom: 25px; }
+.turn-title { display: block; font-size: clamp(48px, 6.8vw, 110px); letter-spacing: -.065em; line-height: .9; }
+.journey-journal .site-footer { color: var(--black); background: var(--white); padding-block: 30px; }
+.journey-journal .site-footer .wordmark { font-family: DM, Arial, sans-serif; font-size: 23px; letter-spacing: -.06em; }
+.journey-journal .site-footer .wordmark span { color: inherit; }
+.chapter-les-caves .journal-related { border-color: var(--dark-line); }
+
+/* Un repère natif compact reste accessible dans toutes les pièces. */
+.journey-journal .mobile-dock {
+  position: fixed;
+  inset: auto var(--gutter) max(17px, env(safe-area-inset-bottom)) auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: max-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  height: auto;
+  padding: 3px 20px;
+  border: 1px solid var(--line);
+  border-radius: 40px;
+  background: var(--white);
+  color: var(--black);
+  box-shadow: 0 3px 22px color-mix(in srgb, var(--black) 9%, transparent);
+  backdrop-filter: none;
+}
+.journey-journal .mobile-dock a { min-height: 44px; display: flex; align-items: center; justify-content: center; flex-direction: row; padding: 0; gap: 0; font-size: 10px; }
+.journey-journal .mobile-dock a[aria-current] { text-decoration: underline; text-underline-offset: 5px; }
+.journey-journal .mobile-dock a::before,
+.journey-journal .mobile-dock svg,
+.journey-journal .dock-cursor { display: none; }
+
+/* Le document d'origine remplit la visionneuse, sans découpe ni distorsion. */
+.journey-journal .archive-viewer { background: var(--black); color: var(--white); }
+.archive-viewer .archive-stage > img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.archive-viewer .archive-stage.is-zoomed > img { width: 200%; height: 200%; max-width: none; max-height: none; }
+.journey-journal .archive-viewer .viewer-brand { font-family: DM, Arial, sans-serif; font-size: 21px; }
+.journey-journal .archive-viewer .viewer-details h2 { font-size: 26px; line-height: 1.15; letter-spacing: -.025em; }
+.archive-viewer .viewer-details p { font-size: 10px; line-height: 1.7; color: var(--dark-muted); margin-top: 5px; max-width: 750px; }
+#archive-counter { font-size: 11px; white-space: nowrap; }
+.archive-copy-fallback { position: absolute; top: 80px; right: var(--viewer-pad); left: var(--viewer-pad); padding: 18px; background: var(--white); color: var(--black); display: flex; align-items: center; gap: 15px; z-index: 5; }
+.archive-copy-fallback label { font-size: 11px; white-space: nowrap; }
+.archive-copy-fallback input { min-width: 0; width: 100%; padding: 10px; font-size: 13px; border: 1px solid var(--line); background: var(--white); }
+.archive-message { pointer-events: none; }
+
+@media (min-width: 1700px) {
+  .journey-journal { --gutter: max(85px, calc((100vw - 1600px) / 2)); }
+}
+
+@media (max-width: 1000px) {
+  .journal-cover-opening, .chapter-opening, .reserve-opening { min-height: 740px; }
+  .journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 { font-size: 11vw; }
+  .cover-collage { height: 430px; }
+  .index-entry { grid-template-columns: 24px 1fr 1.15fr; gap: 4%; min-height: 620px; }
+  .journey-journal .entry-copy h2 { font-size: 8vw; }
+  .journal-heading { grid-template-columns: 1.25fr .75fr; gap: 25px 6%; }
+  .collision-images, .pigment-stack, .lived-photos, .reserve-opening-collage { min-height: 520px; }
+  .ink-collision, .pigment-room, .lived-room { gap: 5%; }
+  .journey-journal :is(.collision-copy, .pigment-copy, .lived-copy) h2 { font-size: 8vw; }
+  .reserve-inventory-heading { gap: 5%; }
+  .reserve-inventory-heading .journal-prose { max-width: 220px; }
+  .reserve-filter { padding-inline: 13px; gap: 10px; }
+}
+
+@media (max-width: 700px) {
+  .journey-journal { --header-h: 70px; --room-space: 76px; }
+  .journey-journal .topbar { gap: 6px; }
+  .journey-journal .topbar nav { gap: 13px; font-size: 10px; }
+  .journey-journal .topbar > button { font-size: 10px; min-width: 28px; }
+  .journey-journal .topbar #motion-toggle { font-size: 14px; margin-left: 0; }
+  .journey-journal .signature { padding-right: 3px; min-width: 35px; }
+  .folio-line { min-height: 58px; gap: 10px; font-size: 8px; }
+  .folio-line nav { gap: 8px; }
+  .journey-journal .folio-line .text-link { font-size: 8px; gap: 7px; }
+  .folio-line svg { width: 12px; height: 12px; }
+  .chapter-opening, .journal-cover-opening, .reserve-opening {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    gap: 55px;
+    padding-block: 55px 100px;
+  }
+  .journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 {
+    font-size: clamp(68px, 18.7vw, 128px);
+    line-height: .86;
+  }
+  .opening-copy .eyebrow, .cover-copy .eyebrow, .reserve-opening-copy .eyebrow { margin-bottom: 29px; font-size: 9px; }
+  .journal-lead { font-size: 12px; margin-top: 27px; max-width: 320px; }
+  .journal-prose { font-size: 12px; }
+  :is(.opening-copy, .cover-copy, .reserve-opening-copy) > .text-link { margin-top: 16px; }
+  .journey-journal .text-link { font-size: 10px; gap: 20px; }
+  .journal-heading { display: block; margin-bottom: 58px; }
+  .journal-heading .eyebrow { margin-bottom: 26px; }
+  .journey-journal .journal-heading h2 { font-size: clamp(51px, 12.8vw, 86px); line-height: .92; }
+  .journal-heading .journal-prose { margin-top: 26px; max-width: 300px; }
+  .archive-photo figcaption { font-size: 8px; padding: 7px 6px; gap: 6px; margin-top: 8px; }
+  .photo-enlarge { right: 8px; bottom: 8px; width: 34px; height: 34px; font-size: 18px; }
+  .cover-collage { height: 116vw; max-height: 620px; margin-left: 0; }
+  .cover-atelier { top: 23%; width: 84%; }
+  .cover-encre { width: 41%; }
+  .cover-paint { left: 4%; bottom: 0; width: 48%; }
+  .cover-poster { right: 1%; bottom: 0; width: 26%; }
+  .reading-note { padding-block: 42px 65px; }
+  .reading-note p { font-size: 31px; max-width: 270px; }
+  .index-entry { min-height: 0; grid-template-columns: 1fr 1fr; gap: 28px 18px; padding-block: 55px 70px; }
+  .entry-number { grid-column: 1 / -1; font-size: 10px; }
+  .entry-copy { min-width: 0; }
+  .journey-journal .entry-copy h2 { font-size: clamp(39px, 10.6vw, 70px); }
+  .entry-copy .journal-prose { font-size: 10px; line-height: 1.85; margin-block: 22px 12px; }
+  .journey-journal .entry-copy .text-link { font-size: 9px; gap: 8px; }
+  .entry-copy .text-link svg { width: 13px; height: 13px; }
+  .entry-image img { height: 72vw; max-height: 430px; }
+  .index-carnets .entry-image { width: 100%; }
+  .index-matieres .entry-image { width: 100%; }
+  .index-les-caves .entry-image { width: 105%; margin-left: -5%; }
+  .index-traces .entry-image { width: 75%; }
+  .index-reserves .entry-image { width: 90%; }
+  .entry-corner { right: 8px; bottom: 8px; width: 34px; height: 34px; font-size: 19px; }
+  .notebook-cover { width: 96%; padding-right: 19%; padding-bottom: 35px; margin-inline: auto; }
+  .word-fragment { bottom: 0; width: 31%; }
+  .ink-collision, .pigment-room, .lived-room { grid-template-columns: minmax(0, 1fr); gap: 55px; padding-block: 70px 95px; }
+  .ink-collision::before, .lived-room::before { top: -30px; height: 65px; }
+  .journey-journal :is(.collision-copy, .pigment-copy, .lived-copy) h2 { font-size: clamp(61px, 15.2vw, 98px); }
+  :is(.collision-copy, .pigment-copy, .lived-copy) .eyebrow { margin-bottom: 28px; }
+  .collision-images { min-height: 0; height: 165vw; max-height: 950px; }
+  .ink-tower { width: 74%; margin-left: 5%; }
+  .ink-knot { width: 42%; bottom: 0; }
+  .ink-blue { width: 38%; bottom: 5%; }
+  .scrap-spread, .paint-spread, .colour-wall { gap: 65px 4%; padding-bottom: 20px; }
+  .scrap-spread > div:nth-child(4n + 1),
+  .paint-spread > div:nth-child(4n + 1) { grid-column: 1 / 12; }
+  .scrap-spread > div:nth-child(4n + 2),
+  .paint-spread > div:nth-child(4n + 2) { grid-column: 5 / 13; padding-top: 0; }
+  .scrap-spread > div:nth-child(4n + 3),
+  .paint-spread > div:nth-child(4n + 3) { grid-column: 1 / 9; padding-top: 0; }
+  .scrap-spread > div:nth-child(4n),
+  .paint-spread > div:nth-child(4n) { grid-column: 3 / 13; padding-top: 0; }
+  .ochre-pages .scrap-spread > div:first-child { grid-column: 1 / 13; }
+  .ochre-pages .scrap-spread > div:nth-child(2) { grid-column: 6 / 13; }
+  .final-sheets > div:first-child { grid-column: 1 / 13; }
+  .final-sheets > div:nth-child(2) { grid-column: 6 / 13; padding-top: 0; }
+  .journal-film { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .journal-film .film-copy h2 { font-size: clamp(53px, 13.5vw, 84px); margin-block: 28px 25px; }
+  .journal-film .film-copy { order: 0; }
+  .journal-film#film-02 .film-copy { order: 0; }
+  .journal-film .film-poster { max-height: 72svh; }
+  .film-controls { gap: 15px; margin-top: 25px; }
+  .opening-paint { width: 94%; margin-left: 6%; }
+  .opening-paint img { max-height: none; }
+  .pigment-stack { min-height: 0; height: 167vw; max-height: 990px; }
+  .pigment-white { width: 86%; }
+  .pigment-blue { width: 39%; top: 12%; }
+  .pigment-red { width: 47%; bottom: 0; }
+  .journey-journal .night-paint .journal-heading h2 { font-size: clamp(57px, 14.5vw, 98px); }
+  .night-paint .journal-heading { margin-bottom: 38px; }
+  .night-canvas { width: 100%; }
+  .colour-wall > div:nth-child(6n + 1) { grid-column: 1 / 12; }
+  .colour-wall > div:nth-child(6n + 2) { grid-column: 5 / 13; padding-top: 0; }
+  .colour-wall > div:nth-child(6n + 3) { grid-column: 1 / 9; }
+  .colour-wall > div:nth-child(6n + 4) { grid-column: 3 / 13; padding-top: 0; }
+  .colour-wall > div:nth-child(6n + 5) { grid-column: 1 / 13; }
+  .colour-wall > div:nth-child(6n) { grid-column: 6 / 13; padding-top: 0; }
+  .paint-signs .colour-wall > div:last-child { grid-column: 1 / 12; }
+  .horizon-page { grid-template-columns: minmax(0, 1fr); gap: 50px; }
+  .journey-journal .horizon-page h2 { font-size: clamp(54px, 13vw, 86px); }
+  .caves-opening { min-height: 850px; min-height: 110svh; padding: 210px var(--gutter) 65px; }
+  .caves-opening .caves-title { top: 55px; }
+  .caves-title .eyebrow { max-width: 270px; margin-bottom: 26px; font-size: 9px; }
+  .journey-journal .caves-title h1 { font-size: clamp(64px, 18vw, 125px); line-height: .83; }
+  .caves-credit { font-size: 9px; margin-top: 24px; }
+  .caves-opening .caves-hero-image { width: 100%; }
+  .caves-hero-image img { max-height: 78svh; }
+  .caves-story { grid-template-columns: minmax(0, 1fr); gap: 55px; }
+  .journey-journal .caves-story h2 { font-size: clamp(57px, 14vw, 88px); }
+  .caves-silence { padding-block: 25px 65px; }
+  .caves-silence > .archive-photo { width: 100%; }
+  .absence-note { display: block; margin-block: 55px 0; }
+  .journey-journal .absence-note h2 { font-size: clamp(55px, 13vw, 88px); }
+  .absence-note .journal-prose { margin-top: 27px; }
+  .caves-passage { padding-block: 60px 90px; }
+  .caves-passage > .archive-photo { width: 92%; }
+  .passage-note { font-size: 36px; margin-left: 15%; padding-top: 35px; }
+  .homage { padding-block: 100px; }
+  .homage-note .eyebrow { margin-bottom: 32px; }
+  .journey-journal .homage-note h2 { font-size: clamp(60px, 14.5vw, 100px); }
+  .chapter-les-caves .homage .journal-lead { font-size: 15px; }
+  .homage-credit { margin-top: 40px; }
+  .traces-opening { padding-bottom: 125px; }
+  .traces-collage { padding-right: 8%; }
+  .mirror-memory { width: 30%; bottom: -19%; }
+  .exhibition-page { grid-template-columns: minmax(0, 1fr); gap: 55px; }
+  .poster-sheet { width: 75%; }
+  .journey-journal .exhibition-copy h2 { font-size: 47vw; max-width: 470px; margin-top: 25px; }
+  .journey-journal .exhibition-copy h3 { font-size: 42px; margin-top: 30px; }
+  .exhibition-copy { padding-inline: 3%; }
+  .lived-photos { min-height: 0; height: 161vw; max-height: 940px; }
+  .lived-concert { width: 96%; }
+  .lived-people { width: 44%; bottom: 0; }
+  .lived-poster { width: 42%; bottom: 0; }
+  .memory-spread { grid-template-columns: 1fr .7fr; padding-inline: 0; gap: 10%; }
+  .window-note { padding-top: 100%; }
+  .margin-note { font-size: 29px; margin-top: 27px; }
+  .reserve-opening { padding-bottom: 135px; }
+  .reserve-count { margin-top: 28px; }
+  .reserve-count b { font-size: 64px; }
+  .reserve-opening-collage { min-height: 0; height: 161vw; max-height: 950px; }
+  .reserve-portrait { width: 79%; margin-left: 7%; }
+  .reserve-shadow { width: 40%; }
+  .reserve-moth { width: 31%; bottom: 8%; }
+  .cut-label { bottom: -62px; max-width: 235px; font-size: 29px; }
+  .reserve-inventory-heading { display: block; margin-bottom: 35px; }
+  .journey-journal .reserve-inventory-heading h2 { font-size: clamp(54px, 13vw, 88px); }
+  .reserve-inventory-heading .journal-prose { margin-top: 25px; max-width: 290px; }
+  .reserve-toolbar { margin-bottom: 45px; padding-block: 9px 12px; }
+  .journey-journal .reserve-filters { flex-wrap: nowrap; overflow-x: auto; gap: 3px; padding-bottom: 7px; scrollbar-color: var(--dark-line) var(--black); }
+  .reserve-filter { flex: 0 0 auto; padding-inline: 12px; gap: 8px; font-size: 10px; }
+  .reserve-status { font-size: 9px; margin-top: 6px; }
+  .reserve-grid { gap: 58px 4%; }
+  .reserve-item[data-hang="1"], .reserve-item[data-hang="5"] { grid-column: 1 / 13; padding-top: 0; }
+  .reserve-item[data-hang="2"], .reserve-item[data-hang="6"] { grid-column: 6 / 13; padding-top: 0; }
+  .reserve-item[data-hang="3"], .reserve-item[data-hang="7"] { grid-column: 1 / 9; padding-top: 0; }
+  .reserve-item[data-hang="4"], .reserve-item[data-hang="8"] { grid-column: 3 / 13; padding-top: 0; }
+  .reserve-grid .photo-link img { max-height: 76svh; }
+  .reserve-more { margin-top: 50px; }
+  .reserve-exit { grid-template-columns: minmax(0, 1fr); gap: 25px; }
+  .journey-journal .reserve-exit h2 { grid-row: auto; font-size: clamp(60px, 14vw, 95px); margin-bottom: 15px; }
+  .journal-related { display: block; padding-block: 45px; }
+  .journey-journal .journal-related h2 { font-size: 43px; }
+  .journal-related .text-link { margin-top: 18px; }
+  .reserve-invitation { grid-template-columns: .35fr 1fr; gap: 8%; padding-block: 60px; }
+  .reserve-invitation-number { font-size: 88px; }
+  .journey-journal .reserve-invitation h2 { font-size: 35px; }
+  .reserve-invitation .text-link { margin-top: 15px; gap: 8px; }
+  .chapter-turn { padding-block: 65px 75px; }
+  .turn-heading { display: block; margin-bottom: 33px; }
+  .journey-journal .turn-heading h2 { font-size: 45px; }
+  .turn-heading > .text-link { margin-top: 17px; }
+  .turn-links a { padding-block: 32px; }
+  .turn-links a:first-child { padding-right: 15px; }
+  .turn-links a:last-child { padding-left: 15px; }
+  .turn-direction { font-size: 9px; margin-bottom: 22px; }
+  .turn-title { font-size: clamp(34px, 9.7vw, 63px); }
+  .journey-journal .site-footer { display: grid; grid-template-columns: 1fr; gap: 8px; padding-block: 25px 95px; }
+  .journey-journal .site-footer > div { justify-content: space-between; gap: 13px; }
+  .journey-journal .mobile-dock { gap: 17px; padding-inline: 18px; }
+  .journey-journal .mobile-dock a { font-size: 9px; }
+  .journey-journal .archive-viewer .viewer-brand { font-size: 17px; }
+  .archive-viewer .viewer-top { gap: 10px; }
+  .archive-viewer .viewer-top > div { gap: 7px; }
+  .journey-journal .archive-viewer .viewer-details h2 { font-size: 20px; }
+  .archive-viewer .viewer-details p { font-size: 9px; }
+  .archive-viewer .viewer-navigation { gap: 8px; }
+  .archive-copy > span { display: none; }
+  .archive-copy-fallback { flex-wrap: wrap; padding: 12px; gap: 10px; top: 67px; }
+  .archive-copy-fallback label { width: calc(100% - 50px); }
+  .archive-copy-fallback .archive-link-close { position: absolute; right: 0; top: 0; }
+  .archive-copy-fallback input { width: 100%; flex-basis: 100%; font-size: 16px; }
+  .archive-zoom { font-size: 10px; }
+}
+
+@media (max-width: 360px) {
+  .journey-journal { --gutter: 18px; }
+  .journey-journal .topbar nav { gap: 10px; font-size: 9px; }
+  .journey-journal .topbar > button { min-width: 25px; }
+  .journey-journal .signature { font-size: 30px; min-width: 32px; }
+  .folio-line nav { gap: 5px; }
+  .folio-line > span { font-size: 7px; }
+  .journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 { font-size: 19vw; }
+  .journey-journal .entry-copy h2 { font-size: 10.7vw; }
+  .entry-copy .journal-prose { font-size: 9px; }
+  .journey-journal .entry-copy .text-link { font-size: 8px; gap: 6px; }
+  .journey-journal .journal-heading h2 { font-size: 13vw; }
+  .journey-journal .reserve-invitation h2 { font-size: 30px; }
+  .reserve-invitation-number { font-size: 76px; }
+  .turn-title { font-size: 9.7vw; }
+  .journey-journal .mobile-dock { gap: 14px; padding-inline: 15px; }
+  .archive-viewer .viewer-hint { display: none; }
+}
+
+@media (max-height: 550px) and (orientation: landscape) {
+  .journal-cover-opening, .chapter-opening, .reserve-opening { min-height: 620px; }
+  .journey-journal .journal-film .film-poster { max-height: 560px; }
+  .caves-opening { min-height: 650px; }
+  .caves-hero-image img { max-height: 580px; }
+  .archive-viewer[open] { grid-template-rows: auto minmax(70px, 1fr) auto auto; gap: 5px; }
+  .archive-viewer .viewer-top .icon-button { min-height: 36px; }
+  .archive-viewer .viewer-details p { display: none; }
+  .journey-journal .archive-viewer .viewer-details h2 { font-size: 17px; }
+  .archive-viewer .viewer-bottom { padding-top: 4px; }
+  .archive-viewer .viewer-bottom .icon-button { min-height: 36px; }
+}
+
+/* Sans mouvement, l'espace et les liens gardent tout leur sens. */
+.motion-reduced .journey-journal :is(.archive-photo, [data-journey-motion]),
+.journey-journal.motion-reduced :is(.archive-photo, [data-journey-motion]) { translate: none; }
+.motion-reduced .journey-journal :is(.cover-photo, .entry-image img, .photo-enlarge) { scale: 1; }
+.motion-reduced .journey-journal :is(.cover-collage, .notebook-cover, .traces-collage) { transform: none; }
+.motion-reduced .journey-journal .opening-paint { scale: 1; }
+.motion-reduced .journey-journal :is(.paper-reveal, .fragment-reveal) { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .journey-journal :is(.archive-photo, [data-journey-motion]) { translate: none; }
+  .journey-journal :is(.cover-photo, .entry-image img, .photo-enlarge) { scale: 1; }
+  .journey-journal :is(.cover-collage, .notebook-cover, .traces-collage) { transform: none; }
+  .journey-journal .opening-paint { scale: 1; }
+  .journey-journal :is(.paper-reveal, .fragment-reveal) { opacity: 1; transform: none; }
+}
+
+/* La réserve est complète sans script ; ses filtres gardent priorité après init. */
+.journey-journal [hidden],
+.journey-journal .reserve-item[hidden],
+.journey-journal .reserve-more[hidden],
+.journey-journal .archive-copy-fallback[hidden] { display: none; }
+
+/* Ajouts du 13 septembre 2026 (main), posés dans le voyage : feuilles des cahiers,
+   passages vers Hors cadre, échos, accès rapide, parcours dans le rouge, rapprochements.
+   Les compositions d'Astra ci-dessus ne sont pas touchées. */
+:is(.hc-nav-entry, .journal-echo, .journal-quick-index, .association) { --soft-line: color-mix(in srgb, currentColor 22%, transparent); }
+
+/* Quinze feuilles d'un même matin. Les traitements — détail agrandi, saturation,
+   retournement, négatif — appartiennent à la page : chaque lien ouvre la feuille entière. */
+.fresh-sheets { --caption-surface: var(--white); --caption-ink: var(--black); color: var(--white); }
+.chromatic-chamber > .sheet-storm { z-index: 1; }
+.sheet-storm {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 56px 0;
+  align-items: start;
+  padding: 30px 0 90px;
+  isolation: isolate;
+}
+.sheet-storm > div { min-width: 0; position: relative; z-index: 1; }
+.sheet-storm > div:focus-within { z-index: 25; }
+.sheet-storm .archive-photo { rotate: var(--tilt, -5deg); }
+.sheet-storm .photo-link { overflow: hidden; background: var(--white); box-shadow: 0 25px 45px -15px rgb(0 0 0 / .65); }
+.sheet-storm .photo-link img { width: 100%; height: auto; }
+.sheet-storm figcaption { margin: 10px 8px 0; }
+.sheet-storm .s-sat img { filter: saturate(2.3) contrast(1.12); }
+.sheet-storm .s-neg img { filter: invert(1) contrast(1.25) saturate(1.4); }
+.sheet-storm .s-neg .photo-link { background: var(--black); box-shadow: 0 0 0 1px var(--dark-muted), 0 25px 45px -15px rgb(0 0 0 / .8); }
+.sheet-storm .s-flip .photo-link img { transform: rotate(180deg); }
+.sheet-storm .s-mirror .photo-link img { transform: scaleX(-1); }
+.sheet-storm .s-zoom .photo-link { aspect-ratio: var(--box, 1); }
+.sheet-storm .s-zoom .photo-link img { height: 100%; object-fit: cover; transform: scale(var(--zoom, 2.4)); transform-origin: var(--focus, 50% 50%); }
+.sheet-storm .s-zoom.s-mirror .photo-link img { transform: scale(var(--zoom, 2.4)) scaleX(-1); }
+html:not(.motion-reduced) .sheet-storm .s-zoom .photo-link img { transition: transform 1.4s var(--ease); }
+html:not(.motion-reduced) .sheet-storm .s-zoom .photo-link:is(:hover, :focus-visible) img { transform: scale(calc(var(--zoom, 2.4) * 1.12)); }
+.sheet-storm .p1 { grid-column: 1 / 8; --tilt: -6deg; }
+.sheet-storm .p2 { grid-column: 8 / 13; margin-top: -110%; z-index: 2; --tilt: 9deg; }
+.sheet-storm .p3 { grid-column: 2 / 6; margin-top: -80%; z-index: 3; --tilt: -3deg; }
+.sheet-storm .p4 { grid-column: 6 / 12; margin-top: -100%; --tilt: 4deg; }
+.sheet-storm .p5 { grid-column: 1 / 9; margin-top: -30%; --tilt: -8deg; }
+.sheet-storm .p6 { grid-column: 7 / 13; margin-top: -100%; z-index: 2; --tilt: 12deg; }
+.sheet-storm .p7 { grid-column: 1 / 5; margin-top: -120%; z-index: 3; --tilt: -14deg; }
+.sheet-storm .p8 { grid-column: 4 / 11; margin-top: -25%; --tilt: 3deg; }
+.sheet-storm .p9 { grid-column: 9 / 13; margin-top: -110%; z-index: 3; --tilt: -7deg; }
+.sheet-storm .p10 { grid-column: 1 / 8; margin-top: -10%; --tilt: 5deg; }
+.sheet-storm .p11 { grid-column: 6 / 13; margin-top: -80%; z-index: 2; --tilt: -11deg; }
+.sheet-storm .p12 { grid-column: 1 / 6; margin-top: 0; --tilt: 7deg; }
+.sheet-storm .p13 { grid-column: 5 / 10; margin-top: -110%; z-index: 3; --tilt: -5deg; }
+.sheet-storm .p14 { grid-column: 3 / 12; margin-top: -5%; --tilt: 2deg; }
+.sheet-storm .p15 { grid-column: 1 / 6; margin-top: -90%; z-index: 3; --tilt: -9deg; }
+.sheet-storm .p16 { grid-column: 6 / 13; margin-top: -90%; --tilt: 6deg; }
+.sheet-storm .p17 { grid-column: 1 / 8; margin-top: 0; --tilt: -4deg; }
+.sheet-storm .p18 { grid-column: 8 / 13; margin-top: -110%; z-index: 2; --tilt: 13deg; }
+.sheet-storm .p19 { grid-column: 2 / 10; margin-top: -10%; --tilt: -2deg; }
+.sheet-storm .p20 { grid-column: 8 / 13; margin-top: -100%; z-index: 3; --tilt: 8deg; }
+
+/* Un passage vers une autre pièce : une ligne, un numéro, une flèche. */
+.journey-journal .hc-nav-entry {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  min-height: 96px;
+  padding-block: 22px;
+  border-top: 1px solid var(--soft-line);
+  font-size: clamp(26px, 2.8vw, 44px);
+  line-height: 1;
+  letter-spacing: -.055em;
+  transition: padding .4s var(--ease);
+}
+.journey-journal .hc-nav-entry:hover { padding-inline: 20px; }
+.journey-journal .hc-nav-entry .tiny-index { font-size: 10px; letter-spacing: .035em; opacity: .7; }
+.journey-journal .hc-nav-entry > span:last-child { font-size: 22px; }
+
+/* Un écho : une image d'un autre chapitre, une phrase pour y aller. */
+.journal-echo { padding-block: 70px; border-top: 1px solid var(--soft-line); }
+.journal-echo > a { display: grid; grid-template-columns: minmax(140px, .55fr) 1fr; align-items: end; gap: 8%; max-width: 980px; }
+.echo-image { display: block; overflow: hidden; }
+.echo-image img { width: 100%; height: auto; transition: scale .8s var(--ease); }
+.journal-echo > a:hover .echo-image img { scale: 1.04; }
+.echo-copy { display: flex; flex-direction: column; align-items: start; gap: 24px; padding-bottom: 4px; }
+.echo-label { font-size: 10px; letter-spacing: .035em; opacity: .7; }
+.echo-title { font-size: clamp(38px, 4.6vw, 74px); line-height: .92; letter-spacing: -.065em; }
+.echo-copy > span:last-child { font-size: 24px; }
+
+/* Les six chapitres d'un regard, sous l'ouverture du journal. */
+.journal-quick-index { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+.journal-quick-index a {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 44px;
+  padding: 24px 18px 26px;
+  border-left: 1px solid var(--line);
+  font-size: clamp(17px, 1.55vw, 25px);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  transition: background .3s;
+}
+.journal-quick-index a:first-child { border-left: 0; padding-left: 0; }
+.journal-quick-index a > span:first-child { font-size: 10px; letter-spacing: .035em; color: var(--muted); }
+.journal-quick-index a:hover { text-decoration: underline; text-underline-offset: 6px; }
+
+/* Du détail à l'ensemble : la même peinture, de très près puis à distance. */
+.matter-journey { background: var(--black); color: var(--white); overflow: clip; }
+.matter-macro { position: relative; height: clamp(430px, 57vw, 850px); overflow: hidden; }
+.matter-macro-image { display: block; width: 100%; height: 100%; position: relative; overflow: hidden; }
+.matter-macro-image img { width: 100%; height: 100%; object-fit: cover; transform: scale(2.2); transform-origin: 64% 48%; }
+.matter-macro-link {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 30px;
+  padding: 13px 20px;
+  border-radius: 40px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 11px;
+}
+.matter-macro-image:focus-visible { outline: 2px solid var(--white); outline-offset: -10px; }
+.matter-return { --caption-surface: var(--black); --caption-ink: var(--white); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 17%; padding-block: 105px 135px; }
+.matter-return-note { justify-self: center; max-width: 260px; font-family: Cormorant, Georgia, serif; font-style: italic; font-weight: 300; font-size: clamp(30px, 3vw, 46px); line-height: 1.05; }
+.matter-return .association-photo { max-width: 420px; rotate: -2deg; }
+
+/* Trois entrées dans la réserve, ouvertes l'une après l'autre. */
+.reserve-associations { padding-block: var(--room-space) 70px; }
+.associations-heading { display: flex; align-items: end; justify-content: space-between; gap: 35px; margin-bottom: 50px; }
+.journey-journal .associations-heading h2 { font-size: clamp(48px, 6vw, 98px); line-height: .9; max-width: 720px; }
+.associations-heading .text-link { max-width: 260px; }
+.association { border-top: 1px solid var(--soft-line); }
+.association:last-of-type { border-bottom: 1px solid var(--soft-line); }
+.association summary {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 44px;
+  padding-block: 26px;
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(28px, 3vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -.055em;
+}
+.association summary::-webkit-details-marker { display: none; }
+.association-number { font-size: 10px; letter-spacing: .035em; color: var(--muted); }
+.association-sign { margin-left: auto; flex-shrink: 0; font-size: 26px; transition: rotate .4s var(--ease); }
+.association[open] .association-sign { rotate: 45deg; }
+.association-images { display: grid; grid-template-columns: 1fr .75fr 1.1fr; align-items: center; gap: 7%; padding: 35px 2% 80px; }
+.association-photo { min-width: 0; }
+.association-images img { max-height: 470px; object-fit: contain; }
+.association-images .association-photo:nth-child(1) { rotate: -3deg; }
+.association-images .association-photo:nth-child(2) { rotate: 4deg; margin-top: 60px; }
+.association-images .association-photo:nth-child(3) { rotate: -2deg; margin-top: -20px; }
+.association-photo figcaption > span:last-child { white-space: normal; }
+.association-note { max-width: 380px; margin-top: 26px; font-size: 11px; line-height: 1.8; color: var(--muted); }
+
+@media (max-width: 1000px) {
+  .sheet-storm { padding: 20px 2% 45px; gap: 36px 0; }
+  .journal-quick-index { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .journal-quick-index a:nth-child(3n + 1) { border-left: 0; padding-left: 0; }
+  .journal-quick-index a:nth-child(-n + 3) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 700px) {
+  .sheet-storm { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 26px 0; }
+  .sheet-storm > div { margin-top: 0; }
+  .sheet-storm > div:nth-child(odd) { grid-column: 1 / 6; }
+  .sheet-storm > div:nth-child(even) { grid-column: 2 / 7; margin-top: -30%; }
+  .sheet-storm :is(.p3, .p9, .p15, .p20) { grid-column: 2 / 6; margin-top: -20%; }
+  .sheet-storm .p11 { grid-column: 1 / 7; margin-top: -6%; }
+  .sheet-storm :is(.p14, .p19) { grid-column: 1 / 7; }
+  .journey-journal .hc-nav-entry { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; min-height: 78px; font-size: 26px; }
+  .journal-echo { padding-block: 50px; }
+  .journal-echo > a { grid-template-columns: .85fr 1fr; gap: 9%; }
+  .echo-copy { gap: 16px; }
+  .echo-title { font-size: 31px; }
+  .matter-macro { height: 68svh; min-height: 370px; max-height: 640px; }
+  .matter-macro-image img { transform: scale(1.75); transform-origin: 62% 50%; }
+  .matter-macro-link { bottom: 20px; }
+  .matter-return { grid-template-columns: 1fr; gap: 45px; padding-block: 55px 75px; }
+  .matter-return-note { justify-self: start; font-size: 30px; }
+  .matter-return .association-photo { width: 77%; justify-self: end; }
+  .associations-heading { display: block; margin-bottom: 28px; }
+  .associations-heading .text-link { margin-top: 20px; max-width: 100%; }
+  .association summary { gap: 16px; padding-block: 20px; font-size: 27px; }
+  .association-images { grid-template-columns: 1fr 1fr; gap: 26px 8%; padding: 20px 0 55px; }
+  .association-images .association-photo:nth-child(3) { grid-column: 1 / -1; width: 72%; justify-self: center; margin-top: 0; }
+}
+@media (max-width: 360px) {
+  .journal-quick-index { grid-template-columns: 1fr 1fr; }
+  .journal-quick-index a:nth-child(n) { border-left: 0; padding-left: 0; border-bottom: 1px solid var(--line); }
+  .journal-quick-index a:nth-child(even) { border-left: 1px solid var(--line); padding-left: 16px; }
+  .journal-quick-index a:nth-last-child(-n + 2) { border-bottom: 0; }
+}
+.motion-reduced .sheet-storm .s-zoom .photo-link img { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  html .sheet-storm .s-zoom .photo-link img { transition: none; }
+}

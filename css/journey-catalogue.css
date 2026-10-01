@@ -1,0 +1,106 @@
+/* Collection: let the opening overflow, leave room around every original. */
+.catalogue-page .topbar { position: absolute; }
+.catalogue-intro { position: relative; isolation: isolate; overflow: hidden; min-height: 84svh; padding: 118px var(--gutter) 150px; display: flex; flex-direction: column; }
+.catalogue-field { background: radial-gradient(ellipse at 85% 60%, var(--ultramarine) 0 15%, transparent 53%), var(--white); }
+.catalogue-orbit { position: absolute; inset: 20% -18% -20% 53%; z-index: 1; background: var(--black); border-radius: 46% 54% 75% 25% / 30% 65% 35% 70%; transform: rotate(-22deg); pointer-events: none; }
+.catalogue-orbit::before, .catalogue-orbit::after { content: ''; position: absolute; inset: -24px -14px -40px -34px; border: 1px solid var(--black); border-radius: inherit; }
+.catalogue-orbit::after { inset: -49px -32px -75px -68px; }
+.catalogue-intro-meta { display: flex; justify-content: space-between; gap: 25px; font-size: 10px; }
+.catalogue-intro-meta, .catalogue-heading { position: relative; z-index: 2; mix-blend-mode: difference; color: var(--white); }
+.catalogue-heading { margin-block: 55px 60px; }
+.catalogue-heading h1 { font-size: clamp(98px, 14.5vw, 250px); line-height: .82; letter-spacing: -.08em; margin-top: 30px; }
+.catalogue-heading h1 em { display: inline-block; margin-left: 11vw; font-size: 1.16em; }
+.catalogue-intro-bottom { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-top: auto; font-size: 12px; }
+.catalogue-intro-bottom > * { position: relative; z-index: 2; }
+.catalogue-intro-bottom p { color: var(--white); mix-blend-mode: difference; }
+.catalogue-seam { position: absolute; bottom: -1px; left: 0; width: 100%; height: 120px; z-index: 3; fill: var(--white); }
+.catalogue-anchor { scroll-margin-top: 35px; }
+.catalogue-collection { padding: 40px var(--gutter) 100px; }
+.catalogue-page .collection-top { border-bottom: 1px solid var(--line); padding-bottom: 25px; }
+.catalogue-page .collection-top h2 { font-size: clamp(58px, 7vw, 100px); }
+.collection-whisper { font-family: Cormorant, Georgia, serif; font-style: italic; font-size: 26px; }
+.catalogue-page .collection-filters { top: 0; padding-block: 18px; margin-top: 14px; z-index: 5; }
+.catalogue-page .collection-filters button { border-radius: 30px; }
+.catalogue-page #collection-status { margin-block: 0 50px; }
+.catalogue-page #collection-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: clamp(25px, 5vw, 80px); row-gap: clamp(50px, 8vw, 130px); align-items: start; }
+.catalogue-page .collection-card { grid-column: span 2; position: relative; }
+.catalogue-page .collection-card:nth-child(9n+1), .catalogue-page .collection-card:nth-child(9n+2) { grid-column: span 3; }
+.catalogue-page .collection-card:nth-child(9n+2), .catalogue-page .collection-card:nth-child(9n+5), .catalogue-page .collection-card:nth-child(9n+8) { margin-top: 90px; }
+.catalogue-page .collection-image { background: transparent; object-fit: contain; aspect-ratio: 1 / 1.14; transition: transform .8s var(--ease); }
+.catalogue-page .collection-card:hover .collection-image { transform: translateY(-8px); }
+.catalogue-page .collection-caption { padding-top: 15px; border-top: 1px solid var(--line); margin-top: 25px; padding-right: 28px; }
+.catalogue-page .collection-caption::after { content: '↗'; position: absolute; bottom: 2px; right: 0; font-size: 20px; }
+.catalogue-page #collection-more { margin-top: 90px; min-width: 210px; justify-content: center; }
+.catalogue-after { position: relative; overflow: hidden; padding: 90px var(--gutter) 100px; color: var(--white); background: var(--black); }
+.catalogue-after::before { content: ''; position: absolute; width: 54vw; height: 52vw; right: -20vw; top: -18vw; border: 1px solid var(--violet); border-radius: 61% 39% 73% 27% / 30% 61% 39% 70%; transform: rotate(-18deg); box-shadow: 0 0 0 24px var(--black), 0 0 0 25px var(--violet), 0 0 0 65px var(--black), 0 0 0 66px var(--violet); pointer-events: none; }
+.catalogue-after h2 { position: relative; font-size: clamp(90px, 12vw, 195px); line-height: .8; margin-block: 60px; }
+.catalogue-after h2 em { margin-left: 14vw; }
+.catalogue-after .underlined-link { position: relative; max-width: 320px; margin-left: auto; }
+.catalogue-footer { padding: 35px var(--gutter); display: flex; align-items: center; flex-wrap: wrap; gap: 22px 40px; font-size: 10px; }
+.catalogue-footer nav { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.catalogue-footer a { min-height: 44px; display: inline-flex; align-items: center; }
+.catalogue-footer a:hover { text-decoration: underline; }
+.catalogue-footer > span { margin-left: auto; color: var(--muted); }
+
+/* These controls are shared by the homepage and the collection. */
+.artwork-bottom { flex-wrap: wrap; }
+.artwork-bottom > div:first-child { flex: 1 1 200px; }
+.artwork-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 0 20px; margin-left: auto; }
+.artwork-actions button, .artwork-actions a { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; font-size: 11px; }
+.artwork-actions button:hover, .artwork-actions a:hover { text-decoration: underline; }
+.artwork-actions button[aria-pressed=true] { text-decoration: underline; }
+.artwork-actions [hidden], #artwork-share-status[hidden] { display: none; }
+#artwork-share-status { order: 4; flex-basis: 100%; margin: 0; overflow-wrap: anywhere; color: var(--dark-muted); font-size: 11px; }
+#artwork-share-status a { text-decoration: underline; }
+.artwork-dialog .artwork-stage { overflow: hidden; touch-action: pan-y pinch-zoom; }
+.artwork-dialog .artwork-stage:focus-visible { outline: 1px solid var(--dark-muted); outline-offset: 4px; }
+.artwork-dialog.is-zoomed .artwork-stage { display: block; overflow: auto; touch-action: pan-x pan-y pinch-zoom; overscroll-behavior: contain; }
+.artwork-dialog.is-zoomed .artwork-stage img { width: auto; height: auto; min-width: 100%; min-height: 100%; max-width: none; max-height: none; object-fit: contain; margin: auto; }
+.artwork-dialog.is-zoomed .artwork-stage { cursor: zoom-out; }
+.artwork-dialog:not(.is-zoomed) .artwork-stage img { cursor: zoom-in; }
+.motion-reduced .catalogue-page .collection-image { transition: none; }
+@media (max-width:900px) {
+  .catalogue-intro { min-height: 76svh; }
+  .catalogue-page #collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .catalogue-page .collection-card, .catalogue-page .collection-card:nth-child(9n+1), .catalogue-page .collection-card:nth-child(9n+2) { grid-column: auto; }
+  .catalogue-page .collection-card:nth-child(n) { margin-top: 0; }
+  .catalogue-page .collection-card:nth-child(even) { margin-top: 55px; }
+  .artwork-actions { gap: 0 16px; }
+  .artwork-bottom { gap: 12px; }
+  .artwork-bottom > div:first-child { flex-basis: 100%; }
+  .artwork-actions { margin-left: 0; margin-right: auto; }
+}
+@media (max-width:600px) {
+  .catalogue-intro { min-height: 76svh; padding-top: 95px; padding-bottom: 100px; }
+  .catalogue-intro-meta { font-size: 8px; }
+  .catalogue-intro-meta > span:last-child { text-align: right; }
+  .catalogue-heading { margin-block: 45px 55px; }
+  .catalogue-heading h1 { font-size: 20vw; margin-top: 35px; }
+  .catalogue-heading h1 em { margin-left: 2vw; font-size: 1.3em; }
+  .catalogue-orbit { left: 44%; top: 29%; }
+  .catalogue-intro-bottom { gap: 15px; align-items: flex-end; font-size: 10px; }
+  .catalogue-intro-bottom .flow-link { max-width: 49%; }
+  .catalogue-seam { height: 75px; }
+  .catalogue-collection { padding-block: 22px 70px; }
+  .catalogue-page .collection-top { padding-bottom: 22px; }
+  .collection-whisper { max-width: 95px; text-align: right; font-size: 23px; line-height: 1; }
+  .catalogue-page .collection-filters { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); gap: 2px; }
+  .catalogue-page #collection-status { margin-bottom: 24px; }
+  .catalogue-page #collection-grid { gap: 35px 20px; }
+  .catalogue-page .collection-card:nth-child(even) { margin-top: 36px; }
+  .catalogue-page .collection-caption { margin-top: 15px; font-size: 10px; padding-right: 16px; }
+  .catalogue-page .collection-caption small { font-size: 9px; }
+  .catalogue-page .collection-caption::after { font-size: 15px; }
+  .catalogue-page #collection-more { margin-top: 50px; }
+  .catalogue-after { padding-block: 65px; }
+  .catalogue-after h2 { font-size: 19vw; margin-block: 45px; }
+  .catalogue-after h2 em { margin-left: 9vw; }
+  .catalogue-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .catalogue-footer nav { grid-column: 1 / -1; gap: 0 23px; }
+  .catalogue-footer > span { font-size: 9px; text-align: right; }
+  .artwork-actions { gap: 0 14px; max-width: calc(100% - 108px); }
+  .artwork-actions button, .artwork-actions a { font-size: 10px; min-height: 44px; }
+  .artwork-arrows { gap: 6px; align-self: flex-end; }
+  .artwork-arrows button { min-width: 44px; min-height: 44px; }
+}
+@media (prefers-reduced-motion:reduce) { .catalogue-page .collection-image { transition: none; } }

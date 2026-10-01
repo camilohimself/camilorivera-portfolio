@@ -2,7 +2,7 @@
 @view-transition { navigation: auto; }
 
 :root { --page-way: 1; --touch-ease: cubic-bezier(.2,.85,.25,1); }
-.site-header { view-transition-name: atelier-header; }
+.topbar,.site-header { view-transition-name: atelier-header; }
 .mobile-dock { view-transition-name: atelier-dock; }
 .scroll-progress { view-transition-name: atelier-progress; }
 ::view-transition { pointer-events: none; }
@@ -12,21 +12,21 @@
 ::view-transition-old(atelier-header), ::view-transition-old(atelier-dock), ::view-transition-old(atelier-progress) { animation: none; }
 ::view-transition-new(atelier-header), ::view-transition-new(atelier-dock), ::view-transition-new(atelier-progress) { animation: none; }
 @keyframes sheet-out {
-  to { opacity: .3; transform: translateX(calc(-4% * var(--page-way))) rotate(calc(-1deg * var(--page-way))); }
+  to { opacity: .25; transform: scale(1.07); }
 }
 @keyframes sheet-in {
-  from { clip-path: polygon(100% 0,100% 0,100% 100%,100% 100%,100% 69%,100% 39%); transform: translateX(6%) rotate(1.3deg); }
-  38% { clip-path: polygon(53% 0,100% 0,100% 100%,42% 100%,47% 69%,43% 39%); }
-  to { clip-path: polygon(0 0,100% 0,100% 100%,0 100%,0 69%,0 39%); transform: none; }
+  from { clip-path: ellipse(0% 0% at 72% 57%); transform: scale(.92); }
+  45% { clip-path: ellipse(55% 72% at 62% 52%); }
+  to { clip-path: ellipse(150% 150% at 50% 50%); transform: none; }
 }
 :root[data-page-way="back"]::view-transition-new(root) { animation-name: sheet-back; }
 @keyframes sheet-back {
-  from { clip-path: polygon(0 0,0 0,0 39%,0 69%,0 100%,0 100%); transform: translateX(-6%) rotate(-1.3deg); }
-  38% { clip-path: polygon(0 0,47% 0,57% 39%,53% 69%,58% 100%,0 100%); }
-  to { clip-path: polygon(0 0,100% 0,100% 39%,100% 69%,100% 100%,0 100%); transform: none; }
+  from { clip-path: ellipse(0% 0% at 27% 60%); transform: scale(1.08); }
+  45% { clip-path: ellipse(60% 72% at 38% 55%); }
+  to { clip-path: ellipse(150% 150% at 50% 50%); transform: none; }
 }
 
-/* Une pression brève, puis un rebond de papier. Pas d’effet sur un geste de défilement. */
+/* Une pression brève, puis un retour souple. Pas d’effet sur un geste de défilement. */
 .touch-held { scale: .958; transition: scale 100ms ease-out; }
 :is(.photo-link,.work-card,.entry-image,.door-card).touch-held { scale: .984; }
 .touch-release { animation: touch-return 360ms var(--touch-ease); }
@@ -35,7 +35,7 @@
 :is(.button,.filter-btn,.reserve-filter)::before {
   content: ""; position: absolute; inset: 3px 0; z-index: -1; pointer-events: none;
   background: currentColor; opacity: .13; scale: 0 1; transform-origin: left;
-  clip-path: polygon(0 9%,24% 1%,40% 10%,76% 0,100% 7%,98% 91%,69% 100%,47% 90%,8% 100%);
+  border-radius: 45% 55% 50% 50% / 40% 55% 45% 60%;
   transition: scale 220ms var(--touch-ease);
 }
 :is(.button,.filter-btn,.reserve-filter).touch-held::before { scale: 1 1; }
@@ -48,7 +48,7 @@
   transition: translate 420ms var(--touch-ease);
 }
 
-/* Les feuilles arrivent en travers puis retrouvent leur accrochage. */
+/* Les fragments émergent puis retrouvent leur accrochage. */
 .work-card,.paper-reveal,.fragment-reveal { --arrival-x: -10px; --arrival-turn: -2deg; }
 html.motion-ready:not(.motion-reduced) .work-card.reveal,
 html.journal-ready:not(.motion-reduced) .paper-reveal,
@@ -78,7 +78,7 @@ html.motion-ready:not(.motion-reduced) .work-card.reveal .work-image { transitio
   .intense .reserve-toolbar { padding-block: 6px 8px; margin-bottom: 20px; }
   .reserve-filters {
     flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; gap: 4px;
-    padding: 3px 1px 6px; scrollbar-width: thin; scrollbar-color: var(--kraft-light) var(--night);
+    padding: 3px 1px 6px; scrollbar-width: thin; scrollbar-color: var(--line) var(--ink);
     scroll-padding-inline: 5px;
   }
   .reserve-filter { flex: 0 0 auto; min-height: 44px; white-space: nowrap; }
