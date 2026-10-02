@@ -109,7 +109,7 @@ em{font-weight:300}
 .work-image{position:relative;aspect-ratio:4/4.4;background:var(--canvas);overflow:hidden;display:grid;place-items:center;padding:clamp(14px,2.6vw,44px)}
 .work-image img{width:100%;height:100%;object-fit:contain;transition:transform 1s var(--ease);max-height:100%;min-height:0}
 .work-card:hover .work-image img{transform:scale(1.035)}
-.work-image::after{content:"↗";position:absolute;bottom:14px;right:14px;width:34px;height:34px;display:grid;place-items:center;background:var(--paper);font-size:20px;opacity:0;transform:translateY(8px);transition:transform .4s var(--ease),opacity .4s}
+.work-image::after{content:"";position:absolute;bottom:14px;right:14px;width:34px;height:34px;color:var(--ink);background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 18.5 18.5 5.5M9 5.5h9.5V15'/%3E%3C/svg%3E") center/20px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 18.5 18.5 5.5M9 5.5h9.5V15'/%3E%3C/svg%3E") center/20px no-repeat;opacity:0;transform:translateY(8px);transition:transform .4s var(--ease),opacity .4s}
 .work-card:hover .work-image::after,.work-card:focus-visible .work-image::after{opacity:1;transform:translateY(0)}
 .work-caption{display:flex;justify-content:space-between;align-items:start;padding-top:15px;gap:15px;font-size:12px}
 .work-caption small{display:block;margin-top:4px;font-size:var(--t-micro);color:var(--muted)}

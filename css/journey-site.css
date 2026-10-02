@@ -89,3 +89,12 @@
 }
 @media(max-width:360px) { .gate-caption strong { font-size:21px; } .gates-heading h2 { font-size:45px; } }
 @media(prefers-reduced-motion:reduce) { .chapter-gate img,.map-arrow { transition:none; } }
+
+/* Icônes au trait : symboles partagés de <svg class="svg-defs">, jamais de glyphes. */
+.svg-defs { position:absolute; width:0; height:0; overflow:hidden; }
+svg.icon {
+  display:inline-block; width:1em; height:1em; vertical-align:-.14em; overflow:visible; flex-shrink:0;
+  fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;
+}
+[data-icon] { display:inline-flex; align-items:center; }
+[data-icon="pause"] > .icon-play, [data-icon="play"] > .icon-pause { display:none; }

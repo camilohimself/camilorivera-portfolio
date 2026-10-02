@@ -1,5 +1,134 @@
 # Vérification de la refonte
 
+## 2 octobre 2026 — La goutte, la page de confidentialité et le crédit
+
+Contrôles exécutés localement avec Chromium sans interface, piloté par Playwright 1.62 déjà présent sur le poste, sur la branche `claude/goutte-confidentialite` (partie de `claude/transitions-liquides`), servie par `python3 -m http.server`.
+
+- **Parcours réels, 26 contrôles sur 26** : accueil sans aucune clé écrite au chargement ; message absent avant 1,5 s puis posé ; détail à quatre lignes, toutes « rien pour l’instant », lien vers `/confidentialite/` ; « Continuer » ne laisse que `cr-notice =vu` et le message ne revient pas sur les œuvres ; navigation avec le message ouvert : posé 250 ms après l’arrivée, sans chute, à la même position au pixel près (1026, 970) ; « Ne rien garder » ne laisse en local que `cr-notice =rien`, la langue choisie ensuite part en session et reste en anglais sur la page suivante ; carnets à 390 × 844 : boutons à 761 px, dock à 775 px ; page de confidentialité sans message, traduite (titre, goutte du titre, courriel, crédit), sans débordement à 1440 et 390 ; dix pages à 1440 × 1000 et 390 × 844 sans erreur JavaScript, sans ressource en erreur, sans débordement, avec crédit et message.
+- **Police du titre** : Cormorant 32 px mesuré sur les neuf pages ; Hors cadre l’affichait d’abord en DM (règle `.journey-journal.art-digital :is(h1, h2, h3)`), corrigé.
+- **Garde-fou vu en échec** : sans la classe `osom-credit` sur `journal/traces/`, `validate-journal.mjs` échoue (« crédit de scénographie »), puis repasse une fois le fichier rétabli.
+
+Sorties des contrôles :
+
+```text
+$ node tools/validate-portfolio.mjs
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 10 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 759 sources responsive, couverture et catalogue accessibles sans script.
+$ node tools/validate-journal.mjs
+OK — 10 pages reliées sans script, 2231 références locales, aucune ancre manquante.
+OK — 213 archives utilisées (129 du journal, 84 de Hors cadre), 625 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+OK — aucun symbole ni emoji dans 38 fichiers servis ; 16 icônes SVG définies à l’identique sur les 10 pages.
+OK — 10 cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.
+OK — panneau de confidentialité, lien vers la déclaration et crédit de scénographie sur les 10 pages.
+```
+
+Limites : non vérifié dans Safari, Firefox ni sur un appareil réel.
+
+## 1er octobre 2026 — Transitions en gouttes, mesures avant et après
+
+Contrôles exécutés localement avec Chromium 151 sans interface, piloté par Playwright 1.62 déjà présent sur le poste, sans paquet ajouté au dépôt. Deux serveurs : la référence `b076117` (extraite par `git archive`) et la branche de travail. WebKit et Firefox ne sont pas installés pour Playwright : non vérifié dans WebKit, non vérifié dans Firefox.
+
+**Méthode.** Les animations sont ralenties à 25 % par le protocole du navigateur (`Animation.setPlaybackRate`), puis figées pour chaque capture, environ toutes les 55 ms de temps d’animation. Le fond placé derrière les deux pages (`::view-transition`) est une sonde, injectée par le banc d’essai seulement : chaque image est capturée deux fois, sonde magenta puis verte. Un pixel où les deux captures diffèrent dans la direction magenta–vert n’appartient ni à l’ancienne ni à la nouvelle page : c’est le « fond nu ». Critère : aucune image où il dépasse 5 % de l’écran. Pour l’en-tête (64 premiers pixels) et pour l’écran entier, l’avancement de chaque image entre l’ancien état (0) et le nouveau (1) est calculé ; un saut de 1 entre deux images consécutives est une bascule sans état intermédiaire. Douze scénarios, à 390 × 844 et 1440 × 1000.
+
+**Mesuré avant.**
+
+- Accueil vers œuvres et œuvres vers accueil : aucune transition (la page des œuvres n’y adhérait pas) ; changement d’écran en une image (saut 1,00 et 0,97 à 1,00).
+- Journal vers carnets, carnets vers caves, caves vers traces : 17,0 à 18,3 % d’écran en fond nu, sur 2 à 3 images par transition (l’ancienne page à 25 % d’opacité) ; en-tête jusqu’à 1,00 de saut.
+- Retour du navigateur traces vers caves : 10,4 % (390) et 11,0 % (1440) de fond nu, sur 3 images.
+- Index, visionneuse du journal, œuvre de la collection, à l’ouverture comme à la fermeture : aucune transition, saut de 1,00 sur l’écran.
+- Sur 40 navigations sans banc d’essai (aller et retour, cinq trajets, deux formats), 24 transitions ; les 16 manquantes sont exactement les allers-retours entre l’accueil et les œuvres.
+
+**Mesuré après.** Fond nu maximal, saut maximal de l’en-tête, saut maximal de l’écran :
+
+| Scénario | 390 × 844 | 1440 × 1000 |
+| --- | --- | --- |
+| Accueil vers œuvres | 0,0 % · — · 0,11 | 0,0 % · — · 0,15 |
+| Œuvres vers accueil | 0,0 % · — · 0,18 | 0,0 % · — · 0,21 |
+| Journal vers carnets | 0,0 % · 0,35 · 0,23 | 0,0 % · 0,43 · 0,20 |
+| Carnets vers caves (en-tête noir) | 0,0 % · 0,33 · 0,14 | 0,0 % · 0,31 · 0,16 |
+| Caves vers traces | 0,0 % · 0,31 · 0,14 | 0,0 % · 0,31 · 0,16 |
+| Retour traces vers caves | 0,0 % · 0,41 · 0,14 | 0,0 % · 0,38 · 0,18 |
+| Index, ouverture | 0,0 % · 0,28 · 0,11 | 0,0 % · 0,14 · 0,17 |
+| Index, fermeture | 0,0 % · 0,36 · 0,11 | 0,0 % · 0,22 · 0,15 |
+| Visionneuse, ouverture | 0,0 % · 0,71 · 0,17 | 0,1 % · 0,39 · 0,16 |
+| Visionneuse, fermeture | 0,0 % · 0,68 · 0,16 | 0,0 % · 0,40 · 0,17 |
+| Œuvre, ouverture | 0,0 % · 0,56 · 0,16 | 0,0 % · 0,42 · 0,17 |
+| Œuvre, fermeture | 0,0 % · 0,64 · 0,16 | 0,0 % · 0,34 · 0,17 |
+
+« — » : l’en-tête est identique avant et après, l’avancement n’y est pas défini. Les sauts d’en-tête de 0,56 à 0,71 sur les panneaux correspondent, à la relecture des planches, au bord de la goutte qui traverse la bande de 64 pixels entre deux images : bord adouci, pas de bascule.
+
+- Mouvement réduit (préférence système simulée) : fondu de 180 ms, quatre à cinq images intermédiaires, fond nu 0,0 %, saut maximal 0,46 sur quatre scénarios et deux formats.
+- Sur 60 navigations sans banc d’essai (mêmes trajets, trois fois), 60 transitions prêtes, aucune sautée.
+- Point d’origine, stockage, repli : 24 contrôles sur 24. La clé `cr-drop` contient seulement `x`, `y`, `t` et `way` ; elle est absente du stockage après l’arrivée ; aucune autre clé de session ou locale n’apparaît. Le point relu correspond au clic à moins d’un pixel ; au clavier, au centre du lien. Le retour du navigateur referme vers le point d’ouverture enregistré dans l’entrée d’historique. Un lien vers un chapitre antérieur et œuvres vers accueil referment. Un geste vieux de plus de 3 secondes est ignoré (centre). Le réglage de mouvement du site donne un fondu. Sans `document.startViewTransition`, l’index s’ouvre en goutte sur le dialogue, se referme en goutte et rend le focus.
+- Parcours de non-régression : 534 contrôles sur 534. Neuf pages, deux formats, deux langues : aucune erreur JavaScript, aucune ressource en erreur, aucun débordement, bascule du mouvement, index (ouverture, focus, Échap, retour du focus). Visionneuse du journal (flèche, zoom, Échap, focus rendu, fermeture par le retour du navigateur, page débloquée, lien direct), collection (filtre, lot suivant, œuvre, clavier, zoom, Échap, focus rendu, retour du navigateur, lien direct), collection et visionneuse de l’accueil, film d’entrée, suites de Hors cadre.
+
+**Instrument.** Le banc d’essai fait parfois sauter la transition qu’il observe : l’ancienne page annonce une transition et la nouvelle n’en reçoit pas. Les mêmes trajets sans capture n’en sautent aucune (60 sur 60). Chaque mesure sautée a été rejouée, jusqu’à six fois par série ; le retour à 390 pixels a demandé plusieurs séries. L’écart aux deux pages (indicateur secondaire, blocs de 12 pixels) atteint 25 à 29 % entre les œuvres et l’accueil avant comme après : c’est le film d’entrée qui avance pendant la transition, non un fond nu.
+
+Vidéos pour Camilo, hors du dépôt : quatre parcours en mobile et en ordinateur, au format WebM et MP4.
+
+Sorties des contrôles :
+
+```text
+$ node tools/validate-portfolio.mjs
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 9 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 759 sources responsive, couverture et catalogue accessibles sans script.
+$ node tools/validate-journal.mjs
+OK — 9 pages reliées sans script, 2164 références locales, aucune ancre manquante.
+OK — 213 archives utilisées (129 du journal, 84 de Hors cadre), 625 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+OK — aucun symbole ni emoji dans 35 fichiers servis ; 16 icônes SVG définies à l’identique sur les 9 pages.
+OK — 9 cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.
+```
+
+`node --check` passe sur les seize scripts de `js/` et les six outils de `tools/` ; `git diff --check` ne signale rien.
+
+Limites : Chromium seulement, fenêtres simulées, aucun téléphone ni Safari réels. La fluidité en temps réel n’est pas mesurée (les captures figent le temps) ; les vidéos sont enregistrées par le navigateur de test et peuvent saccader sans que le site en soit la cause. Le repli sans transitions de vue a été simulé en retirant l’API dans Chromium, pas observé dans un navigateur qui en est dépourvu. Aucun envoi distant, aucune fusion, aucun déploiement.
+
+## 1er octobre 2026 — Icônes au trait à la place des symboles
+
+Contrôles exécutés localement avec Chromium 151 sans interface, piloté par Playwright 1.62 déjà présent sur le poste, sans paquet ajouté au dépôt.
+
+- **Polices** : fontTools lit la table des caractères des cinq `.woff2` : 222 à 231 glyphes, dont U+2191, U+2193 et U+00D7 ; U+2197, U+2192, U+2190, U+2194, U+2199, U+25B7 et U+2161 absents des cinq.
+- **Recomptage** : avant, dans l’ensemble du dépôt, 311 U+2197, 89 U+00D7 (dont 79 dans la documentation et les outils), 27 U+2192, 15 U+2161, 14 U+2190, 12 U+2191, 11 U+2193, 5 U+2194, 5 U+25B7 et 1 U+2199. Après, dans les fichiers servis : aucun. Restent `js/app.js` (non chargé) et les fichiers Markdown et `tools/`.
+- **Rendu** : recadrages avant/après de l’en-tête, des légendes, des liens de section, du pied de page, de l’index, des visionneuses, de la collection et des suites de Hors cadre, à 390 × 844 et 1440 × 1000, en français et en anglais. Les flèches gardent leur place ; l’en-tête de la collection se décale de 3 à 4 pixels, l’icône étant plus étroite que le glyphe de repli. Les croix de fermeture sont légèrement plus grandes qu’avant.
+- **Parcours** : 526 contrôles sur 526 : neuf pages, deux formats, deux langues ; langue active, aucun débordement horizontal, aucun symbole dans le texte affiché, aucune icône sans définition ni dans un texte traduit ; bascule du bouton de mouvement (une seule icône visible) ; index ouvert, focus sur la fermeture, neuf flèches, fermeture par Échap et focus rendu au bouton. Visionneuse du journal (flèche droite, zoom, Échap, focus rendu, lien direct `#fragment/la-main`), collection filtrée (18 puis 29 peintures), œuvre (clavier, bouton suivant, zoom, Échap, focus rendu à une carte, lien direct `#oeuvre/abstrait-996`), collection et visionneuse de l’accueil, bascule du film d’entrée, suites d’états de Hors cadre. Aucune erreur JavaScript, aucune ressource en erreur.
+- **Contrôle vu en échec** sur une copie jetable : une flèche ajoutée en `content` dans `css/journey-site.css`, un emoji (U+1F30A) en commentaire de `js/journey-nav.js`, un symbole modifié dans le bloc d’icônes d’une seule page, `js/app.js` rechargé par l’accueil. La copie rétablie repasse.
+
+```text
+AssertionError [ERR_ASSERTION]: css/journey-site.css:102 : symbole U+2197 ; utiliser une icône SVG
+AssertionError [ERR_ASSERTION]: js/journey-nav.js:67 : symbole U+1F30A ; utiliser une icône SVG
+AssertionError [ERR_ASSERTION]: journal/traces/index.html : définitions des icônes différentes de index.html
+AssertionError [ERR_ASSERTION]: js/app.js est de nouveau chargé : le relire avant de le retirer de la liste
+```
+
+Sorties des contrôles :
+
+```text
+$ node tools/validate-portfolio.mjs
+OK — 115 entrées, 230 variantes, aucun lien local manquant sur 9 pages.
+OK — 29 peintures, 26 encres, 60 photographies.
+OK — navigation complète, ancres historiques, identifiants, polices, dimensions et références des œuvres.
+OK — 759 sources responsive, couverture et catalogue accessibles sans script.
+$ node tools/validate-journal.mjs
+OK — 9 pages reliées sans script, 2153 références locales, aucune ancre manquante.
+OK — 213 archives utilisées (129 du journal, 84 de Hors cadre), 625 images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.
+OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.
+OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.
+OK — aucun symbole ni emoji dans 34 fichiers servis ; 16 icônes SVG définies à l’identique sur les 9 pages.
+OK — 9 cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.
+```
+
+Le nombre de références locales passe de 1772 à 2153 : chaque `<use href="#…">` est une ancre vérifiée. `node --check` passe sur les quinze scripts de `js/` et les six outils de `tools/` ; `git diff --check` ne signale rien.
+
+Limites : aucun iPhone ni Safari réel ; l’affichage en emoji sur iOS reste une déduction. Fenêtres simulées dans Chromium. Aucun envoi distant, aucune fusion, aucun déploiement.
+
 ## 1er octobre 2026 — Favicon et cartes de partage
 
 - Monogramme tracé depuis `fonts/dm-sans-400.woff2` (unités de 1 000, avances 572, 370 et 198, interlettrage −0,12 em, point décalé de 3/37 em). Rendu relu à 256, 32 et 16 pixels et en icône iOS de 180 pixels : « c » et « r » se touchent comme dans l’en-tête.

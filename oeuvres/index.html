@@ -24,27 +24,49 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="preload" href="../fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/cormorant-garamond-300-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="../js/drop.js?v=20261002-goutte"></script>
   <link rel="stylesheet" href="../css/journey.css">
   <link rel="stylesheet" href="../css/journey-space.css">
-  <link rel="stylesheet" href="../css/journey-site.css">
-  <link rel="stylesheet" href="../css/journey-catalogue.css">
-  <script src="../js/journey-preferences.js" defer></script>
+  <link rel="stylesheet" href="../css/journey-site.css?v=20261001-gouttes">
+  <link rel="stylesheet" href="../css/journey-catalogue.css?v=20261001-gouttes">
+  <link rel="stylesheet" href="../css/motion.css?v=20261001-gouttes">
+  <script src="../js/motion.js?v=20261002-goutte" defer></script>
+  <script src="../js/journey-preferences.js?v=20261002-goutte" defer></script>
   <script src="../js/dims.generated.js" defer></script>
-  <script src="../js/collection.js" defer></script>
+  <script src="../js/collection.js?v=20261001-gouttes" defer></script>
   <script src="../js/chromatic.js" defer></script>
-  <script src="../js/journey-nav.js" defer></script>
+  <script src="../js/journey-nav.js?v=20261001-gouttes" defer></script>
+  <link rel="stylesheet" href="../css/privacy-drop.css?v=20261002-goutte">
+  <script src="../js/privacy-drop.js?v=20261002-goutte" defer></script>
 </head>
 <body class="catalogue-page">
-  <a class="skip" href="#gallery" data-en="Skip to the collection">Aller à la collection</a>
+  <a class="skip" href="#gallery" data-en="Skip to the collection">Aller à la collection</a><svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h15M12 5l7 7-7 7"/></symbol>
+  <symbol id="diagonal" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol>
+  <symbol id="book-icon" viewBox="0 0 24 24"><path d="M12 6c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v15"/></symbol>
+  <symbol id="grid-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></symbol>
+  <symbol id="person-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="mail-icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></symbol>
+  <symbol id="icon-north-east" viewBox="0 0 24 24"><path d="M5.5 18.5 18.5 5.5M9 5.5h9.5V15"/></symbol>
+  <symbol id="icon-east" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  <symbol id="icon-west" viewBox="0 0 24 24"><path d="M20 12H4M10 6l-6 6 6 6"/></symbol>
+  <symbol id="icon-north" viewBox="0 0 24 24"><path d="M12 20V4M6 10l6-6 6 6"/></symbol>
+  <symbol id="icon-south" viewBox="0 0 24 24"><path d="M12 4v16M6 14l6 6 6-6"/></symbol>
+  <symbol id="icon-south-west" viewBox="0 0 24 24"><path d="M18.5 5.5 5.5 18.5M15 18.5H5.5V9"/></symbol>
+  <symbol id="icon-east-west" viewBox="0 0 24 24"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M9 4.5v15M15 4.5v15"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24"><path d="M7.5 4.5 19 12 7.5 19.5Z"/></symbol>
+  </defs></svg>
   <header class="topbar">
     <a class="signature" href="../" aria-label="Camilo Rivera, accueil" data-label-en="Camilo Rivera, home">cr<span class="signature-dot">.</span></a>
     <span class="edition" data-en="Collection / 01">Collection / 01</span>
     <nav aria-label="Navigation principale" data-label-en="Main navigation">
       <a href="../journal/" data-en="Journey">Voyage</a>
       <a href="./" aria-current="page" data-en="Works">Œuvres</a>
-      <button type="button" data-open-map data-en="Index ↗">Index ↗</button>
+      <button type="button" data-open-map><span data-en="Index">Index</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></button>
     </nav>
-    <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" aria-label="Réduire les mouvements" title="Réduire les mouvements"><span class="motion-symbol" aria-hidden="true">Ⅱ</span></button>
+    <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" aria-label="Réduire les mouvements" title="Réduire les mouvements"><span class="motion-symbol" aria-hidden="true" data-icon="pause"><svg class="icon icon-pause" aria-hidden="true" focusable="false"><use href="#icon-pause"/></svg><svg class="icon icon-play" aria-hidden="true" focusable="false"><use href="#icon-play"/></svg></span></button>
     <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch to English">EN</button>
   </header>
   <main id="parcours">
@@ -53,7 +75,7 @@
       <div class="catalogue-orbit" aria-hidden="true"></div>
       <div class="catalogue-intro-meta"><span data-en="Matter / Memory">Matière / Mémoire</span><span data-en="Camilo Rivera · Bramois, Switzerland">Camilo Rivera · Bramois, Suisse</span></div>
       <div class="catalogue-heading"><span class="small-label" data-en="An open collection">Une collection ouverte</span><h1 id="catalogue-heading" data-en="The gesture.<br><em>The trace.</em>">Le geste.<br><em>La trace.</em></h1></div>
-      <div class="catalogue-intro-bottom"><p data-en="Come closer to a canvas.<br>Let a memory surface.">Approcher une toile.<br>Laisser remonter un souvenir.</p><a href="#gallery" class="flow-link"><span data-en="Enter the collection">Entrer dans la collection</span><span aria-hidden="true">↓</span></a></div>
+      <div class="catalogue-intro-bottom"><p data-en="Come closer to a canvas.<br>Let a memory surface.">Approcher une toile.<br>Laisser remonter un souvenir.</p><a href="#gallery" class="flow-link"><span data-en="Enter the collection">Entrer dans la collection</span><span aria-hidden="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-south"/></svg></span></a></div>
       <svg class="catalogue-seam" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true"><path d="M0 112C150 5 250 180 435 86S742 3 913 94 1170 9 1440 98V180H0Z"/></svg>
     </section>
     <div id="gallery" class="catalogue-anchor"></div>
@@ -72,16 +94,16 @@
         <a class="collection-card" href="../images/encres/1025E971-FC37-4284-B104-508562EF2D17.webp" data-piece="encre-723"><img class="collection-image" src="../images/encres/1025E971-FC37-4284-B104-508562EF2D17-480.webp" srcset="../images/encres/1025E971-FC37-4284-B104-508562EF2D17-480.webp 480w, ../images/encres/1025E971-FC37-4284-B104-508562EF2D17-800.webp 800w, ../images/encres/1025E971-FC37-4284-B104-508562EF2D17.webp 1200w" sizes="(max-width: 600px) calc(50vw - 32px), 43vw" width="1200" height="1499" alt="Encre 723" loading="lazy"><span class="collection-caption"><span>Encre 723</span><small data-en="India ink">Encre de Chine</small></span></a>
         <a class="collection-card" href="../images/paintings/241240340_255290506453650_8691736928064111730_n.webp" data-piece="abstrait-675"><img class="collection-image" src="../images/paintings/241240340_255290506453650_8691736928064111730_n-480.webp" srcset="../images/paintings/241240340_255290506453650_8691736928064111730_n-480.webp 480w, ../images/paintings/241240340_255290506453650_8691736928064111730_n-800.webp 800w, ../images/paintings/241240340_255290506453650_8691736928064111730_n.webp 1200w" sizes="(max-width: 600px) calc(50vw - 32px), (max-width: 900px) 43vw, 27vw" width="1200" height="1500" alt="Abstrait 675" loading="lazy"><span class="collection-caption"><span>Abstrait 675</span><small data-en="Oil on canvas">Huile sur toile</small></span></a>
       </div>
-      <button id="collection-more" class="underlined-link" type="button" hidden data-en="Keep exploring ↓">Poursuivre l’exploration ↓</button>
+      <button id="collection-more" class="underlined-link" type="button" hidden><span data-en="Keep exploring">Poursuivre l’exploration</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-south"/></svg></button>
       <noscript><p class="no-script">Ces images s’ouvrent directement en grand format. Activez JavaScript pour parcourir la collection complète, filtrer les œuvres et ouvrir la visionneuse. Les <a href="../journal/">chapitres du journal</a> restent accessibles.</p></noscript>
     </section>
-    <section class="catalogue-after" aria-labelledby="after-heading"><span class="small-label" data-en="There is always another passage">Il reste toujours un passage</span><h2 id="after-heading" data-en="Elsewhere,<br><em>within.</em>">Ailleurs,<br><em>au-dedans.</em></h2><a class="underlined-link" href="../journal/"><span data-en="Follow the memories">Suivre les souvenirs</span><span aria-hidden="true">↗</span></a></section>
+    <section class="catalogue-after" aria-labelledby="after-heading"><span class="small-label" data-en="There is always another passage">Il reste toujours un passage</span><h2 id="after-heading" data-en="Elsewhere,<br><em>within.</em>">Ailleurs,<br><em>au-dedans.</em></h2><a class="underlined-link" href="../journal/"><span data-en="Follow the memories">Suivre les souvenirs</span><span aria-hidden="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></span></a></section>
   </main>
-  <footer class="catalogue-footer"><a href="../" data-en="Back to the surface ↑">Revenir à la surface ↑</a><nav aria-label="Les chemins" data-label-en="The paths"><a href="../journal/carnets/" data-en="Notebooks">Carnets</a><a href="../journal/matieres/" data-en="Matter">Matières</a><a href="../journal/les-caves/" data-en="The cellars">Les caves</a><a href="../journal/traces/" data-en="Traces">Traces</a><a href="../journal/reserves/" data-en="Archive">Réserves</a></nav><a href="../#contact" data-en="Contact">Contact</a><span>Camilo Rivera · Version 01</span></footer>
+  <footer class="catalogue-footer"><a href="../"><span data-en="Back to the surface">Revenir à la surface</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north"/></svg></a><nav aria-label="Les chemins" data-label-en="The paths"><a href="../journal/carnets/" data-en="Notebooks">Carnets</a><a href="../journal/matieres/" data-en="Matter">Matières</a><a href="../journal/les-caves/" data-en="The cellars">Les caves</a><a href="../journal/traces/" data-en="Traces">Traces</a><a href="../journal/reserves/" data-en="Archive">Réserves</a></nav><a href="../#contact" data-en="Contact">Contact</a><a href="../confidentialite/"><span data-en="Privacy">Confidentialité</span></a><a class="osom-credit" href="https://www.osom.ch" target="_blank" rel="noopener noreferrer"><span data-en="Scenography: OSOM Labs">Scénographie : OSOM Labs</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></a><span>Camilo Rivera · Version 01</span></footer>
   <dialog id="artwork" class="artwork-dialog" aria-labelledby="artwork-title">
-    <div class="artwork-top"><span>Camilo Rivera</span><span id="artwork-counter"></span><button id="artwork-close" class="close-button" type="button" aria-label="Fermer l’image" data-label-en="Close the image">×</button></div>
+    <div class="artwork-top"><span>Camilo Rivera</span><span id="artwork-counter"></span><button id="artwork-close" class="close-button" type="button" aria-label="Fermer l’image" data-label-en="Close the image"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg></button></div>
     <div class="artwork-stage"><img id="artwork-image" alt=""></div>
-    <div class="artwork-bottom"><div><h2 id="artwork-title"></h2><p id="artwork-detail"></p></div><div class="artwork-actions"><button id="artwork-zoom" type="button" aria-pressed="false">Agrandir</button><button id="artwork-share" type="button">Partager</button><a id="artwork-original" target="_blank" rel="noopener" data-en="Original ↗">Original ↗</a><a id="artwork-contact" data-en="Ask about this work ↗">Parler de cette œuvre ↗</a></div><p id="artwork-share-status" role="status" aria-live="polite" hidden></p><div class="artwork-arrows"><button id="artwork-prev" type="button" aria-label="Image précédente" data-label-en="Previous image">←</button><button id="artwork-next" type="button" aria-label="Image suivante" data-label-en="Next image">→</button></div></div>
+    <div class="artwork-bottom"><div><h2 id="artwork-title"></h2><p id="artwork-detail"></p></div><div class="artwork-actions"><button id="artwork-zoom" type="button" aria-pressed="false">Agrandir</button><button id="artwork-share" type="button">Partager</button><a id="artwork-original" target="_blank" rel="noopener"><span data-en="Original">Original</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></a><a id="artwork-contact"><span data-en="Ask about this work">Parler de cette œuvre</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></a></div><p id="artwork-share-status" role="status" aria-live="polite" hidden></p><div class="artwork-arrows"><button id="artwork-prev" type="button" aria-label="Image précédente" data-label-en="Previous image"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-west"/></svg></button><button id="artwork-next" type="button" aria-label="Image suivante" data-label-en="Next image"><svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-east"/></svg></button></div></div>
   </dialog>
 </body>
 </html>

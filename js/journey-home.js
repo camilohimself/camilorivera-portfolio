@@ -19,8 +19,9 @@
   const alts = [...document.querySelectorAll('[data-alt-en]')].map(el => [el, el.alt]);
   let reduced = false, chosenReduced = false, lang = 'fr', pending = false;
   let filmVisible = false, filmUserPaused = false, filmUserStarted = false, filmPending = false, filmBlocked = false;
-  const read = key => { try { return localStorage.getItem(key) || localStorage.getItem(key.replace('cr-', 'v01-')); } catch { return null; } };
-  const save = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
+  // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
+  const read = key => { try { return sessionStorage.getItem(key) || localStorage.getItem(key) || localStorage.getItem(key.replace('cr-', 'v01-')); } catch { return null; } };
+  const save = (key, value) => { try { (localStorage.getItem('cr-notice') === 'rien' ? sessionStorage : localStorage).setItem(key, value); } catch {} };
   const choose = (fr, en) => lang === 'fr' ? fr : en;
   const hasOpenDialog = () => Boolean(document.querySelector('dialog[open]'));
   chosenReduced = read('cr-motion') === 'reduced';
@@ -29,7 +30,6 @@
 
   function applyLanguage() {
     html.lang = lang;
-    save('cr-language', lang);
     texts.forEach(([el, fr]) => { el.innerHTML = lang === 'en' ? el.dataset.en : fr; });
     labels.forEach(([el, fr]) => el.setAttribute('aria-label', lang === 'en' ? el.dataset.labelEn : fr));
     alts.forEach(([el, fr]) => { el.alt = lang === 'en' ? el.dataset.altEn : fr; });
@@ -48,13 +48,12 @@
     motion.setAttribute('aria-label', label); motion.title = label;
     motion.setAttribute('aria-pressed', String(reduced));
     motion.disabled = systemMotion.matches;
-    const icon = motion.querySelector('span');
-    if (icon) icon.textContent = reduced ? '▷' : 'Ⅱ';
+    const icon = motion.querySelector('[data-icon]');
+    if (icon) icon.dataset.icon = reduced ? 'play' : 'pause';
   }
   function applyMotion() {
     const wasReduced = reduced;
     reduced = chosenReduced || systemMotion.matches;
-    save('cr-motion', chosenReduced ? 'reduced' : 'full');
     html.classList.toggle('motion-reduced', reduced);
     if (reduced && !wasReduced) filmUserStarted = false;
     updatePlayback();
@@ -106,8 +105,8 @@
     const label = video.paused ? choose('Lire le film', 'Play the film') : choose('Mettre en pause', 'Pause the film');
     const toggleLabel = filmToggle?.querySelector('span');
     if (toggleLabel) toggleLabel.textContent = label;
-    const toggleIcon = filmToggle?.querySelector('[aria-hidden]');
-    if (toggleIcon) toggleIcon.textContent = video.paused ? '▷' : 'Ⅱ';
+    const toggleIcon = filmToggle?.querySelector('[data-icon]');
+    if (toggleIcon) toggleIcon.dataset.icon = video.paused ? 'play' : 'pause';
     if (filmError) filmError.textContent = filmBlocked ? choose('Appuyez pour lancer le film.', 'Press to play the film.') : '';
     filmSurfaceToggle?.setAttribute('aria-label', label);
     filmSection?.classList.toggle('film-is-playing', !video.paused);

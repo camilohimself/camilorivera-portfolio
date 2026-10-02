@@ -2,7 +2,7 @@
 
 Site personnel bilingue de Camilo Rivera, artiste peintre à Bramois, Valais. La branche `version-astra` transpose l’ensemble du portfolio dans l’univers V01 : contrastes blanc/noir, couleurs liquides, grandes images et parcours entre œuvres et souvenirs.
 
-Neuf pages composent le voyage : l’accueil, la collection, le journal, les carnets, la matière, les caves, les traces, la réserve et Hors cadre. Un index commun permet de changer de chemin. Le logo `cr.` et la typographie inversée accompagnent tout le site.
+Neuf pages composent le voyage : l’accueil, la collection, le journal, les carnets, la matière, les caves, les traces, la réserve et Hors cadre. Un index commun permet de changer de chemin. Le logo `cr.` et la typographie inversée accompagnent tout le site. Une dixième page, `/confidentialite/`, hors du voyage, dit ce que le site garde sur l’appareil du visiteur ; chaque pied de page la relie, avec le crédit « Scénographie : OSOM Labs ».
 
 ## Aperçu local
 
@@ -66,15 +66,18 @@ Les titres et compositions que `main` avait réécrits pour sa version « rêver
 - `js/journey-preferences.js` : langue et mouvement de la collection ; l’accueil et le journal partagent les mêmes préférences.
 - `js/journal.js`, `reserve.js`, `viewer-motion.js` : interactions des souvenirs et de la réserve.
 - `js/films.js` : lecture silencieuse des films du geste, mise en pause hors écran et derrière une fenêtre ouverte.
-- `css/motion.css`, `js/motion.js` : transitions entre pages et réponses tactiles.
+- `css/motion.css`, `js/drop.js` : transitions en gouttes entre les pages et à l’ouverture des panneaux ; `js/drop.js` est chargé sans `defer` dans l’en-tête de chaque page.
+- `js/motion.js` : réponses tactiles et entrées des fragments.
+- `css/privacy-drop.css`, `js/privacy-drop.js` : la goutte qui dit ce que le site garde, à la première page de la visite, et la mise en page de `/confidentialite/`.
+- `<svg class="svg-defs">`, en tête de chaque page : les seize icônes au trait du site, identiques sur les dix pages. Aucune flèche ni aucun symbole n’est écrit comme caractère.
 - `journal/hors-cadre/index.html`, `css/art-digital.css`, `js/art-digital.js` : Hors cadre, ses films d’encre et ses suites de peinture. `selection.json` et `media.json` tracent les choix éditoriaux et les exports.
 - `css/journey-journal.css`, fin de feuille : feuilles des cahiers, passages vers Hors cadre, échos, accès rapide, parcours dans le rouge et rapprochements.
 
-Les anciennes feuilles de composition restent dans le dépôt pour l’historique, comme `css/reverie.css`, `css/intensity.css`, `css/accrochages.css` et `js/app.js` venus de `main`. Les neuf pages actives utilisent les nouvelles compositions ; elles n’affichent plus les décors kraft/ciel. Les parcours `tools/verify-hors-cadre.mjs` et `tools/verify-reverie.mjs` décrivent la version de `main` et ne valident plus ce rendu.
+Les anciennes feuilles de composition restent dans le dépôt pour l’historique, comme `css/reverie.css`, `css/intensity.css`, `css/accrochages.css` et `js/app.js` venus de `main`. Les pages actives utilisent les nouvelles compositions ; elles n’affichent plus les décors kraft/ciel. Les parcours `tools/verify-hors-cadre.mjs` et `tools/verify-reverie.mjs` décrivent la version de `main` et ne valident plus ce rendu.
 
 ## Partage et icônes
 
-Chaque page déclare une carte de partage propre, lue par WhatsApp, iMessage, Signal, Telegram et les réseaux : `images/partage/<page>.jpg`, JPEG de 1200 × 630 pixels, entre 46 et 86 Ko. L’image de la page est posée au centre et le titre la traverse en noir et blanc inversé, comme le nom traverse le film à l’accueil ; le centre reste lisible quand une application recadre l’aperçu en carré. Les balises `og:image:width`, `og:image:height`, `og:image:type`, `og:image:alt` et `og:site_name` accompagnent la carte. `tools/generate-share-cards.mjs` la régénère (Playwright indiqué par `PLAYWRIGHT_MODULE`, rien n’est installé dans le dépôt).
+Chaque page déclare une carte de partage propre, lue par WhatsApp, iMessage, Signal, Telegram et les réseaux : `images/partage/<page>.jpg`, JPEG de 1200 × 630 pixels, entre 46 et 88 Ko. L’image de la page est posée au centre et le titre la traverse en noir et blanc inversé, comme le nom traverse le film à l’accueil ; le centre reste lisible quand une application recadre l’aperçu en carré. Les balises `og:image:width`, `og:image:height`, `og:image:type`, `og:image:alt` et `og:site_name` accompagnent la carte. `tools/generate-share-cards.mjs` la régénère (Playwright indiqué par `PLAYWRIGHT_MODULE`, rien n’est installé dans le dépôt).
 
 Le favicon reprend le monogramme `cr.` de l’en-tête, tracé depuis `fonts/dm-sans-400.woff2` avec le même interlettrage : `favicon.svg` (inversé en mode sombre), `favicon.ico` (16, 32 et 48 pixels) et `apple-touch-icon.png` (180 pixels). `tools/generate-icons.py` les régénère (fontTools, brotli et ImageMagick du poste).
 
@@ -84,7 +87,9 @@ Une application peut garder l’ancien aperçu d’une adresse déjà partagée 
 
 L’index, les liens entre chapitres et les retours vers la collection permettent une lecture libre. Les adresses `?collection=paintings#gallery`, `?collection=encres#gallery`, `?collection=shooting#gallery` et `?collection=memories#gallery` sélectionnent la collection. Les œuvres et souvenirs ont des liens directs. Les anciens liens de l’accueil restent pris en charge : `#mouvement` rejoint désormais l’entrée vidéo, `#gallery` les œuvres, `#journal` et `#hors-cadre` la mémoire, `#seuil` le contact. La réserve conserve `?regard=atelier#inventaire`.
 
-Les préférences FR/EN et de mouvement sont mémorisées localement. Le réglage système de réduction des animations est prioritaire. Les champs liquides se stabilisent au repos et s’arrêtent hors écran, dans un onglet masqué ou derrière une fenêtre. Le défilement reste natif.
+Les préférences FR/EN et de mouvement sont mémorisées localement (`cr-language`, `cr-motion`) quand le visiteur les change, jamais au chargement. Avec « Ne rien garder », elles ne vivent que dans l’onglet (stockage de session). La réponse au message de confidentialité est gardée dans `cr-notice`. Le réglage système de réduction des animations est prioritaire.
+
+Chaque page s’ouvre dans une goutte née au point du clic et se referme vers lui au retour ; l’index, les visionneuses et la collection de l’accueil font de même depuis leur bouton. Pour passer ce point d’une page à l’autre, `js/drop.js` écrit au départ une seule clé de session, `cr-drop` (position relative du geste, heure, sens), et la supprime à l’arrivée ; le point d’ouverture d’une page reste ensuite attaché à son entrée d’historique. En mouvement réduit, un fondu de 180 ms remplace la goutte. Détails dans `docs/DECISIONS.md`. Les champs liquides se stabilisent au repos et s’arrêtent hors écran, dans un onglet masqué ou derrière une fenêtre. Le défilement reste natif.
 
 L’entrée reste temporairement ancrée à l’écran pendant le passage à travers le nom ; avancer ou remonter dans la page fait évoluer la même composition. Le monogramme `cr.`, les commandes du film et l’accès aux œuvres restent disponibles. Le nom dessiné sur canvas complète un véritable titre `h1`, conservé pour l’accessibilité et comme repli si le rendu n’est pas disponible. Le calque transparent révèle la vidéo existante sans second lecteur ni second décodage. En mouvement réduit, l’entrée occupe un seul écran et la transformation liée au défilement disparaît. Ce travail concerne uniquement l’entrée de l’accueil : ordre des sections, catalogue et photographies de souvenirs restent inchangés.
 
@@ -108,6 +113,7 @@ node --check js/journey-scroll.js
 node --check js/journey-preferences.js
 node --check js/films.js
 node --check js/motion.js
+node --check js/drop.js
 node --check js/art-digital.js
 git diff --check
 ```

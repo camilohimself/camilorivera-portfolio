@@ -13,8 +13,9 @@
     if (!attributes.has(el)) attributes.set(el, {});
     attributes.get(el)[attribute] = {fr: el.getAttribute(attribute), en: el.getAttribute(data)};
   }));
-  const read = key => { try { return localStorage.getItem(key); } catch { return null; } };
-  const save = (key, value) => { try { localStorage.setItem(key, value); } catch { /* Optional preferences. */ } };
+  // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
+  const read = key => { try { return sessionStorage.getItem(key) || localStorage.getItem(key); } catch { return null; } };
+  const save = (key, value) => { try { (localStorage.getItem('cr-notice') === 'rien' ? sessionStorage : localStorage).setItem(key, value); } catch {} };
   let userReduced = read('cr-motion') === 'reduced';
   const en = () => root.lang === 'en';
   const calm = () => root.classList.contains('motion-reduced') || systemMotion.matches;
@@ -44,7 +45,7 @@
     button.setAttribute('aria-pressed', String(reduced));
     button.title = label;
     button.disabled = systemMotion.matches;
-    $('.motion-symbol', button).textContent = reduced ? '▷' : 'Ⅱ';
+    const icon = $('.motion-symbol', button); if (icon) icon.dataset.icon = reduced ? 'play' : 'pause';
     if (reduced) $$('.paper-reveal').forEach(el => el.classList.add('is-visible'));
   }
 
@@ -72,6 +73,8 @@
   let pushed = false;
   let returnUrl = '';
   let messageTimer;
+  let dropClosing = false;
+  const drop = window.CamiloDrop;
   const viewerMotion = window.CamiloViewerMotion?.create({dialog, stage, image, reduced: calm, onStep: stepPhoto});
 
   function photoSlug() {
@@ -137,13 +140,17 @@
     requestFrame();
   }
   function closePhoto() {
+    if (dropClosing) return;
     const goBack = pushed && Boolean(photoSlug());
     const finish = () => {
+      dropClosing = false;
       hidePhoto();
       if (goBack) history.back();
       else history.replaceState(null, '', returnUrl || location.pathname + location.search);
     };
-    if (viewerMotion) viewerMotion.close(finish);
+    // The viewer closes in a drop back into the image that opened it (js/drop.js).
+    if (drop && dialog?.open) { dropClosing = true; viewerMotion?.reset(); drop.swap(finish, {closing: dialog, returnTo: sourceElement}); }
+    else if (viewerMotion) viewerMotion.close(finish);
     else finish();
   }
   function syncPhoto() {
@@ -151,6 +158,7 @@
     const index = photos.findIndex(a => a.dataset.photo === slug);
     if (index >= 0) showPhoto(index, null, false);
     else if (viewerMotion?.closing) viewerMotion.close(hidePhoto, true);
+    else if (drop && dialog?.open && !dropClosing) drop.swap(hidePhoto, {closing: dialog, returnTo: sourceElement});
     else hidePhoto();
   }
   function stepPhoto(step) {
@@ -170,7 +178,9 @@
       link.addEventListener('click', event => {
         if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || typeof dialog.showModal !== 'function') return;
         event.preventDefault();
-        showPhoto(photos.findIndex(a => a.dataset.photo === link.dataset.photo), link);
+        const index = photos.findIndex(a => a.dataset.photo === link.dataset.photo);
+        if (drop && !dialog.open) drop.swap(() => showPhoto(index, link), {origin: link});
+        else showPhoto(index, link);
       });
     });
     image.addEventListener('load', () => stage.classList.remove('image-loading'));

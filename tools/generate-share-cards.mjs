@@ -25,7 +25,8 @@ export const cards = [
   {slug: 'caves', title: 'Les murs<br><em>se souviennent.</em>', eyebrow: '03 / Les caves', image: 'images/journal/caves-lumiere.webp', credit: 'Photographie : David Zuber'},
   {slug: 'traces', title: 'Ce qu’on<br><em>garde.</em>', eyebrow: '04 / Les traces', image: 'images/journal/a-l-atelier.webp'},
   {slug: 'reserves', title: 'Tout ce qui<br><em>déborde.</em>', eyebrow: '05 / La réserve', image: 'images/reserve/r73-img_7505.webp'},
-  {slug: 'hors-cadre', title: 'Hors <em>cadre.</em>', eyebrow: '06 / Hors cadre', image: 'images/hors-cadre/hc-08.webp'}
+  {slug: 'hors-cadre', title: 'Hors <em>cadre.</em>', eyebrow: '06 / Hors cadre', image: 'images/hors-cadre/hc-08.webp'},
+  {slug: 'confidentialite', title: 'Seules les œuvres<br><em>gardent des traces.</em>', eyebrow: 'Confidentialité', image: 'images/encres/1025E971-FC37-4284-B104-508562EF2D17.webp'}
 ];
 
 const dataURL = (file, type) => `data:${type};base64,${fs.readFileSync(path.join(repo, file)).toString('base64')}`;
@@ -64,7 +65,8 @@ const out = path.join(repo, 'images/partage');
 fs.mkdirSync(out, {recursive: true});
 const browser = await chromium.launch();
 const page = await browser.newPage({viewport: {width: 1200, height: 630}, deviceScaleFactor: 1});
-for (const card of cards) {
+const only = process.env.CARDS ? process.env.CARDS.split(',') : null;
+for (const card of cards.filter(card => !only || only.includes(card.slug))) {
   await page.setContent(template(card), {waitUntil: 'load'});
   await page.evaluate(() => document.fonts.ready);
   // Le titre prend la plus grande taille qui tienne dans la largeur et dans la hauteur.

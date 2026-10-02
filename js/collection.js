@@ -35,21 +35,21 @@
   const words = {
     fr: {
       all: 'Œuvres', paintings: 'Peintures', encres: 'Encres', shooting: 'Atelier', memories: 'Souvenirs',
-      loading: 'Chargement…', more: 'Poursuivre l’exploration ↓', retry: 'Réessayer',
+      loading: 'Chargement…', more: 'Poursuivre l’exploration', retry: 'Réessayer',
       unavailable: 'Cette image est introuvable.',
       failed: 'Le chargement a échoué. Les images restent accessibles depuis leurs liens directs.',
       zoom: 'Agrandir', unzoom: 'Revenir à l’ensemble', zoomRegion: 'Image agrandie. Utiliser les flèches pour explorer.', share: 'Partager', copied: 'Lien copié.',
-      copyFallback: 'Lien à copier : ', contact: 'Parler de cette œuvre ↗',
+      copyFallback: 'Lien à copier : ', contact: 'Parler de cette œuvre',
       subject: title => `À propos de ${title}`, count: (visible, total) => `${visible} sur ${total}`,
       techniques: { 'Huile sur toile': 'Huile sur toile', 'Encre de Chine': 'Encre de Chine', Atelier: 'Atelier' }
     },
     en: {
       all: 'Works', paintings: 'Paintings', encres: 'Inks', shooting: 'Studio', memories: 'Memories',
-      loading: 'Loading…', more: 'Keep exploring ↓', retry: 'Try again',
+      loading: 'Loading…', more: 'Keep exploring', retry: 'Try again',
       unavailable: 'This image could not be found.',
       failed: 'The collection could not load. Images remain accessible through their direct links.',
       zoom: 'Zoom in', unzoom: 'See the whole image', zoomRegion: 'Enlarged image. Use the arrow keys to explore.', share: 'Share', copied: 'Link copied.',
-      copyFallback: 'Link to copy: ', contact: 'Ask about this work ↗',
+      copyFallback: 'Link to copy: ', contact: 'Ask about this work',
       subject: title => `About ${title}`, count: (visible, total) => `${visible} of ${total}`,
       techniques: { 'Huile sur toile': 'Oil on canvas', 'Encre de Chine': 'India ink', Atelier: 'Studio' }
     }
@@ -67,6 +67,8 @@
   let artworkReturn = null;
   let collectionReturn = null;
 
+  // The icon stays outside the translated label, so both languages keep it.
+  const setLabel = (element, value) => { (element.querySelector(':scope > span') || element).textContent = value; };
   const lang = () => document.documentElement.lang.startsWith('en') ? 'en' : 'fr';
   const text = () => words[lang()];
   const currentState = () => history.state && typeof history.state === 'object' ? history.state : {};
@@ -161,7 +163,7 @@
     const list = itemsFor(category);
     const shown = Math.min(visibleCount, list.length);
     collectionTitle.textContent = text()[category];
-    more.textContent = text().more;
+    setLabel(more, text().more);
     collectionRetry.textContent = text().retry;
     collectionRetry.hidden = source.status !== 'error';
     more.hidden = source.status !== 'ready' || shown >= list.length;
@@ -307,7 +309,7 @@
     original.href = imagePath(item);
     if (zoom) zoom.textContent = artwork.classList.contains('is-zoomed') ? text().unzoom : text().zoom;
     if (contact && !contact.hidden) {
-      contact.textContent = text().contact;
+      setLabel(contact, text().contact);
       contact.href = `mailto:camrivera@protonmail.com?subject=${encodeURIComponent(text().subject(label(item)))}`;
     }
     previous.disabled = next.disabled = activeItems.length < 2;
@@ -382,6 +384,14 @@
     if ((wasArtworkOpen && !artwork.open) || closedCollection) restoreFocus(closedCollection, closingRoute);
   }
 
+  // Opening or closing a dialog happens in a drop from the clicked element (js/drop.js).
+  function dropSync(origin = null) {
+    const drop = window.CamiloDrop;
+    if (!drop) { syncLocation(); return; }
+    const returnTo = artwork.open ? artworkReturn?.node : collectionReturn;
+    drop.swap(syncLocation, { origin, returnTo });
+  }
+
   function setHistory(state, url, replace = false) {
     const nextState = { ...currentState(), [stateKey]: { ...state, session } };
     history[replace ? 'replaceState' : 'pushState'](nextState, '', url);
@@ -406,8 +416,10 @@
       url.searchParams.set('collection', category);
       setHistory({ ...state, category }, url, true);
     }
-    syncLocation();
-    if (inline) document.getElementById('gallery')?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    if (inline) {
+      syncLocation();
+      document.getElementById('gallery')?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    } else dropSync(opener);
   }
 
   function openArtwork(route, opener = null) {
@@ -420,7 +432,7 @@
       hasBack: true, returnUrl: location.href,
       ...(artwork.open ? state : {})
     }, url, artwork.open);
-    syncLocation();
+    dropSync(opener);
   }
 
   function closeTop() {
@@ -438,7 +450,7 @@
     if (readRoute()) url.hash = inline ? 'gallery' : '';
     else { url.searchParams.delete('collection'); if (url.hash === '#gallery') url.hash = ''; }
     history.replaceState(nextState, '', url);
-    syncLocation();
+    dropSync();
   }
 
   function navigate(direction) {
@@ -585,9 +597,9 @@
   });
   window.addEventListener('popstate', () => {
     historyPending = false;
-    syncLocation();
+    dropSync();
   });
-  window.addEventListener('hashchange', syncLocation);
+  window.addEventListener('hashchange', () => dropSync());
   const refreshLanguage = () => { renderCollection(); renderArtwork(); };
   window.addEventListener('crlanguage', refreshLanguage);
   document.addEventListener('crlanguage', refreshLanguage);

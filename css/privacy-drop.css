@@ -1,0 +1,109 @@
+/* La goutte : ce que le site garde, dit une fois, dans l'encre du site. */
+.privacy-drop {
+  --drop-ink: var(--ultramarine, #2934f5);
+  --drop-paper: var(--white, #f7f7f2);
+  --drop-ease: cubic-bezier(.22,1,.36,1);
+  --drop-bottom: 30px;
+  position: fixed; right: 30px; bottom: var(--drop-bottom); z-index: 9000;
+  width: min(384px, calc(100vw - 24px));
+  color: var(--drop-paper);
+  font-family: DM, "DM Sans", Arial, sans-serif; font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  view-transition-name: privacy-drop; /* la tache reste posée pendant le passage d'une page à l'autre */
+}
+.privacy-drop-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.privacy-drop-ink { position: absolute; inset: -80px; filter: url(#privacy-drop-goo); pointer-events: none; }
+.privacy-drop-ink > div { position: absolute; left: 0; top: 0; background: var(--drop-ink); will-change: transform; }
+.privacy-drop-blob { width: 100px; height: 100px; border-radius: 50%; }
+.privacy-drop-core { border-radius: 30px; }
+.privacy-drop-pillshape { border-radius: 999px; transform-origin: 50% 0; }
+
+.privacy-drop-body { position: relative; padding: 30px 30px 18px; }
+.privacy-drop h2.privacy-drop-title { /* (0,2,1) : passe devant les titres de Hors cadre, chargés avant */
+  margin: 0 0 12px; max-width: 13ch; color: inherit;
+  font-family: Cormorant, "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 300;
+  font-size: 32px; line-height: 1.02; letter-spacing: -.012em;
+}
+.privacy-drop .privacy-drop-text { margin: 0; max-width: 33ch; font-size: 14px; line-height: 1.5; }
+.privacy-drop-body > *, .privacy-drop-pill { opacity: 0; transition: opacity 420ms var(--drop-ease); }
+.privacy-drop.is-inked .privacy-drop-body > * { opacity: 1; }
+.privacy-drop.is-ready .privacy-drop-pill { opacity: 1; }
+.privacy-drop.is-leaving .privacy-drop-body > *, .privacy-drop.is-leaving .privacy-drop-pill { opacity: 0; transition-duration: 180ms; }
+.privacy-drop.is-placed .privacy-drop-body > *, .privacy-drop.is-placed .privacy-drop-pill { transition: none; }
+
+.privacy-drop-more {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 8px; padding: 0;
+  border: 0; background: none; color: inherit; font: inherit; font-size: 13px; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+.privacy-drop-more i { display: inline-grid; width: 16px; height: 16px; }
+.privacy-drop-more svg { width: 16px; height: 16px; }
+
+.privacy-drop-detail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 560ms var(--drop-ease); }
+.privacy-drop.is-open .privacy-drop-detail { grid-template-rows: 1fr; }
+.privacy-drop-detail-inner { min-height: 0; overflow: hidden; }
+.privacy-drop.is-open .privacy-drop-detail-inner { overflow-y: auto; max-height: calc(100svh - 340px - var(--drop-bottom)); overscroll-behavior: contain; }
+.privacy-drop-list { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid color-mix(in srgb, var(--drop-paper) 32%, transparent); }
+.privacy-drop-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; padding: 11px 0; border-bottom: 1px solid color-mix(in srgb, var(--drop-paper) 32%, transparent); }
+.privacy-drop .privacy-drop-name { font-size: 14px; }
+.privacy-drop .privacy-drop-value { font-family: Cormorant, "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 18px; line-height: 1; text-align: right; }
+.privacy-drop .privacy-drop-why { grid-column: 1 / -1; margin: 0; font-size: 12.5px; line-height: 1.45; opacity: .82; }
+.privacy-drop-erase {
+  grid-column: 2; justify-self: end; min-height: 32px; padding: 0; border: 0; background: none; color: inherit;
+  font: inherit; font-size: 12.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
+.privacy-drop .privacy-drop-host { margin: 14px 0 6px; font-size: 12.5px; line-height: 1.45; opacity: .82; max-width: 36ch; }
+.privacy-drop-policy { color: inherit; font-size: 12.5px; text-underline-offset: 3px; }
+
+.privacy-drop-actions { position: relative; display: flex; gap: 12px; padding: 10px 20px 0; }
+.privacy-drop-pill {
+  flex: 1 1 0; min-height: 48px; padding: 0 12px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--drop-paper); font: inherit; font-size: 14px; cursor: pointer;
+}
+.privacy-drop :focus-visible { outline: 2px solid var(--drop-paper); outline-offset: 3px; }
+.privacy-drop-pill:focus-visible { outline-offset: -6px; }
+
+.privacy-drop-fall { position: fixed; inset: 0; z-index: 9001; width: 100vw; height: 100vh; pointer-events: none; overflow: visible; }
+.privacy-drop-fall path { fill: var(--ultramarine, #2934f5); }
+
+/* Mouvement réduit : la tache est déjà posée, un simple fondu. */
+.privacy-drop.is-calm { opacity: 0; transition: opacity 240ms ease; }
+.privacy-drop.is-calm.is-inked { opacity: 1; }
+.privacy-drop.is-calm.is-gone { opacity: 0; }
+::view-transition-group(privacy-drop) { animation-duration: 0s; }
+
+@media print { .privacy-drop, .privacy-drop-fall { display: none; } }
+
+@media (max-width: 600px) {
+  .privacy-drop { right: 20px; left: 20px; width: auto; --drop-bottom: 16px; }
+  .privacy-drop-body { padding: 24px 22px 14px; }
+  .privacy-drop h2.privacy-drop-title { font-size: 28px; }
+  .privacy-drop-actions { padding-inline: 10px; gap: 10px; }
+  .privacy-drop-pill { font-size: 13.5px; }
+}
+
+/* La page de confidentialité : une fiche, comme le cartel d'une œuvre. */
+.privacy-sheet { max-width: 1180px; margin: 0 auto; padding: 168px var(--gutter, 32px) 40px; }
+.privacy-sheet h1 { margin: 0 0 30px; font-family: DM, "DM Sans", Arial, sans-serif; font-weight: 400; font-size: clamp(54px, 10.5vw, 156px); line-height: .86; letter-spacing: -.065em; }
+.privacy-mark {
+  display: inline-block; width: .15em; height: .15em; margin-left: .05em; vertical-align: baseline;
+  background: var(--ultramarine, #2934f5); border-radius: 0 50% 50% 50%; rotate: 45deg; /* le point final est une goutte */
+}
+.privacy-lead { max-width: 25ch; margin: 0 0 76px; font-family: Cormorant, "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 300; font-size: clamp(27px, 3.3vw, 46px); line-height: 1.08; letter-spacing: -.01em; }
+.privacy-rows { border-bottom: 1px solid var(--line, #d1d2ca); }
+.privacy-row { display: grid; grid-template-columns: minmax(170px, 1fr) 2.4fr; gap: 12px 40px; padding: 26px 0 28px; border-top: 1px solid var(--line, #d1d2ca); }
+.privacy-row h2 { margin: 0; font-family: DM, "DM Sans", Arial, sans-serif; font-weight: 400; font-size: 14px; line-height: 1.5; }
+.privacy-row p { max-width: 62ch; margin: 0 0 12px; font-size: 15px; line-height: 1.62; }
+.privacy-row p:last-child { margin-bottom: 0; }
+.privacy-row a { text-decoration: underline; text-underline-offset: 3px; }
+.privacy-keys { max-width: 62ch; margin: 6px 0 18px; }
+.privacy-keys > div { padding: 12px 0; border-top: 1px solid var(--line, #d1d2ca); }
+.privacy-keys dt { font-size: 15px; }
+.privacy-keys code { margin-left: 8px; font-family: inherit; font-size: 12px; color: var(--muted, #61625c); }
+.privacy-keys dd { margin: 3px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted, #61625c); }
+.privacy-updated { margin: 22px 0 0; font-size: 12px; color: var(--muted, #61625c); }
+@media (max-width: 760px) {
+  .privacy-sheet { padding-top: 128px; }
+  .privacy-lead { margin-bottom: 52px; }
+  .privacy-row { grid-template-columns: 1fr; gap: 10px; padding: 22px 0 24px; }
+}

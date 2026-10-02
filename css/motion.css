@@ -1,29 +1,72 @@
 /* Le mouvement suit la lecture et le toucher. Les pages restent des liens natifs. */
 @view-transition { navigation: auto; }
 
-:root { --page-way: 1; --touch-ease: cubic-bezier(.2,.85,.25,1); }
-.topbar,.site-header { view-transition-name: atelier-header; }
+/* Les pages et les panneaux s’ouvrent dans une goutte née au point du geste (js/drop.js)
+   et s’y referment. L’ancienne page reste immobile et opaque : aucun fond nu entre les deux. */
+@property --drop-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+:root { --touch-ease: cubic-bezier(.2,.85,.25,1); }
+::view-transition { pointer-events: none; }
+/* En-tête, dock et progression : un fondu croisé court, qui suit leur géométrie si elle change. */
+.topbar, .site-header { view-transition-name: atelier-header; }
 .mobile-dock { view-transition-name: atelier-dock; }
 .scroll-progress { view-transition-name: atelier-progress; }
-::view-transition { pointer-events: none; }
-::view-transition-group(*) { animation-duration: 480ms; animation-timing-function: var(--touch-ease); }
-::view-transition-old(root) { animation: sheet-out 480ms var(--touch-ease) both; }
-::view-transition-new(root) { animation: sheet-in 540ms var(--touch-ease) both; mix-blend-mode: normal; }
-::view-transition-old(atelier-header), ::view-transition-old(atelier-dock), ::view-transition-old(atelier-progress) { animation: none; }
-::view-transition-new(atelier-header), ::view-transition-new(atelier-dock), ::view-transition-new(atelier-progress) { animation: none; }
-@keyframes sheet-out {
-  to { opacity: .25; transform: scale(1.07); }
+::view-transition-group(atelier-header), ::view-transition-group(atelier-dock), ::view-transition-group(atelier-progress) { animation-duration: 240ms; animation-timing-function: ease-out; }
+/* Un panneau ouvert passe au-dessus de l’en-tête : il ne doit pas en être séparé pendant la goutte. */
+:root[data-drop-panel] :is(.topbar, .site-header, .mobile-dock, .scroll-progress) { view-transition-name: none; }
+:root[data-drop-header] :is(.topbar, .site-header) { view-transition-name: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root), ::view-transition-old(root) {
+  --drop-r: max(1px, calc(var(--drop-end, 150vmax) * pow(var(--drop-p), 2.2)));
+  --drop-u: min(11vmin, 92px);
+  --drop-g: clamp(0, var(--drop-p) * 3, 1);
+  --drop-k: calc(1 + var(--drop-p) * 1.5);
 }
-@keyframes sheet-in {
-  from { clip-path: ellipse(0% 0% at 72% 57%); transform: scale(.92); }
-  45% { clip-path: ellipse(55% 72% at 62% 52%); }
-  to { clip-path: ellipse(150% 150% at 50% 50%); transform: none; }
+:root:not([data-drop="close"], [data-drop="fade"])::view-transition-new(root),
+:root[data-drop="close"]::view-transition-old(root) {
+  -webkit-mask-image:
+    radial-gradient(var(--drop-r) calc(var(--drop-r) * 0.93) at var(--drop-x, 50vw) var(--drop-y, 50vh), #000 max(0px, calc(var(--drop-r) - min(28px, var(--drop-r) * .4))), transparent var(--drop-r)),
+    radial-gradient(calc(var(--drop-r) * 0.76) calc(var(--drop-r) * 0.84) at calc(var(--drop-x, 50vw) + var(--drop-r) * 0.19) calc(var(--drop-y, 50vh) + var(--drop-r) * -0.15), #000 max(0px, calc(calc(var(--drop-r) * 0.76) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.76)),
+    radial-gradient(calc(var(--drop-r) * 0.72) calc(var(--drop-r) * 0.66) at calc(var(--drop-x, 50vw) + var(--drop-r) * -0.17) calc(var(--drop-y, 50vh) + var(--drop-r) * 0.14), #000 max(0px, calc(calc(var(--drop-r) * 0.72) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.72)),
+    radial-gradient(circle calc(var(--drop-u) * 0.62 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 1.75 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.05 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.62 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.62 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.44 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * -1.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.6 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.44 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.44 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.52 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 0.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * 1.95 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.52 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.52 * var(--drop-g)));
+  mask-image:
+    radial-gradient(var(--drop-r) calc(var(--drop-r) * 0.93) at var(--drop-x, 50vw) var(--drop-y, 50vh), #000 max(0px, calc(var(--drop-r) - min(28px, var(--drop-r) * .4))), transparent var(--drop-r)),
+    radial-gradient(calc(var(--drop-r) * 0.76) calc(var(--drop-r) * 0.84) at calc(var(--drop-x, 50vw) + var(--drop-r) * 0.19) calc(var(--drop-y, 50vh) + var(--drop-r) * -0.15), #000 max(0px, calc(calc(var(--drop-r) * 0.76) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.76)),
+    radial-gradient(calc(var(--drop-r) * 0.72) calc(var(--drop-r) * 0.66) at calc(var(--drop-x, 50vw) + var(--drop-r) * -0.17) calc(var(--drop-y, 50vh) + var(--drop-r) * 0.14), #000 max(0px, calc(calc(var(--drop-r) * 0.72) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.72)),
+    radial-gradient(circle calc(var(--drop-u) * 0.62 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 1.75 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.05 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.62 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.62 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.44 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * -1.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.6 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.44 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.44 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.52 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 0.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * 1.95 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.52 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.52 * var(--drop-g)));
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
 }
-:root[data-page-way="back"]::view-transition-new(root) { animation-name: sheet-back; }
-@keyframes sheet-back {
-  from { clip-path: ellipse(0% 0% at 27% 60%); transform: scale(1.08); }
-  45% { clip-path: ellipse(60% 72% at 38% 55%); }
-  to { clip-path: ellipse(150% 150% at 50% 50%); transform: none; }
+:root:not([data-drop="close"], [data-drop="fade"])::view-transition-new(root) { animation: drop-open 780ms linear both; }
+:root[data-drop="close"]::view-transition-old(root) { z-index: 1; animation: drop-close 700ms linear both; }
+:root[data-drop="fade"]::view-transition-new(root) { animation: drop-fade 180ms ease-out both; }
+/* Profils mesurés : le bord visible avance presque régulièrement, la goutte couvre l’écran à 85 % du temps. */
+@keyframes drop-open { 0% { --drop-p: 0.000; } 3% { --drop-p: 0.130; } 6% { --drop-p: 0.196; } 10% { --drop-p: 0.265; } 15% { --drop-p: 0.337; } 20% { --drop-p: 0.399; } 30% { --drop-p: 0.507; } 40% { --drop-p: 0.601; } 50% { --drop-p: 0.686; } 60% { --drop-p: 0.764; } 70% { --drop-p: 0.837; } 80% { --drop-p: 0.905; } 85% { --drop-p: 0.938; } 90% { --drop-p: 0.959; } 93% { --drop-p: 0.972; } 96% { --drop-p: 0.984; } 100% { --drop-p: 1.000; } }
+@keyframes drop-close { 0% { --drop-p: 1.000; } 3% { --drop-p: 0.977; } 6% { --drop-p: 0.954; } 10% { --drop-p: 0.929; } 15% { --drop-p: 0.904; } 20% { --drop-p: 0.878; } 30% { --drop-p: 0.823; } 40% { --drop-p: 0.764; } 50% { --drop-p: 0.699; } 60% { --drop-p: 0.625; } 70% { --drop-p: 0.539; } 80% { --drop-p: 0.432; } 85% { --drop-p: 0.365; } 90% { --drop-p: 0.277; } 93% { --drop-p: 0.202; } 96% { --drop-p: 0.000; } 100% { --drop-p: 0.000; } }
+@keyframes drop-fade { from { opacity: 0; } to { opacity: 1; } }
+/* Sans transition de vue : le panneau lui-même s’ouvre en goutte (animation pilotée par js/drop.js). */
+dialog.drop-panel {
+  --drop-r: max(1px, calc(var(--drop-end, 150vmax) * pow(var(--drop-p), 2.2)));
+  --drop-u: min(11vmin, 92px);
+  --drop-g: clamp(0, var(--drop-p) * 3, 1);
+  --drop-k: calc(1 + var(--drop-p) * 1.5);
+  -webkit-mask-image:
+    radial-gradient(var(--drop-r) calc(var(--drop-r) * 0.93) at var(--drop-x, 50vw) var(--drop-y, 50vh), #000 max(0px, calc(var(--drop-r) - min(28px, var(--drop-r) * .4))), transparent var(--drop-r)),
+    radial-gradient(calc(var(--drop-r) * 0.76) calc(var(--drop-r) * 0.84) at calc(var(--drop-x, 50vw) + var(--drop-r) * 0.19) calc(var(--drop-y, 50vh) + var(--drop-r) * -0.15), #000 max(0px, calc(calc(var(--drop-r) * 0.76) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.76)),
+    radial-gradient(calc(var(--drop-r) * 0.72) calc(var(--drop-r) * 0.66) at calc(var(--drop-x, 50vw) + var(--drop-r) * -0.17) calc(var(--drop-y, 50vh) + var(--drop-r) * 0.14), #000 max(0px, calc(calc(var(--drop-r) * 0.72) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.72)),
+    radial-gradient(circle calc(var(--drop-u) * 0.62 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 1.75 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.05 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.62 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.62 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.44 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * -1.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.6 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.44 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.44 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.52 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 0.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * 1.95 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.52 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.52 * var(--drop-g)));
+  mask-image:
+    radial-gradient(var(--drop-r) calc(var(--drop-r) * 0.93) at var(--drop-x, 50vw) var(--drop-y, 50vh), #000 max(0px, calc(var(--drop-r) - min(28px, var(--drop-r) * .4))), transparent var(--drop-r)),
+    radial-gradient(calc(var(--drop-r) * 0.76) calc(var(--drop-r) * 0.84) at calc(var(--drop-x, 50vw) + var(--drop-r) * 0.19) calc(var(--drop-y, 50vh) + var(--drop-r) * -0.15), #000 max(0px, calc(calc(var(--drop-r) * 0.76) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.76)),
+    radial-gradient(calc(var(--drop-r) * 0.72) calc(var(--drop-r) * 0.66) at calc(var(--drop-x, 50vw) + var(--drop-r) * -0.17) calc(var(--drop-y, 50vh) + var(--drop-r) * 0.14), #000 max(0px, calc(calc(var(--drop-r) * 0.72) - min(28px, var(--drop-r) * .4))), transparent calc(var(--drop-r) * 0.72)),
+    radial-gradient(circle calc(var(--drop-u) * 0.62 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 1.75 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.05 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.62 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.62 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.44 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * -1.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * -1.6 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.44 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.44 * var(--drop-g))),
+    radial-gradient(circle calc(var(--drop-u) * 0.52 * var(--drop-g)) at calc(var(--drop-x, 50vw) + var(--drop-u) * 0.35 * var(--drop-k)) calc(var(--drop-y, 50vh) + var(--drop-u) * 1.95 * var(--drop-k)), #000 calc(calc(var(--drop-u) * 0.52 * var(--drop-g)) * .45), transparent calc(var(--drop-u) * 0.52 * var(--drop-g)));
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
 }
 
 /* Une pression brève, puis un retour souple. Pas d’effet sur un geste de défilement. */
@@ -99,11 +142,12 @@ html.motion-reduced .touch-held { scale: 1; }
 html.motion-reduced .touch-release { animation: none; }
 html.motion-reduced .fragment-reveal { opacity: 1; transform: none; }
 html.motion-reduced .dock-cursor { transition: none; }
-html.motion-reduced::view-transition-group(*),
-html.motion-reduced::view-transition-old(*),
-html.motion-reduced::view-transition-new(*) { animation: none; }
+/* Mouvement réduit : un fondu court, sans goutte ni déplacement. */
+html.motion-reduced::view-transition-old(root) { animation: none; -webkit-mask-image: none; mask-image: none; z-index: auto; }
+html.motion-reduced::view-transition-new(root) { animation: drop-fade 180ms ease-out both; -webkit-mask-image: none; mask-image: none; }
 @media (prefers-reduced-motion:reduce) {
-  @view-transition { navigation: none; }
+  ::view-transition-old(root) { animation: none; -webkit-mask-image: none; mask-image: none; z-index: auto; }
+  ::view-transition-new(root) { animation: drop-fade 180ms ease-out both; -webkit-mask-image: none; mask-image: none; }
   .touch-held { scale: 1; }
   .touch-release { animation: none; }
   .fragment-reveal { opacity: 1; transform: none; }

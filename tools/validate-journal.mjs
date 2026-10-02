@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 
 export const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const routes = ['index.html', 'oeuvres/index.html', 'journal/index.html', ...['carnets', 'matieres', 'les-caves', 'traces', 'reserves', 'hors-cadre'].map(chapter => `journal/${chapter}/index.html`)];
+export const routes = ['index.html', 'oeuvres/index.html', 'journal/index.html', ...['carnets', 'matieres', 'les-caves', 'traces', 'reserves', 'hors-cadre'].map(chapter => `journal/${chapter}/index.html`), 'confidentialite/index.html'];
 export const read = file => fs.readFileSync(path.join(repo, file), 'utf8');
 
 const decode = value => value.replace(/&(?:amp|quot|apos|lt|gt|nbsp|#\d+|#x[\da-f]+);/gi, entity => {
@@ -141,10 +141,14 @@ export function auditSite() {
     if (route.startsWith('journal/')) {
       assert.ok(styles.includes('css/journey-journal.css'), route + ' : mise en page des chapitres');
       for (const script of ['journal', 'journey-scroll']) assert.ok(scripts.includes(`js/${script}.js`), `${route} : script ${script} présent`);
-    } else {
+    } else if (['index.html', 'oeuvres/index.html'].includes(route)) {
       assert.ok(styles.includes('css/journey-catalogue.css'), route + ' : mise en page de la collection');
       assert.ok(scripts.includes('js/collection.js'), route + ' : catalogue partagé');
     }
+    // Panneau de confidentialité, lien vers la déclaration et crédit de scénographie, sur chaque page.
+    assert.ok(styles.includes('css/privacy-drop.css') && scripts.includes('js/privacy-drop.js'), route + ' : panneau de confidentialité');
+    assert.ok(tags.some(tag => tag.tag === 'a' && localURL(tag.attrs.href || '', route)?.target === 'confidentialite/index.html'), route + ' : lien vers la confidentialité');
+    assert.ok(tags.some(tag => tag.tag === 'a' && tag.attrs.href === 'https://www.osom.ch' && /(?:^|\s)osom-credit(?:\s|$)/.test(tag.attrs.class || '')), route + ' : crédit de scénographie');
     for (const {tag, attrs} of tags) {
       for (const attribute of ['aria-labelledby', 'aria-describedby', 'aria-controls']) {
         if (attrs[attribute]) for (const id of attrs[attribute].split(/\s+/)) assert.ok(ids.get(route).includes(id), `${route} : référence accessible absente : ${id}`);
@@ -192,6 +196,45 @@ export function auditSite() {
   return {sources, pages, ids, archives, personal, works, usedArchives, sharedCards, localLinks, sourceVariants, resources};
 }
 
+// Fichiers présents dans le dépôt mais chargés par aucune page : ils ne sont pas contrôlés,
+// et le contrôle échoue si l’un d’eux redevient chargé sans avoir été nettoyé.
+export const unloaded = ['js/app.js', 'css/reverie.css', 'css/intensity.css', 'css/accrochages.css', 'css/journal.css'];
+// Flèches, signes techniques, formes géométriques, symboles divers, dingbats, emoji, chiffres romains,
+// signe de multiplication et sélecteur de présentation emoji. Les signes typographiques restent permis.
+const forbiddenSymbol = /[\u2190-\u21FF\u2300-\u23FF\u25A0-\u25FF\u2600-\u27BF\u2B00-\u2BFF\u2160-\u217F\u00D7\uFE0F\u{1F000}-\u{1FAFF}]/u;
+
+export function checkSymbols(site) {
+  const loaded = new Set([...site.resources].filter(file => /\.(css|js)$/.test(file)));
+  for (const file of unloaded) assert.ok(!loaded.has(file), `${file} est de nouveau chargé : le relire avant de le retirer de la liste`);
+  const served = [...routes];
+  for (const folder of ['css', 'js']) {
+    for (const name of fs.readdirSync(path.join(repo, folder)).sort()) {
+      const file = `${folder}/${name}`;
+      if (/\.(css|js)$/.test(name) && !unloaded.includes(file)) served.push(file);
+    }
+  }
+  for (const file of served) {
+    read(file).split('\n').forEach((line, index) => {
+      const found = forbiddenSymbol.exec(line);
+      assert.ok(!found, `${file}:${index + 1} : symbole U+${found?.[0].codePointAt(0).toString(16).toUpperCase().padStart(4, '0')} ; utiliser une icône SVG`);
+    });
+  }
+  // Une seule définition des icônes, identique sur chaque page ; chaque appel la retrouve.
+  const definitions = routes.map(route => [route, /<svg class="svg-defs"[\s\S]*?<\/svg>/.exec(site.sources.get(route))?.[0]]);
+  for (const [route, block] of definitions) {
+    assert.ok(block, route + ' : définitions des icônes absentes');
+    assert.equal(block, definitions[0][1], route + ' : définitions des icônes différentes de ' + definitions[0][0]);
+  }
+  const symbols = new Set([...definitions[0][1].matchAll(/<symbol id="([^"]+)"/g)].map(match => match[1]));
+  for (const route of routes) {
+    for (const match of site.sources.get(route).matchAll(/<use href="#([^"]+)"/g)) assert.ok(symbols.has(match[1]), `${route} : icône inconnue #${match[1]}`);
+  }
+  for (const file of served.filter(name => name.endsWith('.js'))) {
+    for (const match of read(file).matchAll(/icon\('([a-z-]+)'\)/g)) assert.ok(symbols.has('icon-' + match[1]), `${file} : icône inconnue ${match[1]}`);
+  }
+  return {files: served.length, symbols: symbols.size};
+}
+
 export function validateJournal() {
   const site = auditSite();
   const {sources, pages, archives, personal, usedArchives} = site;
@@ -237,7 +280,10 @@ export function validateJournal() {
   console.log(`OK — ${archives.length + personal.length} archives utilisées (${archives.length} du journal, ${personal.length} de Hors cadre), ${imageVariants} images et variantes, descriptions FR et EN, 73 fragments et filtres déclarés.`);
   console.log('OK — crédits des caves, hommage, affiche de 2017, deux films des carnets et vidéos configurées à la demande.');
   console.log('OK — ressources du voyage, références photo/souvenir/œuvre et absence des anciennes feuilles de présentation.');
+  const symbols = checkSymbols(site);
+  console.log(`OK — aucun symbole ni emoji dans ${symbols.files} fichiers servis ; ${symbols.symbols} icônes SVG définies à l’identique sur les ${routes.length} pages.`);
   console.log(`OK — ${site.sharedCards.size} cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.`);
+  console.log(`OK — panneau de confidentialité, lien vers la déclaration et crédit de scénographie sur les ${routes.length} pages.`);
   return site;
 }
 

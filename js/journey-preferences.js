@@ -10,8 +10,9 @@
     const name = kind === 'label' || kind === 'aria' ? 'aria-label' : kind;
     return [...document.querySelectorAll(`[data-${kind}-en]`)].map(el => [el, name, el.getAttribute(name), el.getAttribute(`data-${kind}-en`)]);
   });
-  const read = key => { try { return localStorage.getItem(key); } catch { return null; } };
-  const save = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
+  // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
+  const read = key => { try { return sessionStorage.getItem(key) || localStorage.getItem(key); } catch { return null; } };
+  const save = (key, value) => { try { (localStorage.getItem('cr-notice') === 'rien' ? sessionStorage : localStorage).setItem(key, value); } catch {} };
   let reduced = read('cr-motion') === 'reduced';
   root.lang = read('cr-language') === 'en' ? 'en' : 'fr';
   function applyMotion() {
@@ -22,7 +23,7 @@
     motion.setAttribute('aria-pressed', String(calm));
     const label = root.lang === 'en' ? (calm ? 'Enable motion' : 'Reduce motion') : (calm ? 'Activer les mouvements' : 'Réduire les mouvements');
     motion.setAttribute('aria-label', label); motion.title = label;
-    motion.querySelector('span').textContent = calm ? '▷' : 'Ⅱ';
+    const icon = motion.querySelector('[data-icon]'); if (icon) icon.dataset.icon = calm ? 'play' : 'pause';
   }
   function translate() {
     const en = root.lang === 'en';

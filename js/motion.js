@@ -4,37 +4,8 @@
   const root = document.documentElement;
   const system = matchMedia('(prefers-reduced-motion: reduce)');
   const calm = () => system.matches || root.classList.contains('motion-reduced');
-  try { if (localStorage.getItem('cr-motion') === 'reduced') root.classList.add('motion-reduced'); } catch {}
-  const chapters = ['/', '/journal/', '/journal/carnets/', '/journal/matieres/', '/journal/les-caves/', '/journal/traces/', '/journal/reserves/', '/journal/hors-cadre/'];
-  let pageTransition = null;
-  function retainTransition(transition) {
-    pageTransition = transition;
-    // Native navigation still succeeds when a decorative transition is skipped
-    // (reduced motion, rapid navigation, or an opt-out on the arriving page).
-    transition.ready.catch(() => {});
-    const release = () => { if (pageTransition === transition) pageTransition = null; };
-    transition.finished.then(release, release);
-  }
-  function setDirection(from, to) {
-    if (!from || !to) return;
-    const previous = chapters.indexOf(new URL(from, location.href).pathname);
-    const next = chapters.indexOf(new URL(to, location.href).pathname);
-    const back = previous >= 0 && next >= 0 && next < previous;
-    root.dataset.pageWay = back ? 'back' : 'forward';
-    root.style.setProperty('--page-way', back ? '-1' : '1');
-  }
-  window.addEventListener('pageswap', event => {
-    if (!event.viewTransition) return;
-    retainTransition(event.viewTransition);
-    if (calm()) event.viewTransition.skipTransition();
-    else setDirection(location.href, event.activation?.entry?.url);
-  });
-  window.addEventListener('pagereveal', event => {
-    if (!event.viewTransition) return;
-    retainTransition(event.viewTransition);
-    if (calm()) event.viewTransition.skipTransition();
-    else setDirection(window.navigation?.activation?.from?.url, location.href);
-  });
+  try { if ((sessionStorage.getItem('cr-motion') || localStorage.getItem('cr-motion')) === 'reduced') root.classList.add('motion-reduced'); } catch {}
+  // Page transitions live in js/drop.js, loaded in <head> so it hears pagereveal.
 
   const selector = 'button, a[href]';
   let press = null;
@@ -153,7 +124,6 @@
     if (!calm()) return;
     clearPress();
     stopEntrances();
-    pageTransition?.skipTransition();
     document.querySelectorAll('.touch-release').forEach(element => element.classList.remove('touch-release'));
     fragments.forEach(element => { element.classList.add('is-visible'); observer?.unobserve(element); });
   }
