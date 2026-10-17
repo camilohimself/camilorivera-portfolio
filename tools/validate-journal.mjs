@@ -235,6 +235,28 @@ export function checkSymbols(site) {
   return {files: served.length, symbols: symbols.size};
 }
 
+// Transitions entre pages : l’opt-in vit en ligne, en tête de chaque page, avant toute feuille et tout script.
+// Chromium lit l’opt-in de la page d’arrivée tel qu’il était à la dernière mise à jour des feuilles actives
+// (insertion du body, puis recalcul de style) : une règle venue d’une feuille encore en revalidation à ce
+// moment-là peut manquer au premier rendu, et la goutte est sautée (mesuré le 17.10.2026, docs/DECISIONS.md).
+export const viewTransitionOptIn = '<style>@view-transition{navigation:auto}</style>';
+export function checkViewTransitionOptIn(site) {
+  for (const route of routes) {
+    const html = site.sources.get(route);
+    const head = html.slice(0, html.indexOf('</head>'));
+    assert.equal(html.split(viewTransitionOptIn).length, 2, route + ' : transitions entre pages déclarées une fois');
+    const at = head.indexOf(viewTransitionOptIn);
+    assert.ok(at > 0, route + ' : transitions entre pages déclarées dans le head');
+    const before = head.slice(head.indexOf('<head>') + '<head>'.length, at);
+    assert.ok(!/<(?!meta\b)[a-z]/i.test(before), route + ' : déclaration des transitions avant tout titre, toute feuille et tout script');
+    // Un retrait (noscript de Hors cadre) doit venir après : la dernière règle @view-transition l’emporte.
+    for (const match of html.matchAll(/@view-transition\s*\{\s*navigation\s*:\s*none/g)) assert.ok(match.index > at, route + ' : retrait des transitions placé avant la déclaration');
+  }
+  const sheets = [...site.resources].filter(file => file.endsWith('.css'));
+  for (const file of sheets) assert.ok(!/@view-transition\s*\{/.test(read(file).replace(/\/\*[\s\S]*?\*\//g, '')), file + ' : règle @view-transition dans une feuille ; elle vit en ligne dans les pages');
+  return routes.length;
+}
+
 export function validateJournal() {
   const site = auditSite();
   const {sources, pages, archives, personal, usedArchives} = site;
@@ -284,6 +306,7 @@ export function validateJournal() {
   console.log(`OK — aucun symbole ni emoji dans ${symbols.files} fichiers servis ; ${symbols.symbols} icônes SVG définies à l’identique sur les ${routes.length} pages.`);
   console.log(`OK — ${site.sharedCards.size} cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.`);
   console.log(`OK — panneau de confidentialité, lien vers la déclaration et crédit de scénographie sur les ${routes.length} pages.`);
+  console.log(`OK — transitions entre pages déclarées en ligne en tête des ${checkViewTransitionOptIn(site)} pages, avant toute feuille et tout script.`);
   return site;
 }
 

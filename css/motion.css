@@ -1,5 +1,5 @@
-/* Le mouvement suit la lecture et le toucher. Les pages restent des liens natifs. */
-@view-transition { navigation: auto; }
+/* Le mouvement suit la lecture et le toucher. Les pages restent des liens natifs.
+   L’opt-in @view-transition vit en ligne en tête de chaque page, pas ici : voir tools/validate-journal.mjs. */
 
 /* Les pages et les panneaux s’ouvrent dans une goutte née au point du geste (js/drop.js)
    et s’y referment. L’ancienne page reste immobile et opaque : aucun fond nu entre les deux. */
