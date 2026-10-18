@@ -68,8 +68,24 @@
   }
 
   // Where the current page opened, kept with its history entry (Navigation API), not in storage.
-  const openedAt = () => { try { return nav?.currentEntry?.getState()?.crDrop || null; } catch { return null; } };
+  // Without the API (Safari 18.2 to 26.1): one session key, the point of each page by address, the last PAGES_MAX only.
+  const PAGES = 'cr-drop-pages', PAGES_MAX = 12;
+  const address = () => location.pathname + location.search;
+  const pages = () => { try { const value = JSON.parse(sessionStorage.getItem(PAGES)); return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; } catch { return {}; } };
+  const openedAt = () => {
+    if (!nav) { const point = pages()[address()]; return typeof point?.x === 'number' && typeof point?.y === 'number' ? point : null; }
+    try { return nav.currentEntry?.getState()?.crDrop || null; } catch { return null; }
+  };
   function keepOpening(point) {
+    if (!nav && point) {
+      const kept = pages();
+      delete kept[address()];
+      kept[address()] = {x: point.x, y: point.y};
+      const names = Object.keys(kept);
+      names.slice(0, Math.max(0, names.length - PAGES_MAX)).forEach(name => delete kept[name]);
+      try { sessionStorage.setItem(PAGES, JSON.stringify(kept)); } catch {}
+      return;
+    }
     if (!nav?.currentEntry || !point) return;
     try { nav.updateCurrentEntry({state: {...(nav.currentEntry.getState() || {}), crDrop: {x: point.x, y: point.y}}}); } catch {}
   }
@@ -87,6 +103,16 @@
       const from = chapter(location.href), to = chapter(destination);
       back = from >= 0 && to >= 0 && to < from;
     }
+    else if (!nav) {
+      // Without the Navigation API, a traversal has no activation and no link: the next page compares the chapters.
+      // The point where this page opened goes along, should it close.
+      const record = {t: Date.now(), from: chapter(location.href)};
+      if (calm()) record.way = 'fade';
+      const opened = openedAt();
+      if (opened) Object.assign(record, {x: opened.x, y: opened.y});
+      try { sessionStorage.setItem(KEY, JSON.stringify(record)); } catch {}
+      return;
+    }
     const point = back ? openedAt() : fresh(gesture);
     const record = {way: calm() ? 'fade' : back ? 'close' : 'open', t: Date.now()};
     if (point) Object.assign(record, {x: point.x, y: point.y});
@@ -94,6 +120,7 @@
   });
 
   addEventListener('pagereveal', event => {
+    reachAnchor();
     let record = null;
     try { record = JSON.parse(sessionStorage.getItem(KEY)); sessionStorage.removeItem(KEY); } catch {}
     if (record && !(Date.now() - record.t <= MAX_AGE)) record = null;
@@ -104,7 +131,13 @@
       // No record (older engine or storage refused): infer the direction on this side.
       const activation = nav?.activation;
       const type = activation?.navigationType || performance.getEntriesByType?.('navigation')?.[0]?.type;
-      if (type === 'traverse' && activation?.from) way = activation.entry.index < activation.from.index ? 'close' : 'open';
+      if (typeof record?.from === 'number') {
+        // Left without the Navigation API towards an unknown page (a traversal, mostly): the order of the chapters
+        // decides, as for a link; when it cannot (privacy page, same chapter), the page closes, as going back is usual.
+        const to = chapter(location.href);
+        way = record.from >= 0 && to >= 0 && to > record.from ? 'open' : 'close';
+      }
+      else if (type === 'traverse' && activation?.from) way = activation.entry.index < activation.from.index ? 'close' : 'open';
       else if (type === 'back_forward') way = 'close';
       else {
         const from = chapter(activation?.from?.url || document.referrer), to = chapter(location.href);
@@ -112,7 +145,8 @@
       }
     }
     if (calm()) way = 'fade';
-    const point = record && 'x' in record ? record : null;
+    // A record from the branch above carries where the page left had opened: only a closing uses it.
+    const point = record && 'x' in record && !('from' in record && way !== 'close') ? record : null;
     settleHeader();
     if (way === 'open') keepOpening(point || {x: .5, y: .5});
     play(transition, way, point);
@@ -121,7 +155,8 @@
   addEventListener('pageshow', event => { if (event.persisted && !active) clear(); });
 
   /* Panels of the same page (index, viewers, collection). update() opens or closes dialogs;
-     the drop direction follows what actually changed. */
+     the drop direction follows what actually changed. update() may return a promise: the drop
+     then waits for it before capturing the new state (the previous image stays on screen meanwhile). */
   const anchors = new WeakMap();
   const openDialogs = () => new Set(document.querySelectorAll('dialog[open]'));
   let queued = null, queuedDone = null;
@@ -158,13 +193,14 @@
       root.dataset.dropPanel = '';
       const transition = document.startViewTransition(() => {
         queued = null;
-        updates.forEach(run => run());
+        const waits = updates.map(run => run()).filter(result => typeof result?.then === 'function');
         change = decide();
         if (!change) return;
         // Set inside the callback: the pseudo-elements read these styles right after it.
         root.dataset.drop = calm() ? 'fade' : change.way;
         const p = change.point;
         place(p ? p.x * innerWidth : innerWidth / 2, p ? p.y * innerHeight : innerHeight / 2);
+        if (waits.length) return Promise.all(waits).then(() => {}, () => {});
       });
       transition.updateCallbackDone.then(() => { if (!change) transition.skipTransition(); }, () => { transition.skipTransition(); });
       transition.ready.catch(() => {});
@@ -207,5 +243,25 @@
       ['--drop-x', '--drop-y', '--drop-end'].forEach(name => dialog.style.removeProperty(name));
     });
   }
+  /* Smooth scrolling (html.scroll-glide in css/journey.css and css/style.css) is for links within the page.
+     The browser scrolls to an anchor reached from another page once the deferred scripts have run, then again
+     until load; it restores a position from the history until load. Arrival must jump: the class waits until
+     the frame after load. */
+  const glide = () => root.classList.add('scroll-glide');
+  const arrival = performance.getEntriesByType?.('navigation')?.[0]?.type;
+  if (!location.hash && arrival !== 'reload' && arrival !== 'back_forward') glide();
+  else addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(glide)), {once: true});
+  // The anchor is reached before the first frame, so the drop opens on it and settleHeader() sees the header
+  // where it will be. Called first thing at pagereveal; only the first one (a page from the cache keeps its place).
+  let reached = false;
+  function reachAnchor() {
+    if (reached) return;
+    reached = true;
+    if (arrival !== 'navigate' || !location.hash) return;
+    let target = null;
+    try { const id = location.hash.slice(1); target = document.getElementById(id) || document.getElementById(decodeURIComponent(id)); } catch {}
+    target?.scrollIntoView({block: 'start', behavior: 'instant'});
+  }
+  addEventListener('pageshow', event => { if (event.persisted) glide(); });
   window.CamiloDrop = {swap};
 })();

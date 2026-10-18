@@ -2,6 +2,10 @@
 .viewer-stage.has-viewer-motion:not(.is-zoomed){overflow:hidden}
 .viewer-stage.has-viewer-motion>img{transform-origin:center;backface-visibility:hidden}
 .viewer-stage.has-viewer-motion.is-dragging>img{will-change:transform;transition:none;cursor:grabbing}
+/* The works viewer (js/collection.js): its stage already clips, its zoom lives on the dialog. */
+.artwork-stage.has-viewer-motion{position:relative}
+.artwork-stage.has-viewer-motion>img{transform-origin:center;backface-visibility:hidden}
+.artwork-stage.has-viewer-motion.is-dragging>img{will-change:transform;transition:none;cursor:grabbing}
 .viewer-motion-ghost{position:absolute;display:block;pointer-events:none;transform-origin:center;z-index:1}
 .viewer-motion-ghost>img{display:block;width:100%;height:100%;object-fit:contain;max-width:none;max-height:none;user-select:none}
 .motion-reduced .viewer-motion-ghost{display:none}

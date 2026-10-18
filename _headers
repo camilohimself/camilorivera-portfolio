@@ -9,14 +9,15 @@
 /*.mp4
   Cache-Control: public, max-age=31536000
 
-# CSS/JS : URLs stables entre déploiements → revalidation à chaque visite
-# (ETag Netlify, 304 quasi gratuit sur ~45 KB). Un cache long ici servirait
-# du vieux code pendant un an aux visiteurs récurrents.
+# CSS/JS : chaque référence porte l’empreinte du contenu (?v=, posée par
+# node tools/version-assets.mjs --write, vérifiée par tools/validate-journal.mjs).
+# Un fichier modifié change d’adresse : cache d’un an sans revalidation.
+# Le HTML, works.json et les .json du journal restent revalidés.
 /*.css
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: public, max-age=31536000, immutable
 
 /*.js
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: public, max-age=31536000, immutable
 
 /works.json
   Cache-Control: public, max-age=0, must-revalidate

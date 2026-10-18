@@ -25,18 +25,19 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="preload" href="../fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/cormorant-garamond-300-italic.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="../js/drop.js?v=20261002-goutte"></script>
-  <link rel="stylesheet" href="../css/journey.css">
-  <link rel="stylesheet" href="../css/journey-space.css">
-  <link rel="stylesheet" href="../css/journey-site.css?v=20261001-gouttes">
-  <link rel="stylesheet" href="../css/journey-catalogue.css?v=20261001-gouttes">
-  <link rel="stylesheet" href="../css/motion.css?v=20261001-gouttes">
-  <script src="../js/motion.js?v=20261002-goutte" defer></script>
-  <script src="../js/journey-preferences.js?v=20261002-goutte" defer></script>
-  <script src="../js/chromatic.js" defer></script>
-  <script src="../js/journey-nav.js?v=20261001-gouttes" defer></script>
-  <link rel="stylesheet" href="../css/privacy-drop.css?v=20261002-goutte">
-  <script src="../js/privacy-drop.js?v=20261002-goutte" defer></script>
+  <link rel="expect" href="#first-frame" blocking="render">
+  <script src="../js/drop.js?v=464ed7ca2f"></script>
+  <link rel="stylesheet" href="../css/journey.css?v=a0485c8af6">
+  <link rel="stylesheet" href="../css/journey-space.css?v=193ef75efe">
+  <link rel="stylesheet" href="../css/journey-site.css?v=ada9abd395">
+  <link rel="stylesheet" href="../css/journey-catalogue.css?v=a49bc25fa1">
+  <link rel="stylesheet" href="../css/motion.css?v=55525c3b43">
+  <script src="../js/motion.js?v=4172a312f4" defer></script>
+  <script src="../js/journey-preferences.js?v=093d59845e" defer></script>
+  <script src="../js/chromatic.js?v=15233c716a" defer></script>
+  <script src="../js/journey-nav.js?v=11d8af13bb" defer></script>
+  <link rel="stylesheet" href="../css/privacy-drop.css?v=1c993b932e">
+  <script src="../js/privacy-drop.js?v=5c780d2b12" defer></script>
 </head>
 <body class="privacy-page">
   <a class="skip" href="#confidentialite" data-en="Skip to the content">Aller au contenu</a><svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -86,7 +87,8 @@
             <div><dt><span data-en="Language">Langue</span> <code>cr-language</code></dt><dd data-en="Your choice between French and English, if you switch language. Until erased.">Votre choix entre français et anglais, si vous changez de langue. Jusqu’à effacement.</dd></div>
             <div><dt><span data-en="Motion">Mouvement</span> <code>cr-motion</code></dt><dd data-en="Whether you reduce the animations. Until erased.">Si vous réduisez les animations. Jusqu’à effacement.</dd></div>
             <div><dt><span data-en="This message">Ce message</span> <code>cr-notice</code></dt><dd data-en="Your answer to the privacy message, so it is not shown again. Until erased.">Votre réponse au message de confidentialité, pour ne pas le reposer. Jusqu’à effacement.</dd></div>
-            <div><dt><span data-en="Your last click">Votre dernier clic</span> <code>cr-drop</code></dt><dd data-en="The relative position of your last click, so the next page opens there. Read and erased when the next page arrives; to close the page back to that point, it also stays in the tab’s history.">La position relative du dernier clic, pour ouvrir la page suivante à cet endroit. Lue puis effacée à l’arrivée sur la page suivante ; pour refermer la page vers ce point au retour, elle reste aussi dans l’historique de l’onglet.</dd></div>
+            <div><dt><span data-en="Your last click">Votre dernier clic</span> <code>cr-drop</code></dt><dd data-en="The relative position of your last click, so the next page opens there; when going back in browsers listed below, also the place of the page left in the index. Read and erased when the next page arrives; to close the page back to that point, it also stays in the tab’s history.">La position relative du dernier clic, pour ouvrir la page suivante à cet endroit ; au retour, dans les navigateurs cités ci-dessous, aussi le rang de la page quittée dans l’index. Lue puis effacée à l’arrivée sur la page suivante ; pour refermer la page vers ce point au retour, elle reste aussi dans l’historique de l’onglet.</dd></div>
+            <div><dt><span data-en="Where pages opened">Les points d’ouverture</span> <code>cr-drop-pages</code></dt><dd data-en="Only in browsers whose history cannot keep that point (Safari before version 26.2): for each page of the tab, its address and the relative position from which it opened, so it closes back to it. Twelve pages at most. As long as the tab.">Seulement dans les navigateurs dont l’historique ne peut pas garder ce point (Safari avant la version 26.2) : pour chaque page de l’onglet, son adresse et la position relative d’où elle s’est ouverte, pour la refermer vers elle. Douze pages au plus. Le temps de l’onglet.</dd></div>
           </dl>
           <p data-en="The message’s “See what is kept” shows them and lets you erase them. With “Keep nothing”, your settings last only as long as the tab. You can also clear the site’s data in your browser.">Le message « Voir ce qui est gardé » les montre et permet de les effacer. Avec « Ne rien garder », vos réglages ne durent que le temps de l’onglet. Vous pouvez aussi vider les données du site dans votre navigateur.</p>
         </div>
@@ -113,5 +115,30 @@
     <p class="privacy-updated" data-en="Updated on 2 October 2026.">Mise à jour le 2 octobre 2026.</p>
   </main>
   <footer class="catalogue-footer"><a href="../"><span data-en="Back to the surface">Revenir à la surface</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north"/></svg></a><a href="../oeuvres/"><span data-en="The works">Les œuvres</span></a><a href="../journal/"><span data-en="The journal">Le journal</span></a><a href="./" aria-current="page"><span data-en="Privacy">Confidentialité</span></a><a class="osom-credit" href="https://www.osom.ch" target="_blank" rel="noopener noreferrer"><span data-en="Scenography: OSOM Labs">Scénographie : OSOM Labs</span> <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-north-east"/></svg></a><span>Camilo Rivera · Version 01</span></footer>
+<script>
+/* Langue enregistrée et goutte de confidentialité posées avant le premier rendu : Chrome attend #first-frame
+   (link rel="expect" en tête). Le français d’origine reste lisible par window.CamiloFrench pour
+   js/journey-preferences.js, js/journey-home.js et js/journal.js. La goutte vient de js/privacy-drop.js, chargé en tête.
+   Bloc identique sur les dix pages, vérifié par tools/validate-journal.mjs. */
+(() => {
+  const saved = new Map();
+  window.CamiloFrench = (el, name) => { const entry = saved.get(el), key = name || 'html'; return entry && key in entry ? entry[key] : name ? el.getAttribute(name) : el.innerHTML; };
+  let language = null;
+  try { language = sessionStorage.getItem('cr-language') || localStorage.getItem('cr-language'); } catch {}
+  if (language === 'en') {
+    const keep = (el, key, value) => { const entry = saved.get(el) || {}; if (!(key in entry)) entry[key] = value; saved.set(el, entry); };
+    document.querySelectorAll('[data-en]').forEach(el => { keep(el, 'html', el.innerHTML); el.innerHTML = el.dataset.en; });
+    [['data-alt-en', 'alt'], ['data-label-en', 'aria-label'], ['data-aria-en', 'aria-label'], ['data-content-en', 'content']].forEach(([data, name]) => {
+      document.querySelectorAll('[' + data + ']').forEach(el => { keep(el, name, el.getAttribute(name)); el.setAttribute(name, el.getAttribute(data)); });
+    });
+    const toggle = document.getElementById('language-toggle');
+    if (toggle) { toggle.textContent = 'FR'; toggle.setAttribute('aria-label', 'Passer en français'); }
+    document.documentElement.lang = 'en';
+  }
+  // Dans la même tâche que la langue : le navigateur ne peint pas entre les deux.
+  window.CamiloPrivacyDrop?.();
+})();
+</script>
+<template id="first-frame"></template>
 </body>
 </html>

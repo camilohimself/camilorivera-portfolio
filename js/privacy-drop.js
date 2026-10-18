@@ -1,9 +1,11 @@
-/* La goutte : une goutte tombe, s'étale et dit ce que le site garde ; elle s'écoule quand on continue. */
+/* La goutte : une goutte tombe, s'étale et dit ce que le site garde ; elle s'écoule quand on continue.
+   Chargé sans defer en tête ; le script de fin de contenu de chaque page appelle window.CamiloPrivacyDrop()
+   avant le premier rendu : la tache est déjà posée quand la page suivante apparaît. */
 (() => {
   'use strict';
   const root = document.documentElement;
   const DROP_KEY = 'cr-drop';
-  if (document.body.classList.contains('privacy-page') || document.querySelector('.privacy-drop')) return;
+  const PAGES_KEY = 'cr-drop-pages';   // écrit par drop.js seulement sans API Navigation (Safari avant 26.2)
 
   /* Stockage : en mode « ne rien garder », les réglages ne vivent que dans l'onglet. */
   const store = kind => (kind === 'session' ? window.sessionStorage : window.localStorage);
@@ -11,7 +13,6 @@
   const write = (kind, key, value) => { try { store(kind).setItem(key, value); } catch {} };
   const remove = (kind, key) => { try { store(kind).removeItem(key); } catch {} };
   const pref = key => read('session', key) || read('local', key) || read('local', key.replace('cr-', 'v01-'));
-  if (read('local', 'cr-notice')) return;
 
   const copy = {
     fr: {
@@ -37,7 +38,7 @@
   const t = () => copy[lang()];
   function items() {
     const en = lang() === 'en';
-    const language = pref('cr-language'), motion = pref('cr-motion'), notice = read('local', 'cr-notice'), drop = read('session', DROP_KEY);
+    const language = pref('cr-language'), motion = pref('cr-motion'), notice = read('local', 'cr-notice'), drop = read('session', DROP_KEY), pages = read('session', PAGES_KEY);
     return [
       { keys: ['cr-language', 'v01-language'], session: false, name: en ? 'Language' : 'Langue',
         why: en ? 'Your choice between French and English.' : 'Votre choix entre français et anglais.',
@@ -50,8 +51,12 @@
         value: notice ? (en ? 'read' : 'lu') : null },
       { keys: [DROP_KEY], session: true, name: en ? 'Your last click' : 'Votre dernier clic',
         why: en ? 'So the next page opens where you touched.' : 'Pour ouvrir la page suivante là où vous avez touché.',
-        value: drop ? (en ? 'this tab' : 'cet onglet') : null }
-    ];
+        value: drop ? (en ? 'this tab' : 'cet onglet') : null },
+      { keys: [PAGES_KEY], session: true, hidden: !pages, name: en ? 'Where pages opened' : 'Les points d’ouverture',
+        why: en ? 'So each page closes back to where it opened.' : 'Pour refermer chaque page vers le point d’où elle s’est ouverte.',
+        life: en ? 'As long as this tab' : 'Le temps de cet onglet',
+        value: pages ? (en ? 'this tab' : 'cet onglet') : null }
+    ].filter(item => !item.hidden);
   }
   const erase = item => item.keys.forEach(key => { remove('local', key); remove('session', key); });
   function keepNothing() {
@@ -64,7 +69,8 @@
     plus: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
     minus: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
   };
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || root.classList.contains('motion-reduced');
+  // Fixé à l'appel : les contrôleurs différés n'ont pas encore posé motion-reduced, le réglage est lu directement.
+  let calm = false;
   let seed = 11;
   const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   // Arrivée depuis une autre page du site : la tache est déjà là, elle ne retombe pas.
@@ -112,7 +118,7 @@
         const name = document.createElement('span'), value = document.createElement('span'), why = document.createElement('p');
         name.className = 'privacy-drop-name'; value.className = 'privacy-drop-value'; why.className = 'privacy-drop-why';
         name.textContent = item.name; value.textContent = item.value || words.empty;
-        why.textContent = `${item.why} ${item.session ? words.tab : words.device}.`;
+        why.textContent = `${item.why} ${item.life || (item.session ? words.tab : words.device)}.`;
         li.append(name, value, why);
         if (item.value) {
           const button = document.createElement('button');
@@ -146,6 +152,8 @@
       else box.style.removeProperty('--drop-bottom');
     }
     seat();
+    // Mesurée avant le premier rendu, la tache peut l'avoir été avec une police de secours.
+    document.fonts?.ready.then(() => kick());
 
     function geometry() {
       const b = box.getBoundingClientRect();
@@ -311,7 +319,11 @@
       targets(g0);
       [...bumps, ...splashes].forEach(b => { b.x.x = b.x.to; b.y.x = b.y.to; });
       render(g0);
-      if (internal && !calm) box.classList.add('is-placed', 'is-inked', 'is-ready');
+      if (internal) {
+        box.classList.add('is-placed', 'is-inked', 'is-ready');
+        // Mouvement réduit : la tache déjà mesurée ne refait pas son fondu d'entrée à chaque page.
+        if (calm) { box.style.transition = 'none'; getComputedStyle(box).opacity; box.style.transition = ''; }
+      }
       else requestAnimationFrame(() => box.classList.add('is-inked', 'is-ready'));
       return;
     }
@@ -322,7 +334,24 @@
     fall(x, -40, y, land);
   }
 
-  // Première page de la visite : laisser l'arrivée se faire avant la goutte.
-  if (internal) start();
-  else setTimeout(start, 1500);
+  // Page préparée (règles de spéculation) : la goutte a pu être fermée, ou « Ce message » effacé, sur la page
+  // précédente depuis le début du prérendu. La question se repose à l'activation, sans réécrire de préférence.
+  let prepared = false;
+  window.CamiloPrivacyDrop = () => {
+    if (document.prerendering && !prepared) {
+      prepared = true;
+      document.addEventListener('prerenderingchange', () => {
+        const box = document.querySelector('.privacy-drop');
+        if (!box) window.CamiloPrivacyDrop();
+        else if (read('local', 'cr-notice')) box.remove();
+        else { calm = matchMedia('(prefers-reduced-motion: reduce)').matches || pref('cr-motion') === 'reduced'; box.classList.toggle('is-calm', calm); }
+      }, { once: true });
+    }
+    if (document.body.classList.contains('privacy-page') || document.querySelector('.privacy-drop')) return;
+    if (read('local', 'cr-notice')) return;
+    calm = matchMedia('(prefers-reduced-motion: reduce)').matches || root.classList.contains('motion-reduced') || pref('cr-motion') === 'reduced';
+    // Première page de la visite : laisser l'arrivée se faire avant la goutte.
+    if (internal) start();
+    else setTimeout(start, 1500);
+  };
 })();

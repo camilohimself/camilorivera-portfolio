@@ -70,7 +70,10 @@
 .privacy-drop.is-calm { opacity: 0; transition: opacity 240ms ease; }
 .privacy-drop.is-calm.is-inked { opacity: 1; }
 .privacy-drop.is-calm.is-gone { opacity: 0; }
-::view-transition-group(privacy-drop) { animation-duration: 0s; }
+/* D'une page à l'autre, la tache glisse vers sa place (le dock du journal la soulève) ; sans mouvement, elle saute. */
+::view-transition-group(privacy-drop) { animation-duration: 420ms; animation-timing-function: cubic-bezier(.22,1,.36,1); }
+html.motion-reduced::view-transition-group(privacy-drop), :root[data-drop="fade"]::view-transition-group(privacy-drop) { animation-duration: 0s; }
+@media (prefers-reduced-motion: reduce) { ::view-transition-group(privacy-drop) { animation-duration: 0s; } }
 
 @media print { .privacy-drop, .privacy-drop-fall { display: none; } }
 

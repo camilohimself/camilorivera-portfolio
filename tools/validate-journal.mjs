@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
+import {assetReferences, fingerprint, versionPattern} from './version-assets.mjs';
 
 export const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const routes = ['index.html', 'oeuvres/index.html', 'journal/index.html', ...['carnets', 'matieres', 'les-caves', 'traces', 'reserves', 'hors-cadre'].map(chapter => `journal/${chapter}/index.html`), 'confidentialite/index.html'];
@@ -235,6 +236,30 @@ export function checkSymbols(site) {
   return {files: served.length, symbols: symbols.size};
 }
 
+// Langue enregistrée et goutte de confidentialité posées avant le premier rendu : un même script en fin
+// de page, puis le repère que Chrome attend (<link rel="expect" blocking="render">) avant de peindre la page.
+// La goutte (js/privacy-drop.js) est chargée sans defer en tête, pour que ce script puisse la poser.
+export function checkEarlyLanguage(site) {
+  const marker = '<template id="first-frame"></template>';
+  const blocks = routes.map(route => {
+    const html = site.sources.get(route);
+    const head = html.slice(0, html.indexOf('</head>'));
+    assert.equal(head.split('<link rel="expect" href="#first-frame" blocking="render">').length, 2, route + ' : premier rendu retenu jusqu’au repère');
+    const scripts = [...html.matchAll(/<script>\n\/\* Langue enregistrée[\s\S]*?<\/script>/g)];
+    assert.equal(scripts.length, 1, route + ' : script de langue en fin de page');
+    assert.ok(scripts[0][0].includes('window.CamiloPrivacyDrop?.();'), route + ' : goutte de confidentialité posée par le script de fin de page');
+    const drop = [...head.matchAll(/<script src="[./]*js\/privacy-drop\.js[^"]*"([^>]*)>/g)];
+    if (route !== 'confidentialite/index.html') assert.ok(drop.length === 1 && !/\b(?:defer|async)\b/.test(drop[0][1]), route + ' : goutte de confidentialité chargée sans defer en tête');
+    const end = scripts[0].index + scripts[0][0].length;
+    assert.equal(html.split(marker).length, 2, route + ' : repère du premier rendu unique');
+    assert.ok(html.indexOf(marker) > end, route + ' : repère après le script de langue');
+    assert.ok(/^\s*<\/body>/.test(html.slice(html.indexOf(marker) + marker.length)), route + ' : repère en fin de contenu');
+    return [route, scripts[0][0]];
+  });
+  for (const [route, block] of blocks) assert.equal(block, blocks[0][1], route + ' : script de langue différent de ' + blocks[0][0]);
+  return blocks.length;
+}
+
 // Transitions entre pages : l’opt-in vit en ligne, en tête de chaque page, avant toute feuille et tout script.
 // Chromium lit l’opt-in de la page d’arrivée tel qu’il était à la dernière mise à jour des feuilles actives
 // (insertion du body, puis recalcul de style) : une règle venue d’une feuille encore en revalidation à ce
@@ -255,6 +280,33 @@ export function checkViewTransitionOptIn(site) {
   const sheets = [...site.resources].filter(file => file.endsWith('.css'));
   for (const file of sheets) assert.ok(!/@view-transition\s*\{/.test(read(file).replace(/\/\*[\s\S]*?\*\//g, '')), file + ' : règle @view-transition dans une feuille ; elle vit en ligne dans les pages');
   return routes.length;
+}
+
+// Feuilles et scripts servis un an en cache (_headers, immutable) : chaque référence locale porte l’empreinte
+// de son contenu, posée par node tools/version-assets.mjs --write. Une empreinte périmée laisserait l’ancien
+// fichier chez les visiteurs pendant un an.
+export function checkAssetVersions(site) {
+  const files = new Set();
+  let count = 0;
+  for (const route of routes) {
+    for (const ref of assetReferences(route, site.sources.get(route))) {
+      assert.ok(versionPattern.test(ref.query), `${route}:${ref.line} : ${ref.raw} sans version tirée du contenu ; lancer node tools/version-assets.mjs --write`);
+      assert.equal(ref.query.slice(3), fingerprint(ref.target), `${route}:${ref.line} : ${ref.raw} : empreinte périmée, ${ref.target} a changé ; lancer node tools/version-assets.mjs --write`);
+      files.add(ref.target);
+      count++;
+    }
+  }
+  // Même relevé que les balises lues par elements() : aucune référence ne passe à côté de l’outil.
+  const local = value => value && !/^(?:[a-z][\w+.-]*:|\/\/)/i.test(value) && /\.(?:css|js)(?:[?#]|$)/.test(value);
+  const tagged = [...site.pages.values()].flatMap(tags => tags.flatMap(tag => [tag.attrs.href, tag.attrs.src].filter(local))).length;
+  assert.equal(count, tagged, `Références CSS et JS : ${count} vues par l’outil, ${tagged} dans les balises`);
+  // Chemins que ce contrôle ne voit pas : @import ou url() vers une feuille ou un script, chargement par script.
+  for (const file of files) {
+    const text = read(file);
+    if (file.endsWith('.css')) assert.ok(!/@import|url\(\s*['"]?[^'")]*\.(?:css|js)\b/i.test(text), file + ' : feuille ou script chargé depuis une feuille, hors du contrôle des versions');
+    else assert.ok(!/['"`][^'"`\s]*\.(?:css|js)(?:\?[^'"`]*)?['"`]/.test(text), file + ' : feuille ou script chargé par un script, hors du contrôle des versions');
+  }
+  return {count, files: files.size};
 }
 
 export function validateJournal() {
@@ -306,7 +358,10 @@ export function validateJournal() {
   console.log(`OK — aucun symbole ni emoji dans ${symbols.files} fichiers servis ; ${symbols.symbols} icônes SVG définies à l’identique sur les ${routes.length} pages.`);
   console.log(`OK — ${site.sharedCards.size} cartes de partage JPEG 1200 × 630 sous 300 Ko, décrites ; icônes .ico, .svg et iOS sur chaque page.`);
   console.log(`OK — panneau de confidentialité, lien vers la déclaration et crédit de scénographie sur les ${routes.length} pages.`);
+  console.log(`OK — langue enregistrée et goutte de confidentialité posées avant le premier rendu par un script identique sur les ${checkEarlyLanguage(site)} pages.`);
   console.log(`OK — transitions entre pages déclarées en ligne en tête des ${checkViewTransitionOptIn(site)} pages, avant toute feuille et tout script.`);
+  const versions = checkAssetVersions(site);
+  console.log(`OK — ${versions.count} références à ${versions.files} feuilles et scripts locaux, toutes versionnées par l’empreinte de leur contenu.`);
   return site;
 }
 

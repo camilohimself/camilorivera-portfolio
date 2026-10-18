@@ -595,11 +595,6 @@
 
 @media (max-width: 700px) {
   .journey-journal { --header-h: 70px; --room-space: 76px; }
-  .journey-journal .topbar { gap: 6px; }
-  .journey-journal .topbar nav { gap: 13px; font-size: 10px; }
-  .journey-journal .topbar > button { font-size: 10px; min-width: 28px; }
-  .journey-journal .topbar #motion-toggle { font-size: 14px; margin-left: 0; }
-  .journey-journal .signature { padding-right: 3px; min-width: 35px; }
   .folio-line { min-height: 58px; gap: 10px; font-size: 8px; }
   .folio-line nav { gap: 8px; }
   .journey-journal .folio-line .text-link { font-size: 8px; gap: 7px; }
@@ -790,9 +785,6 @@
 
 @media (max-width: 360px) {
   .journey-journal { --gutter: 18px; }
-  .journey-journal .topbar nav { gap: 10px; font-size: 9px; }
-  .journey-journal .topbar > button { min-width: 25px; }
-  .journey-journal .signature { font-size: 30px; min-width: 32px; }
   .folio-line nav { gap: 5px; }
   .folio-line > span { font-size: 7px; }
   .journey-journal :is(.chapter-opening, .journal-cover-opening, .reserve-opening) h1 { font-size: 19vw; }

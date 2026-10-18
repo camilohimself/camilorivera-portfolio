@@ -5,10 +5,12 @@
   const language = document.querySelector('.language-toggle');
   const motion = document.querySelector('.motion-toggle');
   const system = matchMedia('(prefers-reduced-motion: reduce)');
-  const texts = [...document.querySelectorAll('[data-en]')].map(el => [el, el.innerHTML]);
+  // Français d’origine : la langue a pu être posée avant le premier rendu (script en fin de page, window.CamiloFrench).
+  const french = window.CamiloFrench || ((el, name) => name ? el.getAttribute(name) : el.innerHTML);
+  const texts = [...document.querySelectorAll('[data-en]')].map(el => [el, french(el)]);
   const attrs = ['alt', 'label', 'aria', 'content'].flatMap(kind => {
     const name = kind === 'label' || kind === 'aria' ? 'aria-label' : kind;
-    return [...document.querySelectorAll(`[data-${kind}-en]`)].map(el => [el, name, el.getAttribute(name), el.getAttribute(`data-${kind}-en`)]);
+    return [...document.querySelectorAll(`[data-${kind}-en]`)].map(el => [el, name, french(el, name), el.getAttribute(`data-${kind}-en`)]);
   });
   // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
   const read = key => { try { return sessionStorage.getItem(key) || localStorage.getItem(key); } catch { return null; } };
@@ -35,5 +37,11 @@
   language?.addEventListener('click', () => { root.lang = root.lang === 'en' ? 'fr' : 'en'; save('cr-language', root.lang); translate(); });
   motion?.addEventListener('click', () => { reduced = !reduced; save('cr-motion', reduced ? 'reduced' : 'full'); applyMotion(); });
   system.addEventListener('change', applyMotion);
+  // Page préparée (règles de spéculation) : la langue ou le mouvement ont pu changer sur la page précédente.
+  document.addEventListener('prerenderingchange', () => {
+    reduced = read('cr-motion') === 'reduced';
+    const lang = read('cr-language') === 'en' ? 'en' : 'fr';
+    if (root.lang !== lang) { root.lang = lang; translate(); } else applyMotion();
+  }, {once: true});
   translate();
 })();

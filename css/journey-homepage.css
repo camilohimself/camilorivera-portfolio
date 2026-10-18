@@ -304,9 +304,6 @@
   .journey-home .hero-film-bottom .flow-link { margin-left: auto; min-height: 46px; font-size: 10px; padding-inline: 14px; }
 }
 @media (max-width: 360px) {
-  .journey-home .topbar { gap: 5px; padding-inline: 16px; }
-  .journey-home .topbar nav { gap: 10px; font-size: 10px; }
-  .journey-home .topbar > button { min-width: 26px; }
   .journey-home .hero-film-name { padding-block: 42px; }
   .journey-home .hero-film-name h1 { font-size: 23.4vw; }
   .journey-home .hero-film-controls { gap: 0 12px; }

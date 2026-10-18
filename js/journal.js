@@ -6,12 +6,14 @@
   const root = document.documentElement;
   const isJournal = document.body.classList.contains('journal-page');
   const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const copy = new Map($$('[data-en]').map(el => [el, el.innerHTML]));
+  // Français d’origine : la langue a pu être posée avant le premier rendu (script en fin de page, window.CamiloFrench).
+  const french = window.CamiloFrench || ((el, name) => name ? el.getAttribute(name) : el.innerHTML);
+  const copy = new Map($$('[data-en]').map(el => [el, french(el)]));
   const attributes = new Map();
   const attributeKeys = [['data-alt-en', 'alt'], ['data-aria-en', 'aria-label'], ['data-content-en', 'content']];
   attributeKeys.forEach(([data, attribute]) => $$('[' + data + ']').forEach(el => {
     if (!attributes.has(el)) attributes.set(el, {});
-    attributes.get(el)[attribute] = {fr: el.getAttribute(attribute), en: el.getAttribute(data)};
+    attributes.get(el)[attribute] = {fr: french(el, attribute), en: el.getAttribute(data)};
   }));
   // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
   const read = key => { try { return sessionStorage.getItem(key) || localStorage.getItem(key); } catch { return null; } };
@@ -262,6 +264,12 @@
       updateMotion();
     });
     systemMotion.addEventListener('change', updateMotion);
+    // Page préparée (règles de spéculation) : la langue ou le mouvement ont pu changer sur la page précédente.
+    document.addEventListener('prerenderingchange', () => {
+      userReduced = read('cr-motion') === 'reduced'; updateMotion();
+      const lang = read('cr-language') === 'en' ? 'en' : 'fr';
+      if (root.lang !== lang) root.lang = lang;
+    }, {once: true});
     $('#year').textContent = new Date().getFullYear();
     window.addEventListener('scroll', requestFrame, {passive: true});
     window.addEventListener('resize', requestFrame, {passive: true});

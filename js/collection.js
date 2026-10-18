@@ -23,6 +23,13 @@
   const contact = document.getElementById('artwork-contact');
   const shareStatus = document.getElementById('artwork-share-status');
   const stage = artwork.querySelector('.artwork-stage');
+  const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const calm = () => systemMotion.matches || document.documentElement.classList.contains('motion-reduced');
+  // The image follows the finger, the outgoing one leaves as a ghost (js/viewer-motion.js). The drop opens the viewer.
+  const viewerMotion = window.CamiloViewerMotion?.create({
+    dialog: artwork, stage, image: artworkImage, reduced: calm, onStep: navigate,
+    zoomed: () => artwork.classList.contains('is-zoomed')
+  });
   const filters = [...collection.querySelectorAll('[data-filter]')];
   const categories = ['all', 'paintings', 'encres', 'shooting', 'memories'];
   const batchSize = 18;
@@ -60,8 +67,17 @@
   let activeItems = [];
   let scrollLock = null;
   let historyPending = false;
-  let gridRenderKey = '';
+  let gridRenderKey = ''; // The grid on screen.
+  let gridCategory = 'all'; // The static cards of the page belong to the full collection.
+  let pendingKey = ''; // A grid waiting for its first images.
+  let gridToken = 0;
   let shownImage = '';
+  let imageShown = '';
+  let imageToken = 0;
+  let shownFull = '';
+  const decodedFiles = new Set();
+  const preloaded = new Set();
+  const keptImages = [];
   let touchStart = null;
   let suppressImageClickUntil = 0;
   let artworkReturn = null;
@@ -162,14 +178,25 @@
     const source = sourceFor(category);
     const list = itemsFor(category);
     const shown = Math.min(visibleCount, list.length);
-    collectionTitle.textContent = text()[category];
+    const renderKey = `${lang()}:${category}:${shown}:${list.length}`;
+    // A filter keeps the cards on screen, with their title and count, until the first images of the new
+    // ones are decoded (js/motion.js). The pressed button answers at once.
+    const motion = window.CamiloMotion;
+    const waiting = source.status === 'ready' && renderKey !== gridRenderKey && category !== gridCategory
+      && grid.children.length > 0 && collectionVisible() && typeof motion?.imagesReady === 'function';
+    const heading = text()[category];
+    const count = source.status === 'loading' ? text().loading
+      : source.status === 'error' ? text().failed : text().count(shown, list.length);
+    const announce = () => {
+      collectionTitle.textContent = heading;
+      status.textContent = count;
+    };
+    if (!waiting) announce();
     setLabel(more, text().more);
     collectionRetry.textContent = text().retry;
     collectionRetry.hidden = source.status !== 'error';
     more.hidden = source.status !== 'ready' || shown >= list.length;
-    status.textContent = source.status === 'loading' ? text().loading
-      : source.status === 'error' ? text().failed : text().count(shown, list.length);
-    grid.setAttribute('aria-busy', String(source.status === 'loading'));
+    grid.setAttribute('aria-busy', String(source.status === 'loading' || waiting));
     filters.forEach(button => {
       const selected = button.dataset.filter === category;
       button.textContent = text()[button.dataset.filter];
@@ -178,10 +205,13 @@
     });
 
     // Leave static direct links available if the data service cannot respond.
-    if (source.status !== 'ready') return;
-    const renderKey = `${lang()}:${category}:${shown}:${list.length}`;
-    if (gridRenderKey === renderKey) return;
-    gridRenderKey = renderKey;
+    if (source.status !== 'ready' || gridRenderKey === renderKey) {
+      if (pendingKey) { pendingKey = ''; gridToken++; } // The grid on screen is the answer: stop waiting.
+      return;
+    }
+    if (pendingKey === renderKey) return;
+    pendingKey = waiting ? renderKey : '';
+    const token = ++gridToken;
     const fragment = document.createDocumentFragment();
     for (const [index, item] of list.slice(0, shown).entries()) {
       const card = document.createElement('a');
@@ -232,10 +262,26 @@
       card.append(image, caption);
       fragment.append(card);
     }
-    grid.replaceChildren(fragment);
+    const shownCategory = category;
+    const place = () => {
+      if (token !== gridToken) return; // A later filter, batch or language won.
+      grid.replaceChildren(fragment);
+      gridRenderKey = renderKey;
+      gridCategory = shownCategory;
+      pendingKey = '';
+      announce();
+      grid.setAttribute('aria-busy', 'false');
+    };
+    if (!waiting) { place(); return; }
+    const images = [...fragment.querySelectorAll('img')];
+    // Counted after the click handler, once the page has reached the gallery: cards keep the same boxes.
+    Promise.resolve()
+      .then(() => motion.imagesReady(images.slice(0, motion.onScreen(grid))))
+      .then(place);
   }
 
   function setZoom(enabled) {
+    if (enabled) viewerMotion?.reset();
     artwork.classList.toggle('is-zoomed', enabled);
     if (zoom) {
       zoom.setAttribute('aria-pressed', String(enabled));
@@ -263,6 +309,94 @@
     shareStatus.hidden = true;
   }
 
+  const imageReady = () => artworkImage.complete && artworkImage.naturalWidth > 0;
+
+  // The thumbnail of this work already decoded on the page (its card in the grid or in a section), if any.
+  function loadedThumbnail(item) {
+    const key = isMemory(item) ? 'memory' : 'piece';
+    let best = null;
+    document.querySelectorAll(`a[data-${key}] img`).forEach(image => {
+      if (image.closest('a').dataset[key] !== identifier(item) || !image.complete || !image.naturalWidth) return;
+      if (!best || image.naturalWidth > best.naturalWidth) best = image;
+    });
+    return best ? best.currentSrc || best.src : '';
+  }
+
+  /* The drop captures the stage as soon as its update returns. A full-size file not decoded yet would
+     leave the previous work on screen (the browser keeps the old image until the new one arrives):
+     show the decoded thumbnail at once, then the full file once decoded, if this work is still shown. */
+  function showImage(item) {
+    const full = imagePath(item);
+    shownFull = full;
+    const token = ++imageToken;
+    artworkImage.style.removeProperty('visibility');
+    if (decodedFiles.has(full)) {
+      artworkImage.src = full;
+      if (imageReady()) return;
+    }
+    const thumbnail = loadedThumbnail(item);
+    if (thumbnail && thumbnail !== full) {
+      artworkImage.src = thumbnail;
+      if (imageReady()) {
+        const loader = new Image();
+        loader.decoding = 'async';
+        loader.src = full;
+        const upgrade = () => {
+          if (token !== imageToken || !loader.naturalWidth) return;
+          decodedFiles.add(full);
+          artworkImage.src = full;
+        };
+        (loader.decode ? loader.decode() : new Promise((resolve, reject) => { loader.onload = resolve; loader.onerror = reject; }))
+          .then(upgrade, upgrade);
+        return;
+      }
+    }
+    artworkImage.src = full;
+    // Nothing decoded for this work yet: an empty stage rather than the previous work.
+    if (!imageReady()) artworkImage.style.visibility = 'hidden';
+  }
+
+  // Holds the drop briefly while the stage has nothing decoded (direct link, history, work outside the grid).
+  function imageSettled(limit = 300) {
+    if (!artwork.open || artworkImage.hidden || !artworkImage.getAttribute('src') || imageReady()) return null;
+    return new Promise(resolve => {
+      const finish = () => {
+        clearTimeout(timer);
+        artworkImage.removeEventListener('load', finish);
+        artworkImage.removeEventListener('error', finish);
+        resolve();
+      };
+      const timer = setTimeout(finish, limit);
+      artworkImage.addEventListener('load', finish);
+      artworkImage.addEventListener('error', finish);
+    });
+  }
+
+  // The next and previous works are decoded ahead, so a step shows them at once. Not when data is saved.
+  function preloadNeighbours() {
+    if (!artwork.open || !activeRoute || activeItems.length < 2 || navigator.connection?.saveData) return;
+    const index = activeItems.findIndex(item => identifier(item) === activeRoute.id);
+    if (index < 0) return;
+    [1, -1].forEach(direction => {
+      const full = imagePath(activeItems[(index + direction + activeItems.length) % activeItems.length]);
+      if (decodedFiles.has(full) || preloaded.has(full)) return;
+      preloaded.add(full);
+      const loader = new Image();
+      loader.decoding = 'async';
+      loader.src = full;
+      const settle = () => {
+        preloaded.delete(full);
+        if (!loader.naturalWidth) return;
+        decodedFiles.add(full);
+        // Kept referenced, the browser keeps them ready for an immediate swap.
+        keptImages.push(loader);
+        if (keptImages.length > 4) keptImages.shift();
+      };
+      (loader.decode ? loader.decode() : new Promise((resolve, reject) => { loader.onload = resolve; loader.onerror = reject; }))
+        .then(settle, settle);
+    });
+  }
+
   function renderArtwork() {
     if (!activeRoute) return;
     const source = sources[activeRoute.kind];
@@ -277,6 +411,9 @@
     if (!item) {
       activeItems = [];
       clearShareStatus();
+      imageShown = '';
+      imageToken++;
+      artworkImage.style.removeProperty('visibility');
       artworkImage.removeAttribute('src');
       artworkImage.alt = '';
       artworkTitle.textContent = source.status === 'loading' ? text().loading : text().unavailable;
@@ -296,7 +433,10 @@
       setZoom(false);
       clearShareStatus();
     }
-    artworkImage.src = imagePath(item);
+    if (imageShown !== imageKey) {
+      imageShown = imageKey;
+      showImage(item);
+    }
     artworkImage.alt = label(item);
     artworkTitle.textContent = label(item);
     artworkDetail.textContent = [
@@ -389,7 +529,8 @@
     const drop = window.CamiloDrop;
     if (!drop) { syncLocation(); return; }
     const returnTo = artwork.open ? artworkReturn?.node : collectionReturn;
-    drop.swap(syncLocation, { origin, returnTo });
+    viewerMotion?.reset();
+    drop.swap(() => { syncLocation(); return imageSettled(); }, { origin, returnTo });
   }
 
   function setHistory(state, url, replace = false) {
@@ -455,14 +596,19 @@
 
   function navigate(direction) {
     if (!activeRoute || activeItems.length < 2) return;
-    const index = activeItems.findIndex(item => identifier(item) === activeRoute.id);
-    const item = activeItems[(index + direction + activeItems.length) % activeItems.length];
-    const route = { kind: isMemory(item) ? 'memories' : 'works', id: identifier(item) };
-    const url = new URL(location.href);
-    url.hash = routeHash(route);
-    setHistory({ ...(overlayState() || {}), view: 'artwork', category, collection: collectionVisible() }, url, true);
-    activeRoute = route;
-    renderArtwork();
+    // Title, counter and image change in the same render; the motion step slides the image in.
+    const render = () => {
+      const index = activeItems.findIndex(item => identifier(item) === activeRoute.id);
+      const item = activeItems[(index + direction + activeItems.length) % activeItems.length];
+      const route = { kind: isMemory(item) ? 'memories' : 'works', id: identifier(item) };
+      const url = new URL(location.href);
+      url.hash = routeHash(route);
+      setHistory({ ...(overlayState() || {}), view: 'artwork', category, collection: collectionVisible() }, url, true);
+      activeRoute = route;
+      renderArtwork();
+    };
+    if (viewerMotion) viewerMotion.step(direction, render);
+    else render();
   }
 
   async function shareArtwork() {
@@ -533,6 +679,13 @@
   previous.addEventListener('click', () => navigate(-1));
   next.addEventListener('click', () => navigate(1));
   zoom?.addEventListener('click', () => setZoom(!artwork.classList.contains('is-zoomed')));
+  artworkImage.addEventListener('load', () => {
+    if (!imageReady()) return;
+    artworkImage.style.removeProperty('visibility');
+    decodedFiles.add(artworkImage.currentSrc || artworkImage.src);
+    if ((artworkImage.currentSrc || artworkImage.src) === shownFull) preloadNeighbours();
+  });
+  artworkImage.addEventListener('error', () => artworkImage.style.removeProperty('visibility'));
   artworkImage.addEventListener('click', () => {
     if (Date.now() < suppressImageClickUntil) return;
     setZoom(!artwork.classList.contains('is-zoomed'));
@@ -572,21 +725,24 @@
     dialog.addEventListener('close', syncScrollLock);
   }
 
-  stage?.addEventListener('touchstart', event => {
-    if (event.touches.length !== 1 || artwork.classList.contains('is-zoomed')) { touchStart = null; return; }
-    touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY, time: Date.now() };
-  }, { passive: true });
-  stage?.addEventListener('touchend', event => {
-    if (!touchStart || !event.changedTouches.length) return;
-    const deltaX = event.changedTouches[0].clientX - touchStart.x;
-    const deltaY = event.changedTouches[0].clientY - touchStart.y;
-    if (Math.abs(deltaX) > 60 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && Date.now() - touchStart.time < 800) {
-      suppressImageClickUntil = Date.now() + 500;
-      navigate(deltaX > 0 ? -1 : 1);
-    }
-    touchStart = null;
-  }, { passive: true });
-  stage?.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
+  // A plain swipe, only without js/viewer-motion.js: with it, one gesture would step twice.
+  if (stage && !viewerMotion) {
+    stage.addEventListener('touchstart', event => {
+      if (event.touches.length !== 1 || artwork.classList.contains('is-zoomed')) { touchStart = null; return; }
+      touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY, time: Date.now() };
+    }, { passive: true });
+    stage.addEventListener('touchend', event => {
+      if (!touchStart || !event.changedTouches.length) return;
+      const deltaX = event.changedTouches[0].clientX - touchStart.x;
+      const deltaY = event.changedTouches[0].clientY - touchStart.y;
+      if (Math.abs(deltaX) > 60 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5 && Date.now() - touchStart.time < 800) {
+        suppressImageClickUntil = Date.now() + 500;
+        navigate(deltaX > 0 ? -1 : 1);
+      }
+      touchStart = null;
+    }, { passive: true });
+    stage.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
+  }
 
   document.addEventListener('keydown', event => {
     if (!artwork.open || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;

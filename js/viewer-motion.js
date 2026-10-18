@@ -4,7 +4,8 @@
   const ease = 'cubic-bezier(.19,1,.22,1)';
   const identity = 'translate3d(0,0,0) rotate(0deg) scale(1)';
 
-  function create({dialog, stage, image, reduced, onStep}) {
+  // zoomed: where the viewer keeps its zoom state (the journal on the stage, the works viewer on its dialog).
+  function create({dialog, stage, image, reduced, onStep, zoomed = () => stage.classList.contains('is-zoomed')}) {
     if (!dialog || !stage || !image) return null;
     let pointer = null;
     let origin = null;
@@ -154,7 +155,7 @@
         clearVisuals();
         done();
       };
-      if (immediate || reduced() || stage.classList.contains('is-zoomed') || !image.naturalWidth || typeof image.animate !== 'function') { complete(); return; }
+      if (immediate || reduced() || zoomed() || !image.naturalWidth || typeof image.animate !== 'function') { complete(); return; }
       const transform = originTransform(visibleRect(origin) || originRect);
       const animation = animate(image, [
         {opacity: 1, transform: identity},
@@ -184,7 +185,7 @@
         rebound();
         return;
       }
-      if (stage.classList.contains('is-zoomed')) { rebound(); return; }
+      if (zoomed()) { rebound(); return; }
       clearVisuals();
       pointer = {id: event.pointerId, x: event.clientX, y: event.clientY, time: performance.now(), axis: null, moved: false};
     }, {passive: true});

@@ -14,9 +14,11 @@
   const memoryCards = [...document.querySelectorAll('.memory-card')];
   const filmSection = document.querySelector('.moving-image');
   const filmViewport = filmSection?.querySelector('.hero-scene') || filmSection;
-  const texts = [...document.querySelectorAll('[data-en]')].map(el => [el, el.innerHTML]);
-  const labels = [...document.querySelectorAll('[data-label-en]')].map(el => [el, el.getAttribute('aria-label')]);
-  const alts = [...document.querySelectorAll('[data-alt-en]')].map(el => [el, el.alt]);
+  // Français d’origine : la langue a pu être posée avant le premier rendu (script en fin de page, window.CamiloFrench).
+  const french = window.CamiloFrench || ((el, name) => name ? el.getAttribute(name) : el.innerHTML);
+  const texts = [...document.querySelectorAll('[data-en]')].map(el => [el, french(el)]);
+  const labels = [...document.querySelectorAll('[data-label-en]')].map(el => [el, french(el, 'aria-label')]);
+  const alts = [...document.querySelectorAll('[data-alt-en]')].map(el => [el, french(el, 'alt') ?? '']);
   let reduced = false, chosenReduced = false, lang = 'fr', pending = false;
   let filmVisible = false, filmUserPaused = false, filmUserStarted = false, filmPending = false, filmBlocked = false;
   // « Ne rien garder » (panneau de confidentialité) : les réglages ne vivent que dans l’onglet.
@@ -175,5 +177,11 @@
   navigator.connection?.addEventListener?.('change', updatePlayback);
   window.addEventListener('pagehide', () => video?.pause());
   window.addEventListener('pageshow', syncActivity);
+  // Page préparée (règles de spéculation) : la langue ou le mouvement ont pu changer sur la page précédente.
+  document.addEventListener('prerenderingchange', () => {
+    chosenReduced = read('cr-motion') === 'reduced'; applyMotion();
+    const next = read('cr-language') === 'en' ? 'en' : 'fr';
+    if (next !== lang) { lang = next; applyLanguage(); }
+  }, {once: true});
   applyMotion(); applyLanguage();
 })();
